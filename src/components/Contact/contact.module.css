@@ -1,0 +1,293 @@
+.contact {
+  margin-top: 13rem;
+  padding: 6rem 0;
+  background-color: var(--color-bg);
+}
+
+.contactWrapper {
+  gap: 5.9rem;
+}
+
+.contactContent {
+  flex: 2;
+}
+
+.contactTitle {
+  gap: 1.2rem;
+
+  h2 {
+    font-size: 4.8rem;
+    font-weight: 300;
+    line-height: 5.1rem;
+    letter-spacing: -0.72px;
+    width: max-content;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 100%;
+      transform: translateX(20px);
+      width: 49.49%;
+      height: 0.2rem;
+      background: linear-gradient(90deg, rgba(49, 56, 227), rgba(0, 0, 0, 0));
+      -webkit-transform: translateX(20px);
+      -moz-transform: translateX(20px);
+      -ms-transform: translateX(20px);
+      -o-transform: translateX(20px);
+    }
+  }
+
+  p {
+    font-size: 3.2rem;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: -0.48px;
+    margin-left: 4.4rem;
+
+    span {
+      color: var(--color-main);
+    }
+  }
+}
+
+.contactDetails {
+  margin-top: 3.5rem;
+  color: var(--color-black);
+  gap: 1.4rem;
+
+  li {
+    max-width: 28rem;
+    gap: 0.4rem;
+    line-height: 2.4rem;
+
+    span:last-child {
+      color: var(--color-main);
+      font-weight: 600;
+    }
+  }
+}
+
+form {
+  > div:nth-child(n + 2) {
+    margin-top: 4.4rem;
+  }
+
+  > button {
+    margin-top: 6.1rem;
+    font-size: 2rem;
+    width: 100% !important;
+    height: 6.8rem;
+  }
+}
+
+.contactForm {
+  flex: 3;
+}
+
+.contactFormDivider {
+  width: 100%;
+  gap: 3.6rem;
+
+  > * {
+    flex: 1;
+  }
+}
+
+.formGroup {
+  gap: 1.2rem;
+  font-weight: 600;
+
+  label {
+    small {
+      color: var(--color-red);
+    }
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select {
+    border-radius: 15.8rem;
+    border: 0.1rem solid var(--color-grey);
+    font-family: var(--main-font);
+    font-size: 1.6rem;
+    background-color: transparent;
+    -webkit-border-radius: 15.8rem;
+    -moz-border-radius: 15.8rem;
+    -ms-border-radius: 15.8rem;
+    -o-border-radius: 15.8rem;
+    padding: 2rem;
+    width: 100%;
+    height: 5.9rem;
+    color: var(--color-gray);
+  }
+
+  select {
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url("../../assets/icons/chevron_down_small_24.svg") no-repeat
+      98.5% !important;
+    background: url("../../assets/icons/chevron_down_small_24.svg") no-repeat
+      calc(100% - 10px) !important;
+    max-width: 48.6rem;
+
+    &::-ms-expand {
+      display: none;
+    }
+  }
+
+  div.formGroupTypes {
+    gap: 1.9rem;
+  }
+
+  label:has(input[type="radio"]) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    border-radius: 5.8rem;
+    border: 0.1rem solid var(--color-grey);
+    -webkit-border-radius: 5.8rem;
+    -moz-border-radius: 5.8rem;
+    -ms-border-radius: 5.8rem;
+    -o-border-radius: 5.8rem;
+    padding: 1.75rem 2.2rem;
+    width: max-content;
+    color: var(--color-gray);
+  }
+
+  input[type="radio"] {
+    /* removing standard background appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    /* custom radiobutton appearance */
+    display: inline-block;
+    width: 2.2rem;
+    height: 2.2rem;
+    /* background-color only for content */
+    background-clip: content-box;
+    border: 0.2rem solid var(--color-grey);
+    background-color: var(--color-grey);
+    border-radius: 50%;
+  }
+
+  /* appearance for checked radiobutton */
+  input[type="radio"]:checked {
+    padding: 0.3rem;
+    border: 0.2rem solid var(--color-white);
+    background-color: var(--color-white);
+  }
+
+  label:has(input[type="radio"]:checked) {
+    border-color: var(--color-main);
+    background-color: var(--color-main);
+    color: var(--color-white);
+  }
+
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  input[type="email"]:focus {
+    border-color: var(--color-main);
+    background-color: var(--color-white);
+  }
+}
+
+/* responsive */
+
+@media (max-width: 992px) {
+  .contactWrapper {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .contactFormDivider {
+    flex-direction: column;
+    gap: 2.8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .contactTitle {
+    gap: 0.8rem;
+
+    h2 {
+      font-size: 2rem;
+      font-weight: 300;
+      line-height: normal;
+      width: max-content;
+      position: relative;
+
+      &::after {
+        width: 62.91%;
+      }
+    }
+
+    p {
+      font-size: 2rem;
+      margin-left: 2.5rem;
+      max-width: 29.5rem;
+    }
+  }
+
+  form {
+    > div:nth-child(n + 2) {
+      margin-top: 2.8rem;
+    }
+
+    > button {
+      margin-top: 4rem;
+      height: 4.9rem;
+    }
+  }
+
+  .formGroup {
+    gap: 0.6rem;
+
+    label {
+      font-size: 1.4rem;
+
+      small {
+        color: var(--color-red);
+      }
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+      font-size: 1.4rem;
+      padding: 1.6rem;
+      height: 4.9rem;
+    }
+
+    div.formGroupTypes {
+      gap: 1.2rem;
+    }
+
+    label:has(input[type="radio"]) {
+      gap: 0.8rem;
+      padding: 1rem 1.6rem;
+      width: max-content;
+      color: var(--color-gray);
+    }
+
+    input[type="radio"] {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .formGroup {
+    select {
+      padding-right: 8.5rem;
+    }
+  }
+}

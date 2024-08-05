@@ -1,0 +1,662 @@
+.hero {
+  margin-top: 2.4rem;
+  background-position: center !important;
+  background-size: cover !important;
+  padding: 7.2rem 0 0;
+  /* filter: blur(150px);
+  -webkit-filter: blur(150px); */
+  height: 59rem;
+}
+
+.heroWrapper {
+  height: 100%;
+}
+
+.heroTitle {
+  gap: 4.2rem;
+}
+
+.heroTitle > h1 {
+  max-width: 94.8rem;
+  text-align: center;
+  font-size: 8rem;
+  font-weight: 700;
+  line-height: 10.1rem;
+  letter-spacing: -1.2px;
+  color: var(--color-white);
+}
+
+.heroTitle > a {
+  display: none;
+  width: 15.4rem;
+  height: 4.1rem;
+}
+
+/* statistics */
+
+.statistics {
+  margin-top: auto;
+  transform: translateY(50%);
+  -webkit-transform: translateY(50%);
+  -moz-transform: translateY(50%);
+  -ms-transform: translateY(50%);
+  -o-transform: translateY(50%);
+  width: 100%;
+}
+
+.statisticsCard {
+  border-radius: 10.619px;
+  background: #fff;
+  box-shadow: 0px 0px 4.424px 0px rgba(91, 89, 89, 0.13);
+  padding: 1rem;
+  width: 12.7rem;
+  height: 12.3rem;
+}
+
+.statsCard2 {
+  zoom: 1.21;
+}
+
+.statsCard2 img {
+  object-fit: contain;
+  -o-object-fit: contain;
+}
+
+.statsCard3 {
+  zoom: 1.5;
+}
+
+.statsCard3 img {
+  object-fit: contain;
+  -o-object-fit: contain;
+}
+
+.statsCard4 {
+  zoom: 1.7;
+}
+
+.statisticsCard > div {
+  width: 2.4rem;
+  height: 2.4rem;
+  display: flex;
+  margin-left: auto;
+}
+
+.statisticsCard > p {
+  font-weight: 800;
+  font-size: 3rem;
+  color: var(--color-main);
+  margin-top: 1.6rem;
+  text-align: center;
+}
+
+.statsCard3 > p {
+  font-size: 2.6rem;
+}
+
+.statsCard4 > p {
+  font-size: 4rem;
+}
+
+.statisticsCard > span {
+  display: block;
+  margin-top: 1rem;
+  color: var(--color-black-70);
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.statsCard2 > span {
+  font-size: 1.25rem;
+}
+
+.statsCard3 > span {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.statsCard4 > span {
+  font-size: 1.6rem;
+}
+
+/* trainings section */
+
+.trainings {
+  margin-top: 22.3rem;
+  padding: 2rem 0;
+}
+
+.trainingsNavbar {
+  margin-top: 6.9rem;
+}
+
+.trainingsNavbarMenu {
+  border-radius: 5.9rem;
+  background: var(--color-white);
+  box-shadow: 0 0 0.3rem 0 rgba(44, 44, 44, 0.13);
+  padding: 1.2rem;
+  -webkit-border-radius: 5.9rem;
+  -moz-border-radius: 5.9rem;
+  -ms-border-radius: 5.9rem;
+  -o-border-radius: 5.9rem;
+}
+
+.trainingsNavbarMenu > li > a {
+  padding: 1.2rem 3.1rem;
+  font-weight: 600;
+}
+
+.trainingsNavbarMenu > li > a > h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: normal;
+}
+
+.trainingsNavbarMenu > li > a > span {
+  font-size: 1.4rem;
+}
+
+.trainingsNavbarMenu > li > a:hover {
+  border-radius: 7.8rem;
+  background-color: var(--color-main);
+  color: var(--color-white);
+  -webkit-border-radius: 7.8rem;
+  -moz-border-radius: 7.8rem;
+  -ms-border-radius: 7.8rem;
+  -o-border-radius: 7.8rem;
+}
+
+.trainingsGrid {
+  margin-top: 3.2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 30.5rem));
+  gap: 2.4rem;
+  place-content: center;
+}
+
+/* partners */
+
+.partners {
+  margin-top: 12.3rem;
+  padding: 2rem 0;
+}
+
+.partnersGrid {
+  margin-top: 6.9rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 41rem));
+  gap: 3.2rem;
+  place-content: center;
+}
+
+.partnersCard {
+  padding: 3.2rem 3.2rem 2rem 3.2rem;
+  width: 100%;
+  height: 36.2rem;
+  border-radius: 2.4rem;
+  -webkit-border-radius: 2.4rem;
+  -moz-border-radius: 2.4rem;
+  -ms-border-radius: 2.4rem;
+  -o-border-radius: 2.4rem;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center right;
+  background-repeat: no-repeat;
+
+  h3 {
+    color: var(--color-white);
+    font-weight: 700;
+  }
+
+  p {
+    margin-top: 1rem;
+    color: var(--color-white);
+    font-size: 1.8rem;
+    font-weight: 500;
+  }
+
+  a {
+    width: 100%;
+    transform: translateY(140%);
+    -webkit-transform: translateY(140%);
+    -moz-transform: translateY(140%);
+    -ms-transform: translateY(140%);
+    -o-transform: translateY(140%);
+    transition: 0.3s transform ease-in-out;
+    -webkit-transition: 0.3s transform ease-in-out;
+    -moz-transition: 0.3s transform ease-in-out;
+    -ms-transition: 0.3s transform ease-in-out;
+    -o-transition: 0.3s transform ease-in-out;
+  }
+}
+
+.partnersCard:hover {
+  a {
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+  }
+}
+
+/* projects */
+
+.projects {
+  margin-top: 11.3rem;
+  padding: 2rem 0;
+}
+
+.projectsCard {
+  height: 100%;
+  border-radius: 1.6rem;
+  background-color: var(--color-bg);
+  -webkit-border-radius: 1.6rem;
+  -moz-border-radius: 1.6rem;
+  -ms-border-radius: 1.6rem;
+  -o-border-radius: 1.6rem;
+  padding: 3.2rem;
+
+  h3 {
+    color: var(--color-main);
+    font-weight: 600;
+  }
+
+  p {
+    font-size: 1.8rem;
+    font-weight: 500;
+    line-height: 2.8rem;
+    margin-top: 1.8rem;
+  }
+}
+
+.projectsCardIcon {
+  background-color: rgba(49, 56, 227, 0.1);
+  width: 26rem;
+  height: 26rem;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  transition: 0.3s ease;
+  -webkit-transition: 0.3s ease;
+  -moz-transition: 0.3s ease;
+  -ms-transition: 0.3s ease;
+  -o-transition: 0.3s ease;
+  div {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    background-color: rgba(49, 56, 227, 0.3);
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+
+    div {
+      background-color: rgba(49, 56, 227, 0.5);
+    }
+  }
+}
+
+.projectsCard:hover .projectsCardIcon {
+  background-color: rgba(49, 56, 227, 0.5);
+  div {
+    background-color: rgba(49, 56, 227, 0.7);
+
+    div {
+      background-color: var(--color-main);
+    }
+  }
+}
+
+/* useful */
+
+.useful {
+  margin-top: 11.3rem;
+  padding: 2rem 0;
+}
+
+.usefulGrid {
+  margin-top: 6.8rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 40.9rem));
+  gap: 3rem;
+  place-content: center;
+}
+
+.usefulCard {
+  height: 25.5rem;
+  a {
+    height: 100%;
+    width: 100%;
+    gap: 1.2rem;
+    background-color: var(--color-bg);
+    border-radius: 1.6rem;
+    transition: 0.3s ease;
+    -webkit-border-radius: 1.6rem;
+    -moz-border-radius: 1.6rem;
+    -ms-border-radius: 1.6rem;
+    -o-border-radius: 1.6rem;
+    -webkit-transition: 0.3s ease;
+    -moz-transition: 0.3s ease;
+    -ms-transition: 0.3s ease;
+    -o-transition: 0.3s ease;
+
+    h3 {
+      font-size: 2.2rem;
+      font-weight: 600;
+    }
+
+    svg {
+      path {
+        transition: 0.3s ease;
+        -webkit-transition: 0.3s ease;
+        -moz-transition: 0.3s ease;
+        -ms-transition: 0.3s ease;
+        -o-transition: 0.3s ease;
+      }
+    }
+  }
+}
+
+.usefulCard a:hover {
+  color: var(--color-main);
+  border: 0.2rem solid var(--color-main);
+  clip-path: inset(0 0 0 0.2rem);
+
+  svg {
+    path {
+      fill: var(--color-main);
+    }
+  }
+}
+
+/* responsive */
+
+@media (max-width: 1434px) {
+  .trainingsNavbarMenu > li > a > h3 {
+    font-size: 1.6rem;
+  }
+
+  .trainingsNavbarMenu > li > a > span {
+    font-size: 1.2rem;
+  }
+
+  .trainingsGrid {
+    height: 100%;
+    overflow-y: scroll;
+  }
+}
+
+@media (max-width: 1300px) {
+  .statisticsCard {
+    width: 10.7rem;
+    height: 11.3rem;
+    padding: 0.8rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .statisticsCard {
+    width: 9.7rem;
+    height: 10.3rem;
+  }
+
+  .statisticsCard > span {
+    font-size: 1.2rem;
+  }
+
+  .statsCard2 > span {
+    font-size: 1rem;
+  }
+
+  .statsCard3 > span {
+    font-size: 1.1rem;
+  }
+
+  .trainingsNavbarMenu > li > a > h3 {
+    font-size: 1.4rem;
+    line-height: 1.7rem;
+  }
+
+  .trainingsNavbarMenu > li > a > span {
+    font-size: 1rem;
+    line-height: normal;
+  }
+}
+
+@media (max-width: 1100px) {
+  .trainingsNavbarMenu > li > a > h3 {
+    font-size: 1.2rem;
+  }
+
+  .trainingsNavbarMenu > li > a > span {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .statistics {
+    margin-top: unset;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+  }
+
+  .statisticsCard {
+    width: 12.7rem;
+    height: 12.3rem;
+  }
+
+  .statisticsCard img {
+    object-fit: contain;
+    -o-object-fit: contain;
+  }
+
+  .statisticsCard > p {
+    font-size: 3rem;
+  }
+
+  .statisticsCard > span {
+    font-size: 1.4rem;
+    line-height: normal;
+  }
+
+  .statsCard2,
+  .statsCard3,
+  .statsCard4 {
+    zoom: normal;
+  }
+
+  .trainings {
+    margin-top: 5.2rem;
+    padding: 2rem 0;
+  }
+
+  .trainingsNavbarMenu > li > a {
+    padding: 0.8rem 2.8rem;
+  }
+
+  .partners {
+    margin-top: 5rem;
+  }
+
+  .partnersCard {
+    width: auto;
+    height: 32rem;
+    align-items: center;
+  }
+}
+
+@media (max-width: 992px) {
+  .heroTitle h1 {
+    font-size: 6rem;
+    line-height: 7.1rem;
+  }
+
+  .heroTitle > a {
+    display: flex;
+  }
+
+  .statistics {
+    margin-top: 3rem;
+  }
+}
+
+@media (max-width: 960px) {
+  .trainingsNavbar {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .trainingsNavbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .trainingsNavbarMenu {
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    padding: 1.2rem 0;
+    box-shadow: none;
+  }
+
+  .trainingsNavbarMenu > li {
+    flex: 0 0 auto;
+  }
+
+  .trainingsNavbarMenu > li > a {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 768px) {
+  .projectsCard {
+    h3 {
+      font-size: 2rem;
+      line-height: 1.7rem;
+    }
+
+    p {
+      line-height: 1.7rem;
+      margin-top: 0.8rem;
+      font-size: 1.2rem;
+    }
+  }
+
+  .projectsCardIcon {
+    width: 15.5rem;
+    height: 15.5rem;
+  }
+
+  .usefulCard {
+    height: 17.9rem;
+    a {
+      gap: 0.8rem;
+
+      h3 {
+        font-size: 1.8rem;
+      }
+
+      svg {
+        width: 3.6rem;
+        height: 3.6rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .statisticsCard {
+    width: 12.7rem;
+    height: 12.3rem;
+  }
+
+  .statisticsCard > p {
+    font-size: 2.4rem;
+  }
+
+  .statisticsCard > span {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .hero h1 {
+    font-size: 2.8rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.8px;
+    max-width: 29.4rem;
+  }
+
+  .statistics {
+    margin-top: 15rem;
+  }
+
+  .statisticsCard {
+    width: 10.3rem;
+    height: 9.1rem;
+  }
+
+  .statisticsCard > div {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .statisticsCard > p,
+  .statisticsCard > span {
+    margin-top: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .partnersCard {
+    width: 66vw;
+    height: 26.8rem;
+  }
+
+  .partnersCard {
+    h3 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .hero {
+    padding: 2.8rem 0 7.4rem;
+    height: auto;
+  }
+  .heroWrapper {
+    border-radius: 1.6rem;
+    /* border-top-left-radius: 16px; */
+    border-top: 0.1rem solid #fff;
+    border-right: 0.1rem solid #fff;
+    border-left: 0.1rem solid #fff;
+    height: max-content;
+    padding: 3.6rem 0 0;
+    -webkit-border-radius: 1.6rem;
+    -moz-border-radius: 1.6rem;
+    -ms-border-radius: 1.6rem;
+    -o-border-radius: 1.6rem;
+  }
+
+  .statisticsCard {
+    width: 8.7rem;
+    height: 8.1rem;
+  }
+}

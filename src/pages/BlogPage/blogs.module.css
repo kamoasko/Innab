@@ -1,0 +1,85 @@
+.blogs {
+  margin-top: 5.6rem;
+}
+
+.blogGrid {
+  margin-top: 3.6rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 30.6rem));
+  gap: 2.4rem;
+  place-content: center;
+}
+
+.blogCard {
+  height: 33.2rem;
+
+  &.defaultBorder > a {
+    border-color: var(--color-main);
+  }
+
+  &.greenBorder > a {
+    border-color: var(--color-green);
+  }
+
+  &.violetBorder > a {
+    border-color: var(--color-violet);
+  }
+
+  &.redBorder > a {
+    border-color: var(--color-red);
+  }
+
+  a {
+    padding: 1.6rem;
+    height: 100%;
+    border-radius: 0.8rem;
+    border: 0.1rem solid var(--color-main);
+    background-position: center;
+    background-size: cover;
+    backdrop-filter: blur(52.599998474121094px);
+    background-repeat: no-repeat;
+    color: var(--color-white);
+    -webkit-border-radius: 0.8rem;
+    -moz-border-radius: 0.8rem;
+    -ms-border-radius: 0.8rem;
+    -o-border-radius: 0.8rem;
+
+    span {
+      font-size: 1.4rem;
+      border-radius: 4px;
+      background-color: var(--color-bg-blue);
+      backdrop-filter: blur(2px);
+      width: 6.2rem;
+      height: 2.5rem;
+    }
+
+    .blogCardContent {
+      gap: 1.2rem;
+    }
+  }
+}
+
+.blogCard:nth-child(2) > a {
+  border-color: var(--color-green);
+}
+
+.blogCard:nth-child(3) > a {
+  border-color: var(--color-violet);
+}
+
+.blogCard:nth-child(4) > a {
+  border-color: var(--color-red);
+}
+
+@media (max-width: 480px) {
+  .blogCard {
+    height: 26.7rem;
+
+    a {
+      .blogCardContent {
+        gap: 0.4rem;
+        font-size: 1.4rem;
+      }
+    }
+  }
+}

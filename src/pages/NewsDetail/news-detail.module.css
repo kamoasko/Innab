@@ -1,0 +1,172 @@
+.newsDetail {
+  margin-top: 5.6rem;
+}
+
+.newsDetailWrapper {
+  margin-top: 6rem;
+  width: 100%;
+  gap: 12rem;
+
+  > * {
+    flex: 1;
+  }
+}
+
+.newsDetailWrapperContent {
+  height: 100%;
+  gap: 10.2rem;
+  border-bottom: 0.1rem solid var(--color-main);
+  padding-bottom: 2.4rem;
+
+  h2 {
+    font-size: 3.4rem;
+    font-weight: 600;
+    color: var(--color-dark-black);
+  }
+}
+
+.newsDetailImg {
+  overflow: hidden;
+  max-height: 37.8rem;
+  border-radius: 1.2rem;
+  -webkit-border-radius: 1.2rem;
+  -moz-border-radius: 1.2rem;
+  -ms-border-radius: 1.2rem;
+  -o-border-radius: 1.2rem;
+}
+
+.newsDetailText {
+  margin-top: 4rem;
+  font-size: 1.8rem;
+  line-height: 2.7rem;
+  max-width: 118.5rem;
+  color: var(--color-dark-black);
+}
+
+.newsDetailParagraphs {
+  margin-top: 4.9rem;
+  max-width: 120rem;
+  gap: 4rem;
+
+  div {
+    h3 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--color-dark-black);
+
+      strong {
+        font-size: 2.8rem;
+        color: var(--color-main);
+        font-weight: 600;
+      }
+    }
+
+    p {
+      margin-top: 2.4rem;
+      font-size: 1.8rem;
+      line-height: 2.7rem;
+      color: var(--color-dark-black);
+    }
+  }
+}
+
+.otherNews {
+  margin-top: 8rem;
+  padding: 2rem 0;
+
+  div {
+    > a {
+      width: 16.2rem;
+      height: 5.4rem;
+      padding: 1.6rem 2.4rem;
+      margin: 2.4rem auto 0;
+    }
+  }
+}
+
+.otherNewsTitle {
+  text-align: center;
+
+  h2 {
+    font-size: 2.8rem;
+    line-height: 4.4rem;
+  }
+}
+
+.otherNewsWrapper {
+  gap: 3.6rem;
+  margin-top: 4rem;
+  flex-wrap: wrap;
+
+  article {
+    flex-basis: 40.8rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .newsDetailWrapper {
+    flex-direction: column;
+    -ms-flex-direction: column;
+  }
+}
+
+@media (max-width: 768px) {
+  .newsDetailWrapper {
+    margin-top: 4rem;
+    gap: 2.4rem;
+  }
+
+  .newsDetailWrapperContent {
+    gap: 3.2rem;
+  }
+
+  .otherNews {
+    margin-top: 5.2rem;
+  }
+
+  .otherNewsWrapper {
+    margin-top: 2.4rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .newsDetailWrapperContent {
+    padding-bottom: 1.6rem;
+
+    h2 {
+      font-size: 2rem;
+      line-height: 2.7rem;
+    }
+
+    time {
+      font-size: 1.4rem;
+    }
+  }
+
+  .newsDetailText {
+    margin-top: 2.4rem;
+    font-size: 1.4rem;
+    line-height: 2.1rem;
+  }
+
+  .newsDetailParagraphs {
+    margin-top: 3.2rem;
+    gap: 3.2rem;
+
+    div {
+      h3 {
+        font-size: 1.8rem;
+
+        strong {
+          font-size: 2.2rem;
+        }
+      }
+
+      p {
+        margin-top: 1.4rem;
+        font-size: 1.4rem;
+        line-height: 2.1rem;
+      }
+    }
+  }
+}
