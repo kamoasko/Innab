@@ -3,7 +3,7 @@ import styles from "./contact.module.css";
 import ContactForm from "./contactForm";
 import ContactDetails from "../contactDetails";
 
-const Contact = () => {
+const Contact = ({ apply }) => {
   return (
     <section className={styles.contact}>
       <div className="container">
@@ -18,7 +18,7 @@ const Contact = () => {
             <ContactDetails marginLeft={"4.4rem"} />
           </div>
           <div className={styles.contactForm}>
-            <ContactForm />
+            <ContactForm apply={apply} />
           </div>
         </div>
       </div>

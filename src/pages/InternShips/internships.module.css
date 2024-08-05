@@ -1,0 +1,58 @@
+.internships {
+  margin-top: 5.6rem;
+}
+
+.activePrograms {
+  margin-top: 11rem;
+  padding: 2rem 0;
+}
+
+.activeProgramsTitle {
+  h2 {
+    font-size: 3.2rem;
+    color: var(--color-dark-black);
+  }
+}
+
+.programsGrid {
+  margin-top: 4.2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 28rem), 41.1rem));
+  gap: 3rem;
+  place-content: center;
+}
+
+@media (max-width: 768px) {
+  .activePrograms {
+    margin-top: 5.2rem;
+  }
+
+  .activeProgramsTitle {
+    h2 {
+      font-size: 2.2rem;
+    }
+  }
+
+  .programsGrid {
+    margin-top: 2.4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .programsGrid {
+    div {
+      width: auto;
+      height: 32.3rem;
+
+      a {
+        font-size: 1.2rem;
+        height: 3.9rem;
+        transform: translateY(155%);
+        -webkit-transform: translateY(155%);
+        -moz-transform: translateY(155%);
+        -ms-transform: translateY(155%);
+        -o-transform: translateY(155%);
+      }
+    }
+  }
+}
