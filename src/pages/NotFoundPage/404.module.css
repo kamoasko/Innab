@@ -1,0 +1,49 @@
+.notFound {
+  height: 100vh;
+  width: 100%;
+  display: grid;
+  gap: 1rem;
+  place-items: center;
+
+  h2 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 3.4rem;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+  }
+
+  a {
+    width: 38.6rem;
+    height: 6.2rem;
+  }
+}
+
+.notFoundImg {
+  max-width: 81.6rem;
+  height: 58rem;
+}
+
+@media (max-width: 768px) {
+  .notFound {
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    a {
+      width: 26.3rem;
+      height: 4.9rem;
+    }
+  }
+
+  .notFoundImg {
+    height: 35rem;
+  }
+}
+
+@media (max-width: 374px) {
+  .notFoundImg {
+    height: 26rem;
+  }
+}
