@@ -7,3 +7,11 @@
   font-size: 1.8rem !important;
   line-height: 2.3rem;
 }
+
+@media (max-width: 768px) {
+  .privacyContent {
+    margin-top: 4rem;
+    font-size: 1.4rem !important;
+    line-height: 2.1rem;
+  }
+}
