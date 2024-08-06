@@ -1,0 +1,133 @@
+.career {
+  margin-top: 5.6rem;
+}
+
+.careerWrapper {
+  margin-top: 6rem;
+  width: 100%;
+  gap: 4.1rem;
+}
+
+.careerImg {
+  flex: 2;
+  flex-basis: 12rem;
+}
+
+.careerDetails {
+  gap: 3.2rem;
+  flex: 5;
+
+  h2 {
+    color: var(--color-main);
+    font-size: 4rem;
+  }
+
+  p {
+    font-size: 2rem;
+    line-height: 3.1rem;
+  }
+
+  div {
+    display: none;
+  }
+}
+
+.cw1 {
+  flex-direction: row-reverse;
+}
+
+/* requirements */
+
+.careerRequirements {
+  margin-top: 7.2rem;
+
+  h3 {
+    font-size: 2.6rem;
+    font-weight: 600;
+    color: var(--color-main);
+  }
+
+  ul {
+    margin-top: 3.2rem;
+    gap: 3.2rem;
+    line-height: normal;
+    font-size: 2.6rem;
+
+    li {
+      gap: 2.4rem;
+
+      span {
+        flex: 1;
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .careerWrapper {
+    flex-direction: column;
+  }
+
+  .careerImg {
+    display: none;
+  }
+
+  .careerDetails {
+    div {
+      display: block;
+      height: 40rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .careerWrapper {
+    margin-top: 4rem;
+  }
+
+  .careerDetails {
+    gap: 2.4rem;
+    flex: 1;
+
+    h2 {
+      font-size: 2rem;
+      line-height: normal;
+    }
+
+    p {
+      font-size: 1.4rem;
+      line-height: 2.1rem;
+    }
+  }
+
+  .careerRequirements {
+    margin-top: 4rem;
+
+    h3 {
+      font-size: 1.6rem;
+    }
+
+    ul {
+      margin-top: 1.6rem;
+      gap: 1.4rem;
+      font-size: 1.4rem;
+
+      li {
+        gap: 1.2rem;
+
+        svg {
+          width: 2.4rem;
+          height: 2.4rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .careerDetails {
+    div {
+      height: 24.9rem;
+    }
+  }
+}

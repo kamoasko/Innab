@@ -38,7 +38,12 @@ function App() {
           <Route path="trainings" element={<TrainingsPage />} />
           <Route path="corporative" element={<Corporative />} />
           <Route path="projects" element={<Projects />} />
-          <Route path="career-center" element={<CareerCenter />} />
+          <Route path="career-center">
+            <Route
+              path="employment-or-graduate-project"
+              element={<CareerCenter />}
+            />
+          </Route>
 
           <Route path="useful-for-you">
             <Route path="video-lessons">

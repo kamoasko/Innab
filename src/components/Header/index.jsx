@@ -776,10 +776,20 @@ const Header = ({ partnersRef }) => {
                   )}
                 </NavLink>
               </li>
-              <li>
+              <li className="navbarMenuDy">
                 <NavLink
                   to={"career-center"}
-                  className={openDropdowns[4] ? "opened" : ""}
+                  className={({ isActive }) =>
+                    `${openDropdowns[4] ? "opened" : ""} ${
+                      isDropdownActive([
+                        "/employment-or-graduate-project",
+                        "/issizlikdir",
+                        "/cooperation-with-dma",
+                      ])
+                        ? "active"
+                        : ""
+                    }`
+                  }
                 >
                   Karyera mərkəzi
                   {!openDropdowns[4] ? (
@@ -816,6 +826,25 @@ const Header = ({ partnersRef }) => {
                     </svg>
                   )}
                 </NavLink>
+                <ul
+                  className={`dropdown dy flex justifyContentBetween ${
+                    openDropdowns[4] ? "open" : ""
+                  }`}
+                >
+                  <li>
+                    <Link to={"career-center/employment-or-graduate-project"}>
+                      İşlə təminat və ya məzun layihəsi
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={"career-center/issizlikdir"}>İşSizlikdir</Link>
+                  </li>
+                  <li>
+                    <Link to={"career-center/cooperation-with-dma"}>
+                      DMA ilə əməkdaşlıq
+                    </Link>
+                  </li>
+                </ul>
               </li>
               <li className="navbarMenuDy">
                 <NavLink
