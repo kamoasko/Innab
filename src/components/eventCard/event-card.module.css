@@ -1,0 +1,48 @@
+.eventCard {
+  padding: 2rem;
+  background-color: var(--color-white);
+  border: 0.1rem solid var(--color-card-bg);
+  border-radius: 1.6rem;
+  -webkit-border-radius: 1.6rem;
+  -moz-border-radius: 1.6rem;
+  -ms-border-radius: 1.6rem;
+  -o-border-radius: 1.6rem;
+  box-shadow: 0 0 3.5rem 0 rgba(0, 0, 0, 0.08);
+  gap: 2.8rem;
+}
+
+.eventCardImg {
+  height: 23.6rem;
+  border-radius: 1.2rem;
+  overflow: hidden;
+
+  img {
+    object-position: top;
+  }
+}
+
+.eventCardDet {
+  gap: 1.8rem;
+  font-size: 1.8rem;
+
+  h4 {
+    color: var(--color-main);
+    font-weight: 700;
+  }
+}
+
+@media (max-width: 768px) {
+  .eventCard {
+    padding: 1.6rem;
+    gap: 1.6rem;
+  }
+
+  .eventCardDet {
+    gap: 0.8rem;
+    font-size: 1.6rem;
+
+    h4 {
+      font-size: 1.8rem;
+    }
+  }
+}

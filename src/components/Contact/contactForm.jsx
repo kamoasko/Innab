@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Button from "../Button";
 
-const ContactForm = ({ apply }) => {
+const ContactForm = ({ apply, join }) => {
   const initialValues = apply
     ? {
         name: "",
@@ -441,7 +441,7 @@ const ContactForm = ({ apply }) => {
 
             <Button
               component
-              title={apply ? "Göndər" : "Müraciət et"}
+              title={apply ? "Göndər" : join ? "Təsdiq et" : "Müraciət et"}
               borderRadius={"7rem"}
             />
           </Form>

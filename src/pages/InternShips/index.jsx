@@ -85,7 +85,11 @@ const InternShips = () => {
           </div>
         </div>
       </section>
-      <Contact apply />
+      <Contact
+        apply
+        title={"Sualın var?"}
+        subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
+      />
     </>
   );
 };

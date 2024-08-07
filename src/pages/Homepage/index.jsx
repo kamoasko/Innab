@@ -728,7 +728,10 @@ const Homepage = () => {
       </section>
 
       <Customers homepage />
-      <Contact />
+      <Contact
+        title={"Sualın var?"}
+        subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
+      />
     </>
   );
 };

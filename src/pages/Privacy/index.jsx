@@ -77,7 +77,10 @@ const Privacy = () => {
           </div>
         </div>
       </section>
-      <Contact />
+      <Contact
+        title={"Sualın var?"}
+        subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
+      />
     </>
   );
 };

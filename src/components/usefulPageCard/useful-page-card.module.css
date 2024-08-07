@@ -22,6 +22,7 @@
   .card {
     margin-top: 3.9rem;
     flex-direction: column-reverse;
+    padding: 3rem;
   }
 
   .cardIcon svg {

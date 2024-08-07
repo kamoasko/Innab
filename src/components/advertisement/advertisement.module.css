@@ -1,0 +1,130 @@
+.advertisement {
+  padding: 4.6rem;
+  border-radius: 2.4rem;
+  background-color: var(--color-nav-bg);
+  -webkit-border-radius: 2.4rem;
+  -moz-border-radius: 2.4rem;
+  -ms-border-radius: 2.4rem;
+  -o-border-radius: 2.4rem;
+}
+
+.advertisementDetails {
+  font-size: 2.4rem;
+  flex: 1;
+
+  ul {
+    gap: 4.4rem;
+
+    li {
+      gap: 2.4rem;
+
+      h3 {
+        font-size: 2.4rem;
+        font-weight: 600;
+      }
+
+      div {
+        gap: 3.2rem;
+      }
+    }
+  }
+
+  a {
+    margin-top: 5.2rem;
+    font-size: initial;
+  }
+}
+
+.advertisementimg {
+  height: 50rem;
+  max-width: 56.4rem;
+  flex: 1;
+  border: 0.1rem solid var(--color-main);
+  border-radius: 1.2rem;
+  -webkit-border-radius: 1.2rem;
+  -moz-border-radius: 1.2rem;
+  -ms-border-radius: 1.2rem;
+  -o-border-radius: 1.2rem;
+  position: relative;
+  align-self: center;
+
+  img {
+    object-position: top;
+    border-radius: 1.2rem;
+    -webkit-border-radius: 1.2rem;
+    -moz-border-radius: 1.2rem;
+    -ms-border-radius: 1.2rem;
+    -o-border-radius: 1.2rem;
+  }
+
+  a {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    width: 80%;
+    bottom: 1.6rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .advertisement {
+    flex-direction: column;
+    gap: 2.8rem;
+    align-items: stretch;
+  }
+
+  .advertisementDetails {
+    a {
+      display: none;
+    }
+  }
+
+  .advertisementimg {
+    a {
+      display: flex;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .advertisement {
+    padding: 2rem 1.6rem;
+  }
+
+  .advertisementDetails {
+    font-size: 1.4rem;
+
+    ul {
+      gap: 2.2rem;
+
+      li {
+        gap: 1.4rem;
+
+        h3 {
+          font-size: 1.4rem;
+        }
+      }
+    }
+  }
+
+  .advertisementimg {
+    height: 45rem;
+    flex: auto;
+
+    a {
+      padding: 0.8rem;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .advertisementimg {
+    height: 27rem;
+  }
+}

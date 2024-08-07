@@ -455,8 +455,17 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .pageTitle {
   padding: 3.3rem 0;
-  max-width: 44.5rem;
-  border-bottom: 0.2rem solid var(--color-main);
+  max-width: 54.5rem;
+  position: relative;
+}
+
+.pageTitle::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  background-color: var(--color-main);
+  height: 0.2rem;
+  width: 100%;
 }
 
 /* tabs menu */
@@ -465,6 +474,15 @@ input[type="search"]::-webkit-search-cancel-button {
   margin-top: 6rem;
   gap: 2rem;
   flex-wrap: wrap;
+}
+
+/* advertisement slider */
+.adsSlider {
+  margin-top: 4.2rem;
+}
+
+.adsSlider .swiper-pagination-bullet-active {
+  background-color: var(--color-main);
 }
 
 /* footer */
@@ -822,7 +840,15 @@ footer {
 
   .pageTitle {
     padding: 1.6rem 0;
-    max-width: 55%;
+    /* max-width: 75%; */
+  }
+
+  .pageTitle::after {
+    width: 75%;
+  }
+
+  .adsSlider {
+    margin-top: 2.4rem;
   }
 }
 
@@ -847,6 +873,10 @@ footer {
 }
 
 @media (max-width: 480px) {
+  .pageTitle::after {
+    width: 85%;
+  }
+
   .footerTopWrapper {
     div {
       p {
@@ -912,5 +942,9 @@ footer {
 
   .headerMobileTools {
     gap: 0.5rem;
+  }
+
+  .pageTitle::after {
+    width: 95%;
   }
 }

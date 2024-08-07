@@ -150,7 +150,10 @@ const NewsDetail = () => {
           <Button title={"Hamısına bax"} borderRadius={"6.3rem"} />
         </div>
       </section>
-      <Contact />
+      <Contact
+        title={"Sualın var?"}
+        subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
+      />
     </>
   );
 };

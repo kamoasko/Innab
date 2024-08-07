@@ -1,0 +1,42 @@
+.eventsFirst {
+  margin-top: 5.6rem;
+}
+
+.eventsActive {
+  margin-top: 11rem;
+  padding: 2rem 0;
+}
+
+.eventsTitle {
+  h2 {
+    font-size: 3.2rem;
+    line-height: 2.3rem;
+    color: var(--color-dark-black);
+  }
+}
+
+.lastEvents {
+  margin-top: 11rem;
+  padding: 2rem 0;
+}
+
+.lastEventsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 41rem));
+  gap: 3.3rem;
+  place-content: center;
+  margin-top: 4.2rem;
+}
+
+@media (max-width: 768px) {
+  .eventsTitle {
+    h2 {
+      font-size: 2.2rem;
+    }
+  }
+
+  .lastEventsGrid {
+    gap: 2.4rem;
+    margin-top: 2.4rem;
+  }
+}
