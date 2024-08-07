@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay, Scrollbar } from "swiper/modules";
+import { Autoplay, Scrollbar } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
@@ -29,6 +29,8 @@ import UsefulCard from "../../components/UsefulCard";
 import Customers from "../../components/Customers";
 import Contact from "../../components/Contact";
 import Button from "../../components/Button";
+import CounterSlider from "../../components/sliders/counterSlider";
+import PartnersSlider from "../../components/sliders/partnersSlider";
 
 const statisticsData = [
   { img: stats1, count: 25, label: "Təlim növü", className: "statsCard1" },
@@ -176,56 +178,12 @@ const Homepage = () => {
                   ))}
                 </>
               ) : (
-                <Swiper
-                  spaceBetween={20}
-                  slidesPerView={5}
-                  loop={true}
-                  autoplay={{ delay: 3000 }}
-                  pagination={{ clickable: true }}
-                  modules={[Pagination, Autoplay]}
-                  breakpoints={{
-                    280: {
-                      slidesPerView: 2,
-                    },
-                    330: {
-                      slidesPerView: 3,
-                    },
-                    375: {
-                      slidesPerView: 3,
-                    },
-                    650: {
-                      slidesPerView: 4,
-                    },
-                    820: {
-                      slidesPerView: 5,
-                    },
-                  }}
-                  onInit={onSwiperInit}
-                  onSlideChange={onSlideChange}
-                >
-                  {statisticsData.map((stat, index) => (
-                    <SwiperSlide key={index}>
-                      <div className={`${styles.statisticsCard}`}>
-                        <div>
-                          <img src={stat.img} alt="" />
-                        </div>
-                        <p>
-                          {isVisible ? (
-                            <CountUp
-                              end={stat.count}
-                              duration={2}
-                              formattingFn={formatCount}
-                            />
-                          ) : (
-                            0
-                          )}
-                          +
-                        </p>
-                        <span>{stat.label}</span>
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
+                <CounterSlider
+                  // onSlideChange={onSlideChange}
+                  onSwiperInit={onSwiperInit}
+                  formatCount={formatCount}
+                  isVisible={isVisible}
+                />
               )}
             </div>
           </div>
@@ -616,60 +574,7 @@ const Homepage = () => {
               />
             </div>
           ) : (
-            <Swiper
-              slidesPerView={3}
-              spaceBetween={32}
-              modules={[Autoplay]}
-              autoplay={{ delay: 3000 }}
-              breakpoints={{
-                280: {
-                  slidesPerView: 1,
-                  spaceBetween: 18,
-                },
-                480: {
-                  slidesPerView: 2,
-                },
-                800: {
-                  slidesPerView: 3,
-                },
-              }}
-            >
-              <SwiperSlide>
-                <PartnersCard
-                  cardtTitle={"Technest layihəsi."}
-                  text={
-                    "İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"
-                  }
-                  img={partnerCardBg}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <PartnersCard
-                  cardtTitle={"Technest layihəsi."}
-                  text={
-                    "İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"
-                  }
-                  img={partnerCardBg1}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <PartnersCard
-                  cardtTitle={"Technest layihəsi."}
-                  text={
-                    "İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"
-                  }
-                  img={partnerCardBg2}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <PartnersCard
-                  cardtTitle={"Technest layihəsi."}
-                  text={
-                    "İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"
-                  }
-                />
-              </SwiperSlide>
-            </Swiper>
+            <PartnersSlider />
           )}
         </div>
       </section>
