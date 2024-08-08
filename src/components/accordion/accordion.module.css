@@ -1,0 +1,102 @@
+.accordionTitle {
+  gap: 5.2rem;
+
+  h2 {
+    font-size: 2.2rem;
+  }
+
+  strong {
+    font-weight: 500;
+  }
+}
+
+.description {
+  gap: 3.2rem;
+}
+
+strong {
+  font-size: 2rem;
+}
+
+.accordionBottom {
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 7.2rem;
+  width: 100%;
+
+  > div {
+    flex-basis: 51rem;
+
+    ol {
+      margin-top: 3.2rem;
+      gap: 2.8rem;
+    }
+  }
+}
+
+.accordionEnd {
+  width: 100%;
+  gap: 3rem;
+  flex-wrap: wrap;
+
+  > div {
+    a {
+      font-weight: 600;
+      color: var(--color-main);
+    }
+  }
+
+  a {
+    height: 4.8rem;
+    width: max-content;
+
+    span {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+  }
+}
+
+@media (max-width: 850px) {
+  .accordionEnd {
+    a {
+      width: 100%;
+      height: 4.1rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .accordionTitle {
+    gap: 2.4rem;
+
+    h2 {
+      font-size: 1.8rem;
+    }
+
+    strong {
+      font-size: 1.6rem;
+    }
+  }
+
+  .description {
+    gap: 2rem;
+    font-size: 1.6rem;
+  }
+
+  strong {
+    font-size: 1.6rem;
+  }
+
+  .accordionBottom {
+    margin-top: 3.2rem;
+    gap: 3.2rem;
+
+    > div {
+      ol {
+        margin-top: 2rem;
+      }
+    }
+  }
+}

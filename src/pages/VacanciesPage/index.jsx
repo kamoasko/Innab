@@ -8,7 +8,7 @@ const VacanciesPage = () => {
     <section className={styles.vanancies}>
       <div className="container">
         <PageTitle title={"Vakansiyalar"} />
-        <div className={`${styles.vananciesWrapper} flex flexDirection`}>
+        <div className={`${styles.vananciesWrapper} flex flexDirectionColumn`}>
           <CustomizedAccordions />
         </div>
       </div>

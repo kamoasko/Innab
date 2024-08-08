@@ -2,15 +2,20 @@ import React from "react";
 import "../../general.css";
 import { Link } from "react-router-dom";
 
-const Button = ({ component, title, borderRadius, to, color }) => {
-  const bgColor = color === "orange" ? "var(--color-btn)" : "var(--color-main)";
+const Button = ({ component, title, borderRadius, to, color, onClick }) => {
+  const bgColor =
+    color === "orange"
+      ? "var(--color-btn)"
+      : color === "white"
+      ? "var(--color-white)"
+      : "var(--color-main)";
 
   return (
     <>
       {component ? (
         <button
           className="contactBtn btnHover flexCenter"
-          type="submit"
+          onClick={onClick}
           style={{
             borderRadius: borderRadius,
             backgroundColor: bgColor,
@@ -31,7 +36,9 @@ const Button = ({ component, title, borderRadius, to, color }) => {
           }}
         >
           <span>{title}</span>
-          <div className="btnHoverBg"></div>
+          <div
+            className={color === "white" ? "btnHoverBg btnHB" : "btnHoverBg"}
+          ></div>
         </Link>
       )}
     </>
