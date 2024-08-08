@@ -295,8 +295,12 @@ input[type="search"]::-webkit-search-cancel-button {
   background-color: var(--color-white);
   border-radius: 100%;
   transform: translate(-50%, -50%);
-  transition: 0.3s;
+  transition: 0.2s;
   visibility: hidden;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -o-transition: 0.2s;
 }
 
 .btnHB {

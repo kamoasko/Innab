@@ -12,10 +12,10 @@
 
 .description {
   gap: 3.2rem;
-}
 
-strong {
-  font-size: 2rem;
+  strong {
+    font-size: 2rem;
+  }
 }
 
 .accordionBottom {
@@ -40,10 +40,16 @@ strong {
   flex-wrap: wrap;
 
   > div {
+    font-size: 2rem;
+
     a {
       font-weight: 600;
       color: var(--color-main);
     }
+  }
+
+  strong {
+    font-size: 2rem;
   }
 
   a {
@@ -96,6 +102,16 @@ strong {
     > div {
       ol {
         margin-top: 2rem;
+      }
+    }
+  }
+
+  .accordionEnd {
+    > div {
+      font-size: 1.6rem;
+
+      strong {
+        font-size: 1.6rem;
       }
     }
   }
