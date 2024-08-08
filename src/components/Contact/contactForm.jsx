@@ -154,7 +154,7 @@ const ContactForm = ({ apply, join }) => {
                     Telefon nömrəsi <small>*</small>
                   </label>
                   <Field
-                    type="phone"
+                    type="tel"
                     id="phone"
                     name="phone"
                     placeholder="(99) - 999 - 99 - 99"

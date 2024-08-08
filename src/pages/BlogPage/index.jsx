@@ -101,8 +101,12 @@ const BlogPage = () => {
         </div>
       </section>
       <Contact
+        apply
         title={"Sualın var?"}
-        subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
+        subTitle={[
+          "Hardan başlamaqda tərəddüd edirsənsə ",
+          <strong>bizə zəng elə</strong>,
+        ]}
       />
     </>
   );

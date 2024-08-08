@@ -46,7 +46,8 @@
     letter-spacing: -0.48px;
     margin-left: 4.4rem;
 
-    span {
+    strong {
+      font-weight: 800;
       color: var(--color-main);
     }
   }

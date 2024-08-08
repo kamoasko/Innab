@@ -73,7 +73,10 @@ const VideoLessons = () => {
 
       <Contact
         title={"Sualın var?"}
-        subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
+        subTitle={[
+          "Hardan başlamaqda tərəddüd edirsənsə ",
+          <strong>bizə zəng elə</strong>,
+        ]}
       />
     </>
   );
