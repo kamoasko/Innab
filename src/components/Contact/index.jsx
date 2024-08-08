@@ -9,7 +9,11 @@ const Contact = ({ apply, join, title, subTitle }) => {
       <div className="container">
         <div className={`${styles.contactWrapper} flex justifyContentBetween`}>
           <div className={styles.contactContent}>
-            <div className={`${styles.contactTitle} flex flexDirectionColumn`}>
+            <div
+              className={`${styles.contactTitle} ${
+                join ? styles.cti : ""
+              } flex flexDirectionColumn`}
+            >
               <h2>{title}</h2>
               <p>{subTitle}</p>
             </div>

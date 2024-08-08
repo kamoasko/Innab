@@ -52,6 +52,14 @@
   }
 }
 
+.cti {
+  h2 {
+    &::after {
+      content: none;
+    }
+  }
+}
+
 .contactDetails {
   margin-top: 3.5rem;
   color: var(--color-black);
@@ -258,6 +266,12 @@ form {
   }
 }
 
+.fge {
+  input[type="email"] {
+    max-width: 27.73rem;
+  }
+}
+
 .adress {
   input[type="text"] {
     color: var(--color-light-black);
@@ -311,6 +325,26 @@ form {
 
 /* responsive */
 
+@media (max-width: 1100px) {
+  .contactTitle {
+    gap: 0.8rem;
+
+    h2 {
+      font-size: 3.6rem;
+      width: max-content;
+
+      &::after {
+        width: 62.91%;
+      }
+    }
+
+    p {
+      font-size: 2.8rem;
+      margin-left: 2.5rem;
+    }
+  }
+}
+
 @media (max-width: 992px) {
   .contactWrapper {
     flex-direction: column;
@@ -318,9 +352,21 @@ form {
 }
 
 @media (max-width: 768px) {
+  form {
+    button {
+      height: 4.9rem;
+    }
+  }
+
   .contactFormDivider {
     flex-direction: column;
     gap: 2.8rem;
+  }
+
+  .fge {
+    input[type="email"] {
+      max-width: unset;
+    }
   }
 }
 
@@ -333,7 +379,6 @@ form {
       font-weight: 300;
       line-height: normal;
       width: max-content;
-      position: relative;
 
       &::after {
         width: 62.91%;
@@ -354,7 +399,6 @@ form {
 
     > button {
       margin-top: 4rem;
-      height: 4.9rem;
     }
   }
 

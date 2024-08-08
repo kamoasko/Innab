@@ -19,6 +19,13 @@ const ContactForm = ({ apply, join }) => {
         address: "",
         cv: null,
       }
+    : join
+    ? {
+        name: "",
+        phone: "",
+        email: "",
+        training: "",
+      }
     : {
         name: "",
         phone: "",
@@ -29,7 +36,7 @@ const ContactForm = ({ apply, join }) => {
 
   const validationSchema = apply
     ? Yup.object({
-        name: Yup.string().required("Ad və Soyad tələb olunur"),
+        name: Yup.string().required("Ad, Soyad və Ata adi tələb olunur"),
         fin: Yup.string().required("FIN tələb olunur"),
         date: Yup.date().required("Doğum tarixi tələb olunur"),
         phone: Yup.string().required("Telefon nömrəsi tələb olunur"),
@@ -40,6 +47,11 @@ const ContactForm = ({ apply, join }) => {
         voen: Yup.string().required("VÖEN tələb olunur"),
         address: Yup.string().required("Ünvan tələb olunur"),
         cv: Yup.mixed().required("CV tələb olunur"),
+      })
+    : join
+    ? Yup.object({
+        name: Yup.string().required("Ad və Soyad tələb olunur"),
+        phone: Yup.string().required("Telefon nömrəsi tələb olunur"),
       })
     : Yup.object({
         name: Yup.string().required("Ad və Soyad tələb olunur"),
@@ -60,7 +72,7 @@ const ContactForm = ({ apply, join }) => {
         {({ setFieldValue }) => (
           <Form>
             <div
-              className={`flex alignItemsCenter justifyContentBetween ${styles.contactFormDivider}`}
+              className={`flex justifyContentBetween ${styles.contactFormDivider}`}
             >
               <div className={`${styles.formGroup} flex flexDirectionColumn`}>
                 <label htmlFor="name">
@@ -104,7 +116,7 @@ const ContactForm = ({ apply, join }) => {
             </div>
 
             <div
-              className={`flex alignItemsCenter justifyContentBetween ${styles.contactFormDivider}`}
+              className={`flex justifyContentBetween ${styles.contactFormDivider}`}
             >
               {apply ? (
                 <div className={`${styles.formGroup} flex flexDirectionColumn`}>
@@ -114,6 +126,8 @@ const ContactForm = ({ apply, join }) => {
                   <Field type="date" id="date" name="date" />
                   <ErrorMessage name="date" component="div" className="error" />
                 </div>
+              ) : join ? (
+                ""
               ) : (
                 <div className={`${styles.formGroup} flex flexDirectionColumn`}>
                   <label>Müraciət formanız</label>
@@ -140,7 +154,7 @@ const ContactForm = ({ apply, join }) => {
                     Telefon nömrəsi <small>*</small>
                   </label>
                   <Field
-                    type="tel"
+                    type="phone"
                     id="phone"
                     name="phone"
                     placeholder="(99) - 999 - 99 - 99"
@@ -152,7 +166,11 @@ const ContactForm = ({ apply, join }) => {
                   />
                 </div>
               ) : (
-                <div className={`${styles.formGroup} flex flexDirectionColumn`}>
+                <div
+                  className={`${styles.formGroup} ${
+                    join ? styles.fge : ""
+                  } flex flexDirectionColumn`}
+                >
                   <label htmlFor="email">E-poçt</label>
                   <Field
                     type="email"

@@ -11,8 +11,6 @@ import eventCardImg from "../../assets/images/advertisement/event-card.png";
 import Contact from "../../components/Contact";
 
 const SeminarWebinar = () => {
-  const span = <span>dəvət edək</span>;
-
   return (
     <>
       <section className={styles.eventsFirst}>
@@ -120,7 +118,10 @@ const SeminarWebinar = () => {
       <Contact
         join
         title={"Növbəti tədbirdə xəbər edək?"}
-        subTitle={`Formu doldur, növbəti tədbirlərə səni də ${span}`}
+        subTitle={[
+          "Formu doldur, növbəti tədbirlərə səni də ",
+          <span>dəvət edək</span>,
+        ]}
       />
     </>
   );

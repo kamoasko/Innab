@@ -571,7 +571,6 @@ footer {
 
   .contactBtn {
     width: 12.4rem;
-    font-size: 1.4rem;
   }
 }
 
@@ -831,6 +830,10 @@ footer {
 
   .customBtn {
     display: none;
+  }
+
+  .contactBtn {
+    font-size: 1.4rem;
   }
 
   .tabsMenu {
