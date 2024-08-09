@@ -274,7 +274,7 @@ input[type="search"]::-webkit-search-cancel-button {
   font-family: var(--main-font);
   position: relative;
   font-weight: 600;
-  width: 18.4rem;
+  width: 18.4rem; 
   background-color: var(--color-btn);
   border: 0.1rem solid;
   color: var(--color-white);
@@ -333,11 +333,23 @@ input[type="search"]::-webkit-search-cancel-button {
   }
 }
 
-.MuiAccordionSummary-expandIconWrapper {
+.vacancyW .MuiAccordionSummary-expandIconWrapper {
   svg {
     width: 3.2rem;
     height: 3.2rem;
   }
+}
+
+.educationT .MuiAccordionSummary-expandIconWrapper {
+  svg {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.educationT .MuiAccordionSummary-root,
+.educationT .MuiAccordionDetails-root {
+  padding: 0;
 }
 
 .MuiAccordionActions-root {
@@ -900,8 +912,16 @@ footer {
     margin-top: 2.4rem;
   }
 
-  .MuiAccordion-root {
+  .vacancyW .MuiAccordion-root {
     padding: 1rem !important;
+  }
+
+  .educationT .MuiAccordion-root {
+    padding: 1rem 0;
+  }
+
+  .educationT .MuiTypography-root {
+    font-size: 1.4rem;
   }
 }
 

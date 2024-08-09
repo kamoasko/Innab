@@ -6,6 +6,14 @@ import { FaArrowRight, FaMinus, FaPlus } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import trainingImg from "../../assets/images/trainings/training.png";
 import Button from "../../components/Button";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Typography,
+} from "@mui/material";
+import CustomExpandIcon from "../../components/accordion/customExpandIcon";
+import room from "../../assets/images/trainings/room.jpeg";
 
 const TrainingsPage = () => {
   const [trainingMenu, setTraininMenu] = useState(false);
@@ -169,6 +177,7 @@ const TrainingsPage = () => {
       <section className={styles.education}>
         <div className="container">
           <div className={`${styles.educationWrapper} flex`}>
+            <div className={styles.educationLeftBg}></div>
             <div className={styles.educationLeft}>
               <h2>
                 <strong>Tədris</strong> mövzuları
@@ -208,8 +217,253 @@ const TrainingsPage = () => {
               </div>
             </div>
             <div
-              className={`${styles.educationTopics} flex flexDirectionColumn`}
-            ></div>
+              className={`${styles.educationTopics} educationT flex flexDirectionColumn`}
+            >
+              <Accordion
+                sx={{
+                  width: "100%",
+                  padding: "2.3rem 0",
+                  backgroundColor: "inherit",
+                  boxShadow: "none",
+                  borderBottom: "0.1rem solid var(--color-gray)",
+                  borderRadius: "0 !important",
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<CustomExpandIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography
+                    sx={{
+                      color: "var(--color-light-black)",
+                      fontSize: "2rem",
+                      lineHeight: "1.8rem",
+                      fontWeight: "600",
+                      fontFamily: "inherit",
+                    }}
+                  >
+                    Biznes üçün Excel
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography
+                    sx={{
+                      fontSize: "1.8rem",
+                      fontWeight: "400",
+                      fontFamily: "inherit",
+                      color: "var(--color-light-black)",
+                    }}
+                  >
+                    Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və
+                    vizuallaşdırılmasını daha az zamanda və daha peşəkar formada
+                    icra edə biləcəksiniz. 
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion
+                sx={{
+                  width: "100%",
+                  padding: "2.3rem 0",
+                  backgroundColor: "inherit",
+                  boxShadow: "none",
+                  borderBottom: "0.1rem solid var(--color-gray)",
+                  borderRadius: "0 !important",
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<CustomExpandIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography
+                    sx={{
+                      color: "var(--color-light-black)",
+                      fontSize: "2rem",
+                      lineHeight: "1.8rem",
+                      fontWeight: "600",
+                      fontFamily: "inherit",
+                    }}
+                  >
+                    Biznes üçün Excel
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography
+                    sx={{
+                      fontSize: "1.8rem",
+                      fontWeight: "400",
+                      fontFamily: "inherit",
+                      color: "var(--color-light-black)",
+                    }}
+                  >
+                    Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və
+                    vizuallaşdırılmasını daha az zamanda və daha peşəkar formada
+                    icra edə biləcəksiniz. 
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion
+                sx={{
+                  width: "100%",
+                  padding: "2.3rem 0",
+                  backgroundColor: "inherit",
+                  boxShadow: "none",
+                  borderBottom: "0.1rem solid var(--color-gray)",
+                  borderRadius: "0 !important",
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<CustomExpandIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography
+                    sx={{
+                      color: "var(--color-light-black)",
+                      fontSize: "2rem",
+                      lineHeight: "1.8rem",
+                      fontWeight: "600",
+                      fontFamily: "inherit",
+                    }}
+                  >
+                    Biznes üçün Excel
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography
+                    sx={{
+                      fontSize: "1.8rem",
+                      fontWeight: "400",
+                      fontFamily: "inherit",
+                      color: "var(--color-light-black)",
+                    }}
+                  >
+                    Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və
+                    vizuallaşdırılmasını daha az zamanda və daha peşəkar formada
+                    icra edə biləcəksiniz. 
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion
+                sx={{
+                  width: "100%",
+                  padding: "2.3rem 0",
+                  backgroundColor: "inherit",
+                  boxShadow: "none",
+                  borderBottom: "0.1rem solid var(--color-gray)",
+                  borderRadius: "0 !important",
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<CustomExpandIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography
+                    sx={{
+                      color: "var(--color-light-black)",
+                      fontSize: "2rem",
+                      lineHeight: "1.8rem",
+                      fontWeight: "600",
+                      fontFamily: "inherit",
+                    }}
+                  >
+                    Biznes üçün Excel
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography
+                    sx={{
+                      fontSize: "1.8rem",
+                      fontWeight: "400",
+                      fontFamily: "inherit",
+                      color: "var(--color-light-black)",
+                    }}
+                  >
+                    Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və
+                    vizuallaşdırılmasını daha az zamanda və daha peşəkar formada
+                    icra edə biləcəksiniz. 
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+              <Accordion
+                sx={{
+                  width: "100%",
+                  padding: "2.3rem 0",
+                  backgroundColor: "inherit",
+                  boxShadow: "none",
+                  borderBottom: "0.1rem solid var(--color-gray)",
+                  borderRadius: "0 !important",
+                }}
+              >
+                <AccordionSummary
+                  expandIcon={<CustomExpandIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography
+                    sx={{
+                      color: "var(--color-light-black)",
+                      fontSize: "2rem",
+                      lineHeight: "1.8rem",
+                      fontWeight: "600",
+                      fontFamily: "inherit",
+                    }}
+                  >
+                    Biznes üçün Excel
+                  </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography
+                    sx={{
+                      fontSize: "1.8rem",
+                      fontWeight: "400",
+                      fontFamily: "inherit",
+                      color: "var(--color-light-black)",
+                    }}
+                  >
+                    Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və
+                    vizuallaşdırılmasını daha az zamanda və daha peşəkar formada
+                    icra edə biləcəksiniz. 
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className={styles.rooms}>
+        <div className="container">
+          <div className={styles.roomsTitle}>
+            <h2>Dərs alacağın otaqlar</h2>
+          </div>
+          <div className={styles.roomsGrid}>
+            <article className={styles.roomsCard}>
+              <picture>
+                <img src={room} alt="" />
+              </picture>
+            </article>
+            <article className={styles.roomsCard}>
+              <picture>
+                <img src={room} alt="" />
+              </picture>
+            </article>
+            <article className={styles.roomsCard}>
+              <picture>
+                <img src={room} alt="" />
+              </picture>
+            </article>
+            <article className={styles.roomsCard}>
+              <picture>
+                <img src={room} alt="" />
+              </picture>
+            </article>
+            <article className={styles.roomsCard}>
+              <picture>
+                <img src={room} alt="" />
+              </picture>
+            </article>
           </div>
         </div>
       </section>

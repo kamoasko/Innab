@@ -4,36 +4,11 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AccordionActions, Box } from "@mui/material";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 import Button from "../Button";
 import { Link } from "react-router-dom";
-
-const CustomExpandIcon = () => {
-  return (
-    <Box
-      sx={{
-        ".Mui-expanded & > .collapsIconWrapper": {
-          display: "none",
-        },
-        ".expandIconWrapper": {
-          display: "none",
-        },
-        ".Mui-expanded & > .expandIconWrapper": {
-          display: "block",
-        },
-      }}
-    >
-      <div className="expandIconWrapper" style={{ color: "var(--color-main)" }}>
-        <FaMinus />
-      </div>
-      <div className="collapsIconWrapper">
-        <FaPlus />
-      </div>
-    </Box>
-  );
-};
+import CustomExpandIcon from "./customExpandIcon";
 
 export default function CustomizedAccordions() {
   return (
