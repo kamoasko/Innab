@@ -3,11 +3,15 @@ import styles from "./contact.module.css";
 import ContactForm from "./contactForm";
 import ContactDetails from "../contactDetails";
 
-const Contact = ({ apply, join, title, subTitle }) => {
+const Contact = ({ apply, join, title, subTitle, training }) => {
   return (
     <section className={styles.contact}>
       <div className="container">
-        <div className={`${styles.contactWrapper} flex justifyContentBetween`}>
+        <div
+          className={`${styles.contactWrapper} ${
+            training ? styles.contactTraning : ""
+          } flex justifyContentBetween`}
+        >
           <div className={styles.contactContent}>
             <div
               className={`${styles.contactTitle} ${

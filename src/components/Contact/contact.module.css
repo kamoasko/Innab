@@ -8,6 +8,14 @@
   gap: 5.9rem;
 }
 
+.contactTraning {
+  flex-direction: column;
+
+  .contactDetails {
+    display: none;
+  }
+}
+
 .contactContent {
   flex: 2;
 }

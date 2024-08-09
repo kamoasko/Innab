@@ -274,7 +274,7 @@ input[type="search"]::-webkit-search-cancel-button {
   font-family: var(--main-font);
   position: relative;
   font-weight: 600;
-  width: 18.4rem; 
+  width: 18.4rem;
   background-color: var(--color-btn);
   border: 0.1rem solid;
   color: var(--color-white);
@@ -327,6 +327,18 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 /* accordion */
+.MuiPaper-root.Mui-expanded {
+  margin: 0 !important;
+}
+
+.MuiPaper-root::before {
+  content: none !important;
+}
+
+.MuiAccordionSummary-root {
+  padding: 0 !important;
+}
+
 .MuiAccordionSummary-content.Mui-expanded {
   p {
     color: var(--color-main);
@@ -628,7 +640,7 @@ footer {
   }
 
   .contactBtn {
-    width: 12.4rem;
+    width: 14.4rem;
   }
 }
 
@@ -922,6 +934,14 @@ footer {
 
   .educationT .MuiTypography-root {
     font-size: 1.4rem;
+  }
+
+  .footerTop {
+    padding: 3.2rem 0;
+  }
+
+  .footerCopy {
+    padding: 1.5rem 0;
   }
 }
 

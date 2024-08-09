@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./trainings.module.css";
 import PageTitle from "../../components/pageTitle";
 import Tabs from "../../components/tabs";
@@ -6,22 +6,12 @@ import { FaArrowRight, FaMinus, FaPlus } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import trainingImg from "../../assets/images/trainings/training.png";
 import Button from "../../components/Button";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Typography,
-} from "@mui/material";
-import CustomExpandIcon from "../../components/accordion/customExpandIcon";
 import room from "../../assets/images/trainings/room.jpeg";
+import Contact from "../../components/Contact";
+import AccordionSecond from "../../components/customAccrodionSecond";
+import TrainingsMenu from "../../components/trainingsMenu";
 
 const TrainingsPage = () => {
-  const [trainingMenu, setTraininMenu] = useState(false);
-
-  const openTrainingMenu = () => {
-    setTraininMenu((prev) => !prev);
-  };
-
   const menus = [
     "Data analitika",
     "Mühasibatlıq",
@@ -38,6 +28,7 @@ const TrainingsPage = () => {
           <PageTitle title={"Təlimlər"} />
         </div>
       </div>
+
       <section className={styles.training}>
         <div className="container">
           <ul className="flex alignItemsCenter tabsMenu">
@@ -60,57 +51,7 @@ const TrainingsPage = () => {
             </div>
           </div>
           <div className={`${styles.trainingWrapper} flex`}>
-            <ul
-              className={`${styles.trainingMenu} trainingMenu flex flexDirectionColumn`}
-            >
-              <li className={trainingMenu ? "opened" : ""}>
-                <div
-                  onClick={openTrainingMenu}
-                  className="flex alignItemsCenter"
-                >
-                  Data analitika {trainingMenu ? <FaMinus /> : <FaPlus />}
-                </div>
-                <ul className="flex flexDirectionColumn">
-                  <li>
-                    <Link>Data analitika</Link>
-                  </li>
-                  <li>
-                    <Link>Data analitika</Link>
-                  </li>
-                  <li>
-                    <Link>Data analitika</Link>
-                  </li>
-                  <li>
-                    <Link>Data analitika</Link>
-                  </li>
-                  <li>
-                    <Link>Data analitika</Link>
-                  </li>
-                  <li>
-                    <Link>Data analitika</Link>
-                  </li>
-                </ul>
-              </li>
-              <li className={trainingMenu ? "opened" : ""}>
-                <div
-                  onClick={openTrainingMenu}
-                  className="flex alignItemsCenter"
-                >
-                  Kompüter bacarıqları {trainingMenu ? <FaMinus /> : <FaPlus />}
-                </div>
-                <ul className="flex flexDirectionColumn">
-                  <li>
-                    <Link>Data analitika</Link>
-                  </li>
-                  <li>
-                    <Link>Data analitika</Link>
-                  </li>
-                  <li>
-                    <Link>Data analitika</Link>
-                  </li>
-                </ul>
-              </li>
-            </ul>
+            <TrainingsMenu />
             <div className={`${styles.trainingAbout} flex`}>
               <div className={styles.trainingAboutImg}>
                 <img src={trainingImg} alt="" />
@@ -174,6 +115,7 @@ const TrainingsPage = () => {
           </div>
         </div>
       </section>
+
       <section className={styles.education}>
         <div className="container">
           <div className={`${styles.educationWrapper} flex`}>
@@ -219,220 +161,29 @@ const TrainingsPage = () => {
             <div
               className={`${styles.educationTopics} educationT flex flexDirectionColumn`}
             >
-              <Accordion
-                sx={{
-                  width: "100%",
-                  padding: "2.3rem 0",
-                  backgroundColor: "inherit",
-                  boxShadow: "none",
-                  borderBottom: "0.1rem solid var(--color-gray)",
-                  borderRadius: "0 !important",
-                }}
-              >
-                <AccordionSummary
-                  expandIcon={<CustomExpandIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography
-                    sx={{
-                      color: "var(--color-light-black)",
-                      fontSize: "2rem",
-                      lineHeight: "1.8rem",
-                      fontWeight: "600",
-                      fontFamily: "inherit",
-                    }}
-                  >
-                    Biznes üçün Excel
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography
-                    sx={{
-                      fontSize: "1.8rem",
-                      fontWeight: "400",
-                      fontFamily: "inherit",
-                      color: "var(--color-light-black)",
-                    }}
-                  >
-                    Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və
-                    vizuallaşdırılmasını daha az zamanda və daha peşəkar formada
-                    icra edə biləcəksiniz. 
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-              <Accordion
-                sx={{
-                  width: "100%",
-                  padding: "2.3rem 0",
-                  backgroundColor: "inherit",
-                  boxShadow: "none",
-                  borderBottom: "0.1rem solid var(--color-gray)",
-                  borderRadius: "0 !important",
-                }}
-              >
-                <AccordionSummary
-                  expandIcon={<CustomExpandIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography
-                    sx={{
-                      color: "var(--color-light-black)",
-                      fontSize: "2rem",
-                      lineHeight: "1.8rem",
-                      fontWeight: "600",
-                      fontFamily: "inherit",
-                    }}
-                  >
-                    Biznes üçün Excel
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography
-                    sx={{
-                      fontSize: "1.8rem",
-                      fontWeight: "400",
-                      fontFamily: "inherit",
-                      color: "var(--color-light-black)",
-                    }}
-                  >
-                    Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və
-                    vizuallaşdırılmasını daha az zamanda və daha peşəkar formada
-                    icra edə biləcəksiniz. 
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-              <Accordion
-                sx={{
-                  width: "100%",
-                  padding: "2.3rem 0",
-                  backgroundColor: "inherit",
-                  boxShadow: "none",
-                  borderBottom: "0.1rem solid var(--color-gray)",
-                  borderRadius: "0 !important",
-                }}
-              >
-                <AccordionSummary
-                  expandIcon={<CustomExpandIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography
-                    sx={{
-                      color: "var(--color-light-black)",
-                      fontSize: "2rem",
-                      lineHeight: "1.8rem",
-                      fontWeight: "600",
-                      fontFamily: "inherit",
-                    }}
-                  >
-                    Biznes üçün Excel
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography
-                    sx={{
-                      fontSize: "1.8rem",
-                      fontWeight: "400",
-                      fontFamily: "inherit",
-                      color: "var(--color-light-black)",
-                    }}
-                  >
-                    Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və
-                    vizuallaşdırılmasını daha az zamanda və daha peşəkar formada
-                    icra edə biləcəksiniz. 
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-              <Accordion
-                sx={{
-                  width: "100%",
-                  padding: "2.3rem 0",
-                  backgroundColor: "inherit",
-                  boxShadow: "none",
-                  borderBottom: "0.1rem solid var(--color-gray)",
-                  borderRadius: "0 !important",
-                }}
-              >
-                <AccordionSummary
-                  expandIcon={<CustomExpandIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography
-                    sx={{
-                      color: "var(--color-light-black)",
-                      fontSize: "2rem",
-                      lineHeight: "1.8rem",
-                      fontWeight: "600",
-                      fontFamily: "inherit",
-                    }}
-                  >
-                    Biznes üçün Excel
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography
-                    sx={{
-                      fontSize: "1.8rem",
-                      fontWeight: "400",
-                      fontFamily: "inherit",
-                      color: "var(--color-light-black)",
-                    }}
-                  >
-                    Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və
-                    vizuallaşdırılmasını daha az zamanda və daha peşəkar formada
-                    icra edə biləcəksiniz. 
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-              <Accordion
-                sx={{
-                  width: "100%",
-                  padding: "2.3rem 0",
-                  backgroundColor: "inherit",
-                  boxShadow: "none",
-                  borderBottom: "0.1rem solid var(--color-gray)",
-                  borderRadius: "0 !important",
-                }}
-              >
-                <AccordionSummary
-                  expandIcon={<CustomExpandIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                >
-                  <Typography
-                    sx={{
-                      color: "var(--color-light-black)",
-                      fontSize: "2rem",
-                      lineHeight: "1.8rem",
-                      fontWeight: "600",
-                      fontFamily: "inherit",
-                    }}
-                  >
-                    Biznes üçün Excel
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography
-                    sx={{
-                      fontSize: "1.8rem",
-                      fontWeight: "400",
-                      fontFamily: "inherit",
-                      color: "var(--color-light-black)",
-                    }}
-                  >
-                    Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və
-                    vizuallaşdırılmasını daha az zamanda və daha peşəkar formada
-                    icra edə biləcəksiniz. 
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
+              <AccordionSecond
+                summary={"Python ilə data analitika"}
+                details={
+                  "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
+                }
+              />
+              <AccordionSecond
+                summary={"Python ilə data analitika"}
+                details={
+                  "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
+                }
+              />
+              <AccordionSecond
+                summary={"Python ilə data analitika"}
+                details={
+                  "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
+                }
+              />
             </div>
           </div>
         </div>
       </section>
+
       <section className={styles.rooms}>
         <div className="container">
           <div className={styles.roomsTitle}>
@@ -466,6 +217,58 @@ const TrainingsPage = () => {
             </article>
           </div>
         </div>
+      </section>
+
+      <section className={`${styles.faqContact} flex`}>
+        <div className={styles.faq}>
+          <div className={styles.faqTitle}>
+            <h2>Tez-tez verilən suallar</h2>
+          </div>
+          <div className={styles.faqWrapper}>
+            <AccordionSecond
+              summary={"Data analitika kursunda ilkin tələblər nələrdir?"}
+              details={
+                "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
+              }
+            />
+            <AccordionSecond
+              summary={"Data analitika kursunda ilkin tələblər nələrdir?"}
+              details={
+                "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
+              }
+            />
+            <AccordionSecond
+              summary={"Data analitika kursunda ilkin tələblər nələrdir?"}
+              details={
+                "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
+              }
+            />
+            <AccordionSecond
+              summary={"Data analitika kursunda ilkin tələblər nələrdir?"}
+              details={
+                "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
+              }
+            />
+            <AccordionSecond
+              summary={"Data analitika kursunda ilkin tələblər nələrdir?"}
+              details={
+                "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
+              }
+            />
+          </div>
+        </div>
+        <div className={styles.faqTraininMenu}>
+          <h2>Digər təlimlər</h2>
+          <TrainingsMenu />
+        </div>
+        <Contact
+          training
+          title={"Sualın var?"}
+          subTitle={[
+            "Hardan başlamaqda tərəddüd edirsənsə ",
+            <strong>bizə zəng elə</strong>,
+          ]}
+        />
       </section>
     </>
   );

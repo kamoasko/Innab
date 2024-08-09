@@ -26,36 +26,6 @@
   gap: 5rem;
 }
 
-.trainingMenu {
-  gap: 1.6rem;
-
-  > li {
-    width: max-content;
-    padding: 1.6rem 2rem;
-    height: 5.5rem;
-    overflow: hidden;
-    border-radius: 6rem;
-    border: 0.1rem solid var(--color-main);
-    transition: 0.3s;
-    -webkit-transition: 0.3s;
-    -moz-transition: 0.3s;
-    -ms-transition: 0.3s;
-    -o-transition: 0.3s;
-
-    div {
-      gap: 2rem;
-      cursor: pointer;
-      font-weight: 700;
-    }
-
-    ul {
-      margin-top: 2rem;
-      line-height: 2.6rem;
-      letter-spacing: 0.016rem;
-    }
-  }
-}
-
 .trainingAbout {
   flex-wrap: wrap;
   gap: 5rem 3.2rem;
@@ -243,6 +213,58 @@
   outline: 0.6rem solid var(--color-main);
 }
 
+/* faq contact */
+
+.faqContact {
+  margin-top: 13rem;
+  gap: 3.6rem;
+
+  > * {
+    flex: 1;
+  }
+
+  section {
+    margin-top: 0;
+    padding: 3.2rem 7.2rem 3.2rem 3.2rem;
+    width: 100%;
+
+    > div {
+      margin: 0;
+      width: 100%;
+    }
+  }
+}
+
+.faq {
+  padding: 3.2rem 2.6rem 3.2rem 7.2rem;
+  background-color: var(--color-bg);
+}
+
+.faqTitle {
+  text-align: center;
+
+  h2 {
+    font-size: 3.2rem;
+  }
+}
+
+.faqWrapper {
+  margin-top: 4rem;
+}
+
+.faqTraininMenu {
+  display: none;
+  text-align: center;
+
+  h2 {
+    font-size: 2.2rem;
+  }
+
+  ul {
+    margin-top: 2.4rem;
+  }
+}
+
 /* responsive */
 
 @media (max-width: 1200px) {
@@ -257,6 +279,14 @@
     a {
       width: 18.4rem;
     }
+  }
+}
+
+@media (max-width: 1100px) {
+  .faqContact {
+    margin-top: 7.2rem;
+    flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -306,17 +336,9 @@
     > .trainingMenu {
       display: none;
     }
-  }
 
-  .trainingMenu {
-    li {
-      > div {
-        font-size: 1.4rem;
-      }
-
-      ul {
-        font-size: 1.4rem;
-      }
+    > ul {
+      display: none;
     }
   }
 
@@ -375,6 +397,10 @@
     padding: 1.6rem 0;
   }
 
+  .educationWrapper {
+    gap: 4rem;
+  }
+
   .educationLeftBg {
     height: 7.1rem;
   }
@@ -382,6 +408,11 @@
   .educationLeft {
     h2 {
       font-size: 2.4rem;
+      line-height: 2rem;
+    }
+
+    > div {
+      margin-left: 0;
     }
   }
 
@@ -389,6 +420,7 @@
     margin-top: 1rem;
     font-size: 1.6rem;
     line-height: 2rem;
+    margin-left: 9rem;
   }
 
   .educationLeftBtns {
@@ -424,6 +456,30 @@
 
   .roomsGrid {
     margin-top: 2.4rem;
+  }
+
+  .faqContact {
+    section {
+      padding: 3.2rem 2rem;
+    }
+  }
+
+  .faq {
+    padding: 1.6rem 2rem;
+  }
+
+  .faqTitle {
+    h2 {
+      font-size: 2.2rem;
+    }
+  }
+
+  .faqWrapper {
+    margin-top: 3.2rem;
+  }
+
+  .faqTraininMenu {
+    display: block;
   }
 }
 
