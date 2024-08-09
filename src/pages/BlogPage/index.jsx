@@ -95,6 +95,7 @@ const BlogPage = () => {
                 title={post.title}
                 det={post.det}
                 className={getCardClass(index)}
+                to={"1"}
               />
             ))}
           </div>

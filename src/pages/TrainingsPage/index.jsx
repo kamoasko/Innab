@@ -23,7 +23,7 @@ const TrainingsPage = () => {
 
   return (
     <>
-      <div className={styles.pageHeading}>
+      <div className="pageTop">
         <div className="container">
           <PageTitle title={"Təlimlər"} />
         </div>

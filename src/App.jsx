@@ -48,11 +48,17 @@ function App() {
           <Route path="useful-for-you">
             <Route path="video-lessons">
               <Route index element={<VideoLessons />} />
-              <Route path=":id" element={<DetailPage />} />
+              <Route
+                path=":id"
+                element={<DetailPage pageTitle={"Video dərslər"} />}
+              />
             </Route>
             <Route path="blog">
               <Route index element={<BlogPage />} />
-              <Route path=":id" element={<DetailPage />} />
+              <Route
+                path=":id"
+                element={<DetailPage pageTitle={"Bloq"} blog />}
+              />
             </Route>
             <Route path="career-calculator" element={<CareerCalculator />} />
             <Route path="seminar-and-webinar" element={<SeminarWebinar />} />

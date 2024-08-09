@@ -5,6 +5,7 @@ import Tabs from "../../components/tabs";
 import VideoLessonCard from "../../components/videoLessonCard";
 import videoImg from "../../assets/images/videoLessons/video-lesson.jpeg";
 import Contact from "../../components/Contact";
+import { Outlet } from "react-router";
 
 const VideoLessons = () => {
   const menus = [
@@ -31,6 +32,7 @@ const VideoLessons = () => {
               det={
                 "Exceli A-dan Z-ə öyrən.Excel, Paste Special: Values, Formulas, Formats, Comments Excel kursları zamanı 100-dən çox praktiki test ilə bilik və barcarıqlarınız yoxlanılacaq."
               }
+              to={"1"}
             />
             <VideoLessonCard
               img={videoImg}
@@ -78,6 +80,7 @@ const VideoLessons = () => {
           <strong>bizə zəng elə</strong>,
         ]}
       />
+      <Outlet />
     </>
   );
 };
