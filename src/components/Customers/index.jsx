@@ -7,7 +7,7 @@ import customerImg1 from "../../assets/images/customers/adra-logo-1.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
-const Customers = ({ homepage, placeId }) => {
+const Customers = ({ homepage, about, placeId }) => {
   // const [reviews, setReviews] = useState([]);
   // const [error, setError] = useState(null);
 
@@ -36,7 +36,7 @@ const Customers = ({ homepage, placeId }) => {
 
   return (
     <section className={styles.customers}>
-      <SectionTitle title={"Müştərilərimiz"} />
+      <SectionTitle about={about} title={"Müştərilərimiz"} />
       <div className={styles.customersText}>
         <p>
           Bank, Sığorta, FMCG, Neft, İT, Təhsil və digər sektorlardan 200-dən

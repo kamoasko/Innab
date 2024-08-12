@@ -191,6 +191,13 @@ html {
       rgba(13, 13, 13, 0) 173.24%
     );
 
+  --color-border-gradient: linear-gradient(
+    260deg,
+    #061459 -66.78%,
+    var(--color-main) 111.37%,
+    rgba(13, 13, 13, 0) 261.54%
+  );
+
   --container-width-lg: 129.6rem;
 
   --main-font: "Gilroy", sans-serif, serif;

@@ -1,0 +1,213 @@
+.timeline {
+  margin-top: 4rem;
+  padding: 2rem 0;
+}
+
+.timelineText {
+  font-size: 2.6rem;
+  font-weight: 600;
+  line-height: 4.2rem;
+}
+
+.timelineContainer {
+  margin-top: 6rem;
+}
+
+.timelineWrapper {
+  max-width: 76.4rem !important;
+  width: 100%;
+}
+
+.timelineCard {
+  overflow: hidden;
+  font-family: inherit;
+}
+
+.timelineCardImg {
+  position: relative;
+  overflow: hidden;
+}
+
+.timelineHover {
+  width: 17.9rem;
+  height: 7rem;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 1.8rem;
+  bottom: -10rem;
+  left: 50%;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
+  -moz-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  -o-transform: translateX(-50%);
+  border-radius: 0.8rem;
+  -webkit-border-radius: 0.8rem;
+  -moz-border-radius: 0.8rem;
+  -ms-border-radius: 0.8rem;
+  -o-border-radius: 0.8rem;
+  transition: 0.3s ease;
+  -webkit-transition: 0.3s ease;
+  -moz-transition: 0.3s ease;
+  -ms-transition: 0.3s ease;
+  -o-transition: 0.3s ease;
+
+  img {
+    object-fit: contain;
+    -o-object-fit: contain;
+  }
+}
+
+.timelineCard:hover .timelineHover {
+  bottom: 3.4rem;
+}
+
+.aboutCardDet {
+  font-family: inherit;
+  padding: 2rem;
+  text-align: start;
+
+  h3 {
+    font-size: 2rem;
+    font-weight: 800;
+  }
+
+  div {
+    margin-top: 1.6rem;
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+}
+
+.contact {
+  margin-top: 22.6rem;
+  padding: 2rem 0;
+
+  > div > h2 {
+    display: none;
+    text-align: center;
+    color: var(--color-main);
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 3rem;
+  }
+
+  > div > div {
+    margin-top: 0;
+  }
+}
+
+.innab {
+  margin-top: 18.1rem;
+  padding: 2rem 0;
+}
+
+.innabTitle {
+  text-align: center;
+  position: relative;
+
+  h2 {
+    font-size: 4.5rem;
+    font-weight: 300;
+    line-height: 2.6rem;
+
+    strong {
+      font-weight: 700;
+      color: var(--color-main);
+    }
+  }
+
+  > div {
+    margin-top: 3.2rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 2.55;
+  }
+
+  &::after,
+  &::before {
+    content: "";
+    position: absolute;
+    background-color: var(--color-main);
+    height: 7.7rem;
+    width: 32%;
+  }
+
+  &::before {
+    border-radius: 30rem 0 0 30rem;
+    -webkit-border-radius: 30rem 0 0 30rem;
+    -moz-border-radius: 30rem 0 0 30rem;
+    -ms-border-radius: 30rem 0 0 30rem;
+    -o-border-radius: 30rem 0 0 30rem;
+    right: 0;
+    top: -100%;
+  }
+
+  &::after {
+    border-radius: 0 30rem 30rem 0;
+    left: 0;
+    bottom: -100%;
+    -webkit-border-radius: 0 30rem 30rem 0;
+    -moz-border-radius: 0 30rem 30rem 0;
+    -ms-border-radius: 0 30rem 30rem 0;
+    -o-border-radius: 0 30rem 30rem 0;
+  }
+}
+
+.innabInteractivity {
+  margin-top: 22rem;
+  max-width: 118.2rem;
+}
+
+@media (max-width: 992px) {
+  .contact {
+    margin-top: 8rem;
+    h2 {
+      display: block;
+    }
+
+    > div > div {
+      margin-top: 3.2rem;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .timelineText {
+    font-size: 1.8rem;
+    line-height: 2.8rem;
+  }
+
+  .timelineContainer {
+    margin-top: 0;
+  }
+
+  .innab {
+    margin-top: 10rem;
+  }
+
+  .innabTitle {
+    h2 {
+      font-size: 2.8rem;
+    }
+
+    > div {
+      margin-top: 2rem;
+      font-size: 1.6rem;
+      line-height: 1.5;
+    }
+
+    &::before,
+    &::after {
+      height: 2.9rem;
+    }
+
+    &::before {
+      top: -45%;
+    }
+
+    &::after {
+      bottom: -45%;
+    }
+  }
+}

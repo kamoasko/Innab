@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../../pages/ContactPage/contact-page.module.css";
 import SocialNetworks from "../SocialNetworks";
 
-const ContactSection = () => {
+const ContactSection = ({ h2 }) => {
   return (
     <div className={`${styles.contactWrapper} flex alignItemsCenter`}>
       <div className={styles.contactMap}>
@@ -14,6 +14,7 @@ const ContactSection = () => {
         ></iframe>
       </div>
       <div className={`${styles.contactInfos} flex flexDirectionColumn`}>
+        {h2 && <h2>Əlaqə</h2>}
         <ul className="flex flexDirectionColumn">
           <li>
             Nərimanov rayonu, Fətəli Xan Xoyski 118 A (Talassemiya Mərkəzinin
