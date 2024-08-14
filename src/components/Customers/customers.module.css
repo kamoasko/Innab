@@ -48,6 +48,17 @@
 
 /* responsive */
 
+@media (max-width: 768px) {
+  .customers {
+    margin-top: 5.2rem;
+  }
+
+  .customersText {
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+  }
+}
+
 @media (max-width: 480px) {
   .customerSliderWrapper {
     padding: 0;

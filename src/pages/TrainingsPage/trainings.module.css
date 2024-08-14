@@ -472,6 +472,14 @@
 
   .faqWrapper {
     margin-top: 3.2rem;
+
+    > div {
+      padding: 1.2rem 0;
+    }
+
+    p {
+      font-size: 1.4rem;
+    }
   }
 
   .faqTraininMenu {

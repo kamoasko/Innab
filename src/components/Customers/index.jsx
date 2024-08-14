@@ -6,8 +6,11 @@ import customerImg from "../../assets/images/customers/kb-logo-main-1.png";
 import customerImg1 from "../../assets/images/customers/adra-logo-1.png";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
-const Customers = ({ homepage, about, placeId }) => {
+const Customers = ({ homepage, about, placeId, corporative }) => {
+  const { width, height } = useWindowDimensions();
+
   // const [reviews, setReviews] = useState([]);
   // const [error, setError] = useState(null);
 
@@ -36,7 +39,11 @@ const Customers = ({ homepage, about, placeId }) => {
 
   return (
     <section className={styles.customers}>
-      <SectionTitle about={about} title={"Müştərilərimiz"} />
+      <SectionTitle
+        about={about}
+        title={"Müştərilərimiz"}
+        corporative={corporative}
+      />
       <div className={styles.customersText}>
         <p>
           Bank, Sığorta, FMCG, Neft, İT, Təhsil və digər sektorlardan 200-dən
@@ -47,69 +54,91 @@ const Customers = ({ homepage, about, placeId }) => {
       </div>
 
       <div className={styles.customerSliderWrapper}>
-        <Swiper
-          spaceBetween={20}
-          loop={true}
-          modules={[Autoplay]}
-          autoplay={{ delay: 3000 }}
-          breakpoints={{
-            320: {
-              slidesPerView: 3,
-              spaceBetween: 12,
-              centeredSlides: true,
-            },
-            425: {
-              slidesPerView: 4,
-              spaceBetween: 12,
-            },
-            481: {
-              slidesPerView: 2,
-            },
-            700: {
-              slidesPerView: 3,
-            },
-            1024: {
-              slidesPerView: 4,
-            },
-            1200: {
-              slidesPerView: 5,
-            },
-            1440: {
-              slidesPerView: 6,
-            },
-            1800: {
-              slidesPerView: 8,
-            },
-          }}
-        >
-          <SwiperSlide>
-            <CustomerCard img={customerImg} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CustomerCard img={customerImg1} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CustomerCard img={customerImg1} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CustomerCard img={customerImg} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CustomerCard img={customerImg1} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CustomerCard img={customerImg1} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CustomerCard img={customerImg1} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CustomerCard img={customerImg1} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <CustomerCard img={customerImg1} />
-          </SwiperSlide>
-        </Swiper>
+        {corporative && width > 768 ? (
+          <div className="container">
+            <div className="customerCard">
+              <CustomerCard img={customerImg} />
+              <CustomerCard img={customerImg} />
+              <CustomerCard img={customerImg1} />
+              <CustomerCard img={customerImg} />
+              <CustomerCard img={customerImg1} />
+              <CustomerCard img={customerImg} />
+              <CustomerCard img={customerImg} />
+              <CustomerCard img={customerImg1} />
+              <CustomerCard img={customerImg} />
+              <CustomerCard img={customerImg} />
+            </div>
+          </div>
+        ) : (
+          <Swiper
+            spaceBetween={20}
+            loop={true}
+            modules={[Autoplay]}
+            autoplay={{ delay: 3000 }}
+            breakpoints={{
+              280: {
+                slidesPerView: 2,
+                spaceBetween: 12,
+                centeredSlides: true,
+              },
+              340: {
+                slidesPerView: 3,
+                spaceBetween: 12,
+                centeredSlides: true,
+              },
+              425: {
+                slidesPerView: 4,
+                spaceBetween: 12,
+              },
+              481: {
+                slidesPerView: 2,
+              },
+              700: {
+                slidesPerView: 3,
+              },
+              1024: {
+                slidesPerView: 4,
+              },
+              1200: {
+                slidesPerView: 5,
+              },
+              1440: {
+                slidesPerView: 6,
+              },
+              1800: {
+                slidesPerView: 8,
+              },
+            }}
+          >
+            <SwiperSlide>
+              <CustomerCard img={customerImg} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <CustomerCard img={customerImg1} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <CustomerCard img={customerImg1} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <CustomerCard img={customerImg} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <CustomerCard img={customerImg1} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <CustomerCard img={customerImg1} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <CustomerCard img={customerImg1} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <CustomerCard img={customerImg1} />
+            </SwiperSlide>
+            <SwiperSlide>
+              <CustomerCard img={customerImg1} />
+            </SwiperSlide>
+          </Swiper>
+        )}
       </div>
       {homepage && (
         <div className={styles.customersReview}>

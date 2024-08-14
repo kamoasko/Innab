@@ -1,0 +1,283 @@
+.pgtC {
+  display: none;
+}
+
+.pageHeader {
+  margin-top: 5.6rem;
+  height: calc(100vh - 24.6rem);
+  position: relative;
+}
+
+.pageHeaderTitle {
+  gap: 4.8rem;
+  color: var(--color-white);
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 3.5rem;
+
+  > div:first-child {
+    h1 {
+      color: var(--color-white);
+    }
+
+    &::after {
+      background-color: var(--color-white);
+    }
+  }
+
+  > div:last-child {
+    max-width: 74.2rem;
+  }
+}
+
+.pageHeaderBottom {
+  justify-content: space-evenly;
+  background-color: var(--color-dark-blue);
+  padding: 2.3rem;
+  width: 100%;
+  color: var(--color-white);
+  font-size: 2rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+/* corporative */
+
+.corporative {
+  margin-top: 10rem;
+  padding: 6rem 0 9.4rem;
+  background-color: var(--color-bg);
+}
+
+.corporativeTitle {
+  h2 {
+    color: var(--color-main);
+    font-size: 4.4rem;
+  }
+}
+
+.corporativeWrapper {
+  margin-top: 7.3rem;
+  gap: 3.6rem;
+}
+
+.corporativeDet {
+  font-size: 2rem;
+  flex-basis: 79rem;
+
+  > h3 {
+    font-size: 3rem;
+    line-height: 3.9rem;
+    font-weight: 700;
+    color: var(--color-dark-black);
+
+    strong {
+      color: var(--color-main);
+    }
+  }
+
+  > div {
+    font-size: 2rem;
+    line-height: 3rem;
+    margin-top: 2.4rem;
+  }
+}
+
+.corporativeLeft {
+  flex-basis: 39rem;
+
+  figcaption {
+    display: none;
+
+    h3 {
+      font-size: 2.4rem;
+      font-weight: 600;
+      line-height: 2.7rem;
+
+      strong {
+        color: var(--color-main);
+      }
+    }
+  }
+}
+
+.corporativeImg {
+  height: 31.4rem;
+}
+
+/* faq */
+
+.faq {
+  margin-top: 8rem;
+
+  a {
+    margin-top: 4rem;
+    height: 6rem;
+    width: 32rem;
+    font-size: 1.6rem;
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+
+      svg {
+        width: 3rem;
+        height: 3rem;
+      }
+    }
+  }
+}
+
+.faqAccordions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 8rem;
+
+  ol {
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 3.9rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .pageHeader {
+    height: calc(100vh - 17.3rem);
+  }
+
+  .corporativeWrapper {
+    margin-top: 5rem;
+    flex-direction: column;
+    gap: 2.4rem;
+  }
+
+  .corporativeLeft {
+    flex-basis: auto;
+
+    figcaption {
+      display: block;
+    }
+  }
+
+  .corporativeImg {
+    margin-top: 1.2rem;
+  }
+
+  .corporativeDet {
+    flex-basis: auto;
+
+    h3 {
+      display: none;
+    }
+
+    > div {
+      margin-top: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .pgtC {
+    display: block;
+  }
+
+  .pageHeader {
+    height: 100vh;
+    margin-top: 4rem;
+    padding: 3.5rem 0 0;
+    font-size: 1.8rem;
+    line-height: 2.4rem;
+  }
+
+  .pageHeaderTitle {
+    > div:first-child {
+      display: none;
+    }
+  }
+
+  .pageHeaderBottom {
+    font-size: 1.4rem;
+    padding: 1.7rem;
+  }
+
+  .corporative {
+    margin-top: 7.2rem;
+  }
+
+  .corporativeTitle {
+    h2 {
+      font-size: 2.2rem;
+    }
+  }
+
+  .corporativeWrapper {
+    margin-top: 2.4rem;
+  }
+
+  .corporativeLeft {
+    figcaption {
+      h3 {
+        font-size: 1.6rem;
+        line-height: 2.1rem;
+      }
+    }
+  }
+
+  .corporativeDet {
+    > div {
+      font-size: 1.4rem;
+      line-height: 2.1rem;
+    }
+  }
+
+  .faq {
+    a {
+      font-size: 1.4rem;
+    }
+  }
+
+  .faqAccordions {
+    grid-template-columns: 1fr;
+
+    > div {
+      padding: 1.2rem 0;
+    }
+
+    p {
+      font-size: 1.4rem;
+    }
+
+    ol {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .corporativeImg {
+    height: 26.1rem;
+  }
+
+  .faq {
+    a {
+      width: auto;
+      margin-top: 4.9rem;
+      height: 4.1rem;
+      border-radius: 8rem;
+      -webkit-border-radius: 8rem;
+      -moz-border-radius: 8rem;
+      -ms-border-radius: 8rem;
+      -o-border-radius: 8rem;
+
+      span {
+        svg {
+          height: 2.4rem;
+          width: 2.4rem;
+        }
+      }
+    }
+  }
+}

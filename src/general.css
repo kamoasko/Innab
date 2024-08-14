@@ -590,6 +590,20 @@ input[type="search"]::-webkit-search-cancel-button {
   color: var(--color-white);
 }
 
+/* customer card */
+
+.customerCard {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3.2rem;
+
+  figure {
+    height: 12.5rem;
+    width: 20rem;
+    border: 0;
+  }
+}
+
 /* footer */
 
 footer {
@@ -1004,6 +1018,13 @@ footer {
 
   .educationT .MuiTypography-root {
     font-size: 1.4rem;
+  }
+
+  .educationT .MuiAccordionSummary-expandIconWrapper {
+    svg {
+      width: 1.7rem;
+      height: 1.7rem;
+    }
   }
 
   .footerTop {
