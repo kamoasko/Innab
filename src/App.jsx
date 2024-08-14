@@ -37,12 +37,9 @@ function App() {
 
           <Route path="trainings" element={<TrainingsPage />} />
           <Route path="corporative" element={<Corporative />} />
-          <Route path="projects" element={<Projects />} />
+          <Route path="projects" element={<Projects book />} />
           <Route path="career-center">
-            <Route
-              path="employment-or-graduate-project"
-              element={<CareerCenter />}
-            />
+            <Route path=":slug" element={<CareerCenter />} />
           </Route>
 
           <Route path="useful-for-you">

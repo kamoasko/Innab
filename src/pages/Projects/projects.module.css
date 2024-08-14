@@ -1,0 +1,303 @@
+.project {
+  margin-top: 6rem;
+}
+
+.projectWrapper {
+  gap: 4rem;
+}
+
+.projectDetail {
+  flex: 3;
+  flex-basis: 85.7rem;
+
+  h2 {
+    color: var(--color-main);
+    font-size: 4rem;
+    line-height: normal;
+  }
+
+  > div {
+    margin-top: 2.1rem;
+    font-size: 1.8rem;
+    line-height: 2.7rem;
+  }
+}
+
+.projectLeft {
+  flex: 1;
+  flex-basis: 39.9rem;
+
+  h2 {
+    color: var(--color-main);
+    font-size: 3rem;
+    display: none;
+  }
+}
+
+.projectCard {
+  height: max-content;
+  overflow: hidden;
+  border: 0.2rem solid var(--color-light-grey);
+  box-shadow: 0px -2px 14px 0px rgba(48, 48, 48, 0.07);
+  background-color: var(--color-white);
+  border-radius: 0.8rem;
+  -webkit-border-radius: 0.8rem;
+  -moz-border-radius: 0.8rem;
+  -ms-border-radius: 0.8rem;
+  -o-border-radius: 0.8rem;
+}
+
+.projectCardImg {
+  height: 27.3rem;
+}
+
+.projectCardDet {
+  padding: 2.4rem;
+
+  > h4 {
+    color: var(--color-main);
+    font-size: 2.2rem;
+    font-weight: 700;
+  }
+
+  > div {
+    margin-top: 1rem;
+    font-size: 1.8rem;
+  }
+
+  > h5 {
+    font-size: 2.2rem;
+    color: var(--color-dark-black);
+    font-weight: 600;
+    margin-top: 1.2rem;
+  }
+
+  > a {
+    margin-top: 2.1rem;
+    width: 100%;
+    font-size: 1.6rem;
+  }
+}
+
+/* mobile book */
+
+.mobileBook {
+  margin-top: 13rem;
+  padding: 3.3rem 0 1.08rem;
+  background-color: var(--color-bg);
+  color: var(--color-dark-black);
+}
+
+.mobileBookWrapper {
+  gap: 8.2rem;
+}
+
+.mobileBookDet {
+  flex-basis: 81.4rem;
+}
+
+.mobileBookContent {
+  gap: 3.2rem;
+
+  > h2 {
+    font-size: 4rem;
+    line-height: normal;
+    color: var(--color-main);
+  }
+
+  > div {
+    font-size: 1.8rem;
+    line-height: 2.7rem;
+  }
+}
+
+.mobileBookQr {
+  margin-top: 7.9rem;
+  gap: 4.1rem;
+
+  picture {
+    width: 28.5rem;
+    height: 28.5rem;
+    padding: 2.6rem;
+    border: 0.3rem ridge var(--color-main);
+    border-radius: 2.3rem;
+    -webkit-border-radius: 2.3rem;
+    -moz-border-radius: 2.3rem;
+    -ms-border-radius: 2.3rem;
+    -o-border-radius: 2.3rem;
+  }
+
+  figcaption {
+    font-size: 2rem;
+    font-weight: 600;
+    max-width: 26rem;
+  }
+}
+
+.mobileBookLeft {
+  flex-basis: 34.7rem;
+}
+
+.mobileBookDownload {
+  gap: 3.2rem;
+  display: none;
+
+  > div:first-child {
+    font-size: 1.4rem;
+  }
+
+  > div:last-child {
+    gap: 1.4rem;
+
+    > a {
+      gap: 0.4rem;
+      width: 15.1rem;
+      height: 4.4rem;
+      padding: 1.2rem;
+      border-radius: 0.7rem;
+      border: 0.1rem solid var(--color-light-black);
+      background: var(--color-white);
+      font-size: 1.4rem;
+
+      > img {
+        object-fit: contain;
+        -o-object-fit: contain;
+        width: auto;
+      }
+
+      > svg {
+        height: 2.3rem;
+        height: 2.3rem;
+        align-self: flex-end;
+      }
+    }
+  }
+}
+
+/* responsive */
+
+@media (max-width: 992px) {
+  .projectWrapper {
+    flex-direction: column-reverse;
+    /* align-items: center; */
+  }
+
+  .projectDetail {
+    flex: none;
+
+    > h2 {
+      display: none;
+    }
+
+    > div {
+      margin-top: 0;
+    }
+  }
+
+  .projectLeft {
+    flex: none;
+
+    h2 {
+      display: block;
+    }
+  }
+
+  .projectCard {
+    margin-top: 1.6rem;
+    max-width: 39.9rem;
+  }
+
+  .mobileBookWrapper {
+    flex-direction: column;
+    gap: 3.2rem;
+  }
+
+  .mobileBookDet {
+    flex-basis: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .mobileBookContent {
+    gap: 1.6rem;
+
+    > h2 {
+      font-size: 2rem;
+    }
+
+    > div {
+      font-size: 1.4rem;
+      line-height: 2.1rem;
+    }
+  }
+
+  .mobileBookLeft {
+    flex-basis: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .projectDetail {
+    > div {
+      font-size: 1.4rem;
+      line-height: 2.1rem;
+    }
+  }
+
+  .projectLeft {
+    h2 {
+      font-size: 2rem;
+      line-height: normal;
+    }
+  }
+
+  .projectCardImg {
+    height: 19.4rem;
+  }
+
+  .projectCardDet {
+    padding: 1.6rem;
+
+    > h4 {
+      font-size: 1.8rem;
+    }
+
+    > div {
+      font-size: 1.6rem;
+      margin-top: 0.4rem;
+    }
+
+    > h5 {
+      font-size: 1.8rem;
+    }
+
+    > a {
+      height: 3.9rem;
+      font-size: 1.2rem;
+    }
+  }
+
+  .mobileBook {
+    padding: 2.4rem 0;
+  }
+
+  .mobileBookQr {
+    display: none;
+  }
+
+  .mobileBookLeft {
+    picture {
+      height: 26.4rem;
+
+      > img {
+        -o-object-fit: contain;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .mobileBookDownload {
+    display: flex;
+  }
+}

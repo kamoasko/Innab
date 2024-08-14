@@ -4,7 +4,7 @@ import PageTitle from "../../components/pageTitle";
 import career from "../../assets/images/career-center/career.png";
 import Contact from "../../components/Contact";
 
-const CareerCenter = () => {
+const CareerCenter = ({ page }) => {
   // ${styles.cw1}
 
   return (
@@ -12,7 +12,11 @@ const CareerCenter = () => {
       <section className={styles.career}>
         <div className="container">
           <PageTitle title={"Karyera mərkəzi"} />
-          <div className={`${styles.careerWrapper}  flex alignItemsCenter`}>
+          <div
+            className={`${styles.careerWrapper} ${
+              page ? styles.cw1 : ""
+            } flex alignItemsCenter`}
+          >
             <div className={styles.careerImg}>
               <img src={career} alt="" />
             </div>
