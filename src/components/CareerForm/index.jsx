@@ -1,122 +1,185 @@
 // src/components/CareerForm/CareerForm.jsx
 import React from "react";
-import { useFormik } from "formik";
+import styles from "../../pages/CareerCalculator/calculator.module.css";
+import { ErrorMessage, Field, Form, Formik, useFormik } from "formik";
 import * as Yup from "yup";
-import { careerData, synonyms } from "../../data/careerData";
+import { Box, Slider, styled, TextField, Typography } from "@mui/material";
+
+const PrettoSlider = styled(Slider)({
+  color: "var(--color-main)",
+  height: 2.5,
+  position: "relative",
+  padding: "0 !important",
+  borderRadius: 0,
+  bottom: "0rem",
+  "& .MuiSlider-rail": {
+    backgroundColor: "transparent",
+  },
+  "& .MuiSlider-track": {
+    border: "none",
+  },
+  "& .MuiSlider-thumb": {
+    height: 18,
+    width: 18,
+    backgroundColor: "#fff",
+    border: "0.25rem solid currentColor",
+    "&:focus, &:hover, &.Mui-active, &.Mui-focusVisible": {
+      boxShadow: "inherit",
+    },
+    "&::before": {
+      display: "none",
+    },
+  },
+  "& .MuiSlider-valueLabel": {
+    lineHeight: 1.2,
+    fontSize: 14,
+    background: "unset",
+    padding: 0,
+    width: 32,
+    height: 32,
+    borderRadius: "50% 50% 50% 0",
+    backgroundColor: "#52af77",
+    transformOrigin: "bottom left",
+    transform: "translate(50%, -100%) rotate(-45deg) scale(0)",
+    "&::before": { display: "none" },
+    "&.MuiSlider-valueLabelOpen": {
+      transform: "translate(50%, -100%) rotate(-45deg) scale(1)",
+    },
+    "& > *": {
+      transform: "rotate(45deg)",
+    },
+  },
+});
 
 const CareerForm = ({ onResults }) => {
   const formik = useFormik({
     initialValues: {
-      skills: "",
+      field: "",
+      educationType: "",
+      duration: "",
+      language: "",
       experience: "",
-      education: "",
     },
     validationSchema: Yup.object({
-      skills: Yup.string().required("Required"),
-      experience: Yup.number().required("Required").positive().integer(),
-      education: Yup.string().required("Required"),
+      field: Yup.string().required("Required"),
+      educationType: Yup.number().required("Required").positive().integer(),
+      duration: Yup.string().required("Required"),
+      language: Yup.string().required("Required"),
+      experience: Yup.string().required("Required"),
     }),
-    onSubmit: (values) => {
-      const normalizedValues = {
-        skills: values.skills.toLowerCase(),
-        experience: values.experience,
-        education: values.education.toLowerCase(),
-      };
-      const results = calculateCareerPath(normalizedValues);
-      onResults(results);
-    },
+    onSubmit: (values) => {},
   });
 
-  const mapSynonyms = (input) => {
-    return input
-      .split(" ")
-      .map((word) => {
-        for (const [key, value] of Object.entries(synonyms)) {
-          if (value.includes(word)) return key;
-        }
-        return word;
-      })
-      .join(" ");
-  };
-
-  const calculateCareerPath = (values) => {
-    const { skills, experience, education } = values;
-
-    // Normalize the skills input to an array, split by space and comma, map synonyms
-    const skillsArray = skills
-      .split(/[, ]+/)
-      .map((skill) => mapSynonyms(skill.trim()));
-
-    // Map education to its synonym equivalent
-    const normalizedEducation = mapSynonyms(education);
-
-    // Find the best match career from the data
-    const bestMatch = careerData.find((career) => {
-      const careerSkills = career.skills.map((skill) => mapSynonyms(skill));
-      return (
-        careerSkills.every((skill) => skillsArray.includes(skill)) &&
-        career.experience <= experience &&
-        mapSynonyms(career.education) === normalizedEducation
-      );
-    });
-
-    // If no match is found, return a default result
-    if (!bestMatch) {
-      return {
-        jobTitle: "General Position",
-        salary: 50000,
-        growth: "Medium",
-        description:
-          "Based on your skills and experience, a general position is recommended.",
-      };
-    }
-
-    return bestMatch;
-  };
-
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div>
-        <label>Skills</label>
-        <input
-          type="text"
-          name="skills"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.skills}
-        />
-        {formik.touched.skills && formik.errors.skills ? (
-          <div>{formik.errors.skills}</div>
-        ) : null}
-      </div>
-      <div>
-        <label>Experience (years)</label>
-        <input
-          type="number"
-          name="experience"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.experience}
-        />
-        {formik.touched.experience && formik.errors.experience ? (
-          <div>{formik.errors.experience}</div>
-        ) : null}
-      </div>
-      <div>
-        <label>Education</label>
-        <input
-          type="text"
-          name="education"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.education}
-        />
-        {formik.touched.education && formik.errors.education ? (
-          <div>{formik.errors.education}</div>
-        ) : null}
-      </div>
-      <button type="submit">Calculate</button>
-    </form>
+    <Formik
+      onSubmit={formik.handleSubmit}
+      initialValues={formik.initialValues}
+      validationSchema={formik.validationSchema}
+    >
+      <Form className="flex flexDirectionColumn">
+        <div className={`${styles.formGroup}`}>
+          <Field as="select" name="field" id="field">
+            <option value="Sahəni seçin">Sahəni seçin</option>
+            <option value="Sahəni seçin">Sahəni seçin</option>
+            <option value="Sahəni seçin">Sahəni seçin</option>
+          </Field>
+          <ErrorMessage name="skills" component="span" className="error" />
+        </div>
+
+        <div className={`${styles.formGroup} flex flexDirectionColumn`}>
+          <h4>Necə öyrənəcəksən?</h4>
+          <div
+            className={`${styles.formGroupWrapper} flex alignItemsCenter justifyContentBetween`}
+            role="group"
+            aria-labelledby="educationType"
+          >
+            <label htmlFor="educationType" className="flex alignItemsCenter">
+              <Field type="radio" name="educationType" value="İnnab-da" />
+              İnnab-da
+            </label>
+            <label htmlFor="educationType" className="flex alignItemsCenter">
+              <Field type="radio" name="educationType" value="Özüm" />
+              Özüm
+            </label>
+            <label htmlFor="educationType" className="flex alignItemsCenter">
+              <Field
+                type="radio"
+                name="educationType"
+                value="Digər kurslarda"
+              />
+              Digər kurslarda
+            </label>
+          </div>
+          <ErrorMessage name="experience" component="span" className="error" />
+        </div>
+
+        <div className={`${styles.formGroup}`}>
+          <div>
+            <label>Gündə neçə saat məşğul olacaqsan?</label>
+            <div className="flex justifyContentBetween">
+              <span>2</span>
+              <span>saat</span>
+            </div>
+            <Box>
+              <PrettoSlider
+                // valueLabelDisplay="auto"
+                aria-label="pretto slider"
+                defaultValue={2}
+                min={0}
+                max={12}
+              />
+            </Box>
+          </div>
+          <ErrorMessage name="education" component="span" className="error" />
+        </div>
+
+        <div
+          className={`${styles.formGroup} flex flexDirectionColumn`}
+          role="group"
+          aria-labelledby="language"
+        >
+          <h4>İngilis dili biliyin</h4>
+          <div
+            className={`${styles.formGroupWrapper} flex alignItemsCenter justifyContentBetween`}
+          >
+            <label htmlFor="language" className="flex alignItemsCenter">
+              <Field type="radio" name="language" value="İnnab-da" />
+              Zəif
+            </label>
+            <label htmlFor="language" className="flex alignItemsCenter">
+              <Field type="radio" name="language" value="Özüm" />
+              Orta
+            </label>
+            <label htmlFor="language" className="flex alignItemsCenter">
+              <Field type="radio" name="language" value="Digər kurslarda" />
+              Güclü
+            </label>
+          </div>
+          <ErrorMessage name="experience" component="span" className="error" />
+        </div>
+
+        <div className={`${styles.formGroup}`}>
+          <div>
+            <label>Sahə üzrə təcrübən</label>
+            <div className="flex justifyContentBetween">
+              <span>0</span>
+              <span>il</span>
+            </div>
+            <Box>
+              <PrettoSlider
+                // valueLabelDisplay="auto"
+                aria-label="pretto slider"
+                defaultValue={0}
+                min={0}
+                max={47}
+              />
+            </Box>
+          </div>
+          <ErrorMessage name="education" component="span" className="error" />
+        </div>
+        {/* <button type="submit">Calculate</button> */}
+      </Form>
+    </Formik>
   );
 };
 

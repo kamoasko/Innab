@@ -84,7 +84,7 @@ const ContactForm = ({ apply, join }) => {
                   name="name"
                   placeholder="İslam Bağırlı"
                 />
-                <ErrorMessage name="name" component="div" className="error" />
+                <ErrorMessage name="name" component="span" className="error" />
               </div>
 
               {apply ? (
@@ -93,7 +93,7 @@ const ContactForm = ({ apply, join }) => {
                     FIN <small>*</small>
                   </label>
                   <Field type="text" id="fin" name="fin" placeholder="FIN" />
-                  <ErrorMessage name="fin" component="div" className="error" />
+                  <ErrorMessage name="fin" component="span" className="error" />
                 </div>
               ) : (
                 <div className={`${styles.formGroup} flex flexDirectionColumn`}>
@@ -108,7 +108,7 @@ const ContactForm = ({ apply, join }) => {
                   />
                   <ErrorMessage
                     name="phone"
-                    component="div"
+                    component="span"
                     className="error"
                   />
                 </div>
@@ -124,7 +124,7 @@ const ContactForm = ({ apply, join }) => {
                     Doğum tarixi <small>*</small>
                   </label>
                   <Field type="date" id="date" name="date" />
-                  <ErrorMessage name="date" component="div" className="error" />
+                  <ErrorMessage name="date" component="span" className="error" />
                 </div>
               ) : join ? (
                 ""
@@ -161,7 +161,7 @@ const ContactForm = ({ apply, join }) => {
                   />
                   <ErrorMessage
                     name="phone"
-                    component="div"
+                    component="span"
                     className="error"
                   />
                 </div>
@@ -180,7 +180,7 @@ const ContactForm = ({ apply, join }) => {
                   />
                   <ErrorMessage
                     name="email"
-                    component="div"
+                    component="span"
                     className="error"
                   />
                 </div>
@@ -232,7 +232,7 @@ const ContactForm = ({ apply, join }) => {
                   </div>
                   <ErrorMessage
                     name="project"
-                    component="div"
+                    component="span"
                     className="error"
                   />
                 </div>
@@ -280,7 +280,7 @@ const ContactForm = ({ apply, join }) => {
                   </div>
                   <ErrorMessage
                     name="education"
-                    component="div"
+                    component="span"
                     className="error"
                   />
                 </div>
@@ -316,7 +316,7 @@ const ContactForm = ({ apply, join }) => {
                   </div>
                   <ErrorMessage
                     name="studentStatus"
-                    component="div"
+                    component="span"
                     className="error"
                   />
                 </div>
@@ -352,7 +352,7 @@ const ContactForm = ({ apply, join }) => {
                   </div>
                   <ErrorMessage
                     name="workStatus"
-                    component="div"
+                    component="span"
                     className="error"
                   />
                 </div>
@@ -382,7 +382,7 @@ const ContactForm = ({ apply, join }) => {
                       </div>
                     </label>
                   </div>
-                  <ErrorMessage name="voen" component="div" className="error" />
+                  <ErrorMessage name="voen" component="span" className="error" />
                 </div>
 
                 <div
@@ -399,7 +399,7 @@ const ContactForm = ({ apply, join }) => {
                   />
                   <ErrorMessage
                     name="address"
-                    component="div"
+                    component="span"
                     className="error"
                   />
                 </div>
@@ -411,7 +411,7 @@ const ContactForm = ({ apply, join }) => {
                     CV-nizi əlavə edin <small>*</small>
                   </label>
                   <label htmlFor="cv" className="flexCenter">
-                    <input
+                    <Field
                       id="cv"
                       name="cv"
                       type="file"
@@ -435,7 +435,7 @@ const ContactForm = ({ apply, join }) => {
                     </svg>
                     <span>Dosya yüklə</span>
                   </label>
-                  <ErrorMessage name="cv" component="div" className="error" />
+                  <ErrorMessage name="cv" component="span" className="error" />
                 </div>
               </>
             ) : (
@@ -451,7 +451,7 @@ const ContactForm = ({ apply, join }) => {
                 </Field>
                 <ErrorMessage
                   name="service"
-                  component="div"
+                  component="span"
                   className="error"
                 />
               </div>

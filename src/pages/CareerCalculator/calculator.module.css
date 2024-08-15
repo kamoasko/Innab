@@ -1,0 +1,269 @@
+.calculator {
+  margin-top: 6rem;
+  padding: 6.4rem 0;
+  background-color: var(--color-main);
+}
+
+.calculatorWrapper {
+  border-radius: 2.4rem;
+  background: var(--color-white);
+  overflow: hidden;
+}
+
+.calculatorForm {
+  padding: 4.8rem 10rem 4.8rem 4.8rem;
+  flex: 1;
+
+  form {
+    margin-top: 6.8rem;
+    gap: 3.6rem;
+  }
+}
+
+.calculatorTitle {
+  gap: 0.4rem;
+
+  h2 {
+    font-size: 4.6rem;
+    line-height: 5.7rem;
+    flex-basis: 36.7rem;
+
+    strong {
+      color: var(--color-main);
+    }
+  }
+
+  > div {
+    flex-basis: 8.6rem;
+    height: 8.6rem;
+  }
+}
+
+.formGroup {
+  > h4 {
+    font-size: 2.2rem;
+    color: var(--color-dark-black);
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  > select {
+    padding: 2rem 3.2rem;
+    font-size: 1.6rem;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url("../../assets/icons/chevron_down_small_24.svg") no-repeat
+      98.5% !important;
+    background: url("../../assets/icons/chevron_down_small_24.svg") no-repeat
+      calc(100% - 10px) !important;
+    color: #777;
+
+    &::-ms-expand {
+      display: none;
+    }
+  }
+
+  > div:first-child {
+    font-size: 1.4rem;
+    padding: 1.2rem 3.2rem;
+    height: 7.1rem;
+
+    > div {
+      color: initial;
+      font-size: 1.6rem;
+    }
+  }
+}
+
+.formGroupWrapper {
+  margin-top: 1.8rem;
+  width: 100%;
+  gap: 0.5rem;
+  font-size: 1.8rem;
+
+  > label {
+    gap: 1.2rem;
+
+    > input[type="radio"] {
+      /* removing standard background appearance */
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      /* custom radiobutton appearance */
+      display: inline-block;
+      width: 2.2rem;
+      height: 2.2rem;
+      /* background-color only for content */
+      background-clip: content-box;
+      border: 0.2rem solid var(--color-grey);
+      background-color: var(--color-grey);
+      border-radius: 50%;
+    }
+
+    /* appearance for checked radiobutton */
+    > input[type="radio"]:checked {
+      padding: 0.3rem;
+      border: 0.2rem solid var(--color-main);
+      background-color: var(--color-main);
+    }
+  }
+}
+
+.formGroup > div:first-child,
+.formGroup > select {
+  width: 100%;
+  font-family: inherit;
+  color: #777;
+  border: 0.1rem solid var(--color-black-71);
+  border-radius: 5.2rem;
+  -webkit-border-radius: 5.2rem;
+  -moz-border-radius: 5.2rem;
+  -ms-border-radius: 5.2rem;
+  -o-border-radius: 5.2rem;
+}
+
+/* results */
+
+.calculatorResults {
+  padding: 4.8rem;
+  background-color: var(--color-nav-bg);
+  flex: 1;
+
+  h4 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: normal;
+    color: var(--color-dark-black);
+    letter-spacing: inherit;
+  }
+}
+
+.resultSalary {
+  border-bottom: 0.1rem solid #8d8c8c;
+  padding-bottom: 4rem;
+
+  h3 {
+    color: var(--color-dark-black);
+    margin-top: 1.2rem;
+    font-size: 5.6rem;
+    font-weight: 700;
+    line-height: 5.7rem;
+  }
+}
+
+.resultDetails {
+  margin-top: 4rem;
+  gap: 3.3rem;
+
+  > li {
+    > span {
+      font-size: 1.4rem;
+      color: #777;
+    }
+
+    > h4 {
+      margin-top: 1.2rem;
+    }
+  }
+}
+
+@media (max-width: 1070px) {
+  .formGroupWrapper {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .calculatorWrapper {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .calculator {
+    margin-top: 4rem;
+    padding: 3.2rem 0;
+  }
+
+  .calculatorTitle {
+    align-items: center;
+
+    > h2 {
+      font-size: 2rem;
+      line-height: normal;
+      flex-basis: unset;
+    }
+
+    > div {
+      flex-basis: 3.3rem;
+
+      img {
+        object-fit: contain;
+      }
+    }
+  }
+
+  .calculatorForm {
+    padding: 1.6rem 1.6rem 5.6rem;
+
+    form {
+      margin-top: 3.2rem;
+      gap: 3.2rem;
+    }
+  }
+
+  .formGroup {
+    > h4 {
+      font-size: 1.6rem;
+      line-height: normal;
+    }
+
+    select {
+      padding: 1.2rem 2rem;
+    }
+
+    > div:first-child {
+      padding: 1.2rem 2.8rem;
+      font-size: 1.2rem;
+
+      > div {
+        font-size: 1.4rem;
+      }
+    }
+  }
+
+  .formGroupWrapper {
+    font-size: 1.2rem;
+    margin-top: 1.4rem;
+    justify-content: stretch;
+    gap: 2.4rem;
+
+    > label {
+      gap: 0.8rem;
+    }
+  }
+
+  .calculatorResults {
+    padding: 3.2rem 1.6rem;
+
+    h4 {
+      font-size: 1.8rem;
+    }
+  }
+
+  .resultSalary {
+    padding-bottom: 1.96rem;
+
+    > h3 {
+      font-size: 3rem;
+      line-height: normal;
+
+      > svg {
+        width: 3.8rem;
+        height: 2.9rem;
+      }
+    }
+  }
+}

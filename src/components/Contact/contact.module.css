@@ -86,21 +86,21 @@
   }
 }
 
-form {
-  > div:nth-child(n + 2) {
-    margin-top: 4.4rem;
-  }
-
-  > button {
-    margin-top: 6.1rem;
-    font-size: 2rem;
-    width: 100% !important;
-    height: 6.8rem;
-  }
-}
-
 .contactForm {
   flex: 3;
+
+  form {
+    > div:nth-child(n + 2) {
+      margin-top: 4.4rem;
+    }
+
+    > button {
+      margin-top: 6.1rem;
+      font-size: 2rem;
+      width: 100% !important;
+      height: 6.8rem;
+    }
+  }
 }
 
 .contactFormDivider {
