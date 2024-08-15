@@ -9,7 +9,7 @@ import { Autoplay } from "swiper/modules";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 const Customers = ({ homepage, about, placeId, corporative }) => {
-  const { width, height } = useWindowDimensions();
+  const { width } = useWindowDimensions();
 
   // const [reviews, setReviews] = useState([]);
   // const [error, setError] = useState(null);

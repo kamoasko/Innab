@@ -22,7 +22,6 @@ const Corporative = () => {
       <section
         className={styles.pageHeader}
         style={{
-          // backgroundImage: `linear-gradient(90deg, rgba(49, 56, 227), rgba(0, 0, 0, 0)),  url(${corporativeBg})`,
           background: `linear-gradient(90deg, var(--color-main) -1.51%, rgba(3, 5, 51, 0.00) 81.73%), url(${corporativeBg}) lightgray center / cover no-repeat`,
         }}
       >

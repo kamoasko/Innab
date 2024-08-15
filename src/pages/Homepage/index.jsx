@@ -6,7 +6,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import CountUp from "react-countup";
 import styles from "./home.module.css";
-import hero from "../../assets/images/homepage/hero.png";
+import hero from "../../assets/images/homepage/hero.jpeg";
 import stats1 from "../../assets/images/homepage/təlim_növü1.svg";
 import stats2 from "../../assets/images/homepage/işlə_təmin1.svg";
 import stats3 from "../../assets/images/homepage/tələbə1.svg";
@@ -133,7 +133,12 @@ const Homepage = () => {
       <section
         className={styles.hero}
         style={{
-          background: `url(${hero})`,
+          background: `
+            linear-gradient(180deg, var(--color-main) 3%, rgba(0, 0, 0, 0.3) 100%), 
+            linear-gradient(270deg, rgba(0, 0, 0, 0.3) 5%, rgba(5, 5, 5, 0.1) 10%),
+            linear-gradient(45deg, rgba(0, 0, 0, 0.3) 5%, rgba(5, 5, 5, 0.1) 10%),
+            url(${hero}) rgba(247, 247, 254, 0.87) center / cover no-repeat
+          `,
         }}
       >
         <div className="container" style={{ height: "100%" }}>
