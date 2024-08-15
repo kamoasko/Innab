@@ -5,6 +5,7 @@ import NewsCard from "../../components/newsCard";
 import Contact from "../../components/Contact";
 import newsImg from "../../assets/images/news/news-img.jpeg";
 import { Outlet } from "react-router";
+import { Pagination } from "@mui/material";
 
 const NewsPage = () => {
   return (
@@ -43,6 +44,12 @@ const NewsPage = () => {
               to={"3"}
             />
           </div>
+          <Pagination
+            className="flex justifyContentCenter"
+            sx={{ marginTop: "7.2rem", fontSize: "1.6rem" }}
+            count={4}
+            size="large"
+          />
         </div>
       </section>
       <Contact
