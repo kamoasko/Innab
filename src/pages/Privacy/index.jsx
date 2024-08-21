@@ -21,6 +21,8 @@ const Privacy = () => {
     <Suspense fallback={<CircularProgress />}>
       <section className={styles.privacy}>
         <div className="container">
+          {status === "loading" && <CircularProgress />}
+          {status === "failed" && <p>{error}</p>}
           <PageTitle title={privacy.page_title} />
           <div
             className={styles.privacyContent}

@@ -1,28 +1,42 @@
-import React from "react";
+import React, { Suspense, useEffect } from "react";
 import styles from "./corporative.module.css";
-import PageTitle from "../../components/pageTitle";
-import { Link } from "react-router-dom";
-import corporativeBg from "../../assets/images/corporative/corporative.png";
-import corporativeImg from "../../assets/images/corporative/corporative-img.jpeg";
-import AccordionSecond from "../../components/customAccrodionSecond";
-import Button from "../../components/Button";
+import { Link, useParams } from "react-router-dom";
 import { HiOutlineArrowLongRight } from "react-icons/hi2";
-import Customers from "../../components/Customers";
-import Contact from "../../components/Contact";
+import { CircularProgress } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCorporativeDatas } from "../../features/corporative/corporativeSlice";
+
+const Contact = React.lazy(() => import("../../components/Contact"));
+const Customers = React.lazy(() => import("../../components/Customers"));
+const Button = React.lazy(() => import("../../components/Button"));
+const AccordionSecond = React.lazy(() =>
+  import("../../components/customAccrodionSecond")
+);
+const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 
 const Corporative = () => {
+  const dispatch = useDispatch();
+  const { lang } = useParams();
+  const { corporative, status, error } = useSelector(
+    (state) => state.corporative
+  );
+
+  useEffect(() => {
+    dispatch(fetchCorporativeDatas(lang));
+  }, [lang, dispatch]);
+
   return (
-    <>
+    <Suspense fallback={<CircularProgress />}>
       <div className={`${styles.pgtC} pageTop`}>
         <div className="container">
-          <PageTitle title={"Korporativ"} />
+          <PageTitle title={corporative.banner_title} />
         </div>
       </div>
 
       <section
         className={styles.pageHeader}
         style={{
-          background: `linear-gradient(90deg, var(--color-main) -1.51%, rgba(3, 5, 51, 0.00) 81.73%), url(${corporativeBg}) lightgray center / cover no-repeat`,
+          background: `linear-gradient(90deg, var(--color-main) -1.51%, rgba(3, 5, 51, 0.00) 81.73%), url(${corporative.banner}) lightgray center / cover no-repeat`,
         }}
       >
         <div className="container">
@@ -32,11 +46,8 @@ const Corporative = () => {
             <div
               className={`${styles.pageHeaderTitle} flex flexDirectionColumn`}
             >
-              <PageTitle title={"Korporativ"} />
-              <div>
-                Korporativ hədəflərinizə çatmaq üçün tədris proqramlarımıza
-                qoşulun və komandanızın peşəkar inkişafını bizə etibar edin.
-              </div>
+              <PageTitle title={corporative.banner_title} />
+              <div>{corporative.banner_description}</div>
             </div>
             <ol className={`${styles.pageHeaderBottom} flex alignItemsCenter`}>
               <li>
@@ -56,41 +67,32 @@ const Corporative = () => {
       <section className={styles.corporative}>
         <div className="container">
           <div className={styles.corporativeTitle}>
-            <h2>Korporativ təlimlərimiz</h2>
+            <h2>{corporative.content_title}</h2>
           </div>
           <div
             className={`${styles.corporativeWrapper} flex alignItemsCenter justifyContentBetween`}
           >
             <figure className={styles.corporativeLeft}>
               <figcaption>
-                <h3>
-                  “Şirkətinizə <strong>özəl təlim planı</strong>,{" "}
-                  <strong>saatları</strong> və <strong>məkanı</strong>{" "}
-                  uyğunlaşdırmaq imkanı”
-                </h3>
+                <h3
+                  dangerouslySetInnerHTML={{
+                    __html: corporative.content_top_text,
+                  }}
+                />
               </figcaption>
               <picture className={styles.corporativeImg}>
-                <img src={corporativeImg} alt="" />
+                <img src={corporative.image} alt="" />
               </picture>
             </figure>
             <div className={styles.corporativeDet}>
-              <h3>
-                “Şirkətinizə <strong>özəl təlim planı</strong>,{" "}
-                <strong>saatları</strong> və <strong>məkanı</strong>{" "}
-                uyğunlaşdırmaq imkanı”
-              </h3>
-              <div>
-                “İnnab Business School” olaraq bu günə qədər 300-dən çox dövlət
-                və özəl qurumlara xidmət göstərmişik. Peşəkar mütəxəssislərdən
-                ibarət olan komandamız ən yaxşı tədrisi təmin edirlər.
-                Mərkəzimizdə bir çox sahələri əhatə edən təlimlər həyata
-                keçirilir. Hər bir sahə üzrə ixtisaslaşmış təlimçilərimiz nəzəri
-                bilikləri praktiki nümunələr ilə sintez edərək iştirakçıları 
-                maksimum fayda əldə etməsinə çalışırlar. Bizim korporativ
-                təlimlərimizdə iştirak edərək bilik və bacarıqlarınızı
-                artıraraq əməkdaşlarınızın peşəkar inkişafını təmin edə
-                bilərsiniz. 
-              </div>
+              <h3
+                dangerouslySetInnerHTML={{
+                  __html: corporative.content_top_text,
+                }}
+              />
+              <div
+                dangerouslySetInnerHTML={{ __html: corporative.content_text }}
+              />
             </div>
           </div>
         </div>
@@ -168,7 +170,7 @@ const Corporative = () => {
         title={"Sualın var?"}
         subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
       />
-    </>
+    </Suspense>
   );
 };
 
