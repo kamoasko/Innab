@@ -6,6 +6,10 @@
   margin-top: 6rem;
   font-size: 1.8rem !important;
   line-height: 2.3rem;
+
+  strong {
+    font-weight: 600;
+  }
 }
 
 @media (max-width: 768px) {
