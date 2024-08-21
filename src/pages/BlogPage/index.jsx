@@ -18,7 +18,7 @@ const BlogPage = () => {
 
   useEffect(() => {
     dispatch(fetchBlogPosts(lang));
-  }, [lang, dispatch]); // Refetch when language changes
+  }, [lang, dispatch]);
 
   const menus = [
     "Data analitika",

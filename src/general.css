@@ -382,6 +382,13 @@ input[type="search"]::-webkit-search-cancel-button {
   background-color: var(--color-main) !important;
 }
 
+.vertical-timeline-element-icon img {
+  width: 3rem;
+  height: 3rem;
+  object-fit: contain;
+  -o-object-fit: contain;
+}
+
 /* section title */
 
 .sectionTitle {
