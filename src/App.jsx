@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import MainLayout from "./layouts/mainLayout/MainLayout";
 import Homepage from "./pages/Homepage";
 import About from "./pages/About";
@@ -21,13 +21,23 @@ import Projects from "./pages/Projects";
 import ContactPage from "./pages/ContactPage";
 import Privacy from "./pages/Privacy";
 import ScrollToTop from "./components/scrollToTop";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { selectedLanguage } = useSelector((state) => state.languages);
+
   return (
     <>
       {/* <ScrollToTop /> */}
       <Routes>
-        <Route path="/" element={<MainLayout />}>
+        {/* Redirect the root to the selected language */}
+        <Route
+          path="/"
+          element={<Navigate to={`/${selectedLanguage}`} replace />}
+        />
+
+        {/* Language-specific routes */}
+        <Route path="/:lang" element={<MainLayout />}>
           <Route index element={<Homepage />} />
           <Route path="about">
             <Route index element={<About />} />
@@ -46,14 +56,14 @@ function App() {
             <Route path="video-lessons">
               <Route index element={<VideoLessons />} />
               <Route
-                path=":id"
+                path=":slug"
                 element={<DetailPage pageTitle={"Video dərslər"} />}
               />
             </Route>
             <Route path="blog">
               <Route index element={<BlogPage />} />
               <Route
-                path=":id"
+                path=":slug"
                 element={<DetailPage pageTitle={"Bloq"} blog />}
               />
             </Route>
@@ -67,7 +77,7 @@ function App() {
             <Route path=":id" element={<NewsDetail />} />
           </Route>
 
-          <Route path="/privacy-policy" element={<Privacy />} />
+          <Route path="privacy-policy" element={<Privacy />} />
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

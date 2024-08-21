@@ -1,15 +1,31 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../general.css";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import logo from "../../assets/images/logo.svg";
 import SocialNetworks from "../SocialNetworks";
 import Button from "../Button";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchLanguages,
+  setLanguage,
+} from "../../features/languages/languageSlice";
 
-const Header = ({ partnersRef }) => {
+const Header = ({ partnersRef, onLanguageChange }) => {
   const [searchBarOpen, setSearchBarOpen] = useState(false);
   const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
   const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
   const [mobMenuOpen, setMobMenuOpen] = useState(false);
+  const dispatch = useDispatch();
+  const { lang } = useParams();
+  const { languages, selectedLanguage } = useSelector(
+    (state) => state.languages
+  );
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -40,6 +56,22 @@ const Header = ({ partnersRef }) => {
         partnersRef.current.scrollIntoView({ behavior: "smooth" });
       }
     }, 0);
+  };
+
+  useEffect(() => {
+    dispatch(fetchLanguages());
+  }, [dispatch]);
+
+  const handleLanguageChange = (event) => {
+    const selectedLang = event.target.value;
+    dispatch(setLanguage(selectedLang));
+
+    // Replace the current language in the URL with the new one
+    const newUrl = window.location.pathname.replace(
+      `/${lang}`,
+      `/${selectedLang}`
+    );
+    navigate(newUrl); // Navigate to the new URL
   };
 
   return (
@@ -89,10 +121,17 @@ const Header = ({ partnersRef }) => {
                 </li>
               </ul>
               <form action="" className="headerTopLang">
-                <select name="" id="">
-                  <option value="AZ">AZ</option>
-                  <option value="RU">RU</option>
-                  <option value="EN">EN</option>
+                <select
+                  name="language"
+                  id="language"
+                  onChange={handleLanguageChange}
+                  value={lang}
+                >
+                  {languages.map((lang) => (
+                    <option key={lang.site_code} value={lang.site_code}>
+                      {lang.site_code}
+                    </option>
+                  ))}
                 </select>
               </form>
             </div>
