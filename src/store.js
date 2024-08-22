@@ -7,6 +7,8 @@ import corporativeReducer from "./features/corporative/corporativeSlice";
 import vacanciesReducer from "./features/vacancies/vacanciesSlice";
 import statisticReducer from "./features/statistics/statisticSlice";
 import siteInfoReducer from "./features/siteInfos/siteInfoSlice";
+import categoryReducer from "./features/categories/categorySlice";
+import roomReducer from "./features/rooms/roomSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +20,8 @@ export const store = configureStore({
     vacancies: vacanciesReducer,
     statistics: statisticReducer,
     infos: siteInfoReducer,
+    categories: categoryReducer,
+    rooms: roomReducer,
   },
 });
 

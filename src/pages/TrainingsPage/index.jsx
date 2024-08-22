@@ -1,25 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./trainings.module.css";
 import PageTitle from "../../components/pageTitle";
 import Tabs from "../../components/tabs";
 import { FaArrowRight, FaMinus, FaPlus } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import trainingImg from "../../assets/images/trainings/training.png";
 import Button from "../../components/Button";
-import room from "../../assets/images/trainings/room.jpeg";
 import Contact from "../../components/Contact";
 import AccordionSecond from "../../components/customAccrodionSecond";
 import TrainingsMenu from "../../components/trainingsMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCategories } from "../../features/categories/categorySlice";
+import { Box, CircularProgress } from "@mui/material";
+import Rooms from "../../components/rooms";
 
 const TrainingsPage = () => {
-  const menus = [
-    "Data analitika",
-    "Mühasibatlıq",
-    "Komputer bacarıqları",
-    "İnsan resursları",
-    "Yumşaq səriştələr",
-    "Digər təlimlər",
-  ];
+  const dispatch = useDispatch();
+  const { lang } = useParams();
+  const { categories, status, error } = useSelector(
+    (state) => state.categories
+  );
+
+  useEffect(() => {
+    dispatch(fetchCategories(lang));
+  }, [lang, dispatch]);
 
   return (
     <>
@@ -32,9 +36,22 @@ const TrainingsPage = () => {
       <section className={styles.training}>
         <div className="container">
           <ul className="flex alignItemsCenter tabsMenu">
-            {menus.map((menu, index) => (
-              <Tabs key={index} title={menu} />
-            ))}
+            {status === "loading" && (
+              <Box sx={{ width: "100%" }}>
+                <CircularProgress
+                  sx={{ width: "2rem !important", height: "2rem !important" }}
+                />
+              </Box>
+            )}
+            {status === "failed" && <p>{error}</p>}
+            {status === "succeeded" &&
+              categories.map((category) => (
+                <Tabs
+                  key={category.id}
+                  title={category.title}
+                  to={category.slug}
+                />
+              ))}
           </ul>
           <div className={styles.trainingInfo}>
             <h2>Data Analitik kursu</h2>
@@ -184,40 +201,7 @@ const TrainingsPage = () => {
         </div>
       </section>
 
-      <section className={styles.rooms}>
-        <div className="container">
-          <div className={styles.roomsTitle}>
-            <h2>Dərs alacağın otaqlar</h2>
-          </div>
-          <div className={styles.roomsGrid}>
-            <article className={styles.roomsCard}>
-              <picture>
-                <img src={room} alt="" />
-              </picture>
-            </article>
-            <article className={styles.roomsCard}>
-              <picture>
-                <img src={room} alt="" />
-              </picture>
-            </article>
-            <article className={styles.roomsCard}>
-              <picture>
-                <img src={room} alt="" />
-              </picture>
-            </article>
-            <article className={styles.roomsCard}>
-              <picture>
-                <img src={room} alt="" />
-              </picture>
-            </article>
-            <article className={styles.roomsCard}>
-              <picture>
-                <img src={room} alt="" />
-              </picture>
-            </article>
-          </div>
-        </div>
-      </section>
+      <Rooms />
 
       <section className={`${styles.faqContact} flex`}>
         <div className={styles.faq}>
