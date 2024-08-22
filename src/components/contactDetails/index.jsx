@@ -1,74 +1,97 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "../Contact/contact.module.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSiteInfos } from "../../features/siteInfos/siteInfoSlice";
+import { Box, CircularProgress } from "@mui/material";
 
 const ContactDetails = ({ marginLeft, email }) => {
   const { width } = useWindowDimensions();
 
+  const dispatch = useDispatch();
+  const { lang } = useParams();
+  const { infos, status, error } = useSelector((state) => state.infos);
+
+  useEffect(() => {
+    dispatch(fetchSiteInfos(lang));
+  }, [lang, dispatch]);
+
   return (
     <>
-      {email ? (
-        <ul
-          className={`${styles.contactDetails} flex flexDirectionColumn`}
-          style={{ marginLeft: marginLeft }}
-        >
-          <li className="flex flexDirectionColumn">
-            <span>Fiziki şəxslər üçün</span>
-            <span>
-              Tel:<Link>(+994) 50 290 61 21</Link>
-            </span>
-          </li>
-          <li className="flex flexDirectionColumn">
-            <span>Korporativ müştərilər üçün</span>
-            <span>
-              Tel:<Link>(+994) 50 290 61 31</Link>
-            </span>
-          </li>
-          <li className="flex flexDirectionColumn">
-            <span>
-              DMA, Technest, Qaçqınkom və digər dövlətlə əməkdaşlıq layihələri
-              üçün
-            </span>
-            <span>
-              Tel:<Link>(+994) 51 230 25 17</Link>
-            </span>
-          </li>
-          <li className="flex flexDirectionColumn">
-            <span>
-              Tel:<Link to={"mailto:info@innab.org"}>info@innab.org</Link>
-            </span>
-          </li>
-        </ul>
-      ) : !email && width > 768 ? (
-        <ul
-          className={`${styles.contactDetails} flex flexDirectionColumn`}
-          style={{ marginLeft: marginLeft }}
-        >
-          <li className="flex flexDirectionColumn">
-            <span>Fiziki şəxslər üçün</span>
-            <span>
-              Tel:<Link>(+994) 50 290 61 21</Link>
-            </span>
-          </li>
-          <li className="flex flexDirectionColumn">
-            <span>Korporativ müştərilər üçün</span>
-            <span>
-              Tel:<Link>(+994) 50 290 61 31</Link>
-            </span>
-          </li>
-          <li className="flex flexDirectionColumn">
-            <span>
-              DMA, Technest, Qaçqınkom və digər dövlətlə əməkdaşlıq layihələri
-              üçün
-            </span>
-            <span>
-              Tel:<Link>(+994) 51 230 25 17</Link>
-            </span>
-          </li>
-        </ul>
-      ) : (
-        ""
+      {status === "loading" && (
+        <Box sx={{ width: "100%" }}>
+          <CircularProgress
+            sx={{ width: "2rem !important", height: "2rem !important" }}
+          />
+        </Box>
+      )}
+      {status === "failed" && <p>{error}</p>}
+      {status === "succeeded" && (
+        <>
+          {email ? (
+            <ul
+              className={`${styles.contactDetails} flex flexDirectionColumn`}
+              style={{ marginLeft: marginLeft }}
+            >
+              <li className="flex flexDirectionColumn">
+                <span>Fiziki şəxslər üçün</span>
+                <span>
+                  Tel: <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
+                </span>
+              </li>
+              <li className="flex flexDirectionColumn">
+                <span>Korporativ müştərilər üçün</span>
+                <span>
+                  Tel: <Link to={`tel:${infos.phone2}`}>{infos.phone2}</Link>
+                </span>
+              </li>
+              <li className="flex flexDirectionColumn">
+                <span>
+                  DMA, Technest, Qaçqınkom və digər dövlətlə əməkdaşlıq
+                  layihələri üçün
+                </span>
+                <span>
+                  Tel: <Link to={`tel:${infos.phone2}`}>{infos.phone2}</Link>
+                </span>
+              </li>
+              <li className="flex flexDirectionColumn">
+                <span>
+                  <Link to={`mailto:${infos.email2}`}>{infos.email2}</Link>
+                </span>
+              </li>
+            </ul>
+          ) : !email && width > 768 ? (
+            <ul
+              className={`${styles.contactDetails} flex flexDirectionColumn`}
+              style={{ marginLeft: marginLeft }}
+            >
+              <li className="flex flexDirectionColumn">
+                <span>Fiziki şəxslər üçün</span>
+                <span>
+                  Tel: <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
+                </span>
+              </li>
+              <li className="flex flexDirectionColumn">
+                <span>Korporativ müştərilər üçün</span>
+                <span>
+                  Tel: <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
+                </span>
+              </li>
+              <li className="flex flexDirectionColumn">
+                <span>
+                  DMA, Technest, Qaçqınkom və digər dövlətlə əməkdaşlıq
+                  layihələri üçün
+                </span>
+                <span>
+                  Tel: <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
+                </span>
+              </li>
+            </ul>
+          ) : (
+            ""
+          )}
+        </>
       )}
     </>
   );

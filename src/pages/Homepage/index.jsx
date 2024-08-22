@@ -4,16 +4,8 @@ import { Autoplay, Scrollbar } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import CountUp from "react-countup";
 import styles from "./home.module.css";
 import hero from "../../assets/images/homepage/hero.jpeg";
-import stats1 from "../../assets/images/homepage/təlim_növü1.svg";
-import stats2 from "../../assets/images/homepage/işlə_təmin1.svg";
-import stats3 from "../../assets/images/homepage/tələbə1.svg";
-import stats4 from "../../assets/images/homepage/təcrübə1.svg";
-import stats5 from "../../assets/images/homepage/video.svg";
-import stats6 from "../../assets/images/homepage/partnyor2.svg";
-import stats7 from "../../assets/images/homepage/məqalə1.svg";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import SectionTitle from "../../components/SectionTitle";
 import { NavLink, useOutletContext } from "react-router-dom";
@@ -29,77 +21,16 @@ import UsefulCard from "../../components/UsefulCard";
 import Customers from "../../components/Customers";
 import Contact from "../../components/Contact";
 import Button from "../../components/Button";
-import CounterSlider from "../../components/sliders/counterSlider";
 import PartnersSlider from "../../components/sliders/partnersSlider";
-
-const statisticsData = [
-  { img: stats1, count: 25, label: "Təlim növü", className: "statsCard1" },
-  {
-    img: stats2,
-    count: 25,
-    label: "İşlə təmin sayı",
-    className: "statsCard2",
-  },
-  {
-    img: stats3,
-    count: 15000,
-    label: "Maariflənən tələbə",
-    className: "statsCard3",
-  },
-  { img: stats4, count: 8, label: "İllik təcrübə", className: "statsCard4" },
-  {
-    img: stats5,
-    count: 900,
-    label: "Öyrədici video",
-    className: "statsCard3",
-  },
-  {
-    img: stats6,
-    count: 200,
-    label: "Partnyorlar",
-    className: "statsCard2",
-  },
-  { img: stats7, count: 200, label: "Məqalə", className: "statsCard1" },
-];
+import StatsCounter from "../../components/statsCounter";
 
 const Homepage = () => {
-  const { height, width } = useWindowDimensions();
-  const [isVisible, setIsVisible] = useState(false);
+  const { width } = useWindowDimensions();
   const [paginationContent, setPaginationContent] = useState("");
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
-  const statsRef = useRef(null);
   const swiperRef = useRef(null);
   const { partnersRef } = useOutletContext();
-
-  const formatCount = (count) => {
-    if (count >= 1000 && width <= 1024) {
-      return `${(count / 1000).toFixed(0)}k`;
-    }
-    return count;
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (statsRef.current) {
-      observer.observe(statsRef.current);
-    }
-
-    return () => {
-      if (statsRef.current) {
-        observer.unobserve(statsRef.current);
-      }
-    };
-  }, []);
 
   const onSwiperInit = (swiper) => {
     swiperRef.current = swiper;
@@ -150,47 +81,7 @@ const Homepage = () => {
               <Button title={"Müraciət et"} to={"#contact"} color="orange" />
             </div>
 
-            <div
-              className={`${styles.statistics} stats flex alignItemsCenter justifyContentBetween`}
-              ref={statsRef}
-            >
-              {width >= 1024 ? (
-                <>
-                  {statisticsData.map((stat, index) => (
-                    <div
-                      key={index}
-                      className={`${styles.statisticsCard} ${
-                        styles[stat.className]
-                      }`}
-                    >
-                      <div>
-                        <img src={stat.img} alt="" />
-                      </div>
-                      <p>
-                        {isVisible ? (
-                          <CountUp
-                            end={stat.count}
-                            duration={2}
-                            formattingFn={formatCount}
-                          />
-                        ) : (
-                          0
-                        )}
-                        +
-                      </p>
-                      <span>{stat.label}</span>
-                    </div>
-                  ))}
-                </>
-              ) : (
-                <CounterSlider
-                  // onSlideChange={onSlideChange}
-                  onSwiperInit={onSwiperInit}
-                  formatCount={formatCount}
-                  isVisible={isVisible}
-                />
-              )}
-            </div>
+            <StatsCounter />
           </div>
         </div>
       </section>

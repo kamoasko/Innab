@@ -1,10 +1,20 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import logo from "../../assets/images/logo.svg";
+import React, { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import ContactDetails from "../contactDetails";
 import SocialNetworks from "../SocialNetworks";
+import { useDispatch, useSelector } from "react-redux";
+import { Box, CircularProgress } from "@mui/material";
+import { fetchSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 
 const Footer = () => {
+  const dispatch = useDispatch();
+  const { lang } = useParams();
+  const { infos, status, error } = useSelector((state) => state.infos);
+
+  useEffect(() => {
+    dispatch(fetchSiteInfos(lang));
+  }, [lang, dispatch]);
+
   return (
     <footer>
       <div className="footerTop">
@@ -45,11 +55,7 @@ const Footer = () => {
             <div>
               <h5>Ünvan</h5>
               <div>
-                <p>
-                  Nərimanov rayonu, Fətəli Xan Xoyski 118 A (Talassemiya
-                  Mərkəzinin yanında, Gənclik və Nərimanov metrolarının
-                  yaxınlığında)
-                </p>
+                <p>{infos.address}</p>
               </div>
             </div>
             <div>
@@ -59,9 +65,19 @@ const Footer = () => {
             <div>
               <h5>Bizi izləyin</h5>
               <SocialNetworks gap={"2.4rem"} />
-              <div className="footerLogo">
-                <img src={logo} alt="" />
-              </div>
+              {status === "loading" && (
+                <Box sx={{ width: "100%" }}>
+                  <CircularProgress
+                    sx={{ width: "2rem !important", height: "2rem !important" }}
+                  />
+                </Box>
+              )}
+              {status === "failed" && <p>{error}</p>}
+              {status === "succeeded" && (
+                <div className="footerLogo">
+                  <img src={infos.header_footer} alt="" />
+                </div>
+              )}
             </div>
           </div>
         </div>

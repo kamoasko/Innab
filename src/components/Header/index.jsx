@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import "../../general.css";
+import React, { useEffect, useState } from "react";
 import {
   Link,
   NavLink,
@@ -10,22 +9,20 @@ import {
 import logo from "../../assets/images/logo.svg";
 import SocialNetworks from "../SocialNetworks";
 import Button from "../Button";
+import LangForm from "../langForm";
+import SearchBar from "../searchBar";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchLanguages,
-  setLanguage,
-} from "../../features/languages/languageSlice";
+import { fetchSiteInfos } from "../../features/siteInfos/siteInfoSlice";
+import { Box, CircularProgress } from "@mui/material";
 
-const Header = ({ partnersRef, onLanguageChange }) => {
+const Header = ({ partnersRef }) => {
   const [searchBarOpen, setSearchBarOpen] = useState(false);
   const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
   const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
   const [mobMenuOpen, setMobMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const { lang } = useParams();
-  const { languages, selectedLanguage } = useSelector(
-    (state) => state.languages
-  );
+  const { infos, status, error } = useSelector((state) => state.infos);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -59,34 +56,32 @@ const Header = ({ partnersRef, onLanguageChange }) => {
   };
 
   useEffect(() => {
-    dispatch(fetchLanguages());
-  }, [dispatch]);
-
-  const handleLanguageChange = (event) => {
-    const selectedLang = event.target.value;
-    dispatch(setLanguage(selectedLang));
-
-    // Replace the current language in the URL with the new one
-    const newUrl = window.location.pathname.replace(
-      `/${lang}`,
-      `/${selectedLang}`
-    );
-    navigate(newUrl); // Navigate to the new URL
-  };
+    dispatch(fetchSiteInfos(lang));
+  }, [lang, dispatch]);
 
   return (
     <header>
       <div className="container">
         <div className="headerTop flex alignItemsCenter justifyContentBetween">
-          <Link to={"/"} className="headerTopLogo">
-            <img src={logo} alt="Innab logo" />
-          </Link>
+          {status === "loading" && (
+            <Box sx={{ width: "100%" }}>
+              <CircularProgress
+                sx={{ width: "2rem !important", height: "2rem !important" }}
+              />
+            </Box>
+          )}
+          {status === "failed" && <p>{error}</p>}
+          {status === "succeeded" && (
+            <Link to={"/"} className="headerTopLogo">
+              <img src={infos.header_top} alt="Innab logo" />
+            </Link>
+          )}
           <div className="headerTopRight flex alignItemsCenter justifyContentBetween">
             <SocialNetworks gap={"3.2rem"} />
             <div className="headerTopTools flex alignItemsCenter">
               <ul className="headerTopContact flex alignItemsCenter">
                 <li>
-                  <Link to={"tel:+994502906121"}>
+                  <Link to={`tel:${infos.phone1}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -99,11 +94,11 @@ const Header = ({ partnersRef, onLanguageChange }) => {
                         fill="#3138E3"
                       />
                     </svg>
-                    (+994) 50 290 61 21
+                    {infos.phone1}
                   </Link>
                 </li>
                 <li>
-                  <Link to={"mailto:info@innab.org"}>
+                  <Link to={`mailto:${infos.email2}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -116,24 +111,11 @@ const Header = ({ partnersRef, onLanguageChange }) => {
                         fill="#3138E3"
                       />
                     </svg>
-                    info@innab.org
+                    {infos.email2}
                   </Link>
                 </li>
               </ul>
-              <form action="" className="headerTopLang">
-                <select
-                  name="language"
-                  id="language"
-                  onChange={handleLanguageChange}
-                  value={lang}
-                >
-                  {languages.map((lang) => (
-                    <option key={lang.site_code} value={lang.site_code}>
-                      {lang.site_code}
-                    </option>
-                  ))}
-                </select>
-              </form>
+              <LangForm />
             </div>
           </div>
           <div className="headerMobileTools flex alignItemsCenter">
@@ -204,95 +186,19 @@ const Header = ({ partnersRef, onLanguageChange }) => {
           </div>
         </div>
       </div>
-      <form action="" className={`searchForm ${searchBarOpen ? "open" : ""}`}>
-        <div className="searchBar" id="">
-          <button name="">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-            >
-              <path
-                d="M8.12507 1.25C11.9221 1.25 15.0001 4.32821 15.0001 8.12536C15.0001 9.68585 14.4803 11.1249 13.6043 12.2788L18.4739 17.1542C18.8398 17.5205 18.8394 18.1141 18.4731 18.48C18.1068 18.8459 17.5132 18.8456 17.1473 18.4792L12.2783 13.6049C11.1245 14.4809 9.68549 15.0007 8.12507 15.0007C4.32807 15.0007 1.25 11.9225 1.25 8.12536C1.25 4.32821 4.32807 1.25 8.12507 1.25ZM8.12507 3.125C5.36363 3.125 3.125 5.36372 3.125 8.12536C3.125 10.887 5.36363 13.1257 8.12507 13.1257C10.8865 13.1257 13.1251 10.887 13.1251 8.12536C13.1251 5.36372 10.8865 3.125 8.12507 3.125Z"
-                fill="#333333"
-              />
-            </svg>
-          </button>
-          <input type="search" name="" id="" />
-          <button
-            type="button"
-            name=""
-            id=""
-            onClick={() => setSearchBarOpen(false)}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-            >
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M4.71967 4.71967C5.01256 4.42678 5.48744 4.42678 5.78033 4.71967L10 8.93934L14.2197 4.71967C14.5126 4.42678 14.9874 4.42678 15.2803 4.71967C15.5732 5.01256 15.5732 5.48744 15.2803 5.78033L11.0607 10L15.2803 14.2197C15.5732 14.5126 15.5732 14.9874 15.2803 15.2803C14.9874 15.5732 14.5126 15.5732 14.2197 15.2803L10 11.0607L5.78033 15.2803C5.48744 15.5732 5.01256 15.5732 4.71967 15.2803C4.42678 14.9874 4.42678 14.5126 4.71967 14.2197L8.93934 10L4.71967 5.78033C4.42678 5.48744 4.42678 5.01256 4.71967 4.71967Z"
-                fill="#333333"
-              />
-            </svg>
-          </button>
-        </div>
-      </form>
+      <SearchBar
+        isOpen={searchBarOpen}
+        onClose={() => setSearchBarOpen(false)}
+        top
+      />
       <div className={`headerBottom ${mobMenuOpen ? "opened" : ""}`}>
         {searchBarOpen ? (
           <div className="container">
-            <form action="">
-              <div className={`searchBar ${searchBarOpen ? "open" : ""}`} id="">
-                <button name="">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M7.92893 7.92893C9.73721 6.12066 12.2389 5 15 5C17.7611 5 20.2628 6.12066 22.0711 7.92893C23.8793 9.73721 25 12.2389 25 15C25 17.7611 23.8793 20.2628 22.0711 22.0711C20.2628 23.8793 17.7611 25 15 25C12.2389 25 9.73721 23.8793 7.92893 22.0711C6.12066 20.2628 5 17.7611 5 15C5 12.2389 6.12066 9.73721 7.92893 7.92893ZM15 7.5C12.9286 7.5 11.0553 8.3381 9.6967 9.6967C8.3381 11.0553 7.5 12.9286 7.5 15C7.5 17.0714 8.3381 18.9447 9.6967 20.3033C11.0553 21.6619 12.9286 22.5 15 22.5C17.0714 22.5 18.9447 21.6619 20.3033 20.3033C21.6619 18.9447 22.5 17.0714 22.5 15C22.5 12.9286 21.6619 11.0553 20.3033 9.6967C18.9447 8.3381 17.0714 7.5 15 7.5Z"
-                      fill="#3138E3"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M21.6243 21.3565C22.1124 20.8684 22.9039 20.8684 23.392 21.3565L28.1435 26.108C28.6316 26.5961 28.6316 27.3876 28.1435 27.8757C27.6553 28.3639 26.8639 28.3639 26.3757 27.8757L21.6243 23.1243C21.1361 22.6361 21.1361 21.8447 21.6243 21.3565Z"
-                      fill="#3138E3"
-                    />
-                  </svg>
-                </button>
-                <input type="search" name="" id="" />
-                <button
-                  type="button"
-                  name=""
-                  id=""
-                  onClick={() => setSearchBarOpen(false)}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                  >
-                    <path
-                      d="M7.19216 7.19216C7.63847 6.74584 8.36209 6.74584 8.8084 7.19216L16.0003 14.3831L23.1922 7.19216C23.6041 6.78018 24.2524 6.74848 24.7007 7.09708L24.8084 7.19216C25.2547 7.63847 25.2547 8.36209 24.8084 8.8084L17.6174 16.0003L24.8084 23.1922C25.2204 23.6041 25.2521 24.2524 24.9035 24.7007L24.8084 24.8084C24.3621 25.2547 23.6385 25.2547 23.1922 24.8084L16.0003 17.6174L8.8084 24.8084C8.39642 25.2204 7.74816 25.2521 7.29982 24.9035L7.19216 24.8084C6.74584 24.3621 6.74584 23.6385 7.19216 23.1922L14.3831 16.0003L7.19216 8.8084C6.78018 8.39642 6.74848 7.74816 7.09708 7.29982L7.19216 7.19216Z"
-                      fill="#808080"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </form>
+            <SearchBar
+              isOpen={searchBarOpen}
+              onClose={() => setSearchBarOpen(false)}
+              bottom
+            />
           </div>
         ) : (
           <nav className="navbar flex alignItemsCenter justifyContentBetween container">

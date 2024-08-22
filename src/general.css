@@ -341,7 +341,8 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .MuiAccordionSummary-content.Mui-expanded {
-  p {
+  h2,
+  strong {
     color: var(--color-main);
   }
 }

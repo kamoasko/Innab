@@ -1,8 +1,8 @@
 import React, { Suspense, useEffect } from "react";
+import styles from "./blogs.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchBlogPosts } from "../../features/blog/blogSlice";
-import styles from "./blogs.module.css";
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import { useParams } from "react-router";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
@@ -14,7 +14,6 @@ const BlogPage = () => {
   const dispatch = useDispatch();
   const { lang } = useParams();
   const { posts, status, error } = useSelector((state) => state.blog);
-  const { selectedLanguage } = useSelector((state) => state.languages);
 
   useEffect(() => {
     dispatch(fetchBlogPosts(lang));
@@ -48,7 +47,18 @@ const BlogPage = () => {
             ))}
           </ul>
           <div className={styles.blogGrid}>
-            {status === "loading" && <CircularProgress />}
+            {status === "loading" && (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%",
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            )}
             {status === "failed" && <p>{error}</p>}
             {status === "succeeded" &&
               posts.map((post, index) => (
