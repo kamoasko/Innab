@@ -59,7 +59,7 @@ const BlogPage = () => {
                 <CircularProgress />
               </Box>
             )}
-            {status === "failed" && <p>{error}</p>}
+            {status === "failed" && <Box>{error}</Box>}
             {status === "succeeded" &&
               posts.map((post, index) => (
                 <BlogCard

@@ -5,7 +5,7 @@ export const fetchSiteInfos = createAsyncThunk(
   "siteInfos/fetchSiteInfos",
   async (lang, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`${lang}/get_siteinfo`);
+      const response = await axiosInstance.get(`/${lang}/get_siteinfo`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

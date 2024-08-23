@@ -22,6 +22,7 @@ import ContactPage from "./pages/ContactPage";
 import Privacy from "./pages/Privacy";
 import ScrollToTop from "./components/scrollToTop";
 import { useSelector } from "react-redux";
+import VideoGrid from "./components/videosGrid";
 
 function App() {
   const { selectedLanguage } = useSelector((state) => state.languages);
@@ -51,13 +52,15 @@ function App() {
           </Route>
 
           <Route path="useful-for-you">
-            <Route path="video-lessons">
-              <Route index element={<VideoLessons />} />
-              <Route
-                path=":slug"
-                element={<DetailPage pageTitle={"Video dərslər"} />}
-              />
+            <Route path="video-lessons" element={<VideoLessons />}>
+              <Route path=":slug" element={<VideoGrid />}>
+                <Route
+                  path=":videoSlug"
+                  element={<DetailPage pageTitle={"Video dərslər"} />}
+                />
+              </Route>
             </Route>
+
             <Route path="blog">
               <Route index element={<BlogPage />} />
               <Route

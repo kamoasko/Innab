@@ -9,6 +9,7 @@ import statisticReducer from "./features/statistics/statisticSlice";
 import categoryReducer from "./features/categories/categorySlice";
 import roomReducer from "./features/rooms/roomSlice";
 import SiteReducer from "./features/siteInfos/siteInfoSlice";
+import videoLessonReducer from "./features/videoLessons/videoLessonSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     infos: SiteReducer,
     categories: categoryReducer,
     rooms: roomReducer,
+    videos: videoLessonReducer,
   },
 });
 

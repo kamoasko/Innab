@@ -1,18 +1,53 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./video-lessons.module.css";
 import PageTitle from "../../components/pageTitle";
 import Tabs from "../../components/tabs";
-import VideoLessonCard from "../../components/videoLessonCard";
-import videoImg from "../../assets/images/videoLessons/video-lesson.jpeg";
 import Contact from "../../components/Contact";
-import { Outlet } from "react-router";
+import { Outlet, useParams } from "react-router";
+import VideoGrid from "../../components/videosGrid";
 
 const VideoLessons = () => {
   const menus = [
-    "Data analitika",
-    "Mühasibatlıq",
-    "Komputer bacarıqları",
-    "Faydalı mövzular",
+    {
+      id: 18,
+      title: "Data analitika",
+      seo_title: "Data analitika",
+      seo_keywords: "",
+      seo_description: "",
+      seo_links: null,
+      seo_scripts: null,
+      slug: "data-analitika",
+    },
+    {
+      id: 19,
+      title: "Mühasibatlıq",
+      seo_title: "Mühasibatlıq",
+      seo_keywords: "",
+      seo_description: "",
+      seo_links: null,
+      seo_scripts: null,
+      slug: "muhasibatliq",
+    },
+    {
+      id: 20,
+      title: "Komputer bacarıqları",
+      seo_title: "Komputer bacarıqları",
+      seo_keywords: "",
+      seo_description: "",
+      seo_links: null,
+      seo_scripts: null,
+      slug: "komputer-bacariqlari",
+    },
+    {
+      id: 21,
+      title: "Faydalı mövzular",
+      seo_title: "Faydalı mövzular",
+      seo_keywords: "",
+      seo_description: "",
+      seo_links: null,
+      seo_scripts: null,
+      slug: "faydali-movzular",
+    },
   ];
 
   return (
@@ -21,55 +56,17 @@ const VideoLessons = () => {
         <div className="container">
           <PageTitle title={"Video dərslər"} />
           <ul className="flex alignItemsCenter tabsMenu">
-            {menus.map((menu, index) => (
-              <Tabs key={index} title={menu} />
+            {menus.map((menu) => (
+              <Tabs
+                key={menu.id}
+                title={menu.title}
+                to={`useful-for-you/video-lessons/${menu.slug}`}
+                categoryId={menu.id}
+              />
             ))}
           </ul>
-          <div className={styles.videoLessonsGrid}>
-            <VideoLessonCard
-              img={videoImg}
-              title={"55 Dərsə Excel"}
-              det={
-                "Exceli A-dan Z-ə öyrən.Excel, Paste Special: Values, Formulas, Formats, Comments Excel kursları zamanı 100-dən çox praktiki test ilə bilik və barcarıqlarınız yoxlanılacaq."
-              }
-              to={"1"}
-            />
-            <VideoLessonCard
-              img={videoImg}
-              title={"55 Dərsə Excel"}
-              det={
-                "Exceli A-dan Z-ə öyrən.Excel, Paste Special: Values, Formulas, Formats, Comments Excel kursları zamanı 100-dən çox praktiki test ilə bilik və barcarıqlarınız yoxlanılacaq."
-              }
-            />
-            <VideoLessonCard
-              img={videoImg}
-              title={"55 Dərsə Excel"}
-              det={
-                "Exceli A-dan Z-ə öyrən.Excel, Paste Special: Values, Formulas, Formats, Comments Excel kursları zamanı 100-dən çox praktiki test ilə bilik və barcarıqlarınız yoxlanılacaq."
-              }
-            />
-            <VideoLessonCard
-              img={videoImg}
-              title={"55 Dərsə Excel"}
-              det={
-                "Exceli A-dan Z-ə öyrən.Excel, Paste Special: Values, Formulas, Formats, Comments Excel kursları zamanı 100-dən çox praktiki test ilə bilik və barcarıqlarınız yoxlanılacaq."
-              }
-            />
-            <VideoLessonCard
-              img={videoImg}
-              title={"55 Dərsə Excel"}
-              det={
-                "Exceli A-dan Z-ə öyrən.Excel, Paste Special: Values, Formulas, Formats, Comments Excel kursları zamanı 100-dən çox praktiki test ilə bilik və barcarıqlarınız yoxlanılacaq."
-              }
-            />
-            <VideoLessonCard
-              img={videoImg}
-              title={"55 Dərsə Excel"}
-              det={
-                "Exceli A-dan Z-ə öyrən.Excel, Paste Special: Values, Formulas, Formats, Comments Excel kursları zamanı 100-dən çox praktiki test ilə bilik və barcarıqlarınız yoxlanılacaq."
-              }
-            />
-          </div>
+          <VideoGrid />
+          <Outlet />
         </div>
       </section>
 
@@ -80,7 +77,6 @@ const VideoLessons = () => {
           <strong>bizə zəng elə</strong>,
         ]}
       />
-      <Outlet />
     </>
   );
 };
