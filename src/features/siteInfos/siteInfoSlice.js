@@ -1,19 +1,22 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axiosInstance from "../../axios";
 
 export const fetchSiteInfos = createAsyncThunk(
-  "infos/fetchSiteInfos",
-  async (languageCode) => {
-    const apiUrl = `https://innab.coder.az/api/${languageCode}/get_siteinfo`;
-    const response = await axios.get(apiUrl);
-    return response.data.data;
+  "siteInfos/fetchSiteInfos",
+  async (lang, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`${lang}/get_siteinfo`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 
-const SiteInfoSlice = createSlice({
-  name: "infos",
+const siteInfosSlice = createSlice({
+  name: "siteInfos",
   initialState: {
-    infos: [],
+    infos: {},
     status: "idle",
     error: null,
   },
@@ -29,9 +32,9 @@ const SiteInfoSlice = createSlice({
       })
       .addCase(fetchSiteInfos.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.payload;
       });
   },
 });
 
-export default SiteInfoSlice.reducer;
+export default siteInfosSlice.reducer;

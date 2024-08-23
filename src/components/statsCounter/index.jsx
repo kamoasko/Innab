@@ -28,7 +28,7 @@ const StatisticCard = ({ stat, isVisible, formatCount, className }) => (
   </div>
 );
 
-const StatsCounter = () => {
+const StatsCounter = React.memo(() => {
   const dispatch = useDispatch();
   const { lang } = useParams();
   const { statistics, status, error } = useSelector(
@@ -145,6 +145,6 @@ const StatsCounter = () => {
       )}
     </div>
   );
-};
+});
 
 export default StatsCounter;

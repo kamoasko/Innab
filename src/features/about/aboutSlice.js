@@ -1,13 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../../axios";
 
 export const fetchAboutCards = createAsyncThunk(
   "about/fetchAboutCards",
-  async (languageCode) => {
-    const apiUrl = `https://innab.coder.az/api/${languageCode}/get_about`;
-    const response = await axios.get(apiUrl);
-
-    return response.data.data;
+  async (lang, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/${lang}/get_about`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 

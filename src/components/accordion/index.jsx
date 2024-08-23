@@ -4,8 +4,8 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
-import { AccordionActions, CircularProgress } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
+import { AccordionActions, Box, CircularProgress } from "@mui/material";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVacancies } from "../../features/vacancies/vacanciesSlice";
 
@@ -23,7 +23,18 @@ export default function CustomizedAccordions() {
 
   return (
     <Suspense fallback={<CircularProgress />}>
-      {status === "loading" && <CircularProgress />}
+      {status === "loading" && (
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
       {status === "failed" && <p>{error}</p>}
       {status === "succeeded" &&
         vacancies.map((vacancy, index) => (

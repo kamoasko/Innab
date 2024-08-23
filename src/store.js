@@ -6,9 +6,9 @@ import privacyReducer from "./features/privacy/privacySlicer";
 import corporativeReducer from "./features/corporative/corporativeSlice";
 import vacanciesReducer from "./features/vacancies/vacanciesSlice";
 import statisticReducer from "./features/statistics/statisticSlice";
-import siteInfoReducer from "./features/siteInfos/siteInfoSlice";
 import categoryReducer from "./features/categories/categorySlice";
 import roomReducer from "./features/rooms/roomSlice";
+import SiteReducer from "./features/siteInfos/siteInfoSlice";
 
 export const store = configureStore({
   reducer: {
@@ -19,7 +19,7 @@ export const store = configureStore({
     corporative: corporativeReducer,
     vacancies: vacanciesReducer,
     statistics: statisticReducer,
-    infos: siteInfoReducer,
+    infos: SiteReducer,
     categories: categoryReducer,
     rooms: roomReducer,
   },

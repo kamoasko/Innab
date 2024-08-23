@@ -1,12 +1,12 @@
 // src/redux/slices/languageSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../../axios";
 
 export const fetchLanguages = createAsyncThunk(
   "languages/fetchLanguages",
   async () => {
-    const response = await axios.get("https://innab.coder.az/api/get_langs");
-    return response.data.data;
+    const response = await axiosInstance.get("/get_langs");
+    return response.data;
   }
 );
 
@@ -14,7 +14,7 @@ const languageSlice = createSlice({
   name: "languages",
   initialState: {
     languages: [],
-    selectedLanguage: "az", // Default to Azerbaijani
+    selectedLanguage: "az",
     status: "idle",
     error: null,
   },

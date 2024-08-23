@@ -6,7 +6,6 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import logo from "../../assets/images/logo.svg";
 import SocialNetworks from "../SocialNetworks";
 import Button from "../Button";
 import LangForm from "../langForm";
@@ -15,7 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { Box, CircularProgress } from "@mui/material";
 
-const Header = ({ partnersRef }) => {
+const Header = React.memo(({ partnersRef }) => {
   const [searchBarOpen, setSearchBarOpen] = useState(false);
   const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
   const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
@@ -990,6 +989,6 @@ const Header = ({ partnersRef }) => {
       </div>
     </header>
   );
-};
+});
 
 export default Header;

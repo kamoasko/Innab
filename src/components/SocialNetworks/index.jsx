@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { fetchSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { Box, CircularProgress } from "@mui/material";
+import { FaInstagram } from "react-icons/fa6";
 
-const SocialNetworks = ({ gap }) => {
+const SocialNetworks = React.memo(({ gap, contact }) => {
   const dispatch = useDispatch();
   const { lang } = useParams();
   const { infos, status, error } = useSelector((state) => state.infos);
@@ -22,14 +23,14 @@ const SocialNetworks = ({ gap }) => {
           />
         </Box>
       )}
-      {status === "failed" && <p>{error}</p>}
+      {status === "failed" && <Box>{error}</Box>}
       {status === "succeeded" && (
         <ul
           className="socialNetworks flex alignItemsCenter"
           style={{ gap: gap }}
         >
           <li>
-            <Link>
+            <Link to={infos.facebook_link}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -57,67 +58,71 @@ const SocialNetworks = ({ gap }) => {
           </li>
           <li>
             <Link to={infos.instagram_link}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-              >
-                <path
-                  d="M14.9951 0H5.00486C2.24567 0 0 2.24566 0 5.00485V14.1443C0 16.9035 2.24567 19.1492 5.00486 19.1492H14.9951C17.7543 19.1492 20 16.9035 20 14.1443V5.00485C20 2.24566 17.7543 0 14.9951 0ZM1.76544 5.00485C1.76544 3.2186 3.2186 1.76544 5.00486 1.76544H14.9951C16.7814 1.76544 18.2345 3.2186 18.2345 5.00485V14.1443C18.2345 15.9306 16.7814 17.3837 14.9951 17.3837H5.00486C3.2186 17.3837 1.76544 15.9306 1.76544 14.1443V5.00485Z"
-                  fill="url(#paint0_linear_1015_22592)"
-                />
-                <path
-                  d="M10.0018 14.2301C12.5681 14.2301 14.6569 12.1413 14.6569 9.57502C14.6569 7.00875 12.5681 4.91992 10.0018 4.91992C7.43551 4.91992 5.34668 7.00875 5.34668 9.57502C5.34668 12.1413 7.43551 14.2301 10.0018 14.2301ZM10.0018 6.68536C11.5951 6.68536 12.8914 7.98168 12.8914 9.57502C12.8914 11.1684 11.5951 12.4647 10.0018 12.4647C8.40845 12.4647 7.11212 11.1684 7.11212 9.57502C7.11212 7.98168 8.40845 6.68536 10.0018 6.68536Z"
-                  fill="url(#paint1_linear_1015_22592)"
-                />
-                <path
-                  d="M15.0877 5.67148C15.7789 5.67148 16.3424 5.10937 16.3424 4.41679C16.3424 3.72422 15.7803 3.16211 15.0877 3.16211C14.3951 3.16211 13.833 3.72422 13.833 4.41679C13.833 5.10937 14.3951 5.67148 15.0877 5.67148Z"
-                  fill="url(#paint2_linear_1015_22592)"
-                />
-                <defs>
-                  <linearGradient
-                    id="paint0_linear_1015_22592"
-                    x1="1.56003"
-                    y1="17.6988"
-                    x2="18.7994"
-                    y2="1.10616"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#FAAD4F" />
-                    <stop offset="0.35" stopColor="#DD2A7B" />
-                    <stop offset="0.62" stopColor="#9537B0" />
-                    <stop offset="1" stopColor="#515BD4" />
-                  </linearGradient>
-                  <linearGradient
-                    id="paint1_linear_1015_22592"
-                    x1="1.56042"
-                    y1="17.6985"
-                    x2="18.7998"
-                    y2="1.10588"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#FAAD4F" />
-                    <stop offset="0.35" stopColor="#DD2A7B" />
-                    <stop offset="0.62" stopColor="#9537B0" />
-                    <stop offset="1" stopColor="#515BD4" />
-                  </linearGradient>
-                  <linearGradient
-                    id="paint2_linear_1015_22592"
-                    x1="1.42908"
-                    y1="17.5632"
-                    x2="18.6685"
-                    y2="0.970503"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#FAAD4F" />
-                    <stop offset="0.35" stopColor="#DD2A7B" />
-                    <stop offset="0.62" stopColor="#9537B0" />
-                    <stop offset="1" stopColor="#515BD4" />
-                  </linearGradient>
-                </defs>
-              </svg>
+              {contact ? (
+                <FaInstagram style={{ width: "2.4rem", height: "2.4rem" }} />
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  fill="none"
+                >
+                  <path
+                    d="M14.9951 0H5.00486C2.24567 0 0 2.24566 0 5.00485V14.1443C0 16.9035 2.24567 19.1492 5.00486 19.1492H14.9951C17.7543 19.1492 20 16.9035 20 14.1443V5.00485C20 2.24566 17.7543 0 14.9951 0ZM1.76544 5.00485C1.76544 3.2186 3.2186 1.76544 5.00486 1.76544H14.9951C16.7814 1.76544 18.2345 3.2186 18.2345 5.00485V14.1443C18.2345 15.9306 16.7814 17.3837 14.9951 17.3837H5.00486C3.2186 17.3837 1.76544 15.9306 1.76544 14.1443V5.00485Z"
+                    fill="url(#paint0_linear_1015_22592)"
+                  />
+                  <path
+                    d="M10.0018 14.2301C12.5681 14.2301 14.6569 12.1413 14.6569 9.57502C14.6569 7.00875 12.5681 4.91992 10.0018 4.91992C7.43551 4.91992 5.34668 7.00875 5.34668 9.57502C5.34668 12.1413 7.43551 14.2301 10.0018 14.2301ZM10.0018 6.68536C11.5951 6.68536 12.8914 7.98168 12.8914 9.57502C12.8914 11.1684 11.5951 12.4647 10.0018 12.4647C8.40845 12.4647 7.11212 11.1684 7.11212 9.57502C7.11212 7.98168 8.40845 6.68536 10.0018 6.68536Z"
+                    fill="url(#paint1_linear_1015_22592)"
+                  />
+                  <path
+                    d="M15.0877 5.67148C15.7789 5.67148 16.3424 5.10937 16.3424 4.41679C16.3424 3.72422 15.7803 3.16211 15.0877 3.16211C14.3951 3.16211 13.833 3.72422 13.833 4.41679C13.833 5.10937 14.3951 5.67148 15.0877 5.67148Z"
+                    fill="url(#paint2_linear_1015_22592)"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_1015_22592"
+                      x1="1.56003"
+                      y1="17.6988"
+                      x2="18.7994"
+                      y2="1.10616"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stopColor="#FAAD4F" />
+                      <stop offset="0.35" stopColor="#DD2A7B" />
+                      <stop offset="0.62" stopColor="#9537B0" />
+                      <stop offset="1" stopColor="#515BD4" />
+                    </linearGradient>
+                    <linearGradient
+                      id="paint1_linear_1015_22592"
+                      x1="1.56042"
+                      y1="17.6985"
+                      x2="18.7998"
+                      y2="1.10588"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stopColor="#FAAD4F" />
+                      <stop offset="0.35" stopColor="#DD2A7B" />
+                      <stop offset="0.62" stopColor="#9537B0" />
+                      <stop offset="1" stopColor="#515BD4" />
+                    </linearGradient>
+                    <linearGradient
+                      id="paint2_linear_1015_22592"
+                      x1="1.42908"
+                      y1="17.5632"
+                      x2="18.6685"
+                      y2="0.970503"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stopColor="#FAAD4F" />
+                      <stop offset="0.35" stopColor="#DD2A7B" />
+                      <stop offset="0.62" stopColor="#9537B0" />
+                      <stop offset="1" stopColor="#515BD4" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              )}
             </Link>
           </li>
           <li>
@@ -144,7 +149,7 @@ const SocialNetworks = ({ gap }) => {
             </Link>
           </li>
           <li>
-            <Link to={infos.twitter_link}>
+            <Link to={infos.tiktok_link}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -198,6 +203,6 @@ const SocialNetworks = ({ gap }) => {
       )}
     </>
   );
-};
+});
 
 export default SocialNetworks;

@@ -44,6 +44,7 @@ const AccordionSecond = ({ summary, details }) => {
             fontFamily: "inherit",
             color: "var(--color-light-black)",
           }}
+          component={"div"}
         >
           {details}
         </Typography>

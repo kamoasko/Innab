@@ -1,12 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axiosInstance from "../../axios";
 
 export const fetchVacancies = createAsyncThunk(
   "vacancies/fetchVacancies",
-  async (languageCode) => {
-    const apiUrl = `https://innab.coder.az/api/${languageCode}/get_vacancy`;
-    const response = await axios.get(apiUrl);
-    return response.data.data;
+  async (lang, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/${lang}/get_vacancy`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
 

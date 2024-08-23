@@ -30,13 +30,11 @@ function App() {
     <>
       {/* <ScrollToTop /> */}
       <Routes>
-        {/* Redirect the root to the selected language */}
         <Route
           path="/"
           element={<Navigate to={`/${selectedLanguage}`} replace />}
         />
 
-        {/* Language-specific routes */}
         <Route path="/:lang" element={<MainLayout />}>
           <Route index element={<Homepage />} />
           <Route path="about">
