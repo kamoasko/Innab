@@ -38,7 +38,7 @@ const VideoGrid = React.memo(() => {
               img={video.image}
               title={video.title}
               det={video.short_description}
-              to={`/${slug}/${video.slug}`}
+              to={`/${lang}/useful-for-you/video-lessons/${slug}/${video.slug}`}
             />
           ))}
       </div>
