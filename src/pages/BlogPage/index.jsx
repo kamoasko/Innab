@@ -1,39 +1,29 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import styles from "./blogs.module.css";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchBlogPosts } from "../../features/blog/blogSlice";
 import { Box, CircularProgress } from "@mui/material";
-import { useParams } from "react-router";
+import { Outlet, useParams } from "react-router";
+import { fetchBlogCategory } from "../../features/blogCategories/blogCategorySlice";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Tabs = React.lazy(() => import("../../components/tabs"));
 const Contact = React.lazy(() => import("../../components/Contact"));
-const BlogCard = React.lazy(() => import("../../components/blogCard"));
 
 const BlogPage = () => {
   const dispatch = useDispatch();
   const { lang } = useParams();
-  const { posts, status, error } = useSelector((state) => state.blog);
+  const { blogCategories, status, error } = useSelector(
+    (state) => state.blogCategories
+  );
+  const [categoryId, setCategoryId] = useState(null);
 
   useEffect(() => {
-    dispatch(fetchBlogPosts(lang));
+    dispatch(fetchBlogCategory({ lang }));
   }, [lang, dispatch]);
 
-  const menus = [
-    "Data analitika",
-    "Mühasibatlıq",
-    "Komputer bacarıqları",
-    "Faydalı mövzular",
-  ];
-
-  const getCardClass = (index) => {
-    const classes = [
-      styles.defaultBorder,
-      styles.greenBorder,
-      styles.violetBorder,
-      styles.redBorder,
-    ];
-    return classes[index % classes.length];
+  const handleTabClick = (id) => {
+    setCategoryId(id);
+    dispatch(fetchBlogCategory({ lang, categoryId: id }));
   };
 
   return (
@@ -42,16 +32,10 @@ const BlogPage = () => {
         <div className="container">
           <PageTitle title={"Bloq"} />
           <ul className="flex alignItemsCenter tabsMenu">
-            {menus.map((menu, index) => (
-              <Tabs key={index} title={menu} />
-            ))}
-          </ul>
-          <div className={styles.blogGrid}>
             {status === "loading" && (
               <Box
                 sx={{
                   display: "flex",
-                  alignItems: "center",
                   justifyContent: "center",
                   width: "100%",
                 }}
@@ -61,18 +45,16 @@ const BlogPage = () => {
             )}
             {status === "failed" && <Box>{error}</Box>}
             {status === "succeeded" &&
-              posts.map((post, index) => (
-                <BlogCard
-                  key={post.id}
-                  label={"Bloq"}
-                  bg={post.background_image}
-                  title={post.title}
-                  det={post.short_description}
-                  className={getCardClass(index)}
-                  to={post.slug}
+              blogCategories.map((blogCategory) => (
+                <Tabs
+                  key={blogCategory.id}
+                  title={blogCategory.title}
+                  to={`/${lang}/useful-for-you/blog/${blogCategory.slug}`}
+                  onClick={() => handleTabClick(blogCategory.id)}
                 />
               ))}
-          </div>
+          </ul>
+          <Outlet context={{ categoryId }} />
         </div>
       </section>
       <Contact

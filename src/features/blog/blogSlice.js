@@ -3,9 +3,11 @@ import axiosInstance from "../../axios";
 
 export const fetchBlogPosts = createAsyncThunk(
   "blog/fetchBlogPosts",
-  async (lang, { rejectWithValue }) => {
+  async ({ lang, categoryId }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/${lang}/get_blog/5`);
+      const response = await axiosInstance.get(
+        `/${lang}/get_blog/${categoryId}`
+      );
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);

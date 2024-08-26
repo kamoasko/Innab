@@ -55,7 +55,6 @@ const VideoLessons = () => {
                 />
               ))}
           </ul>
-          {/* Pass categoryId as a prop */}
           <Outlet context={{ categoryId }} />
         </div>
       </section>

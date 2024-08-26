@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { Box, CircularProgress } from "@mui/material";
 import { fetchVideoLessonCategory } from "../../features/videoCategories/videoCategorySlice";
+import { fetchBlogCategory } from "../../features/blogCategories/blogCategorySlice";
 
 const Header = React.memo(({ partnersRef }) => {
   const [searchBarOpen, setSearchBarOpen] = useState(false);
@@ -24,6 +25,7 @@ const Header = React.memo(({ partnersRef }) => {
   const { lang, slug } = useParams();
   const { infos, status, error } = useSelector((state) => state.infos);
   const { categories } = useSelector((state) => state.videoCategories);
+  const { blogCategories } = useSelector((state) => state.blogCategories);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -58,11 +60,13 @@ const Header = React.memo(({ partnersRef }) => {
   };
 
   const categorySlug = categories[0]?.slug;
+  const blogCategorySlug = blogCategories[0]?.slug;
 
   useEffect(() => {
     dispatch(fetchSiteInfos(lang));
-    dispatch(fetchVideoLessonCategory(lang));
-  }, [lang, dispatch, categorySlug]);
+    dispatch(fetchVideoLessonCategory({ lang }));
+    dispatch(fetchBlogCategory({ lang }));
+  }, [lang, dispatch, categorySlug, blogCategorySlug]);
 
   return (
     <header>
@@ -854,7 +858,9 @@ const Header = React.memo(({ partnersRef }) => {
                     </Link>
                   </li>
                   <li>
-                    <Link to={"useful-for-you/blog"}>Bloq</Link>
+                    <Link to={`useful-for-you/blog/${blogCategorySlug}`}>
+                      Bloq
+                    </Link>
                   </li>
                   <li>
                     <Link to={"useful-for-you/seminar-and-webinar"}>

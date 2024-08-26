@@ -11,6 +11,7 @@ import roomReducer from "./features/rooms/roomSlice";
 import SiteReducer from "./features/siteInfos/siteInfoSlice";
 import videoLessonReducer from "./features/videoLessons/videoLessonSlice";
 import videoCategoryReducer from "./features/videoCategories/videoCategorySlice";
+import blogCategoryReducer from "./features/blogCategories/blogCategorySlice";
 
 export const store = configureStore({
   reducer: {
@@ -26,6 +27,7 @@ export const store = configureStore({
     rooms: roomReducer,
     videos: videoLessonReducer,
     videoCategories: videoCategoryReducer,
+    blogCategories: blogCategoryReducer,
   },
 });
 
