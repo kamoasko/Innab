@@ -591,6 +591,17 @@ input[type="search"]::-webkit-search-cancel-button {
   flex-wrap: wrap;
 }
 
+.tab.active {
+  color: var(--color-white);
+
+  > div {
+    visibility: initial;
+    width: 100% !important;
+    height: 100%;
+    border-radius: 100px;
+  }
+}
+
 /* advertisement slider */
 .adsSlider {
   margin-top: 4.2rem;

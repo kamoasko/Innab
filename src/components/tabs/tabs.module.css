@@ -30,8 +30,7 @@
     -o-transition: 0.2s;
   }
 
-  &:hover,
-  &.active {
+  &:hover {
     color: var(--color-white);
 
     > div {

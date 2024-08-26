@@ -52,14 +52,14 @@ function App() {
           </Route>
 
           <Route path="useful-for-you">
-            <Route path="video-lessons" element={<VideoLessons />}>
-              <Route path=":slug" element={<VideoGrid />}>
-                <Route
-                  path=":videoSlug"
-                  element={<DetailPage pageTitle={"Video dərslər"} />}
-                />
-              </Route>
+            <Route path="video-lessons/:slug" element={<VideoLessons />}>
+              <Route index element={<VideoGrid />} />
             </Route>
+
+            <Route
+              path="video-lessons/:slug/:videoSlug"
+              element={<DetailPage pageTitle={"Video dərslər"} />}
+            />
 
             <Route path="blog">
               <Route index element={<BlogPage />} />

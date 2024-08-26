@@ -13,6 +13,7 @@ import SearchBar from "../searchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { Box, CircularProgress } from "@mui/material";
+import { fetchVideoLessonCategory } from "../../features/videoCategories/videoCategorySlice";
 
 const Header = React.memo(({ partnersRef }) => {
   const [searchBarOpen, setSearchBarOpen] = useState(false);
@@ -20,8 +21,10 @@ const Header = React.memo(({ partnersRef }) => {
   const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
   const [mobMenuOpen, setMobMenuOpen] = useState(false);
   const dispatch = useDispatch();
-  const { lang } = useParams();
+  const { lang, slug } = useParams();
   const { infos, status, error } = useSelector((state) => state.infos);
+  const { categories } = useSelector((state) => state.videoCategories);
+
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -54,9 +57,12 @@ const Header = React.memo(({ partnersRef }) => {
     }, 0);
   };
 
+  const categorySlug = categories[0]?.slug;
+
   useEffect(() => {
     dispatch(fetchSiteInfos(lang));
-  }, [lang, dispatch]);
+    dispatch(fetchVideoLessonCategory(lang));
+  }, [lang, dispatch, categorySlug]);
 
   return (
     <header>
@@ -794,7 +800,11 @@ const Header = React.memo(({ partnersRef }) => {
                 <NavLink
                   className={({ isActive }) =>
                     `${openDropdowns[5] ? "opened" : ""} ${
-                      isDropdownActive(["/useful-for-you"]) ? "active" : ""
+                      isDropdownActive([
+                        `/useful-for-you/video-lessons/${categorySlug}`,
+                      ])
+                        ? "active"
+                        : ""
                     }`
                   }
                 >
@@ -839,7 +849,7 @@ const Header = React.memo(({ partnersRef }) => {
                   }`}
                 >
                   <li>
-                    <Link to={"useful-for-you/video-lessons"}>
+                    <Link to={`useful-for-you/video-lessons/${categorySlug}`}>
                       Video dərslər
                     </Link>
                   </li>
