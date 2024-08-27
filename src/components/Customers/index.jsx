@@ -2,14 +2,22 @@ import React, { useEffect, useState } from "react";
 import SectionTitle from "../SectionTitle";
 import styles from "./customers.module.css";
 import CustomerCard from "../CustomerCard";
-import customerImg from "../../assets/images/customers/kb-logo-main-1.png";
-import customerImg1 from "../../assets/images/customers/adra-logo-1.png";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { fetchCustomers } from "../../features/customers/customerSlice";
+import { Box, CircularProgress } from "@mui/material";
+import CustomerSlider from "../sliders/customerSlider";
 
 const Customers = ({ homepage, about, placeId, corporative }) => {
+  const dispatch = useDispatch();
+  const { lang } = useParams();
+  const { customers, status, error } = useSelector((state) => state.customers);
   const { width } = useWindowDimensions();
+
+  useEffect(() => {
+    dispatch(fetchCustomers(lang));
+  }, [lang, dispatch]);
 
   // const [reviews, setReviews] = useState([]);
   // const [error, setError] = useState(null);
@@ -52,92 +60,33 @@ const Customers = ({ homepage, about, placeId, corporative }) => {
           faydalanmışdır.
         </p>
       </div>
-
+      {status === "loading" && (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
+      {status === "failed" && <Box>{error}</Box>}
       <div className={styles.customerSliderWrapper}>
-        {corporative && width > 768 ? (
-          <div className="container">
-            <div className="customerCard">
-              <CustomerCard img={customerImg} />
-              <CustomerCard img={customerImg} />
-              <CustomerCard img={customerImg1} />
-              <CustomerCard img={customerImg} />
-              <CustomerCard img={customerImg1} />
-              <CustomerCard img={customerImg} />
-              <CustomerCard img={customerImg} />
-              <CustomerCard img={customerImg1} />
-              <CustomerCard img={customerImg} />
-              <CustomerCard img={customerImg} />
-            </div>
-          </div>
-        ) : (
-          <Swiper
-            spaceBetween={20}
-            loop={true}
-            modules={[Autoplay]}
-            autoplay={{ delay: 3000 }}
-            breakpoints={{
-              280: {
-                slidesPerView: 2,
-                spaceBetween: 12,
-                centeredSlides: true,
-              },
-              340: {
-                slidesPerView: 3,
-                spaceBetween: 12,
-                centeredSlides: true,
-              },
-              425: {
-                slidesPerView: 4,
-                spaceBetween: 12,
-              },
-              481: {
-                slidesPerView: 2,
-              },
-              700: {
-                slidesPerView: 3,
-              },
-              1024: {
-                slidesPerView: 4,
-              },
-              1200: {
-                slidesPerView: 5,
-              },
-              1440: {
-                slidesPerView: 6,
-              },
-              1800: {
-                slidesPerView: 8,
-              },
-            }}
-          >
-            <SwiperSlide>
-              <CustomerCard img={customerImg} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CustomerCard img={customerImg1} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CustomerCard img={customerImg1} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CustomerCard img={customerImg} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CustomerCard img={customerImg1} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CustomerCard img={customerImg1} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CustomerCard img={customerImg1} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CustomerCard img={customerImg1} />
-            </SwiperSlide>
-            <SwiperSlide>
-              <CustomerCard img={customerImg1} />
-            </SwiperSlide>
-          </Swiper>
+        {status === "succeeded" && (
+          <>
+            {corporative && width > 768 ? (
+              <div className="container">
+                <div className="customerCard">
+                  {customers.map((customer) => (
+                    <CustomerCard img={customer.image} key={customer.id} />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <CustomerSlider customers={customers} />
+            )}
+          </>
         )}
       </div>
       {homepage && (

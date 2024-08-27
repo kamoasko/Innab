@@ -8,7 +8,7 @@ import styles from "./home.module.css";
 import hero from "../../assets/images/homepage/hero.jpeg";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import SectionTitle from "../../components/SectionTitle";
-import { NavLink, useOutletContext } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import sql from "../../assets/images/homepage/SQL.png";
 import mysql from "../../assets/images/homepage/mysql.png";
 import TrainingsCard from "../../components/TrainingsCard";
