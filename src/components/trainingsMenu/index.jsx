@@ -3,7 +3,7 @@ import styles from "./trainings-menu.module.css";
 import { Link } from "react-router-dom";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
-const TrainingsMenu = () => {
+const TrainingsMenu = ({ categories }) => {
   const [trainingMenu, setTraininMenu] = useState(false);
 
   const openTrainingMenu = () => {
@@ -14,47 +14,33 @@ const TrainingsMenu = () => {
     <ul
       className={`${styles.trainingMenu} trainingMenu flex flexDirectionColumn`}
     >
-      <li className={trainingMenu ? "opened" : ""}>
-        <div onClick={openTrainingMenu} className="flex alignItemsCenter">
-          Data analitika {trainingMenu ? <FaMinus /> : <FaPlus />}
-        </div>
-        <ul className="flex flexDirectionColumn">
-          <li>
-            <Link>Data analitika</Link>
-          </li>
-          <li>
-            <Link>Data analitika</Link>
-          </li>
-          <li>
-            <Link>Data analitika</Link>
-          </li>
-          <li>
-            <Link>Data analitika</Link>
-          </li>
-          <li>
-            <Link>Data analitika</Link>
-          </li>
-          <li>
-            <Link>Data analitika</Link>
-          </li>
-        </ul>
-      </li>
-      <li className={trainingMenu ? "opened" : ""}>
-        <div onClick={openTrainingMenu} className="flex alignItemsCenter">
-          Kompüter bacarıqları {trainingMenu ? <FaMinus /> : <FaPlus />}
-        </div>
-        <ul className="flex flexDirectionColumn">
-          <li>
-            <Link>Data analitika</Link>
-          </li>
-          <li>
-            <Link>Data analitika</Link>
-          </li>
-          <li>
-            <Link>Data analitika</Link>
-          </li>
-        </ul>
-      </li>
+      {categories.map((category) => (
+        <li className={trainingMenu ? "opened" : ""} key={category.id}>
+          <div onClick={openTrainingMenu} className="flex alignItemsCenter">
+            {category.title} {trainingMenu ? <FaMinus /> : <FaPlus />}
+          </div>
+          <ul className="flex flexDirectionColumn">
+            <li>
+              <Link>Data analitika</Link>
+            </li>
+            <li>
+              <Link>Data analitika</Link>
+            </li>
+            <li>
+              <Link>Data analitika</Link>
+            </li>
+            <li>
+              <Link>Data analitika</Link>
+            </li>
+            <li>
+              <Link>Data analitika</Link>
+            </li>
+            <li>
+              <Link>Data analitika</Link>
+            </li>
+          </ul>
+        </li>
+      ))}
     </ul>
   );
 };

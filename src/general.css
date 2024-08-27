@@ -629,11 +629,15 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .detailTopic.active {
   height: calc(100%);
+}
 
-  > div:first-of-type {
-    background-color: var(--color-main);
-    color: var(--color-white);
-  }
+.detailTopic.active > div:first-of-type {
+  background-color: var(--color-main);
+  color: var(--color-white);
+}
+
+.detailTopic.active > div:first-of-type > svg {
+  transform: rotate(180deg);
 }
 
 .detailTopic.active h3 {
