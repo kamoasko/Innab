@@ -3,20 +3,20 @@ import axiosInstance from "../../axios";
 
 export const fetchNews = createAsyncThunk(
   "news/fetchNews",
-  async (lang, { rejectWithValue }) => {
+  async ({ lang, page }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/${lang}/get_news`);
-      const sortedNews = response?.data.sort((a, b) => {
-        // Sort by `pined`, if pined is null, treat it as 0 (false)
+      const response = await axiosInstance.get(
+        `/${lang}/get_news?page=${page}`
+      );
+      const sortedNews = response?.data?.sort((a, b) => {
         return (b.pined ? 1 : 0) - (a.pined ? 1 : 0);
       });
-      return sortedNews;
+      return { data: sortedNews, pagination: response?.pagination };
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
-
 
 export const fetchNewsDetail = createAsyncThunk(
   "news/fetchNewsDetail",
@@ -34,6 +34,7 @@ const newsSlice = createSlice({
   name: "news",
   initialState: {
     news: [],
+    pagination: {},
     detailedNews: {},
     status: "idle",
     error: null,
@@ -44,6 +45,7 @@ const newsSlice = createSlice({
       .addCase(fetchNews.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.news = action.payload;
+        state.pagination = action.payload.pagination;
       })
       .addCase(fetchNews.pending, (state) => {
         state.status = "loading";

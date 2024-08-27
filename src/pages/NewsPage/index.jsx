@@ -1,24 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./news-page.module.css";
 import PageTitle from "../../components/pageTitle";
 import NewsCard from "../../components/newsCard";
 import Contact from "../../components/Contact";
 import newsImg from "../../assets/images/news/news-img.jpeg";
-import { Outlet } from "react-router";
+import { Outlet, useParams } from "react-router";
 import { Box, CircularProgress, Pagination } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router/dist";
 import { useEffect } from "react";
 import { fetchNews } from "../../features/news/newsSlice";
 
 const NewsPage = () => {
   const dispatch = useDispatch();
   const { lang } = useParams();
-  const { news, status, error } = useSelector((state) => state.news);
+  const { news, status, error, pagination } = useSelector(
+    (state) => state.news
+  );
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
-    dispatch(fetchNews(lang));
-  }, [lang, dispatch]);
+    dispatch(fetchNews({ lang, page }));
+  }, [lang, page, dispatch]);
+
+  const handlePageChange = (event, value) => {
+    setPage(value);
+  };
 
   return (
     <>
@@ -39,7 +45,7 @@ const NewsPage = () => {
             )}
             {status === "failed" && <Box>{error}</Box>}
             {status === "succeeded" &&
-              news.map((post) => (
+              news.data.map((post) => (
                 <NewsCard
                   key={post.id}
                   title={post.title}
@@ -53,8 +59,10 @@ const NewsPage = () => {
           <Pagination
             className="flex justifyContentCenter"
             sx={{ marginTop: "7.2rem", fontSize: "1.6rem" }}
-            count={4}
+            count={pagination.last_page}
             size="large"
+            page={page}
+            onChange={handlePageChange}
           />
         </div>
       </section>

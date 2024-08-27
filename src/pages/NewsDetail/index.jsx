@@ -89,54 +89,6 @@ const NewsDetail = () => {
                     diqqətlə yoxlanılır
                   </p>
                 </div>
-
-                <div>
-                  <h3>
-                    <strong>Frontend developer</strong> kimdir?
-                  </h3>
-                  <p>
-                    Frontend proqramçılar nə edir? Frontend proqramçı kimdir?
-                    Onlar veb saytların vəya mobil tətbiqlərin vizual hissəsini,
-                    interfeyslərini proqramlaşdırır. Siz hər hansı bir veb-sayta
-                    daxil olduqda, saytda gördüyünüz bütün vizual elementlər
-                    front-end proqramçıların işi hesab edilir. Bunların doğru
-                    işləməsi və lazımi yerə yönlənməsi kimi məsələlər isə
-                    backend proqramçıların işi hesab olunur.    Dizayn edilmiş
-                    maketi frontend proqramçı kodlama vasitəsilə hazırlayır,
-                    bütün elementlərin və vizual effektlərin işləməsini də bu
-                    mütəxəssislər təmin edir. Frontend mütəxəssisin digər bir
-                    öhdəliyi isə hazırladığı səhifələri bütün ekran ölçülərinə
-                    uyğunlaşdırmaq, responsivliyi təmin etməkdir: telefonlar,
-                    kompüter monitorları, noutbuklar, planşetlər, televizorlar
-                    və s. Bu tip responsivlik problemləri istifadəçi təcrübəsinə
-                    mənfi təsir etdiyi üçün frontend developer tərəfindən
-                    diqqətlə yoxlanılır
-                  </p>
-                </div>
-
-                <div>
-                  <h3>
-                    <strong>Frontend developer</strong> kimdir?
-                  </h3>
-                  <p>
-                    Frontend proqramçılar nə edir? Frontend proqramçı kimdir?
-                    Onlar veb saytların vəya mobil tətbiqlərin vizual hissəsini,
-                    interfeyslərini proqramlaşdırır. Siz hər hansı bir veb-sayta
-                    daxil olduqda, saytda gördüyünüz bütün vizual elementlər
-                    front-end proqramçıların işi hesab edilir. Bunların doğru
-                    işləməsi və lazımi yerə yönlənməsi kimi məsələlər isə
-                    backend proqramçıların işi hesab olunur.    Dizayn edilmiş
-                    maketi frontend proqramçı kodlama vasitəsilə hazırlayır,
-                    bütün elementlərin və vizual effektlərin işləməsini də bu
-                    mütəxəssislər təmin edir. Frontend mütəxəssisin digər bir
-                    öhdəliyi isə hazırladığı səhifələri bütün ekran ölçülərinə
-                    uyğunlaşdırmaq, responsivliyi təmin etməkdir: telefonlar,
-                    kompüter monitorları, noutbuklar, planşetlər, televizorlar
-                    və s. Bu tip responsivlik problemləri istifadəçi təcrübəsinə
-                    mənfi təsir etdiyi üçün frontend developer tərəfindən
-                    diqqətlə yoxlanılır
-                  </p>
-                </div>
               </div> */}
             </>
           )}
