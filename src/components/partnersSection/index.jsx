@@ -32,32 +32,35 @@ const PartnersSection = () => {
     >
       <SectionTitle title={"Partnyorlar"} />
       <div className="container">
-        {width >= 1024 ? (
-          <div className={styles.partnersGrid}>
-            {status === "loading" && (
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  width: "100%",
-                }}
-              >
-                <CircularProgress />
-              </Box>
+        {status === "loading" && (
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+            }}
+          >
+            <CircularProgress />
+          </Box>
+        )}
+        {status === "failed" && <Box>{error}</Box>}
+        {status === "succeeded" && (
+          <>
+            {width >= 1024 ? (
+              <div className={styles.partnersGrid}>
+                {partners.map((partner) => (
+                  <PartnersCard
+                    key={partner.id}
+                    cardtTitle={partner.name}
+                    text={partner.short_description}
+                    img={partner.image}
+                  />
+                ))}
+              </div>
+            ) : (
+              <PartnersSlider partnerSlider={partners} />
             )}
-            {status === "failed" && <Box>{error}</Box>}
-            {status === "succeeded" &&
-              partners.map((partner) => (
-                <PartnersCard
-                  key={partner.id}
-                  cardtTitle={partner.name}
-                  text={partner.short_description}
-                  img={partner.image}
-                />
-              ))}
-          </div>
-        ) : (
-          <PartnersSlider />
+          </>
         )}
       </div>
     </section>

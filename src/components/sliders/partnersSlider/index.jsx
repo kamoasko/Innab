@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import PartnersCard from "../../PartnersCard";
 import { Autoplay } from "swiper/modules";
 import partnerCardBg from "../../../assets/images/homepage/partners.jpeg";
 import partnerCardBg1 from "../../../assets/images/homepage/partners1.png";
 import partnerCardBg2 from "../../../assets/images/homepage/partners2.jpeg";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { fetchPartners } from "../../../features/partners/partnersSlice";
 
-const PartnersSlider = () => {
+const PartnersSlider = ({ partnerSlider }) => {
+  // const dispatch = useDispatch();
+  // const { lang } = useParams();
+  // const { partners, status, error } = useSelector((state) => state.partners);
+
+  // useEffect(() => {
+  //   dispatch(fetchPartners(lang));
+  // }, [lang, dispatch]);
+
   return (
     <Swiper
       slidesPerView={3}
@@ -26,34 +37,15 @@ const PartnersSlider = () => {
         },
       }}
     >
-      <SwiperSlide>
-        <PartnersCard
-          cardtTitle={"Technest layihəsi."}
-          text={"İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"}
-          img={partnerCardBg}
-        />
-      </SwiperSlide>
-      <SwiperSlide>
-        <PartnersCard
-          cardtTitle={"Technest layihəsi."}
-          text={"İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"}
-          img={partnerCardBg1}
-        />
-      </SwiperSlide>
-      <SwiperSlide>
-        <PartnersCard
-          cardtTitle={"Technest layihəsi."}
-          text={"İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"}
-          img={partnerCardBg2}
-        />
-      </SwiperSlide>
-      <SwiperSlide>
-        <PartnersCard
-          cardtTitle={"Technest layihəsi."}
-          text={"İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"}
-          img={partnerCardBg2}
-        />
-      </SwiperSlide>
+      {partnerSlider.map((partner) => (
+        <SwiperSlide key={partner.id}>
+          <PartnersCard
+            cardtTitle={partner.name}
+            text={partner.short_description}
+            img={partner.image}
+          />
+        </SwiperSlide>
+      ))}
     </Swiper>
   );
 };
