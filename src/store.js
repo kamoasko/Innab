@@ -13,6 +13,7 @@ import videoLessonReducer from "./features/videoLessons/videoLessonSlice";
 import videoCategoryReducer from "./features/videoCategories/videoCategorySlice";
 import blogCategoryReducer from "./features/blogCategories/blogCategorySlice";
 import newsReducer from "./features/news/newsSlice";
+import partnersReducer from "./features/partners/partnersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -30,6 +31,7 @@ export const store = configureStore({
     videoCategories: videoCategoryReducer,
     blogCategories: blogCategoryReducer,
     news: newsReducer,
+    partners: partnersReducer,
   },
 });
 

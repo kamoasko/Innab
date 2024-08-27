@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Scrollbar } from "swiper/modules";
+import { Scrollbar } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
@@ -11,18 +11,14 @@ import SectionTitle from "../../components/SectionTitle";
 import { NavLink, useOutletContext } from "react-router-dom";
 import sql from "../../assets/images/homepage/SQL.png";
 import mysql from "../../assets/images/homepage/mysql.png";
-import partnerCardBg from "../../assets/images/homepage/partners.jpeg";
-import partnerCardBg1 from "../../assets/images/homepage/partners1.png";
-import partnerCardBg2 from "../../assets/images/homepage/partners2.jpeg";
 import TrainingsCard from "../../components/TrainingsCard";
-import PartnersCard from "../../components/PartnersCard";
 import ProjectSliders from "../../components/sliders/ProjectSlider";
 import UsefulCard from "../../components/UsefulCard";
 import Customers from "../../components/Customers";
 import Contact from "../../components/Contact";
 import Button from "../../components/Button";
-import PartnersSlider from "../../components/sliders/partnersSlider";
 import StatsCounter from "../../components/statsCounter";
+import PartnersSection from "../../components/partnersSection";
 
 const Homepage = () => {
   const { width } = useWindowDimensions();
@@ -30,7 +26,6 @@ const Homepage = () => {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const swiperRef = useRef(null);
-  const { partnersRef } = useOutletContext();
 
   const onSwiperInit = (swiper) => {
     swiperRef.current = swiper;
@@ -420,60 +415,9 @@ const Homepage = () => {
           </div>
         </div>
       </section>
-      <section
-        className={`${styles.partners} partners`}
-        ref={partnersRef}
-        id="#partners"
-      >
-        <SectionTitle title={"Partnyorlar"} />
-        <div className="container">
-          {width >= 1024 ? (
-            <div className={styles.partnersGrid}>
-              <PartnersCard
-                cardtTitle={"Technest layihəsi."}
-                text={
-                  "İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"
-                }
-                img={partnerCardBg}
-              />
-              <PartnersCard
-                cardtTitle={"Technest layihəsi."}
-                text={
-                  "İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"
-                }
-                img={partnerCardBg1}
-              />
-              <PartnersCard
-                cardtTitle={"Technest layihəsi."}
-                text={
-                  "İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"
-                }
-                img={partnerCardBg2}
-              />
-              <PartnersCard
-                cardtTitle={"Technest layihəsi."}
-                text={
-                  "İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"
-                }
-              />
-              <PartnersCard
-                cardtTitle={"Technest layihəsi."}
-                text={
-                  "İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"
-                }
-              />
-              <PartnersCard
-                cardtTitle={"Technest layihəsi."}
-                text={
-                  "İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"
-                }
-              />
-            </div>
-          ) : (
-            <PartnersSlider />
-          )}
-        </div>
-      </section>
+
+      <PartnersSection />
+
       <section className={styles.projects}>
         <SectionTitle title={"Lahiyələr"} />
         <div className="container">

@@ -6,12 +6,17 @@ export const fetchNews = createAsyncThunk(
   async (lang, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`/${lang}/get_news`);
-      return response?.data;
+      const sortedNews = response?.data.sort((a, b) => {
+        // Sort by `pined`, if pined is null, treat it as 0 (false)
+        return (b.pined ? 1 : 0) - (a.pined ? 1 : 0);
+      });
+      return sortedNews;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
+
 
 export const fetchNewsDetail = createAsyncThunk(
   "news/fetchNewsDetail",
@@ -31,14 +36,9 @@ const newsSlice = createSlice({
     news: [],
     detailedNews: {},
     status: "idle",
-    currentSlug: null,
     error: null,
   },
-  reducers: {
-    setCurrentSlug: (state, action) => {
-      state.currentSlug = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchNews.fulfilled, (state, action) => {
@@ -66,5 +66,4 @@ const newsSlice = createSlice({
   },
 });
 
-export const { setCurrentSlug } = newsSlice.actions;
 export default newsSlice.reducer;

@@ -1,0 +1,67 @@
+import React, { useEffect } from "react";
+import styles from "../../pages/Homepage/home.module.css";
+import partnerCardBg from "../../assets/images/homepage/partners.jpeg";
+import partnerCardBg1 from "../../assets/images/homepage/partners1.png";
+import partnerCardBg2 from "../../assets/images/homepage/partners2.jpeg";
+import PartnersCard from "../PartnersCard";
+import SectionTitle from "../SectionTitle";
+import { useOutletContext, useParams } from "react-router";
+import PartnersSlider from "../sliders/partnersSlider";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPartners } from "../../features/partners/partnersSlice";
+import { Box, CircularProgress } from "@mui/material";
+
+const PartnersSection = () => {
+  const dispatch = useDispatch();
+  const { lang } = useParams();
+  const { partners, status, error } = useSelector((state) => state.partners);
+
+  const { width } = useWindowDimensions();
+  const { partnersRef } = useOutletContext();
+
+  useEffect(() => {
+    dispatch(fetchPartners(lang));
+  }, [lang, dispatch]);
+
+  return (
+    <section
+      className={`${styles.partners} partners`}
+      ref={partnersRef}
+      id="#partners"
+    >
+      <SectionTitle title={"Partnyorlar"} />
+      <div className="container">
+        {width >= 1024 ? (
+          <div className={styles.partnersGrid}>
+            {status === "loading" && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  width: "100%",
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            )}
+            {status === "failed" && <Box>{error}</Box>}
+            {status === "succeeded" &&
+              partners.map((partner) => (
+                <PartnersCard
+                  key={partner.id}
+                  cardtTitle={partner.name}
+                  text={partner.short_description}
+                  img={partner.image}
+                />
+              ))}
+          </div>
+        ) : (
+          <PartnersSlider />
+        )}
+      </div>
+    </section>
+  );
+};
+
+export default PartnersSection;
