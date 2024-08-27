@@ -39,14 +39,14 @@ const NewsPage = () => {
             )}
             {status === "failed" && <Box>{error}</Box>}
             {status === "succeeded" &&
-              news.map((post, index) => (
+              news.map((post) => (
                 <NewsCard
                   key={post.id}
                   title={post.title}
-                  date={"Fevral 12 ,2024"}
+                  date={post.published_at.slice(0, 10)}
                   desc={post.short_description}
                   img={post.image}
-                  to={post.slug}
+                  to={`/${lang}/news/${post.slug}`}
                 />
               ))}
           </div>

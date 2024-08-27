@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../../pages/NewsPage/news-page.module.css";
 import { Link } from "react-router-dom";
 
-const NewsCard = ({ title, img, desc, date, to }) => {
+const NewsCard = React.memo(({ title, img, desc, date, to }) => {
   return (
     <article className={`${styles.newsCard} flex flexDirectionColumn`}>
       <Link to={to}>
@@ -17,6 +17,6 @@ const NewsCard = ({ title, img, desc, date, to }) => {
       </Link>
     </article>
   );
-};
+});
 
 export default NewsCard;

@@ -76,7 +76,7 @@ function App() {
 
           <Route path="news">
             <Route index element={<NewsPage />} />
-            <Route path=":id" element={<NewsDetail />} />
+            <Route path=":slug" element={<NewsDetail />} />
           </Route>
 
           <Route path="privacy-policy" element={<Privacy />} />

@@ -7,16 +7,19 @@ import Contact from "../../components/Contact";
 import Button from "../../components/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
-import { fetchNews } from "../../features/news/newsSlice";
 import { Box, CircularProgress } from "@mui/material";
+import { fetchNews, fetchNewsDetail } from "../../features/news/newsSlice";
 
 const NewsDetail = () => {
   const dispatch = useDispatch();
   const { lang, slug } = useParams();
-  const { detailedNews, status, error } = useSelector((state) => state.news);
+  const { news, detailedNews, status, error } = useSelector(
+    (state) => state.news
+  );
 
   useEffect(() => {
-    dispatch(fetchNews({ lang, slug }));
+    dispatch(fetchNewsDetail({ lang, slug }));
+    dispatch(fetchNews(lang));
   }, [lang, slug, dispatch]);
 
   if (status === "loading") {
@@ -37,10 +40,6 @@ const NewsDetail = () => {
     return <Box>{error}</Box>;
   }
 
-  if (!detailedNews) {
-    return <div>News not found</div>;
-  }
-
   return (
     <>
       <section className={styles.newsDetail}>
@@ -54,23 +53,17 @@ const NewsDetail = () => {
                 <div
                   className={`${styles.newsDetailWrapperContent} flex flexDirectionColumn justifyContentBetween`}
                 >
-                  <h2>{detailedNews.pageTitle}</h2>
-                  <time dateTime="Fevral 12 ,2024">Fevral 12 ,2024</time>
+                  <h2>{detailedNews.title}</h2>
+                  <time dateTime={detailedNews.published_at?.slice(0, 10)}>
+                    {detailedNews.published_at?.slice(0, 10)}
+                  </time>
                 </div>
                 <div className={styles.newsDetailImg}>
-                  <img src={detailedNews.image} alt="" />
+                  <img src={detailedNews.image || newsImg} alt="" />
                 </div>
               </div>
-              <div className={styles.newsDetailText}>
-                <p>
-                  Front-end proqramlaşdırma inkişafı veb dünyasına qapı açan və
-                  istifadəçilərin veb sayt təcrübəsini formalaşdıran vacib
-                  sahədir. Bu sahə yerli bazarda da inkişaf etdiyi üçün peşəkar
-                  olmaq istəyənlər bu haqda maraqlanır yaxud uyğun frontend
-                  kursu axtarışına çıxır. Bəs kimdir frontend developer?
-                </p>
-              </div>
-              <div
+              <div className={styles.newsDetailText}>{detailedNews.text}</div>
+              {/* <div
                 className={`${styles.newsDetailParagraphs} flex flexDirectionColumn`}
               >
                 <div>
@@ -144,7 +137,7 @@ const NewsDetail = () => {
                     diqqətlə yoxlanılır
                   </p>
                 </div>
-              </div>
+              </div> */}
             </>
           )}
         </div>
@@ -156,32 +149,25 @@ const NewsDetail = () => {
             <h2>Digər xəbərlər</h2>
           </div>
           <div className={`${styles.otherNewsWrapper} flexCenter`}>
-            <NewsCard
-              title={"Data Analitika Nədir ?"}
-              date={"Fevral 12 ,2024"}
-              img={newsImg}
-              desc={
-                "Data analitika sahəsində mütəxəsis olmaq istəyənlər üçün mükəməl imkanlar  İNNAB lorem ipsum sit amet"
-              }
-            />
-            <NewsCard
-              title={"Data Analitika Nədir ?"}
-              date={"Fevral 12 ,2024"}
-              img={newsImg}
-              desc={
-                "Data analitika sahəsində mütəxəsis olmaq istəyənlər üçün mükəməl imkanlar  İNNAB lorem ipsum sit amet"
-              }
-            />
-            <NewsCard
-              title={"Data Analitika Nədir ?"}
-              date={"Fevral 12 ,2024"}
-              img={newsImg}
-              desc={
-                "Data analitika sahəsində mütəxəsis olmaq istəyənlər üçün mükəməl imkanlar  İNNAB lorem ipsum sit amet"
-              }
-            />
+            {status === "succeeded" &&
+              news
+                .slice(0, 3)
+                .map((post) => (
+                  <NewsCard
+                    key={post.id}
+                    title={post.title}
+                    date={post.published_at?.slice(0, 10)}
+                    img={post.image}
+                    desc={post.short_description}
+                    to={`/${lang}/news/${post.slug}`}
+                  />
+                ))}
           </div>
-          <Button title={"Hamısına bax"} borderRadius={"6.3rem"} to={"/news"} />
+          <Button
+            title={"Hamısına bax"}
+            borderRadius={"6.3rem"}
+            to={`/${lang}/news`}
+          />
         </div>
       </section>
       <Contact
