@@ -14,7 +14,9 @@ const ProjectCard = ({ title, text, icon, to }) => {
       </div>
       <div className={`${styles.projectsCardIcon} flexCenter projectsCardS`}>
         <div className="flexCenter">
-          <div className="flexCenter">{icon}</div>
+          <div className="flexCenter">
+            <img src={icon} alt="" />
+          </div>
         </div>
       </div>
     </Link>

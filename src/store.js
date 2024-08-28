@@ -15,6 +15,7 @@ import blogCategoryReducer from "./features/blogCategories/blogCategorySlice";
 import newsReducer from "./features/news/newsSlice";
 import partnersReducer from "./features/partners/partnersSlice";
 import customerReducer from "./features/customers/customerSlice";
+import projectReducer from "./features/project/projectSlice";
 
 export const store = configureStore({
   reducer: {
@@ -34,6 +35,7 @@ export const store = configureStore({
     news: newsReducer,
     partners: partnersReducer,
     customers: customerReducer,
+    projects: projectReducer,
   },
 });
 
