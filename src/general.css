@@ -613,9 +613,28 @@ input[type="search"]::-webkit-search-cancel-button {
 
 /* trainings menu */
 
+.trainingMenu {
+  gap: 1.6rem;
+}
+
+.trainingMenu > li {
+  width: max-content;
+  padding: 1.6rem 2rem;
+  height: 5.5rem;
+  overflow: hidden;
+  border-radius: 6rem;
+  border: 0.1rem solid var(--color-main);
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+}
+
 .trainingMenu > li.opened {
   overflow: visible;
-  height: calc(100%);
+  /* height: calc(100%); */
+  height: max-content;
   background-color: var(--color-main);
   color: var(--color-white);
   border-radius: 2.4rem;
@@ -625,10 +644,32 @@ input[type="search"]::-webkit-search-cancel-button {
   -o-border-radius: 2.4rem;
 }
 
+.trainingMenu > li div {
+  gap: 2rem;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.trainingMenu > li ul {
+  margin-top: 2rem;
+  line-height: 2.6rem;
+  letter-spacing: 0.016rem;
+}
+
+@media (max-width: 768px) {
+  .trainingMenu li > div {
+    font-size: 1.4rem;
+  }
+
+  .trainingMenu li ul {
+    font-size: 1.4rem;
+  }
+}
+
 /* video and blog details*/
 
 .detailTopic.active {
-  height: calc(100%);
+  height: max-content;
 }
 
 .detailTopic.active > div:first-of-type {

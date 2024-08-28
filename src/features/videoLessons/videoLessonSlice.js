@@ -15,6 +15,21 @@ export const fetchVideoLessons = createAsyncThunk(
   }
 );
 
+export const fetchVideoLessonCategory = createAsyncThunk(
+  "videos/fetchVideoLessonCategory",
+  async ({ lang }, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(
+        `/${lang}/get_videolessonscategory`
+      );
+
+      return response?.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 export const fetchVideoLessonContent = createAsyncThunk(
   "videos/fetchVideoLessonContent",
   async ({ lang, videoSlug }, { rejectWithValue }) => {
@@ -23,7 +38,6 @@ export const fetchVideoLessonContent = createAsyncThunk(
         `/${lang}/get_videolesson_content/${videoSlug}`
       );
 
-      console.log(response?.data);
       return { data: response?.data, links: response?.data?.links };
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -35,6 +49,7 @@ const videoLessonSlice = createSlice({
   name: "videos",
   initialState: {
     videos: [],
+    videoCategories: [],
     videoLesson: [],
     status: "idle",
     error: null,
@@ -50,6 +65,17 @@ const videoLessonSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchVideoLessons.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(fetchVideoLessonCategory.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.videoCategories = action.payload;
+      })
+      .addCase(fetchVideoLessonCategory.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchVideoLessonCategory.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })

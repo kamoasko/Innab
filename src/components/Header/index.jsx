@@ -13,8 +13,8 @@ import SearchBar from "../searchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { Box, CircularProgress } from "@mui/material";
-import { fetchVideoLessonCategory } from "../../features/videoCategories/videoCategorySlice";
 import { fetchBlogCategory } from "../../features/blogCategories/blogCategorySlice";
+import { fetchVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 
 const Header = React.memo(({ partnersRef }) => {
   const [searchBarOpen, setSearchBarOpen] = useState(false);
@@ -24,7 +24,7 @@ const Header = React.memo(({ partnersRef }) => {
   const dispatch = useDispatch();
   const { lang, slug } = useParams();
   const { infos, status, error } = useSelector((state) => state.infos);
-  const { categories } = useSelector((state) => state.videoCategories);
+  const { videoCategories } = useSelector((state) => state.videos);
   const { blogCategories } = useSelector((state) => state.blogCategories);
 
   const location = useLocation();
@@ -59,7 +59,7 @@ const Header = React.memo(({ partnersRef }) => {
     }, 0);
   };
 
-  const categorySlug = categories[0]?.slug;
+  const categorySlug = videoCategories[0]?.slug;
   const blogCategorySlug = blogCategories[0]?.slug;
 
   useEffect(() => {

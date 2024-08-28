@@ -8,16 +8,17 @@ import Contact from "../../components/Contact";
 import blogImg from "../../assets/images/bloq/blog.jpeg";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { fetchVideoLessonContent } from "../../features/videoLessons/videoLessonSlice";
+import {
+  fetchVideoLessonCategory,
+  fetchVideoLessonContent,
+} from "../../features/videoLessons/videoLessonSlice";
 import { Box, CircularProgress } from "@mui/material";
-import { fetchVideoLessonCategory } from "../../features/videoCategories/videoCategorySlice";
 
 const DetailPage = ({ blog, pageTitle }) => {
   const dispatch = useDispatch();
   const { lang, videoSlug } = useParams();
-  const { videoLesson, status, error } = useSelector((state) => state.videos);
-  const { categories, status1, error1 } = useSelector(
-    (state) => state.videoCategories
+  const { videoLesson, videoCategories, status, error } = useSelector(
+    (state) => state.videos
   );
   const [playing, setPlaying] = useState(false);
   const [isOpened, setIsOpened] = useState({});
@@ -33,9 +34,9 @@ const DetailPage = ({ blog, pageTitle }) => {
     setPlaying(true);
   };
 
-  useEffect(() => {
-    dispatch(fetchVideoLessonCategory(lang));
-  }, [lang, categories, dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchVideoLessonCategory(lang));
+  // }, [lang, videoCategories, dispatch]);
 
   useEffect(() => {
     dispatch(fetchVideoLessonContent({ lang, videoSlug }));
@@ -52,9 +53,8 @@ const DetailPage = ({ blog, pageTitle }) => {
       <section className={styles.detail}>
         <div className="container">
           <div className={`${styles.detailWrapper} flex`}>
-            {status1 === "succeeded" && (
-              <TrainingsMenu categories={categories} />
-            )}
+            <TrainingsMenu vidCat={videoCategories} />
+
             <div className={styles.detailMain}>
               {status === "loading" && (
                 <Box

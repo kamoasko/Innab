@@ -17,6 +17,8 @@ const NewsDetail = () => {
     (state) => state.news
   );
 
+  console.log(news);
+
   useEffect(() => {
     dispatch(fetchNewsDetail({ lang, slug }));
     dispatch(fetchNews(lang));
@@ -102,7 +104,7 @@ const NewsDetail = () => {
           </div>
           <div className={`${styles.otherNewsWrapper} flexCenter`}>
             {status === "succeeded" &&
-              news
+              news.data
                 .slice(0, 3)
                 .map((post) => (
                   <NewsCard
