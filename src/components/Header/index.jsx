@@ -692,10 +692,16 @@ const Header = memo(({ partnersRef }) => {
                   )}
                 </NavLink>
               </li>
-              <li>
+              <li className="navbarMenuDy">
                 <NavLink
-                  to={"projects"}
-                  className={openDropdowns[3] ? "opened" : ""}
+                  to={"#"}
+                  className={({ isActive }) =>
+                    `${openDropdowns[3] ? "opened" : ""} ${
+                      isDropdownActive(["/55-derse-excel-kitabi", "/mini-mba"])
+                        ? "active"
+                        : ""
+                    }`
+                  }
                 >
                   Lahiyələr
                   {!openDropdowns[3] ? (
@@ -732,6 +738,20 @@ const Header = memo(({ partnersRef }) => {
                     </svg>
                   )}
                 </NavLink>
+                <ul
+                  className={`dropdown dy flex justifyContentBetween ${
+                    openDropdowns[3] ? "open" : ""
+                  }`}
+                >
+                  <li>
+                    <Link to={"projects/55-derse-excel-kitabi"}>
+                      "55 dərsə Excel" kitabı
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={"projects/mini-mba"}>Mini MBA</Link>
+                  </li>
+                </ul>
               </li>
               <li className="navbarMenuDy">
                 <NavLink

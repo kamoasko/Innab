@@ -66,13 +66,15 @@ const ProjectSliders = () => {
         }}
       >
         {status === "succeeded" &&
-          projects.map((project) => (
-            <SwiperSlide key={project.id}>
+          projects.map((project, index) => (
+            <SwiperSlide key={index}>
               <ProjectCard
                 title={project.title}
                 text={project.card_description}
                 icon={project.image}
-                to={project.slug}
+                to={`${
+                  project.is_corporative === 1 ? "career-center" : "projects"
+                }/${project.slug}`}
               />
             </SwiperSlide>
           ))}

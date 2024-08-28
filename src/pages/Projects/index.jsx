@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./projects.module.css";
 import PageTitle from "../../components/pageTitle";
 import projectImg from "../../assets/images/projects/project.png";
@@ -6,16 +6,25 @@ import Button from "../../components/Button";
 import qrCode from "../../assets/images/projects/qrcode.png";
 import qrCodeApp from "../../assets/images/projects/qrcodeapp.png";
 import playStore from "../../assets/icons/google-play-icon.svg";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaApple } from "react-icons/fa6";
 import Contact from "../../components/Contact";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProjects } from "../../features/project/projectSlice";
 
 const Projects = ({ book }) => {
   const contactRef = useRef(null);
+  const dispatch = useDispatch();
+  const { lang } = useParams();
+  const { projects, status, error } = useSelector((state) => state.projects);
 
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    dispatch(fetchProjects(lang));
+  }, [lang, dispatch]);
 
   return (
     <>
