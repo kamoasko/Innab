@@ -10,21 +10,25 @@ import { Link, useParams } from "react-router-dom";
 import { FaApple } from "react-icons/fa6";
 import Contact from "../../components/Contact";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProjects } from "../../features/project/projectSlice";
+import { fetchProjectContent } from "../../features/project/projectSlice";
 
 const Projects = ({ book }) => {
   const contactRef = useRef(null);
   const dispatch = useDispatch();
-  const { lang } = useParams();
-  const { projects, status, error } = useSelector((state) => state.projects);
+  const { lang, projectSlug } = useParams();
+  const { projectContent, status, error } = useSelector(
+    (state) => state.projects
+  );
+
+  console.log(projectSlug);
 
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    dispatch(fetchProjects(lang));
-  }, [lang, dispatch]);
+    dispatch(fetchProjectContent({ lang, projectSlug }));
+  }, [lang, projectSlug, dispatch]);
 
   return (
     <>
