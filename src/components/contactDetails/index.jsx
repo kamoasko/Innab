@@ -15,7 +15,7 @@ const ContactDetails = ({ marginLeft, email }) => {
 
   useEffect(() => {
     dispatch(fetchSiteInfos(lang));
-  }, [lang, dispatch]);
+  }, [lang]);
 
   return (
     <>

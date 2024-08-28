@@ -38,7 +38,14 @@ export const fetchVideoLessonContent = createAsyncThunk(
         `/${lang}/get_videolesson_content/${videoSlug}`
       );
 
-      return { data: response?.data, links: response?.data?.links };
+      const links = response?.data?.map((link) => link.links);
+      // console.log(links.flat(Infinity).map((a) => a.id));
+      
+
+      return {
+        data: response?.data,
+        links: links.flat(Infinity)[0],
+      };
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -51,6 +58,7 @@ const videoLessonSlice = createSlice({
     videos: [],
     videoCategories: [],
     videoLesson: [],
+    links: [],
     status: "idle",
     error: null,
   },
@@ -82,6 +90,7 @@ const videoLessonSlice = createSlice({
       .addCase(fetchVideoLessonContent.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.videoLesson = action.payload;
+        state.links = action.payload;
       })
       .addCase(fetchVideoLessonContent.pending, (state) => {
         state.status = "loading";

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import {
   Link,
   NavLink,
@@ -16,7 +16,7 @@ import { Box, CircularProgress } from "@mui/material";
 import { fetchBlogCategory } from "../../features/blogCategories/blogCategorySlice";
 import { fetchVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 
-const Header = React.memo(({ partnersRef }) => {
+const Header = memo(({ partnersRef }) => {
   const [searchBarOpen, setSearchBarOpen] = useState(false);
   const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
   const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
@@ -64,6 +64,9 @@ const Header = React.memo(({ partnersRef }) => {
 
   useEffect(() => {
     dispatch(fetchSiteInfos(lang));
+  }, [lang, dispatch]);
+
+  useEffect(() => {
     dispatch(fetchVideoLessonCategory({ lang }));
     dispatch(fetchBlogCategory({ lang }));
   }, [lang, dispatch, categorySlug, blogCategorySlug]);
@@ -82,7 +85,7 @@ const Header = React.memo(({ partnersRef }) => {
           {status === "failed" && <p>{error}</p>}
           {status === "succeeded" && (
             <Link to={"/"} className="headerTopLogo">
-              <img src={infos.header_top} alt="Innab logo" />
+              <img src={infos?.header_top} alt="Innab logo" />
             </Link>
           )}
           <div className="headerTopRight flex alignItemsCenter justifyContentBetween">
@@ -90,7 +93,7 @@ const Header = React.memo(({ partnersRef }) => {
             <div className="headerTopTools flex alignItemsCenter">
               <ul className="headerTopContact flex alignItemsCenter">
                 <li>
-                  <Link to={`tel:${infos.phone1}`}>
+                  <Link to={`tel:${infos?.phone1}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -103,11 +106,11 @@ const Header = React.memo(({ partnersRef }) => {
                         fill="#3138E3"
                       />
                     </svg>
-                    {infos.phone1}
+                    {infos?.phone1}
                   </Link>
                 </li>
                 <li>
-                  <Link to={`mailto:${infos.email2}`}>
+                  <Link to={`mailto:${infos?.email2}`}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -120,7 +123,7 @@ const Header = React.memo(({ partnersRef }) => {
                         fill="#3138E3"
                       />
                     </svg>
-                    {infos.email2}
+                    {infos?.email2}
                   </Link>
                 </li>
               </ul>

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useRef } from "react";
 import styles from "./corporative.module.css";
 import { Link, useParams } from "react-router-dom";
 import { HiOutlineArrowLongRight } from "react-icons/hi2";
@@ -20,6 +20,26 @@ const Corporative = () => {
   const { corporative, status, error } = useSelector(
     (state) => state.corporative
   );
+  const contactRef = useRef(null);
+  const trainingRef = useRef(null);
+  const customersRef = useRef(null);
+
+  const scrollToSection = function (r) {
+    switch (r) {
+      case contactRef:
+        contactRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case trainingRef:
+        trainingRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case customersRef:
+        customersRef.current?.scrollIntoView({ behavior: "smooth" });
+        break;
+      default:
+        null;
+        break;
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchCorporativeDatas(lang));
@@ -69,20 +89,29 @@ const Corporative = () => {
                   className={`${styles.pageHeaderBottom} flex alignItemsCenter`}
                 >
                   <li>
-                    <Link>Təlimlər</Link>
+                    <Link to={"#"} onClick={() => scrollToSection(trainingRef)}>
+                      Təlimlər
+                    </Link>
                   </li>
                   <li>
-                    <Link>Bizi seçənlər</Link>
+                    <Link
+                      to={"#"}
+                      onClick={() => scrollToSection(customersRef)}
+                    >
+                      Bizi seçənlər
+                    </Link>
                   </li>
                   <li>
-                    <Link>Müraciət</Link>
+                    <Link to={"#"} onClick={() => scrollToSection(contactRef)}>
+                      Müraciət
+                    </Link>
                   </li>
                 </ol>
               </div>
             </div>
           </section>
 
-          <section className={styles.corporative}>
+          <section className={styles.corporative} ref={trainingRef}>
             <div className="container">
               <div className={styles.corporativeTitle}>
                 <h2>{corporative.content_title}</h2>
@@ -187,10 +216,11 @@ const Corporative = () => {
         </div>
       </section>
 
-      <Customers about corporative />
+      <Customers about corporative ref={customersRef} />
       <Contact
         title={"Sualın var?"}
         subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
+        contactRef={contactRef}
       />
     </Suspense>
   );

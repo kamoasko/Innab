@@ -13,11 +13,12 @@ import {
   fetchVideoLessonContent,
 } from "../../features/videoLessons/videoLessonSlice";
 import { Box, CircularProgress } from "@mui/material";
+import axios from "axios";
 
 const DetailPage = ({ blog, pageTitle }) => {
   const dispatch = useDispatch();
   const { lang, videoSlug } = useParams();
-  const { videoLesson, videoCategories, status, error } = useSelector(
+  const { videoLesson, videoCategories, links, status, error } = useSelector(
     (state) => state.videos
   );
   const [playing, setPlaying] = useState(false);
@@ -29,6 +30,45 @@ const DetailPage = ({ blog, pageTitle }) => {
       [lessonId]: !prev[lessonId],
     }));
   };
+
+  console.log(links.links);
+
+  const [duration, setDuration] = useState("");
+
+  const videoId = links?.links?.link?.split("v=")[1].split("&")[0];
+
+  useEffect(() => {
+    const fetchDuration = async () => {
+      const apiKey = "AIzaSyAcNaMFfPRTTcuOI5JHkrDC8ZrzDAb4ELQ";
+      const url = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=${apiKey}`;
+
+      try {
+        const response = await axios.get(url);
+        const isoDuration = response.data.items[0].contentDetails.duration;
+        const formattedDuration = formatDuration(isoDuration);
+        setDuration(formattedDuration);
+      } catch (error) {
+        console.error("Error fetching video duration:", error);
+      }
+    };
+
+    fetchDuration();
+  }, [videoId]);
+
+  const formatDuration = (isoDuration) => {
+    // Example: "PT1H15M36S" to "1:15:36"
+    const match = isoDuration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+    const hours = (match[1] || "").slice(0, -1);
+    const minutes = (match[2] || "").slice(0, -1);
+    const seconds = (match[3] || "").slice(0, -1);
+
+    return [hours, minutes, seconds]
+      .filter(Boolean)
+      .map((v) => v.padStart(2, "0"))
+      .join(":");
+  };
+
+  console.log(duration);
 
   const handlePlayClick = () => {
     setPlaying(true);
@@ -141,13 +181,13 @@ const DetailPage = ({ blog, pageTitle }) => {
                           <FaChevronDown />
                         </div>
                         <ul className="flex flexDirectionColumn">
-                          {lesson.links.map((link) => (
+                          {lesson.links.map((link, index) => (
                             <li
                               className="flex flexDirectionColumn"
                               key={link.id}
                             >
                               <span>
-                                {link.id}. {link.title}
+                                1.{index + 1}. {link.title}
                               </span>
                               <span className="flex alignItemsCenter">
                                 <svg

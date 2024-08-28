@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
 import styles from "./video-lessons.module.css";
 import { Outlet, useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,7 +17,7 @@ const VideoLessons = () => {
   );
   const [categoryId, setCategoryId] = useState(null);
 
-  useEffect(() => {
+  useCallback(() => {
     dispatch(fetchVideoLessonCategory({ lang }));
   }, [lang, dispatch]);
 

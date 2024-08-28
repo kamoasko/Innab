@@ -3,9 +3,9 @@ import styles from "./contact.module.css";
 import ContactForm from "./contactForm";
 import ContactDetails from "../contactDetails";
 
-const Contact = ({ apply, join, title, subTitle, training }) => {
+const Contact = ({ apply, join, title, subTitle, training, contactRef }) => {
   return (
-    <section className={styles.contact}>
+    <section ref={contactRef} className={styles.contact}>
       <div className="container">
         <div
           className={`${styles.contactWrapper} ${

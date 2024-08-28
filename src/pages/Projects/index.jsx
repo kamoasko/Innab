@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./projects.module.css";
 import PageTitle from "../../components/pageTitle";
 import projectImg from "../../assets/images/projects/project.png";
@@ -11,6 +11,12 @@ import { FaApple } from "react-icons/fa6";
 import Contact from "../../components/Contact";
 
 const Projects = ({ book }) => {
+  const contactRef = useRef(null);
+
+  const scrollToContact = () => {
+    contactRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <>
       <div className="pageTop">
@@ -63,7 +69,12 @@ const Projects = ({ book }) => {
                     <h4>"55 dərsə Excel" kitabı</h4>
                     <div>Excelin sirrlərini bu kitabdan öyrənin!</div>
                     <h5>25 AZN</h5>
-                    <Button title={"Sifariş ver"} borderRadius={"7.8rem"} />
+                    <Button
+                      component
+                      title={"Sifariş ver"}
+                      borderRadius={"7.8rem"}
+                      onClick={scrollToContact}
+                    />
                   </div>
                 </article>
               </div>
@@ -132,6 +143,7 @@ const Projects = ({ book }) => {
           "Hardan başlamaqda tərəddüd edirsənsə ",
           <strong>bizə zəng elə</strong>,
         ]}
+        contactRef={contactRef}
       />
     </>
   );

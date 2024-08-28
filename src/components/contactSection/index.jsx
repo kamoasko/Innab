@@ -13,7 +13,7 @@ const ContactSection = React.memo(({ h2 }) => {
 
   useEffect(() => {
     dispatch(fetchSiteInfos(lang));
-  }, [lang, dispatch]);
+  }, [lang]);
 
   return (
     <div className={`${styles.contactWrapper} flex alignItemsCenter`}>

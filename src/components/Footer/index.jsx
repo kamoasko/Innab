@@ -13,7 +13,7 @@ const Footer = () => {
 
   useEffect(() => {
     dispatch(fetchSiteInfos(lang));
-  }, [lang, dispatch]);
+  }, [lang]);
 
   return (
     <footer>

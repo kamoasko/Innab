@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "https://innab.coder.az/api",
+  baseURL: "https://admin.innab.coder.az/api",
   headers: {
     "Content-Type": "application/json",
   },

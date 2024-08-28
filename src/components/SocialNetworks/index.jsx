@@ -12,25 +12,31 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
 
   useEffect(() => {
     dispatch(fetchSiteInfos(lang));
-  }, [lang, dispatch]);
+  }, [lang]);
+
+  if (status === "loading") {
+    return (
+      <Box sx={{ width: "100%" }}>
+        <CircularProgress
+          sx={{ width: "2rem !important", height: "2rem !important" }}
+        />
+      </Box>
+    );
+  }
+
+  if (status === "failed") {
+    return <Box>{error}</Box>;
+  }
 
   return (
     <>
-      {status === "loading" && (
-        <Box sx={{ width: "100%" }}>
-          <CircularProgress
-            sx={{ width: "2rem !important", height: "2rem !important" }}
-          />
-        </Box>
-      )}
-      {status === "failed" && <Box>{error}</Box>}
       {status === "succeeded" && (
         <ul
           className="socialNetworks flex alignItemsCenter"
           style={{ gap: gap }}
         >
           <li>
-            <Link to={infos.facebook_link}>
+            <Link to={infos?.facebook_link}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -57,7 +63,7 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
             </Link>
           </li>
           <li>
-            <Link to={infos.instagram_link}>
+            <Link to={infos?.instagram_link}>
               {contact ? (
                 <FaInstagram style={{ width: "2.4rem", height: "2.4rem" }} />
               ) : (
@@ -126,7 +132,7 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
             </Link>
           </li>
           <li>
-            <Link to={infos.linkedin_link}>
+            <Link to={infos?.linkedin_link}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -149,7 +155,7 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
             </Link>
           </li>
           <li>
-            <Link to={infos.tiktok_link}>
+            <Link to={infos?.tiktok_link}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -173,7 +179,7 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
             </Link>
           </li>
           <li>
-            <Link to={infos.youtube_link}>
+            <Link to={infos?.youtube_link}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"

@@ -35,7 +35,7 @@ const LangForm = () => {
         onChange={handleLanguageChange}
         value={lang}
       >
-        {languages.map((lang) => (
+        {languages?.map((lang) => (
           <option key={lang.site_code} value={lang.site_code}>
             {lang.site_code}
           </option>
