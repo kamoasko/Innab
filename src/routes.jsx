@@ -51,7 +51,13 @@ export const generateRoutes = (menuData, lang) => {
         },
         { path: `trainings`, element: <TrainingsPage /> },
         { path: parentMenu[2]?.slug, element: <Corporative /> },
-        { path: `${parentMenu[3]?.slug}/:slug`, element: <Projects /> },
+        {
+          path: `${parentMenu[3]?.slug}/:slug`,
+          children: [
+            { path: "", element: <Projects book /> },
+            { path: "", element: <Projects /> },
+          ],
+        },
         { path: `${parentMenu[4]?.slug}/:slug`, element: <CareerCenter /> },
         {
           path: parentMenu[5]?.slug,

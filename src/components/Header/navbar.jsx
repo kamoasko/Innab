@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
-import { fetchBlogCategory } from "../../features/blogCategories/blogCategorySlice";
+import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
 import {
   Link,
   NavLink,
@@ -17,11 +17,11 @@ import { Skeleton } from "@mui/material";
 const Navbar = ({ partnersRef }) => {
   const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
   const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
-  const { lang, slug } = useParams();
+  const { lang } = useParams();
   const { data: menus, status, error } = useMenus(lang);
   const dispatch = useDispatch();
   const { videoCategories } = useSelector((state) => state.videos);
-  const { blogCategories } = useSelector((state) => state.blogCategories);
+  const { data: blogCategories } = useBlogCategories(lang);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ const Navbar = ({ partnersRef }) => {
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
 
   const categorySlug = videoCategories[0]?.slug;
-  const blogCategorySlug = blogCategories[0]?.slug;
+  //   const blogCategorySlug = blogCategories[0]?.slug;
 
   const toggleDropdown = (index) => {
     setOpenDropdowns((prev) =>
@@ -59,8 +59,7 @@ const Navbar = ({ partnersRef }) => {
 
   useEffect(() => {
     dispatch(fetchVideoLessonCategory({ lang }));
-    dispatch(fetchBlogCategory({ lang }));
-  }, [lang, dispatch, categorySlug, blogCategorySlug]);
+  }, [lang, dispatch, categorySlug]);
 
   if (status === "error") {
     return <Box>{error}</Box>;
@@ -752,7 +751,7 @@ const Navbar = ({ partnersRef }) => {
                 </li>
                 <li>
                   <Link
-                    to={`${parentMenu[5].slug}/${usefulMenu[1].slug}/${blogCategorySlug}`}
+                    to={`${parentMenu[5].slug}/${usefulMenu[1].slug}/data-analitika`}
                   >
                     {usefulMenu[1].title}
                   </Link>

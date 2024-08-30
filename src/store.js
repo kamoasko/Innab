@@ -11,7 +11,7 @@ import roomReducer from "./features/rooms/roomSlice";
 // import SiteReducer from "./features/siteInfos/siteInfoSlice";
 import videoLessonReducer from "./features/videoLessons/videoLessonSlice";
 // import videoCategoryReducer from "./features/videoCategories/videoCategorySlice";
-import blogCategoryReducer from "./features/blogCategories/blogCategorySlice";
+// import blogCategoryReducer from "./features/blogCategories/blogCategorySlice";
 import newsReducer from "./features/news/newsSlice";
 import partnersReducer from "./features/partners/partnersSlice";
 import customerReducer from "./features/customers/customerSlice";
@@ -31,7 +31,7 @@ export const store = configureStore({
     rooms: roomReducer,
     videos: videoLessonReducer,
     // videoCategories: videoCategoryReducer,
-    blogCategories: blogCategoryReducer,
+    // blogCategories: blogCategoryReducer,
     news: newsReducer,
     partners: partnersReducer,
     customers: customerReducer,

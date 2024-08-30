@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import styles from "../../pages/BlogPage/blogs.module.css";
 import { useOutletContext, useParams } from "react-router";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { useBlogPosts } from "../../features/blog/blogSlice";
 
 const BlogCard = React.lazy(() => import("../../components/blogCard"));
@@ -22,18 +22,34 @@ const BlogGrid = () => {
   };
 
   return (
-    <Suspense fallback={<CircularProgress />}>
+    <Suspense
+      fallback={
+        <Box>
+          <Skeleton variant="rectangular" height={332} />
+        </Box>
+      }
+    >
       <div className={styles.blogGrid}>
         {status === "loading" && (
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 28rem), 30.6rem))",
+              gap: "2.4rem",
+              placeContent: "center",
               width: "100%",
             }}
           >
-            <CircularProgress />
+            {[...Array(4)].map((_, index) => (
+              <Skeleton
+                key={index}
+                variant="rectangular"
+                width={306}
+                height={332}
+                className={styles.blogCard}
+              />
+            ))}
           </Box>
         )}
         {status === "error" && <Box>{error.message}</Box>}
