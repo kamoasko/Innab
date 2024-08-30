@@ -1,40 +1,15 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../axios";
 
-export const fetchSiteInfos = createAsyncThunk(
-  "siteInfos/fetchSiteInfos",
-  async (lang, { rejectWithValue }) => {
-    try {
+export const useSiteInfos = (lang) => {
+  return useQuery({
+    queryKey: ["infos", lang],
+    queryFn: async () => {
       const response = await axiosInstance.get(`/${lang}/get_siteinfo`);
+
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-const siteInfosSlice = createSlice({
-  name: "siteInfos",
-  initialState: {
-    infos: {},
-    status: "idle",
-    error: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchSiteInfos.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchSiteInfos.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.infos = action.payload;
-      })
-      .addCase(fetchSiteInfos.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
-      });
-  },
-});
-
-export default siteInfosSlice.reducer;
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    cacheTime: 1000 * 60 * 30, // 30 minutes
+  });
+};

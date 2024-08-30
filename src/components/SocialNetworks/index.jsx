@@ -1,18 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { fetchSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { Box, CircularProgress } from "@mui/material";
 import { FaInstagram } from "react-icons/fa6";
+import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 
 const SocialNetworks = React.memo(({ gap, contact }) => {
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { infos, status, error } = useSelector((state) => state.infos);
+  const { data: infos, status, error } = useSiteInfos(lang);
 
-  useEffect(() => {
-    dispatch(fetchSiteInfos(lang));
-  }, [lang]);
+  // useEffect(() => {
+  //   useSiteInfos(lang);
+  // }, [lang]);
 
   if (status === "loading") {
     return (
@@ -30,7 +29,7 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
 
   return (
     <>
-      {status === "succeeded" && (
+      {status === "success" && (
         <ul
           className="socialNetworks flex alignItemsCenter"
           style={{ gap: gap }}

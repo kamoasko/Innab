@@ -4,16 +4,15 @@ import ContactDetails from "../contactDetails";
 import SocialNetworks from "../SocialNetworks";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, CircularProgress } from "@mui/material";
-import { fetchSiteInfos } from "../../features/siteInfos/siteInfoSlice";
+import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 
 const Footer = () => {
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { infos, status, error } = useSelector((state) => state.infos);
+  const { data: infos, status, error } = useSiteInfos(lang);
 
-  useEffect(() => {
-    dispatch(fetchSiteInfos(lang));
-  }, [lang]);
+  // useEffect(() => {
+  //   useSiteInfos(lang);
+  // }, [lang]);
 
   return (
     <footer>
@@ -54,9 +53,7 @@ const Footer = () => {
             </div>
             <div>
               <h5>Ünvan</h5>
-              <div>
-                <p>{infos.address}</p>
-              </div>
+              <div>{status === "success" && <p>{infos.address}</p>}</div>
             </div>
             <div>
               <h5>Əlaqə</h5>
@@ -73,7 +70,7 @@ const Footer = () => {
                 </Box>
               )}
               {status === "failed" && <p>{error}</p>}
-              {status === "succeeded" && (
+              {status === "success" && (
                 <div className="footerLogo">
                   <img src={infos.header_footer} alt="" />
                 </div>

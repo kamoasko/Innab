@@ -20,7 +20,6 @@ export const fetchProjectContent = createAsyncThunk(
       const response = await axiosInstance.get(
         `/${lang}/get_project/${projectSlug}`
       );
-      console.log(response);
 
       return response.data;
     } catch (error) {

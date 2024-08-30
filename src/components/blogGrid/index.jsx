@@ -1,23 +1,15 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import styles from "../../pages/BlogPage/blogs.module.css";
-import { useDispatch, useSelector } from "react-redux";
 import { useOutletContext, useParams } from "react-router";
-import { fetchBlogPosts } from "../../features/blog/blogSlice";
 import { Box, CircularProgress } from "@mui/material";
+import { useBlogPosts } from "../../features/blog/blogSlice";
 
 const BlogCard = React.lazy(() => import("../../components/blogCard"));
 
 const BlogGrid = () => {
-  const dispatch = useDispatch();
-  const { lang, slug } = useParams();
+  const { lang } = useParams();
   const { categoryId } = useOutletContext();
-  const { posts, status, error } = useSelector((state) => state.blog);
-
-  useEffect(() => {
-    if (categoryId) {
-      dispatch(fetchBlogPosts({ lang, categoryId }));
-    }
-  }, [lang, categoryId, dispatch]);
+  const { data: posts, status, error } = useBlogPosts(lang, categoryId);
 
   const getCardClass = (index) => {
     const classes = [
@@ -44,8 +36,8 @@ const BlogGrid = () => {
             <CircularProgress />
           </Box>
         )}
-        {status === "failed" && <Box>{error}</Box>}
-        {status === "succeeded" &&
+        {status === "error" && <Box>{error.message}</Box>}
+        {status === "success" &&
           posts.map((post, index) => (
             <BlogCard
               key={post.id}

@@ -20,8 +20,6 @@ const Projects = ({ book }) => {
     (state) => state.projects
   );
 
-  console.log(projectSlug);
-
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
   };

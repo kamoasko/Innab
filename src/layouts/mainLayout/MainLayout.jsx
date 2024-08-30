@@ -3,7 +3,6 @@ import React, { useRef } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
-import { fetchBlogPosts } from "../../features/blog/blogSlice";
 import { useDispatch } from "react-redux";
 
 const MainLayout = () => {
@@ -12,10 +11,7 @@ const MainLayout = () => {
 
   return (
     <>
-      <Header
-        partnersRef={partnersRef}
-        onLanguageChange={(lang) => dispatch(fetchBlogPosts(lang))}
-      />
+      <Header partnersRef={partnersRef} />
 
       <main>
         <Outlet context={{ partnersRef }} />

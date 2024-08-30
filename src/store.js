@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import blogReducer from "./features/blog/blogSlice";
+// import blogReducer from "./features/blog/blogSlice";
 import languageReducer from "./features/languages/languageSlice";
 import aboutReducer from "./features/about/aboutSlice";
 import privacyReducer from "./features/privacy/privacySlicer";
@@ -8,7 +8,7 @@ import vacanciesReducer from "./features/vacancies/vacanciesSlice";
 import statisticReducer from "./features/statistics/statisticSlice";
 import categoryReducer from "./features/categories/categorySlice";
 import roomReducer from "./features/rooms/roomSlice";
-import SiteReducer from "./features/siteInfos/siteInfoSlice";
+// import SiteReducer from "./features/siteInfos/siteInfoSlice";
 import videoLessonReducer from "./features/videoLessons/videoLessonSlice";
 // import videoCategoryReducer from "./features/videoCategories/videoCategorySlice";
 import blogCategoryReducer from "./features/blogCategories/blogCategorySlice";
@@ -19,14 +19,14 @@ import projectReducer from "./features/project/projectSlice";
 
 export const store = configureStore({
   reducer: {
-    blog: blogReducer,
+    // blog: blogReducer,/
     languages: languageReducer,
     about: aboutReducer,
     privacy: privacyReducer,
     corporative: corporativeReducer,
     vacancies: vacanciesReducer,
     statistics: statisticReducer,
-    infos: SiteReducer,
+    // infos: SiteReducer,
     categories: categoryReducer,
     rooms: roomReducer,
     videos: videoLessonReducer,

@@ -11,10 +11,10 @@ import Button from "../Button";
 import LangForm from "../langForm";
 import SearchBar from "../searchBar";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { Box, CircularProgress } from "@mui/material";
 import { fetchBlogCategory } from "../../features/blogCategories/blogCategorySlice";
 import { fetchVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
+import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 
 const Header = memo(({ partnersRef }) => {
   const [searchBarOpen, setSearchBarOpen] = useState(false);
@@ -23,7 +23,7 @@ const Header = memo(({ partnersRef }) => {
   const [mobMenuOpen, setMobMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const { lang, slug } = useParams();
-  const { infos, status, error } = useSelector((state) => state.infos);
+  const { data: infos, status, error } = useSiteInfos(lang);
   const { videoCategories } = useSelector((state) => state.videos);
   const { blogCategories } = useSelector((state) => state.blogCategories);
 
@@ -62,9 +62,9 @@ const Header = memo(({ partnersRef }) => {
   const categorySlug = videoCategories[0]?.slug;
   const blogCategorySlug = blogCategories[0]?.slug;
 
-  useEffect(() => {
-    dispatch(fetchSiteInfos(lang));
-  }, [lang, dispatch]);
+  // useEffect(() => {
+  //   useSiteInfos(lang);
+  // }, [lang]);
 
   useEffect(() => {
     dispatch(fetchVideoLessonCategory({ lang }));
@@ -83,7 +83,7 @@ const Header = memo(({ partnersRef }) => {
             </Box>
           )}
           {status === "failed" && <p>{error}</p>}
-          {status === "succeeded" && (
+          {status === "success" && (
             <Link to={"/"} className="headerTopLogo">
               <img src={infos?.header_top} alt="Innab logo" />
             </Link>

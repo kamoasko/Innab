@@ -3,19 +3,18 @@ import styles from "../Contact/contact.module.css";
 import { Link, useParams } from "react-router-dom";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { Box, CircularProgress } from "@mui/material";
+import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 
 const ContactDetails = ({ marginLeft, email }) => {
   const { width } = useWindowDimensions();
 
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { infos, status, error } = useSelector((state) => state.infos);
+  const { data: infos, status, error } = useSiteInfos(lang);
 
-  useEffect(() => {
-    dispatch(fetchSiteInfos(lang));
-  }, [lang]);
+  // useEffect(() => {
+  //   useSiteInfos(lang);
+  // }, [lang]);
 
   return (
     <>
@@ -27,7 +26,7 @@ const ContactDetails = ({ marginLeft, email }) => {
         </Box>
       )}
       {status === "failed" && <p>{error}</p>}
-      {status === "succeeded" && (
+      {status === "success" && (
         <>
           {email ? (
             <ul

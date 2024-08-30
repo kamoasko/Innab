@@ -1,42 +1,16 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../axios";
 
-export const fetchBlogPosts = createAsyncThunk(
-  "blog/fetchBlogPosts",
-  async ({ lang, categoryId }, { rejectWithValue }) => {
-    try {
+export const useBlogPosts = (lang, categoryId) => {
+  return useQuery({
+    queryKey: ["blogPosts", lang, categoryId],
+    queryFn: async () => {
       const response = await axiosInstance.get(
         `/${lang}/get_blog/${categoryId}`
       );
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-const blogSlice = createSlice({
-  name: "blog",
-  initialState: {
-    posts: [],
-    status: "idle",
-    error: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchBlogPosts.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchBlogPosts.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.posts = action.payload;
-      })
-      .addCase(fetchBlogPosts.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
-  },
-});
-
-export default blogSlice.reducer;
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    cacheTime: 1000 * 60 * 30, // 30 minutes
+  });
+};
