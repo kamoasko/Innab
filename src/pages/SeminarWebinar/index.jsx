@@ -10,12 +10,12 @@ import EventCard from "../../components/eventCard";
 import eventCardImg from "../../assets/images/advertisement/event-card.png";
 import Contact from "../../components/Contact";
 
-const SeminarWebinar = () => {
+const SeminarWebinar = ({ workshop }) => {
   return (
     <>
       <section className={styles.eventsFirst}>
         <div className="container">
-          <PageTitle title={"Seminar & Vebinar"} />
+          <PageTitle title={workshop ? "Vorkshoplar" : "Seminar & Vebinar"} />
           <UsefulPageCard
             desc={
               "Proqramlaşdırma sahəsində tədbirlərdən xəbərdar olun. Biz, səktorun ən maraqlı və aktual tədbirlərini təşkil edirik. Mövzularımız arasında yeni texnologiyalar, proqramlaşdırmada trendlər əsas yer alır. Bu tədbirlərdə sizin proqramlaşdırma biliklərinizi genişləndirə bilər və digər ekspertlərlə görüşmə imkanı əldə edəcəksiniz."

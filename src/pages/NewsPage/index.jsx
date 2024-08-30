@@ -52,7 +52,7 @@ const NewsPage = () => {
                   date={post.published_at.slice(0, 10)}
                   desc={post.short_description}
                   img={post.image}
-                  to={`/${lang}/news/${post.slug}`}
+                  to={post.slug}
                 />
               ))}
           </div>
