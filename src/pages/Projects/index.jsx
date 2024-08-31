@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./projects.module.css";
 import PageTitle from "../../components/pageTitle";
 import projectImg from "../../assets/images/projects/project.png";
@@ -16,17 +16,22 @@ const Projects = ({ book }) => {
   const contactRef = useRef(null);
   const dispatch = useDispatch();
   const { lang, projectSlug } = useParams();
-  const { projectContent, status, error } = useSelector(
+  const { projectContent, projects, status, error } = useSelector(
     (state) => state.projects
   );
+
+  const [project, setProject] = useState("55-derse-excel-kitabi");
 
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
-    dispatch(fetchProjectContent({ lang, projectSlug }));
-  }, [lang, projectSlug, dispatch]);
+    setProject(projectSlug);
+    dispatch(fetchProjectContent({ lang, project }));
+  }, [lang, project, dispatch]);
+
+  console.log(project);
 
   return (
     <>

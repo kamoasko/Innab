@@ -31,7 +31,7 @@ const BlogGrid = () => {
     >
       <div className={styles.blogGrid}>
         {status === "pending" &&
-          [...Array(posts?.length)].map((_, index) => (
+          [...Array(3)].map((_, index) => (
             <Skeleton
               animation="wave"
               key={index}

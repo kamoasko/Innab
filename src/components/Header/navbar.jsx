@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
 import {
   Link,
@@ -18,7 +17,6 @@ const Navbar = ({ partnersRef }) => {
   const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
   const { lang } = useParams();
   const { data: menus, status, error } = useMenus(lang);
-  const dispatch = useDispatch();
   // const { data: videoCategories } = useVideoData(lang);
   // const { data: blogCategories } = useBlogCategories(lang);
   const location = useLocation();

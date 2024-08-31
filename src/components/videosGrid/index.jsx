@@ -1,13 +1,13 @@
 import React, { Suspense } from "react";
 import styles from "../../pages/VideoLessons/video-lessons.module.css";
-import { Box, CircularProgress, Skeleton } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { useParams, useOutletContext } from "react-router-dom";
 import { useVideoLessons } from "../../features/videoLessons/videoLessonSlice";
 
 const VideoLessonCard = React.lazy(() => import("../videoLessonCard"));
 
 const VideoGrid = React.memo(() => {
-  const { lang, slug } = useParams();
+  const { lang } = useParams();
   const { categoryId } = useOutletContext();
   const {
     data: videoLessons,
@@ -25,7 +25,7 @@ const VideoGrid = React.memo(() => {
     >
       <div className={styles.videoLessonsGrid}>
         {status === "pending" &&
-          [...Array(videoLessons?.length)].map((_, index) => (
+          [...Array(3)].map((_, index) => (
             <Skeleton
               animation="pulse"
               key={index}

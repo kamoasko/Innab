@@ -13,7 +13,6 @@ import VideoLessons from "./pages/VideoLessons";
 import BlogPage from "./pages/BlogPage";
 import CareerCalculator from "./pages/CareerCalculator";
 import SeminarWebinar from "./pages/SeminarWebinar";
-import InternShips from "./pages/InternShips";
 import NewsPage from "./pages/NewsPage";
 import NewsDetail from "./pages/NewsDetail";
 import Privacy from "./pages/Privacy";
@@ -21,6 +20,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import DetailPage from "./pages/DetailPage";
 import VideoGrid from "./components/videosGrid";
 import BlogGrid from "./components/blogGrid";
+import Scholarships from "./pages/Scholarship";
 
 export const generateRoutes = (menuData, lang) => {
   const parentMenu = menuData?.filter((menu) => menu.parent_id === 0);
@@ -94,7 +94,7 @@ export const generateRoutes = (menuData, lang) => {
             },
             {
               path: usefulMenu[3]?.slug,
-              element: <InternShips />,
+              element: <Scholarships />,
             },
           ],
         },

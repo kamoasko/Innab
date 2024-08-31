@@ -5,8 +5,14 @@ import UsefulPageCard from "../../components/usefulPageCard";
 import PartnersCard from "../../components/PartnersCard";
 import programImg from "../../assets/images/homepage/partners.jpeg";
 import Contact from "../../components/Contact";
+import { useParams } from "react-router";
+import { useScholarshipProgram } from "../../features/scholarshipProgram/useScholarshipProgram";
+import { Skeleton } from "@mui/material";
 
-const InternShips = () => {
+const Scholarships = () => {
+  const { lang } = useParams();
+  const { data: programs, status, error } = useScholarshipProgram(lang);
+
   return (
     <>
       <section className={styles.internships}>
@@ -61,27 +67,25 @@ const InternShips = () => {
             <h2>Aktiv təqaüd proqramları</h2>
           </div>
           <div className={styles.programsGrid}>
-            <PartnersCard
-              cardtTitle={"Technest layihəsi."}
-              text={
-                "İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"
-              }
-              img={programImg}
-            />
-            <PartnersCard
-              cardtTitle={"Technest layihəsi."}
-              text={
-                "İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"
-              }
-              img={programImg}
-            />
-            <PartnersCard
-              cardtTitle={"Technest layihəsi."}
-              text={
-                "İRİA ilə əməkdaşlıq çərçivəsində təqaüd proqramının icrası"
-              }
-              img={programImg}
-            />
+            {status === "pending" &&
+              [...Array(3)].map((_, index) => (
+                <Skeleton
+                  variant="rectangular"
+                  width={410}
+                  height={360}
+                  sx={{ borderRadius: "2.4rem" }}
+                />
+              ))}
+            {status === "error" && <Box>{error}</Box>}
+            {status === "success" &&
+              programs?.map((program) => (
+                <PartnersCard
+                  key={program.id}
+                  cardtTitle={program.name}
+                  text={program.short_description}
+                  img={program.image}
+                />
+              ))}
           </div>
         </div>
       </section>
@@ -97,4 +101,4 @@ const InternShips = () => {
   );
 };
 
-export default InternShips;
+export default Scholarships;
