@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { fetchPartners } from "../../../features/partners/partnersSlice";
 
-const PartnersSlider = ({ partnerSlider }) => {
+const PartnersSlider = ({ partnerSlider, onclick }) => {
   // const dispatch = useDispatch();
   // const { lang } = useParams();
   // const { partners, status, error } = useSelector((state) => state.partners);
@@ -43,6 +43,7 @@ const PartnersSlider = ({ partnerSlider }) => {
             cardtTitle={partner.name}
             text={partner.short_description}
             img={partner.image}
+            onClick={onclick}
           />
         </SwiperSlide>
       ))}

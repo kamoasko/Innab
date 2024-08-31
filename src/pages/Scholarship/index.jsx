@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./internships.module.css";
 import PageTitle from "../../components/pageTitle";
 import UsefulPageCard from "../../components/usefulPageCard";
@@ -12,6 +12,11 @@ import { Skeleton } from "@mui/material";
 const Scholarships = () => {
   const { lang } = useParams();
   const { data: programs, status, error } = useScholarshipProgram(lang);
+  const contactRef = useRef(null);
+
+  const handleScrollToContact = () => {
+    contactRef?.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <>
@@ -70,6 +75,7 @@ const Scholarships = () => {
             {status === "pending" &&
               [...Array(3)].map((_, index) => (
                 <Skeleton
+                  key={index}
                   variant="rectangular"
                   width={410}
                   height={360}
@@ -84,6 +90,7 @@ const Scholarships = () => {
                   cardtTitle={program.name}
                   text={program.short_description}
                   img={program.image}
+                  onClick={handleScrollToContact}
                 />
               ))}
           </div>
@@ -96,6 +103,7 @@ const Scholarships = () => {
           "Hardan başlamaqda tərəddüd edirsənsə ",
           <strong>bizə zəng elə</strong>,
         ]}
+        contactRef={contactRef}
       />
     </>
   );

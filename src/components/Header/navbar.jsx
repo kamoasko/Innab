@@ -12,7 +12,7 @@ import Button from "../Button";
 import { useMenus } from "../../features/menus/useMenu";
 import { Skeleton } from "@mui/material";
 
-const Navbar = ({ partnersRef }) => {
+const Navbar = ({ partnersRef, setSearchBarOpen }) => {
   const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
   const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
   const { lang } = useParams();

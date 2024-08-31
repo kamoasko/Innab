@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./advertisement.module.css";
 import Button from "../Button";
 
-const Advertisement = ({ speakers = [], time, location, adsImg }) => {
+const Advertisement = ({ speakers = [], time, location, adsImg, onclick }) => {
   return (
     <article
       className={`${styles.advertisement} flex alignItemsCenter justifyContentBetween`}
@@ -30,11 +30,16 @@ const Advertisement = ({ speakers = [], time, location, adsImg }) => {
             <p>{location}</p>
           </li>
         </ul>
-        <Button title={"Qoşul"} borderRadius={"7rem"} />
+        <Button
+          title={"Qoşul"}
+          component
+          onClick={onclick}
+          borderRadius={"7rem"}
+        />
       </div>
       <div className={styles.advertisementimg}>
         <img src={adsImg} alt="" />
-        <Button title={"Qoşul"} borderRadius={"7rem"} />
+        <Button title={"Qoşul"} component borderRadius={"7rem"} />
       </div>
     </article>
   );

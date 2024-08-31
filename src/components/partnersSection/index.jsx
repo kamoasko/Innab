@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "../../pages/Homepage/home.module.css";
 import partnerCardBg from "../../assets/images/homepage/partners.jpeg";
 import partnerCardBg1 from "../../assets/images/homepage/partners1.png";
@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPartners } from "../../features/partners/partnersSlice";
 import { Box, CircularProgress } from "@mui/material";
 
-const PartnersSection = () => {
+const PartnersSection = ({ onClick }) => {
   const dispatch = useDispatch();
   const { lang } = useParams();
   const { partners, status, error } = useSelector((state) => state.partners);
@@ -54,11 +54,12 @@ const PartnersSection = () => {
                     cardtTitle={partner.name}
                     text={partner.short_description}
                     img={partner.image}
+                    onClick={onClick}
                   />
                 ))}
               </div>
             ) : (
-              <PartnersSlider partnerSlider={partners} />
+              <PartnersSlider onclick={onClick} partnerSlider={partners} />
             )}
           </>
         )}

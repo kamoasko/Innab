@@ -4,7 +4,7 @@ import SocialNetworks from "../SocialNetworks";
 import Button from "../Button";
 import LangForm from "../langForm";
 import SearchBar from "../searchBar";
-import { Box, CircularProgress, Skeleton } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import Navbar from "./navbar";
 
@@ -153,7 +153,10 @@ const Header = memo(({ partnersRef }) => {
             />
           </div>
         ) : (
-          <Navbar partnersRef={partnersRef} />
+          <Navbar
+            partnersRef={partnersRef}
+            setSearchBarOpen={setSearchBarOpen}
+          />
         )}
       </div>
     </header>

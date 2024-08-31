@@ -26,6 +26,11 @@ const Homepage = () => {
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const swiperRef = useRef(null);
+  const contactRef = useRef(null);
+
+  const handleScrollToContact = () => {
+    contactRef?.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   const onSwiperInit = (swiper) => {
     swiperRef.current = swiper;
@@ -416,7 +421,7 @@ const Homepage = () => {
         </div>
       </section>
 
-      <PartnersSection />
+      <PartnersSection onClick={handleScrollToContact} />
 
       <section className={styles.projects}>
         <SectionTitle title={"Lahiyələr"} />
@@ -719,6 +724,7 @@ const Homepage = () => {
       <Contact
         title={"Sualın var?"}
         subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
+        contactRef={contactRef}
       />
     </>
   );
