@@ -1,105 +1,52 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../axios";
 
-export const fetchVideoLessons = createAsyncThunk(
-  "videos/fetchVideoLessons",
-  async ({ lang, categoryId }, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.get(
-        `/${lang}/get_videolessons/${categoryId}`
-      );
-      return response?.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const fetchVideoLessonCategory = createAsyncThunk(
-  "videos/fetchVideoLessonCategory",
-  async ({ lang }, { rejectWithValue }) => {
-    try {
+export const useVideoLessonCategory = (lang) => {
+  return useQuery({
+    queryKey: ["videoLessonCategory", lang],
+    queryFn: async () => {
       const response = await axiosInstance.get(
         `/${lang}/get_videolessonscategory`
       );
 
-      return response?.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
+      return response.data;
+    },
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 30,
+  });
+};
 
-export const fetchVideoLessonContent = createAsyncThunk(
-  "videos/fetchVideoLessonContent",
-  async ({ lang, videoSlug }, { rejectWithValue }) => {
-    try {
+export const useVideoLessonContent = (lang, videoSlug) => {
+  return useQuery({
+    queryKey: ["videoLessonContent", lang, videoSlug],
+    queryFn: async () => {
       const response = await axiosInstance.get(
         `/${lang}/get_videolesson_content/${videoSlug}`
       );
 
-      const links = response?.data?.map((link) => link.links);
-      // console.log(links.flat(Infinity).map((a) => a.id));
-      
+      const links = response.data?.map((link) => link.links);
 
       return {
-        data: response?.data,
+        data: response.data,
         links: links.flat(Infinity)[0],
       };
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
+    },
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 30,
+  });
+};
 
-const videoLessonSlice = createSlice({
-  name: "videos",
-  initialState: {
-    videos: [],
-    videoCategories: [],
-    videoLesson: [],
-    links: [],
-    status: "idle",
-    error: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchVideoLessons.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.videos = action.payload;
-      })
-      .addCase(fetchVideoLessons.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchVideoLessons.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
-      .addCase(fetchVideoLessonCategory.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.videoCategories = action.payload;
-      })
-      .addCase(fetchVideoLessonCategory.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchVideoLessonCategory.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
-      .addCase(fetchVideoLessonContent.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.videoLesson = action.payload;
-        state.links = action.payload;
-      })
-      .addCase(fetchVideoLessonContent.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchVideoLessonContent.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
-  },
-});
+export const useVideoLessons = (lang, categoryId) => {
+  return useQuery({
+    queryKey: ["videoLessons", lang, categoryId],
+    queryFn: async () => {
+      const response = await axiosInstance.get(
+        `/${lang}/get_videolessons/${categoryId}`
+      );
 
-export default videoLessonSlice.reducer;
+      return response.data;
+    },
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 30,
+  });
+};

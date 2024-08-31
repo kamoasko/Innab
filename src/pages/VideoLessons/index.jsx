@@ -1,30 +1,31 @@
-import React, { Suspense, useCallback, useEffect, useState } from "react";
+import React, { Suspense, useState, useEffect } from "react";
 import styles from "./video-lessons.module.css";
 import { Outlet, useParams } from "react-router";
-import { useDispatch, useSelector } from "react-redux";
-import { Box, CircularProgress } from "@mui/material";
-import { fetchVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
+import { Box, CircularProgress, Skeleton } from "@mui/material";
+import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
+import { useMenus } from "../../features/menus/useMenu";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
 const Tabs = React.lazy(() => import("../../components/tabs"));
 
 const VideoLessons = () => {
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { videoCategories, status, error } = useSelector(
-    (state) => state.videos
-  );
+  const { data: videoCategories, status, error } = useVideoLessonCategory(lang);
+  const { data: menus } = useMenus(lang);
   const [categoryId, setCategoryId] = useState(null);
-
-  useCallback(() => {
-    dispatch(fetchVideoLessonCategory({ lang }));
-  }, [lang, dispatch]);
+  const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
+  const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
 
   const handleTabClick = (id) => {
     setCategoryId(id);
-    dispatch(fetchVideoLessonCategory({ lang, categoryId: id }));
   };
+
+  useEffect(() => {
+    if (status === "success" && videoCategories.length > 0) {
+      setCategoryId(videoCategories[0].id);
+    }
+  }, [status, videoCategories]);
 
   return (
     <Suspense fallback={<CircularProgress />}>
@@ -32,25 +33,33 @@ const VideoLessons = () => {
         <div className="container">
           <PageTitle title={"Video dərslər"} />
           <ul className="flex alignItemsCenter tabsMenu">
-            {status === "loading" && (
+            {status === "pending" && (
               <Box
                 sx={{
                   display: "flex",
-                  justifyContent: "center",
                   width: "100%",
+                  gap: 2,
                 }}
               >
-                <CircularProgress />
+                {[...Array(4)].map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    variant="rectangular"
+                    width={180}
+                    height={58}
+                    className={styles.tab}
+                    sx={{ borderRadius: "4.8rem" }}
+                  />
+                ))}
               </Box>
             )}
-            {status === "failed" && <Box>{error}</Box>}
-            {status === "succeeded" &&
+            {status === "error" && <Box>{error}</Box>}
+            {status === "success" &&
               videoCategories.map((category) => (
                 <Tabs
                   key={category.id}
                   title={category.title}
-                  to={`/${lang}/useful-for-you/video-lessons/${category.slug}`}
-                  categoryId={category.id}
+                  to={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[0]?.slug}/${category.slug}`}
                   onClick={() => handleTabClick(category.id)}
                 />
               ))}

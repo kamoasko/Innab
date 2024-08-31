@@ -30,28 +30,18 @@ const BlogGrid = () => {
       }
     >
       <div className={styles.blogGrid}>
-        {status === "loading" && (
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns:
-                "repeat(auto-fit, minmax(min(100%, 28rem), 30.6rem))",
-              gap: "2.4rem",
-              placeContent: "center",
-              width: "100%",
-            }}
-          >
-            {[...Array(4)].map((_, index) => (
-              <Skeleton
-                key={index}
-                variant="rectangular"
-                width={306}
-                height={332}
-                className={styles.blogCard}
-              />
-            ))}
-          </Box>
-        )}
+        {status === "pending" &&
+          [...Array(posts?.length)].map((_, index) => (
+            <Skeleton
+              animation="wave"
+              key={index}
+              variant="rectangular"
+              width={306}
+              height={332}
+              className={styles.blogCard}
+              sx={{ borderRadius: "1.6rem" }}
+            />
+          ))}
         {status === "error" && <Box>{error.message}</Box>}
         {status === "success" &&
           posts.map((post, index) => (

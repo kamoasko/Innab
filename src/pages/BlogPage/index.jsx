@@ -13,7 +13,7 @@ const BlogPage = () => {
   const { lang } = useParams();
   const { data: blogCategories, status, error } = useBlogCategories(lang);
   const { data: menus } = useMenus(lang);
-  const [categoryId, setCategoryId] = useState(null);
+  const [categoryId, setCategoryId] = useState(blogCategories[0]?.id);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
 

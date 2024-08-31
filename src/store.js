@@ -9,8 +9,7 @@ import statisticReducer from "./features/statistics/statisticSlice";
 import categoryReducer from "./features/categories/categorySlice";
 import roomReducer from "./features/rooms/roomSlice";
 // import SiteReducer from "./features/siteInfos/siteInfoSlice";
-import videoLessonReducer from "./features/videoLessons/videoLessonSlice";
-// import videoCategoryReducer from "./features/videoCategories/videoCategorySlice";
+// import videoLessonReducer from "./features/videoLessons/videoLessonSlice";
 // import blogCategoryReducer from "./features/blogCategories/blogCategorySlice";
 import newsReducer from "./features/news/newsSlice";
 import partnersReducer from "./features/partners/partnersSlice";
@@ -29,7 +28,7 @@ export const store = configureStore({
     // infos: SiteReducer,
     categories: categoryReducer,
     rooms: roomReducer,
-    videos: videoLessonReducer,
+    // videos: videoLessonReducer,
     // videoCategories: videoCategoryReducer,
     // blogCategories: blogCategoryReducer,
     news: newsReducer,

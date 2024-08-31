@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { FaInstagram } from "react-icons/fa6";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 
@@ -9,21 +9,44 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
   const { lang } = useParams();
   const { data: infos, status, error } = useSiteInfos(lang);
 
-  // useEffect(() => {
-  //   useSiteInfos(lang);
-  // }, [lang]);
-
-  if (status === "loading") {
+  if (status === "pending") {
     return (
-      <Box sx={{ width: "100%" }}>
-        <CircularProgress
-          sx={{ width: "2rem !important", height: "2rem !important" }}
+      <Box sx={{ display: "flex", alignItems: "center", gap: 3.2 }}>
+        <Skeleton
+          variant="rectangular"
+          width={30}
+          height={30}
+          sx={{ borderRadius: "0.5rem" }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width={30}
+          height={30}
+          sx={{ borderRadius: "0.5rem" }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width={30}
+          height={30}
+          sx={{ borderRadius: "0.5rem" }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width={30}
+          height={30}
+          sx={{ borderRadius: "0.5rem" }}
+        />
+        <Skeleton
+          variant="rectangular"
+          width={30}
+          height={30}
+          sx={{ borderRadius: "0.5rem" }}
         />
       </Box>
     );
   }
 
-  if (status === "failed") {
+  if (status === "error") {
     return <Box>{error}</Box>;
   }
 

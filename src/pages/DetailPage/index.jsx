@@ -6,21 +6,23 @@ import Button from "../../components/Button";
 import { FaChevronDown } from "react-icons/fa";
 import Contact from "../../components/Contact";
 import blogImg from "../../assets/images/bloq/blog.jpeg";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import {
-  fetchVideoLessonCategory,
-  fetchVideoLessonContent,
+  useVideoLessonCategory,
+  useVideoLessonContent,
 } from "../../features/videoLessons/videoLessonSlice";
 import { Box, CircularProgress } from "@mui/material";
 import axios from "axios";
 
 const DetailPage = ({ blog, pageTitle }) => {
-  const dispatch = useDispatch();
   const { lang, videoSlug } = useParams();
-  const { videoLesson, videoCategories, links, status, error } = useSelector(
-    (state) => state.videos
-  );
+  const {
+    data: videoLessonContent,
+    status,
+    error,
+  } = useVideoLessonContent(lang, videoSlug);
+  const { data: videoLessonCategory } = useVideoLessonCategory(lang, videoSlug);
+
   const [playing, setPlaying] = useState(false);
   const [isOpened, setIsOpened] = useState({});
 
@@ -31,10 +33,9 @@ const DetailPage = ({ blog, pageTitle }) => {
     }));
   };
 
-  console.log(links.links);
-
   const [duration, setDuration] = useState("");
 
+  const links = videoLessonContent?.links;
   const videoId = links?.links?.link?.split("v=")[1].split("&")[0];
 
   useEffect(() => {
@@ -74,14 +75,6 @@ const DetailPage = ({ blog, pageTitle }) => {
     setPlaying(true);
   };
 
-  // useEffect(() => {
-  //   dispatch(fetchVideoLessonCategory(lang));
-  // }, [lang, videoCategories, dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchVideoLessonContent({ lang, videoSlug }));
-  }, [lang, videoSlug, dispatch]);
-
   return (
     <>
       <div className="pageTop">
@@ -93,10 +86,10 @@ const DetailPage = ({ blog, pageTitle }) => {
       <section className={styles.detail}>
         <div className="container">
           <div className={`${styles.detailWrapper} flex`}>
-            <TrainingsMenu vidCat={videoCategories} />
+            <TrainingsMenu vidCat={videoLessonCategory} />
 
             <div className={styles.detailMain}>
-              {status === "loading" && (
+              {status === "pending" && (
                 <Box
                   sx={{
                     display: "flex",
@@ -107,7 +100,7 @@ const DetailPage = ({ blog, pageTitle }) => {
                   <CircularProgress />
                 </Box>
               )}
-              {status === "failed" && <Box>{error}</Box>}
+              {status === "error" && <Box>{error}</Box>}
               <div className={`${styles.detailMainTop} flex`}>
                 <div className={styles.detailFigure}>
                   {blog ? (
@@ -167,8 +160,8 @@ const DetailPage = ({ blog, pageTitle }) => {
                   )}
                 </div>
                 <div className={styles.detailTopics}>
-                  {status === "succeeded" &&
-                    videoLesson.data.map((lesson) => (
+                  {status === "success" &&
+                    videoLessonContent.data.map((lesson) => (
                       <div
                         onClick={() => toggleLesson(lesson.id)}
                         className={`${styles.detailTopic} detailTopic ${

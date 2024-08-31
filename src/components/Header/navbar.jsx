@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
 import {
   Link,
@@ -20,8 +19,8 @@ const Navbar = ({ partnersRef }) => {
   const { lang } = useParams();
   const { data: menus, status, error } = useMenus(lang);
   const dispatch = useDispatch();
-  const { videoCategories } = useSelector((state) => state.videos);
-  const { data: blogCategories } = useBlogCategories(lang);
+  // const { data: videoCategories } = useVideoData(lang);
+  // const { data: blogCategories } = useBlogCategories(lang);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -29,7 +28,7 @@ const Navbar = ({ partnersRef }) => {
   const aboutMenu = menus?.filter((menu) => menu.parent_id === 3);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
 
-  const categorySlug = videoCategories[0]?.slug;
+  // const categorySlug = videoCategories[0]?.slug;
   //   const blogCategorySlug = blogCategories[0]?.slug;
 
   const toggleDropdown = (index) => {
@@ -56,10 +55,6 @@ const Navbar = ({ partnersRef }) => {
       }
     }, 0);
   };
-
-  useEffect(() => {
-    dispatch(fetchVideoLessonCategory({ lang }));
-  }, [lang, dispatch, categorySlug]);
 
   if (status === "error") {
     return <Box>{error}</Box>;
@@ -695,7 +690,7 @@ const Navbar = ({ partnersRef }) => {
                 className={({ isActive }) =>
                   `${openDropdowns[5] ? "opened" : ""} ${
                     isDropdownActive([
-                      `${parentMenu[5].slug}/${usefulMenu[0].slug}/${categorySlug}`,
+                      `${parentMenu[5].slug}/${usefulMenu[0].slug}/data-analitika`,
                     ])
                       ? "active"
                       : ""
@@ -744,7 +739,7 @@ const Navbar = ({ partnersRef }) => {
               >
                 <li>
                   <Link
-                    to={`${parentMenu[5].slug}/${usefulMenu[0].slug}/${categorySlug}`}
+                    to={`${parentMenu[5].slug}/${usefulMenu[0].slug}/data-analitika`}
                   >
                     {usefulMenu[0].title}
                   </Link>
