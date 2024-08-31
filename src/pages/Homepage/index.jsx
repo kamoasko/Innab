@@ -1,17 +1,7 @@
 import React, { useRef, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Scrollbar } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/scrollbar";
 import styles from "./home.module.css";
-import hero from "../../assets/images/homepage/hero.jpeg";
-import useWindowDimensions from "../../hooks/useWindowDimensions";
 import SectionTitle from "../../components/SectionTitle";
-import { NavLink } from "react-router-dom";
-import sql from "../../assets/images/homepage/SQL.png";
-import mysql from "../../assets/images/homepage/mysql.png";
-import TrainingsCard from "../../components/TrainingsCard";
+import { NavLink, useParams } from "react-router-dom";
 import ProjectSliders from "../../components/sliders/ProjectSlider";
 import UsefulCard from "../../components/UsefulCard";
 import Customers from "../../components/Customers";
@@ -19,44 +9,21 @@ import Contact from "../../components/Contact";
 import Button from "../../components/Button";
 import StatsCounter from "../../components/statsCounter";
 import PartnersSection from "../../components/partnersSection";
+import { useMenus } from "../../features/menus/useMenu";
+import HomeTrainings from "../../components/homeTrainings";
+import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 
 const Homepage = () => {
-  const { width } = useWindowDimensions();
-  const [paginationContent, setPaginationContent] = useState("");
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
-  const swiperRef = useRef(null);
+  const { lang } = useParams();
   const contactRef = useRef(null);
+  const { data: infos } = useSiteInfos(lang);
+  const { data: menus } = useMenus(lang);
+
+  const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
+  const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
 
   const handleScrollToContact = () => {
     contactRef?.current.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const onSwiperInit = (swiper) => {
-    swiperRef.current = swiper;
-    updatePagination(swiper);
-    setIsBeginning(swiper.isBeginning);
-    setIsEnd(swiper.isEnd);
-  };
-
-  const onSlideChange = (swiper) => {
-    updatePagination(swiper);
-    setIsBeginning(swiper.isBeginning);
-    setIsEnd(swiper.isEnd);
-  };
-
-  const updatePagination = (swiper) => {
-    const currentIndex = swiper.realIndex + 1;
-    const totalSlides = swiper.slides.length;
-    setPaginationContent(`${currentIndex}/${totalSlides}`);
-  };
-
-  const handlePrevClick = () => {
-    if (swiperRef.current) swiperRef.current.slidePrev();
-  };
-
-  const handleNextClick = () => {
-    if (swiperRef.current) swiperRef.current.slideNext();
   };
 
   return (
@@ -68,7 +35,7 @@ const Homepage = () => {
             linear-gradient(180deg, var(--color-main) 3%, rgba(0, 0, 0, 0.3) 100%), 
             linear-gradient(270deg, rgba(0, 0, 0, 0.3) 5%, rgba(5, 5, 5, 0.1) 10%),
             linear-gradient(45deg, rgba(0, 0, 0, 0.3) 5%, rgba(5, 5, 5, 0.1) 10%),
-            url(${hero}) rgba(247, 247, 254, 0.87) center / cover no-repeat
+            url(${infos?.header_image}) rgba(247, 247, 254, 0.87) center / cover no-repeat
           `,
         }}
       >
@@ -127,297 +94,7 @@ const Homepage = () => {
             </ul>
           </nav>
 
-          {width >= 1024 ? (
-            <Swiper
-              className="trainingSlider"
-              scrollbar={{
-                hide: false,
-                draggable: true,
-              }}
-              modules={[Scrollbar]}
-              onInit={onSwiperInit}
-              onSlideChange={onSlideChange}
-            >
-              <SwiperSlide>
-                <div className={styles.trainingsGrid}>
-                  <TrainingsCard
-                    img={sql}
-                    title={"SQL"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                  <TrainingsCard
-                    img={sql}
-                    title={"SQL"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                  <TrainingsCard
-                    img={mysql}
-                    title={"Ms Excel"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                  <TrainingsCard
-                    img={mysql}
-                    title={"Ms Excel"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                  <TrainingsCard
-                    img={mysql}
-                    title={"Ms Excel"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                  <TrainingsCard
-                    img={mysql}
-                    title={"Ms Excel"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                  <TrainingsCard
-                    img={mysql}
-                    title={"Ms Excel"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                  <TrainingsCard
-                    img={mysql}
-                    title={"Ms Excel"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <div className={styles.trainingsGrid}>
-                  <TrainingsCard
-                    img={sql}
-                    title={"SQL"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                  <TrainingsCard
-                    img={sql}
-                    title={"SQL"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                  <TrainingsCard
-                    img={mysql}
-                    title={"Ms Excel"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                  <TrainingsCard
-                    img={mysql}
-                    title={"Ms Excel"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                  <TrainingsCard
-                    img={mysql}
-                    title={"Ms Excel"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                  <TrainingsCard
-                    img={mysql}
-                    title={"Ms Excel"}
-                    desc={
-                      "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                    }
-                  />
-                </div>
-              </SwiperSlide>
-            </Swiper>
-          ) : (
-            <Swiper
-              slidesPerView={3}
-              spaceBetween={18}
-              className="trainingSlider"
-              loop={true}
-              // modules={[Autoplay]}
-              // autoplay={{ delay: 3000 }}
-              breakpoints={{
-                280: {
-                  slidesPerView: 1,
-                },
-                320: {
-                  slidesPerView: 2,
-                },
-                480: {
-                  spaceBetween: 18,
-                },
-                767: {
-                  slidesPerView: 3,
-                },
-              }}
-            >
-              <SwiperSlide>
-                <TrainingsCard
-                  img={sql}
-                  title={"SQL"}
-                  desc={
-                    "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                  }
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TrainingsCard
-                  img={sql}
-                  title={"SQL"}
-                  desc={
-                    "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                  }
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TrainingsCard
-                  img={mysql}
-                  title={"Ms Excel"}
-                  desc={
-                    "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                  }
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TrainingsCard
-                  img={mysql}
-                  title={"Ms Excel"}
-                  desc={
-                    "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                  }
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TrainingsCard
-                  img={mysql}
-                  title={"Ms Excel"}
-                  desc={
-                    "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                  }
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TrainingsCard
-                  img={mysql}
-                  title={"Ms Excel"}
-                  desc={
-                    "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                  }
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TrainingsCard
-                  img={mysql}
-                  title={"Ms Excel"}
-                  desc={
-                    "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                  }
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TrainingsCard
-                  img={mysql}
-                  title={"Ms Excel"}
-                  desc={
-                    "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                  }
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TrainingsCard
-                  img={mysql}
-                  title={"Ms Excel"}
-                  desc={
-                    "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                  }
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TrainingsCard
-                  img={mysql}
-                  title={"Ms Excel"}
-                  desc={
-                    "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                  }
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TrainingsCard
-                  img={mysql}
-                  title={"Ms Excel"}
-                  desc={
-                    "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                  }
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TrainingsCard
-                  img={mysql}
-                  title={"Ms Excel"}
-                  desc={
-                    "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                  }
-                />
-              </SwiperSlide>
-            </Swiper>
-          )}
-
-          <div className="customPagination">
-            <button
-              className="prevTraining"
-              onClick={handlePrevClick}
-              disabled={isBeginning}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="56"
-                height="16"
-                viewBox="0 0 56 16"
-                fill="none"
-              >
-                <path
-                  d="M0.292892 7.29289C-0.0976295 7.68342 -0.0976295 8.31658 0.292892 8.70711L6.65685 15.0711C7.04738 15.4616 7.68054 15.4616 8.07107 15.0711C8.46159 14.6805 8.46159 14.0474 8.07107 13.6569L2.41422 8L8.07107 2.34315C8.46159 1.95262 8.46159 1.31946 8.07107 0.928932C7.68054 0.538408 7.04738 0.538408 6.65685 0.928932L0.292892 7.29289ZM56 7L1 7V9L56 9V7Z"
-                  fill="#E4E4E4"
-                />
-              </svg>
-            </button>
-            <div className="customPagNumbers">{paginationContent}</div>
-            <button
-              className="nextTraining"
-              onClick={handleNextClick}
-              disabled={isEnd}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="56"
-                height="16"
-                viewBox="0 0 56 16"
-                fill="none"
-              >
-                <path
-                  d="M55.7071 8.70711C56.0976 8.31659 56.0976 7.68342 55.7071 7.2929L49.3431 0.928937C48.9526 0.538412 48.3195 0.538412 47.9289 0.928936C47.5384 1.31946 47.5384 1.95263 47.9289 2.34315L53.5858 8L47.9289 13.6569C47.5384 14.0474 47.5384 14.6805 47.9289 15.0711C48.3195 15.4616 48.9526 15.4616 49.3431 15.0711L55.7071 8.70711ZM-8.74228e-08 9L55 9L55 7L8.74228e-08 7L-8.74228e-08 9Z"
-                  fill="#3138E3"
-                />
-              </svg>
-            </button>
-          </div>
+          <HomeTrainings />
         </div>
       </section>
 
@@ -459,7 +136,7 @@ const Homepage = () => {
                   />
                 </svg>
               }
-              to={"useful-for-you/video-lessons/data-analitika"}
+              to={`${parentMenu[5]?.slug}/${usefulMenu[0]?.slug}/data-analitika`}
             />
             <UsefulCard
               title={"Bloq"}
@@ -477,7 +154,7 @@ const Homepage = () => {
                   />
                 </svg>
               }
-              to={"useful-for-you/blog/data-analitika"}
+              to={`${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/data-analitika`}
             />
             <UsefulCard
               title={"Karyera kakulyatoru"}
@@ -587,7 +264,7 @@ const Homepage = () => {
                   </defs>
                 </svg>
               }
-              to={"useful-for-you/career-calculator"}
+              to={`${parentMenu[5]?.slug}/career-calculator`}
             />
             <UsefulCard
               title={"Seminar & Vebinar"}
@@ -627,7 +304,7 @@ const Homepage = () => {
                   </defs>
                 </svg>
               }
-              to={"useful-for-you/seminar-and-webinar"}
+              to={`${parentMenu[5]?.slug}/${usefulMenu[2]?.slug}`}
             />
             <UsefulCard
               title={"Workshoplar"}
@@ -674,7 +351,7 @@ const Homepage = () => {
                   </defs>
                 </svg>
               }
-              to={"useful-for-you/workshops"}
+              to={`${parentMenu[5]?.slug}/${usefulMenu[4]?.slug}`}
             />
             <UsefulCard
               title={"Təqaüd proqramları"}
@@ -714,7 +391,7 @@ const Homepage = () => {
                   </defs>
                 </svg>
               }
-              to={"useful-for-you/internships"}
+              to={`${parentMenu[5]?.slug}/${usefulMenu[3]?.slug}`}
             />
           </div>
         </div>

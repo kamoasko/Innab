@@ -1,4 +1,3 @@
-import React from "react";
 import { Navigate } from "react-router-dom";
 import MainLayout from "./layouts/mainLayout/MainLayout";
 import Homepage from "./pages/Homepage";
@@ -49,7 +48,10 @@ export const generateRoutes = (menuData, lang) => {
           path: `${parentMenu[0]?.slug}/${aboutMenu[2]?.slug}`,
           element: <ContactPage />,
         },
-        { path: `trainings`, element: <TrainingsPage /> },
+        {
+          path: `${parentMenu[1]?.slug}/:trainingSlug`,
+          element: <TrainingsPage />,
+        },
         { path: parentMenu[2]?.slug, element: <Corporative /> },
         {
           path: `${parentMenu[3]?.slug}/:slug`,
@@ -81,7 +83,7 @@ export const generateRoutes = (menuData, lang) => {
               element: <DetailPage pageTitle={"Bloq"} blog />,
             },
             {
-              path: `career-calculator`,
+              path: `${usefulMenu[5]?.slug}`,
               element: <CareerCalculator />,
             },
             {

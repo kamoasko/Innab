@@ -11,17 +11,24 @@ import SocialNetworks from "../SocialNetworks";
 import Button from "../Button";
 import { useMenus } from "../../features/menus/useMenu";
 import { Skeleton } from "@mui/material";
+import { useTrainingCategories } from "../../features/categories/categorySlice";
 
 const Navbar = ({ partnersRef, setSearchBarOpen }) => {
   const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
   const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
   const { lang } = useParams();
   const { data: menus, status, error } = useMenus(lang);
+  const {
+    data: trainingsCategory,
+    trainingStatus,
+    trainingError,
+  } = useTrainingCategories(lang);
   // const { data: videoCategories } = useVideoData(lang);
   // const { data: blogCategories } = useBlogCategories(lang);
   const location = useLocation();
   const navigate = useNavigate();
 
+  const categorySlug = trainingsCategory?.map((cat) => cat.title);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const aboutMenu = menus?.filter((menu) => menu.parent_id === 3);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
@@ -134,7 +141,7 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
             </li>
             <li>
               <NavLink
-                to={"trainings"}
+                to={parentMenu[1]?.slug}
                 end
                 className={openDropdowns[1] ? "opened" : ""}
               >
@@ -217,7 +224,9 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
                   </p>
                   <ul className={`${openSubMenus[0] ? "open" : ""}`}>
                     <li>
-                      <Link>Data analitika</Link>
+                      <Link to={`${parentMenu[1]?.slug}/data-analitika`}>
+                        Data analitika
+                      </Link>
                     </li>
                     <li>
                       <Link>MS Excel</Link>
@@ -513,39 +522,6 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
                 className={openDropdowns[2] ? "opened" : ""}
               >
                 {parentMenu[2].title}
-                {!openDropdowns[2] ? (
-                  <svg
-                    onClick={() => toggleDropdown(2)}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M10 3.25C10.4142 3.25 10.75 3.58579 10.75 4V9.24999L16 9.25C16.4142 9.25 16.75 9.58579 16.75 10C16.75 10.4142 16.4142 10.75 16 10.75L10.75 10.75V16C10.75 16.4142 10.4142 16.75 10 16.75C9.58581 16.75 9.25002 16.4142 9.25002 16V10.75H4C3.58579 10.75 3.25 10.4142 3.25 9.99999C3.25 9.58578 3.58579 9.24999 4 9.24999H9.25002V4C9.25002 3.58579 9.58581 3.25 10 3.25Z"
-                      fill="#333333"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    onClick={() => toggleDropdown(2)}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M2 9.75C2 9.33579 2.33579 9 2.75 9H17.25C17.6642 9 18 9.33579 18 9.75C18 10.1642 17.6642 10.5 17.25 10.5H2.75C2.33579 10.5 2 10.1642 2 9.75Z"
-                      fill="#3138E3"
-                    />
-                  </svg>
-                )}
               </NavLink>
             </li>
             <li className="navbarMenuDy">
@@ -605,7 +581,7 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
                   </Link>
                 </li>
                 <li>
-                  <Link to={"projects/mini-mba"}>Mini MBA</Link>
+                  <Link to={`${parentMenu[3].slug}/mini-mba`}>Mini MBA</Link>
                 </li>
               </ul>
             </li>
@@ -755,8 +731,8 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
                   </Link>
                 </li>
                 <li>
-                  <Link to={`${parentMenu[5].slug}/career-calculator`}>
-                    Karyera Kalkulyatoru
+                  <Link to={`${parentMenu[5].slug}/${usefulMenu[5].slug}`}>
+                    {usefulMenu[5].title}
                   </Link>
                 </li>
                 <li>
@@ -778,39 +754,6 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
                 className={openDropdowns[6] ? "opened" : ""}
               >
                 {parentMenu[6].title}
-                {!openDropdowns[6] ? (
-                  <svg
-                    onClick={() => toggleDropdown(6)}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M10 3.25C10.4142 3.25 10.75 3.58579 10.75 4V9.24999L16 9.25C16.4142 9.25 16.75 9.58579 16.75 10C16.75 10.4142 16.4142 10.75 16 10.75L10.75 10.75V16C10.75 16.4142 10.4142 16.75 10 16.75C9.58581 16.75 9.25002 16.4142 9.25002 16V10.75H4C3.58579 10.75 3.25 10.4142 3.25 9.99999C3.25 9.58578 3.58579 9.24999 4 9.24999H9.25002V4C9.25002 3.58579 9.58581 3.25 10 3.25Z"
-                      fill="#333333"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    onClick={() => toggleDropdown(6)}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M2 9.75C2 9.33579 2.33579 9 2.75 9H17.25C17.6642 9 18 9.33579 18 9.75C18 10.1642 17.6642 10.5 17.25 10.5H2.75C2.33579 10.5 2 10.1642 2 9.75Z"
-                      fill="#3138E3"
-                    />
-                  </svg>
-                )}
               </Link>
             </li>
             <li>
@@ -819,39 +762,6 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
                 className={openDropdowns[7] ? "opened" : ""}
               >
                 {parentMenu[7].title}
-                {!openDropdowns[7] ? (
-                  <svg
-                    onClick={() => toggleDropdown(7)}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M10 3.25C10.4142 3.25 10.75 3.58579 10.75 4V9.24999L16 9.25C16.4142 9.25 16.75 9.58579 16.75 10C16.75 10.4142 16.4142 10.75 16 10.75L10.75 10.75V16C10.75 16.4142 10.4142 16.75 10 16.75C9.58581 16.75 9.25002 16.4142 9.25002 16V10.75H4C3.58579 10.75 3.25 10.4142 3.25 9.99999C3.25 9.58578 3.58579 9.24999 4 9.24999H9.25002V4C9.25002 3.58579 9.58581 3.25 10 3.25Z"
-                      fill="#333333"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    onClick={() => toggleDropdown(7)}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M2 9.75C2 9.33579 2.33579 9 2.75 9H17.25C17.6642 9 18 9.33579 18 9.75C18 10.1642 17.6642 10.5 17.25 10.5H2.75C2.33579 10.5 2 10.1642 2 9.75Z"
-                      fill="#3138E3"
-                    />
-                  </svg>
-                )}
               </NavLink>
             </li>
           </ul>

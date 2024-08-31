@@ -1,40 +1,30 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../axios";
 
-export const fetchCategories = createAsyncThunk(
-  "categories/fetchCategories",
-  async (lang, { rejectWithValue }) => {
-    try {
+export const useTrainingCategories = (lang) => {
+  return useQuery({
+    queryKey: ["categories", lang],
+    queryFn: async () => {
       const response = await axiosInstance.get(`/${lang}/get_categories`);
+
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
+    },
+    // staleTime: 1000 * 60 * 5, // 5 minutes
+    // cacheTime: 1000 * 60 * 30, // 30 minutes
+  });
+};
 
-const categorySlice = createSlice({
-  name: "categories",
-  initialState: {
-    categories: [],
-    status: "idle",
-    error: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchCategories.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchCategories.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.categories = action.payload;
-      })
-      .addCase(fetchCategories.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
-  },
-});
+export const useTrainingContent = (lang, categotyId) => {
+  return useQuery({
+    queryKey: ["trainingContent", lang, categotyId],
+    queryFn: async () => {
+      const response = await axiosInstance.get(
+        `/${lang}/get_trainings/${categotyId}`
+      );
 
-export default categorySlice.reducer;
+      return response.data;
+    },
+    // staleTime: 1000 * 60 * 5, // 5 minutes
+    // cacheTime: 1000 * 60 * 30, // 30 minutes
+  });
+};

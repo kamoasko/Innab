@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import styles from "./trainings.module.css";
 import PageTitle from "../../components/pageTitle";
 import Tabs from "../../components/tabs";
@@ -9,21 +8,25 @@ import Button from "../../components/Button";
 import Contact from "../../components/Contact";
 import AccordionSecond from "../../components/customAccrodionSecond";
 import TrainingsMenu from "../../components/trainingsMenu";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCategories } from "../../features/categories/categorySlice";
+import {
+  useTrainingCategories,
+  useTrainingContent,
+} from "../../features/categories/categorySlice";
 import { Box, CircularProgress } from "@mui/material";
 import Rooms from "../../components/rooms";
 
 const TrainingsPage = () => {
-  const dispatch = useDispatch();
-  const { lang } = useParams();
-  const { categories, status, error } = useSelector(
-    (state) => state.categories
-  );
-
-  useEffect(() => {
-    dispatch(fetchCategories(lang));
-  }, [lang, dispatch]);
+  const { lang, categoryId } = useParams();
+  const {
+    data: categories,
+    status: categoriesStatus,
+    error: categoriesError,
+  } = useTrainingCategories(lang);
+  const {
+    data: trainingContent,
+    status: contentStatus,
+    error: contentError,
+  } = useTrainingContent(lang, categoryId);
 
   return (
     <>
@@ -36,20 +39,20 @@ const TrainingsPage = () => {
       <section className={styles.training}>
         <div className="container">
           <ul className="flex alignItemsCenter tabsMenu">
-            {status === "loading" && (
+            {categoriesStatus === "pending" && (
               <Box sx={{ width: "100%" }}>
                 <CircularProgress
                   sx={{ width: "2rem !important", height: "2rem !important" }}
                 />
               </Box>
             )}
-            {status === "failed" && <p>{error}</p>}
-            {status === "succeeded" &&
+            {categoriesStatus === "error" && <p>{categoriesError}</p>}
+            {categoriesStatus === "success" &&
               categories.map((category) => (
                 <Tabs
                   key={category.id}
                   title={category.title}
-                  to={category.slug}
+                  to={`/${lang}/telimler/${category.slug}`}
                 />
               ))}
           </ul>

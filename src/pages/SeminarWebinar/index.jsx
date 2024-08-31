@@ -30,8 +30,6 @@ const SeminarWebinar = ({ workshop }) => {
     contactRef?.current.scrollIntoView({ behavior: "smooth" });
   };
 
-  console.log(seminarOrWorkshop);
-
   return (
     <>
       <section className={styles.eventsFirst}>
@@ -127,7 +125,7 @@ const SeminarWebinar = ({ workshop }) => {
           <Swiper
             className="adsSlider"
             spaceBetween={20}
-            pagination={true}
+            pagination={{ clickable: true }}
             autoplay={{ delay: 3000 }}
             modules={[Pagination, Autoplay]}
           >
@@ -146,7 +144,7 @@ const SeminarWebinar = ({ workshop }) => {
                   <Advertisement
                     onclick={handleScrollToContact}
                     speakers={sow.spikers}
-                    time={sow.event_datetime}
+                    time={sow.event_datetime?.slice(0, 16)}
                     adsImg={sow.image}
                     location={sow.place}
                   />
