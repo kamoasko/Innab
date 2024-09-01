@@ -30,8 +30,8 @@ const VideoGrid = React.memo(() => {
               animation="pulse"
               key={index}
               variant="rectangular"
-              width={400}
-              height={456}
+              width={410}
+              height={486}
               className={styles.blogCard}
               sx={{ borderRadius: "1.6rem" }}
             />

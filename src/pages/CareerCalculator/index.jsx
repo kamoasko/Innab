@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./calculator.module.css";
 import CareerForm from "../../components/CareerForm";
 import CareerResults from "../../components/CareerResults";

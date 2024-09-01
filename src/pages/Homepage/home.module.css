@@ -218,12 +218,14 @@
   }
 
   button {
+    font-size: 1.6rem;
     width: 100%;
-    transform: translateY(140%);
-    -webkit-transform: translateY(140%);
-    -moz-transform: translateY(140%);
-    -ms-transform: translateY(140%);
-    -o-transform: translateY(140%);
+    height: 4.8rem;
+    transform: translateY(150%);
+    -webkit-transform: translateY(150%);
+    -moz-transform: translateY(150%);
+    -ms-transform: translateY(150%);
+    -o-transform: translateY(150%);
     transition: 0.3s transform ease-in-out;
     -webkit-transition: 0.3s transform ease-in-out;
     -moz-transition: 0.3s transform ease-in-out;

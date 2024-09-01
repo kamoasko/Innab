@@ -226,7 +226,7 @@ const Homepage = () => {
                   </defs>
                 </svg>
               }
-              to={`${parentMenu[5]?.slug}/career-calculator`}
+              to={`${parentMenu[5]?.slug}/${usefulMenu[5]?.slug}`}
             />
             <UsefulCard
               title={"Seminar & Vebinar"}

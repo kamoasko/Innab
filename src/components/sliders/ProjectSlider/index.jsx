@@ -11,12 +11,15 @@ import { FaChevronRight } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { fetchProjects } from "../../../features/project/projectSlice";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Skeleton } from "@mui/material";
+import { useMenus } from "../../../features/menus/useMenu";
 
 const ProjectSliders = () => {
   const dispatch = useDispatch();
   const { lang } = useParams();
   const { projects, status, error } = useSelector((state) => state.projects);
+  const { data: menus, menuStatus, menuError } = useMenus(lang);
+  const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
@@ -34,7 +37,12 @@ const ProjectSliders = () => {
             width: "100%",
           }}
         >
-          <CircularProgress />
+          <Skeleton
+            variant="rectangular"
+            width={400}
+            height={486}
+            sx={{ borderRadius: "1.6rem" }}
+          />
         </Box>
       )}
       {status === "failed" && <Box>{error}</Box>}
@@ -73,7 +81,9 @@ const ProjectSliders = () => {
                 text={project.card_description}
                 icon={project.image}
                 to={`${
-                  project.is_corporative === 1 ? "career-center" : "projects"
+                  project.is_corporative === 1
+                    ? parentMenu[4]?.slug
+                    : parentMenu[3]?.slug
                 }/${project.slug}`}
               />
             </SwiperSlide>
