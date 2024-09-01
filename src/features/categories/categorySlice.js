@@ -3,7 +3,7 @@ import axiosInstance from "../../axios";
 
 export const useTrainingCategories = (lang) => {
   return useQuery({
-    queryKey: ["categories", lang],
+    queryKey: ["trainingsCategories", lang],
     queryFn: async () => {
       const response = await axiosInstance.get(`/${lang}/get_categories`);
 
@@ -14,12 +14,12 @@ export const useTrainingCategories = (lang) => {
   });
 };
 
-export const useTrainingContent = (lang, categotyId) => {
+export const useTrainingContent = (lang, categotryId) => {
   return useQuery({
-    queryKey: ["trainingContent", lang, categotyId],
+    queryKey: ["trainingContent", lang, categotryId],
     queryFn: async () => {
       const response = await axiosInstance.get(
-        `/${lang}/get_trainings/${categotyId}`
+        `/${lang}/get_trainings/${categotryId}`
       );
 
       return response.data;
