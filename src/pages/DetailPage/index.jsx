@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./details.module.css";
 import PageTitle from "../../components/pageTitle";
 import TrainingsMenu from "../../components/trainingsMenu";
@@ -16,6 +16,7 @@ import axios from "axios";
 import BlogPosts from "../../components/blogPosts";
 import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
 import { useBlogContent, useBlogPosts } from "../../features/blog/blogSlice";
+import { Link } from "react-router-dom";
 
 const DetailPage = ({ blog, pageTitle }) => {
   const { lang, videoSlug, blogSlug, categoryId, blogCategoryId } = useParams();
@@ -33,10 +34,10 @@ const DetailPage = ({ blog, pageTitle }) => {
   } = useBlogContent(lang, blogSlug);
   const { data: posts } = useBlogPosts(lang, blogCategoryId);
 
-  console.log(posts);
-
   const [playing, setPlaying] = useState(false);
   const [isOpened, setIsOpened] = useState({});
+  const [duration, setDuration] = useState("");
+  const [playlistData, setPlaylistData] = useState(null);
 
   const toggleLesson = (lessonId) => {
     setIsOpened((prev) => ({
@@ -45,12 +46,17 @@ const DetailPage = ({ blog, pageTitle }) => {
     }));
   };
 
-  const [duration, setDuration] = useState("");
-  const [playlistData, setPlaylistData] = useState(null);
-
   const links = videoLessonContent?.links;
   const videoId = links?.link;
   const apiKey = "AIzaSyAcNaMFfPRTTcuOI5JHkrDC8ZrzDAb4ELQ";
+  const [videoLessonId, setVideoLessonId] = useState(videoId);
+
+  const iframeRef = useRef(null);
+  const handleVideoId = (id) => {
+    setVideoLessonId(id);
+
+    iframeRef.current.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+  };
 
   useEffect(() => {
     const fetchPlaylistData = async () => {
@@ -100,7 +106,6 @@ const DetailPage = ({ blog, pageTitle }) => {
 
   useEffect(() => {
     const fetchDuration = async () => {
-      const apiKey = "AIzaSyAcNaMFfPRTTcuOI5JHkrDC8ZrzDAb4ELQ";
       const url = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=${apiKey}`;
 
       try {
@@ -206,6 +211,7 @@ const DetailPage = ({ blog, pageTitle }) => {
                       </div>
                     ) : (
                       <iframe
+                        ref={iframeRef}
                         width="100%"
                         height="100%"
                         src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
@@ -239,7 +245,7 @@ const DetailPage = ({ blog, pageTitle }) => {
                                 className="flex flexDirectionColumn"
                                 key={link.id}
                               >
-                                <span>
+                                <span onClick={() => handleVideoId(link.link)}>
                                   1.{index + 1}. {link.title}
                                 </span>
                                 <span className="flex alignItemsCenter">
