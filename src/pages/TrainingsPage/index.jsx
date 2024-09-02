@@ -17,7 +17,7 @@ import Rooms from "../../components/rooms";
 
 const TrainingsPage = () => {
   const { lang, trainingSlug } = useParams();
-  const param = useParams();
+
   const {
     data: categories,
     status: categoriesStatus,
@@ -30,10 +30,7 @@ const TrainingsPage = () => {
     data: trainingContent,
     status: contentStatus,
     error: contentError,
-  } = useTrainingContent(lang, categoryId);
-
-  console.log(trainingContent[0]);
-  
+  } = useTrainingContent(lang, categoryId);  
 
   return (
     <>
@@ -64,18 +61,19 @@ const TrainingsPage = () => {
               ))}
           </ul>
           <div className={styles.trainingInfo}>
-            <h2>Data Analitik kursu</h2>
-            <div>
-              Data Analitik kursu sizə karyeranızda böyük imkanlar yaradacaq. 10
-              -dan çox sahə ekspertinin rəyi və tövsiyyəsi əsasında hazırlanan
-              “Data Analitika” təliminə qoşulmaqla 6 ay müddətində  “Biznes üçün
-              Excel”, “Analitika Metodları”, “SQL ilə data analitika”, “Biznes
-              Statistikası”, “Power Bi ilə vizuallaşdırma” və “Python ilə data
-              analitika”  öyrənəcəksiniz. Data Analitik kurslarının təlim planı
-              ilə aşağlda tanış ola bilərsiniz. Yeni yaranacaq Data Analitika
-              kursu qruplarına qeydiyyatdan keçmək üçün aşağıda sağ sütünda
-              olan “Müraciət et” düyməsinə klik edə bilərsiniz.
-            </div>
+            <h2>
+              {
+                trainingContent &&
+                trainingContent[0].top_text_title
+              }
+            </h2>
+
+            <div 
+              dangerouslySetInnerHTML={{
+                __html: trainingContent ? trainingContent[0].top_text : ""
+              }}
+            ></div>
+
           </div>
           <div className={`${styles.trainingWrapper} flex`}>
             <TrainingsMenu />
@@ -91,7 +89,14 @@ const TrainingsPage = () => {
                 <Link className="flex justifyContentBetween">
                   Müştəri rəyləri <FaArrowRight />
                 </Link>
-                <Link className="flex justifyContentBetween">
+                <Link 
+                  className="flex justifyContentBetween"
+                  to={ trainingContent ?
+                    trainingContent[0]?.file :
+                    "#"
+                  }
+                  target={ trainingContent && trainingContent[0]?.file ? "_black" : "_self" }
+                >
                   Təlim planı
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -108,15 +113,26 @@ const TrainingsPage = () => {
                     />
                   </svg>
                 </Link>
-                <div>
+                {/* <div>
                   142 saat tədris müddəti Biznes üçün Excel və Statistika, SQL,
                   Power Bi, Python ilə data analitika 300+ praktiki test üçün
                   Proqramların yüklənməsində bələdçilik Sertifikat
-                </div>
+                </div> */}
+
+                <div 
+                  dangerouslySetInnerHTML={{
+                    __html: trainingContent ? trainingContent[0].list : ""
+                  }}
+                ></div>
               </div>
               <div className={styles.trainingAboutBottom}>
-                <h2>Data analitik kursu haqqında</h2>
-                <div>
+                <h2>
+                  {
+                    trainingContent &&
+                    trainingContent[0].bottom_text_title
+                  }
+                </h2>
+                {/* <div>
                   “İnnab Business School” komandası tərəfindən ölkənin 10-dan
                   çox nüfuzlu data ekspertinin tövsiyə və rəyləri əsasında təlim
                   planı hazırlanmış “Data Analitik” kursuna qoşulmaqla bu sahədə
@@ -136,7 +152,13 @@ const TrainingsPage = () => {
                   analitika sahəsində olan vakansiyaların əmək haqqısı yüksək,
                   bu səriştələrə sahib olan şəxslərin işsiz qalma ehtimalı xeyli
                   aşağıdır. 
-                </div>
+                </div> */}
+
+                <div 
+                  dangerouslySetInnerHTML={{
+                    __html: trainingContent ? trainingContent[0].bottom_text : ""
+                  }}
+                ></div>
               </div>
             </div>
           </div>
