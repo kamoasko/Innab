@@ -3,14 +3,11 @@ import styles from "./trainings-menu.module.css";
 import { Link } from "react-router-dom";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
-const TrainingsMenu = React.memo(({ vidCat }) => {
-  const [trainingMenu, setTraininMenu] = useState({});
+const TrainingsMenu = React.memo(({ vidCat, posts }) => {
+  const [openCategoryId, setOpenCategoryId] = useState(null);
 
-  const openTrainingMenu = (lessonId) => {
-    setTraininMenu((prev) => ({
-      ...prev,
-      [lessonId]: !prev[lessonId],
-    }));
+  const toggleTrainingMenu = (categoryId) => {
+    setOpenCategoryId((prevId) => (prevId === categoryId ? null : categoryId));
   };
 
   return (
@@ -18,34 +15,28 @@ const TrainingsMenu = React.memo(({ vidCat }) => {
       className={`${styles.trainingMenu} trainingMenu flex flexDirectionColumn`}
     >
       {vidCat?.map((category) => (
-        <li className={trainingMenu[category.id] ? "opened" : ""}>
+        <li
+          key={category.id}
+          className={openCategoryId === category.id ? "opened" : ""}
+        >
           <div
-            onClick={() => openTrainingMenu(category.id)}
+            onClick={() => toggleTrainingMenu(category.id)}
             className="flex alignItemsCenter"
           >
             {category.title}{" "}
-            {trainingMenu[category.id] ? <FaMinus /> : <FaPlus />}
+            {openCategoryId === category.id ? <FaMinus /> : <FaPlus />}
           </div>
-          <ul className="flex flexDirectionColumn">
-            <li>
-              <Link>Data analitika</Link>
-            </li>
-            <li>
-              <Link>Data analitika</Link>
-            </li>
-            <li>
-              <Link>Data analitika</Link>
-            </li>
-            <li>
-              <Link>Data analitika</Link>
-            </li>
-            <li>
-              <Link>Data analitika</Link>
-            </li>
-            <li>
-              <Link>Data analitika</Link>
-            </li>
-          </ul>
+          {openCategoryId === category.id && (
+            <ul className="flex flexDirectionColumn">
+              {posts
+                ?.filter((post) => post.categoryId === category.id)
+                .map((post) => (
+                  <li key={post.id}>
+                    <Link to={`/post/${post.slug}`}>{post.title}</Link>
+                  </li>
+                ))}
+            </ul>
+          )}
         </li>
       ))}
     </ul>
