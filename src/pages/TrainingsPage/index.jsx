@@ -16,17 +16,24 @@ import { Box, CircularProgress } from "@mui/material";
 import Rooms from "../../components/rooms";
 
 const TrainingsPage = () => {
-  const { lang, categoryId } = useParams();
+  const { lang, trainingSlug } = useParams();
+  const param = useParams();
   const {
     data: categories,
     status: categoriesStatus,
     error: categoriesError,
   } = useTrainingCategories(lang);
+
+  const categoryId = categories?.filter(category => category.slug == trainingSlug)[0].id;
+
   const {
     data: trainingContent,
     status: contentStatus,
     error: contentError,
   } = useTrainingContent(lang, categoryId);
+
+  console.log(trainingContent[0]);
+  
 
   return (
     <>
