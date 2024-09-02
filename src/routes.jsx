@@ -29,10 +29,10 @@ export const generateRoutes = (menuData, lang) => {
   const routes = [
     {
       path: "/",
-      element: <Navigate to={`/${lang}`} replace />,
+      element: <Navigate to={`${lang}`} replace />,
     },
     {
-      path: `/:lang`,
+      path: `:lang`,
       element: <MainLayout />,
       children: [
         { path: "", element: <Homepage /> },

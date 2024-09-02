@@ -10,10 +10,10 @@ const GoogleReviews = ({ placeId }) => {
       try {
         const apiKey = "AIzaSyCfV-yh-nvSbmfOLJ23TsxTBynxxC82mM0";
         const response = await fetch(
-          `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJRbvf7pt9MEARgjHAlEh5G5A&key=${apiKey}`
-          //   {
-          //     mode: "no-cors",
-          //   }
+          `https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJRbvf7pt9MEARgjHAlEh5G5A&key=${apiKey}`,
+          {
+            mode: "no-cors",
+          }
         );
 
         if (!response.ok) {
@@ -29,7 +29,6 @@ const GoogleReviews = ({ placeId }) => {
 
     fetchReviews();
   }, []);
-  console.log(reviews);
 
   return (
     <div className={styles.customersReview}>

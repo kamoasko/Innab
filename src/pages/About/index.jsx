@@ -5,13 +5,13 @@ import {
   VerticalTimelineElement,
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
-import aboutImg from "../../assets/images/about/about.jpeg";
-import aboutImg1 from "../../assets/images/about/about1.jpeg";
 import logo from "../../assets/images/about-logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { fetchAboutCards } from "../../features/about/aboutSlice";
 import { CircularProgress } from "@mui/material";
+import { Helmet } from "react-helmet-async";
+import { useMenus } from "../../features/menus/useMenu";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
@@ -27,6 +27,7 @@ const About = () => {
   const dispatch = useDispatch();
   const { lang } = useParams();
   const { about, status, error } = useSelector((state) => state.about);
+  const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
 
   useEffect(() => {
     dispatch(fetchAboutCards(lang));
@@ -34,6 +35,31 @@ const About = () => {
 
   return (
     <>
+      <Helmet>
+        {menuStatus === "pending" && (
+          <>
+            <title>{"Haqqımızda"}</title>
+            <meta name="description" content={"Haqqımızda"} />
+            <meta name="keywords" content={"Haqqımızda"} />
+            <link rel="canonical" href={`/${lang}/haqqimizda`} />
+            <script type="application/ld+json"></script>
+          </>
+        )}
+        {menuStatus === "error" && <noscript>{menuError}</noscript>}
+        {menuStatus === "success" && (
+          <>
+            <title>{menus[0]?.seo_title}</title>
+            <meta name="description" content={menus[0]?.seo_description} />
+            <meta name="keywords" content={menus[0]?.seo_keywords} />
+            {menus[0]?.seo_links || (
+              <link rel="canonical" href={`/${lang}/${menus[0]?.slug}`} />
+            )}
+            {menus[0]?.seo_scripts || (
+              <script type="application/ld+json"></script>
+            )}
+          </>
+        )}
+      </Helmet>
       <Suspense fallback={<CircularProgress />}>
         <div className="pageTop">
           <div className="container">

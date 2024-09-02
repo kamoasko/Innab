@@ -1,18 +1,24 @@
-import React, { useRef, useState } from "react";
+import React, { Suspense, useRef } from "react";
 import styles from "./home.module.css";
-import SectionTitle from "../../components/SectionTitle";
-import { NavLink, useParams } from "react-router-dom";
-import ProjectSliders from "../../components/sliders/ProjectSlider";
-import UsefulCard from "../../components/UsefulCard";
-import Customers from "../../components/Customers";
-import Contact from "../../components/Contact";
-import Button from "../../components/Button";
-import StatsCounter from "../../components/statsCounter";
-import PartnersSection from "../../components/partnersSection";
+import { useParams } from "react-router-dom";
 import { useMenus } from "../../features/menus/useMenu";
 import HomeTrainings from "../../components/homeTrainings";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
-import TrainingLayout from "../../layouts/trainingLayout";
+import { Box, Skeleton } from "@mui/material";
+
+const Contact = React.lazy(() => import("../../components/Contact"));
+const Customers = React.lazy(() => import("../../components/Customers"));
+const UsefulCard = React.lazy(() => import("../../components/UsefulCard"));
+const ProjectSliders = React.lazy(() =>
+  import("../../components/sliders/ProjectSlider")
+);
+const Button = React.lazy(() => import("../../components/Button"));
+const SectionTitle = React.lazy(() => import("../../components/SectionTitle"));
+const StatsCounter = React.lazy(() => import("../../components/statsCounter"));
+const PartnersSection = React.lazy(() =>
+  import("../../components/partnersSection")
+);
+const TrainingLayout = React.lazy(() => import("../../layouts/trainingLayout"));
 
 const Homepage = () => {
   const { lang } = useParams();
@@ -28,7 +34,13 @@ const Homepage = () => {
   };
 
   return (
-    <>
+    <Suspense
+      fallback={
+        <Box>
+          <Skeleton variant="rectangular" height={48} />
+        </Box>
+      }
+    >
       <section
         className={styles.hero}
         style={{
@@ -53,6 +65,7 @@ const Homepage = () => {
           </div>
         </div>
       </section>
+
       <section className={`${styles.trainings} trainings`}>
         <SectionTitle title={"Təlimlər"} />
         <div className="container">
@@ -68,6 +81,7 @@ const Homepage = () => {
           <ProjectSliders />
         </div>
       </section>
+
       <section className={styles.useful}>
         <SectionTitle title={"Sizə faydalı"} />
         <div className="container">
@@ -360,12 +374,13 @@ const Homepage = () => {
       </section>
 
       <Customers homepage />
+
       <Contact
         title={"Sualın var?"}
         subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
         contactRef={contactRef}
       />
-    </>
+    </Suspense>
   );
 };
 

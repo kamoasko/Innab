@@ -4,6 +4,7 @@ import { Box, Skeleton } from "@mui/material";
 import { Outlet, useParams } from "react-router";
 import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
 import { useMenus } from "../../features/menus/useMenu";
+import { Helmet } from "react-helmet-async";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Tabs = React.lazy(() => import("../../components/tabs"));
@@ -21,61 +22,85 @@ const BlogPage = () => {
     setCategoryId(id);
   };
 
+  const currentCategory = blogCategories?.find(
+    (category) => category.id === categoryId
+  );
+
   return (
-    <Suspense
-      fallback={
-        <Box>
-          <Skeleton variant="rectangular" height={48} />
-        </Box>
-      }
-    >
-      <section className={styles.blogs}>
-        <div className="container">
-          <PageTitle title={"Bloq"} />
-          <ul className="flex alignItemsCenter tabsMenu">
-            {status === "pending" && (
-              <Box
-                sx={{
-                  display: "flex",
-                  width: "100%",
-                  gap: 2,
-                }}
-              >
-                {[...Array(4)].map((_, index) => (
-                  <Skeleton
-                    key={index}
-                    variant="rectangular"
-                    width={180}
-                    height={58}
-                    className={styles.tab}
-                    sx={{ borderRadius: "4.8rem" }}
+    <>
+      <Helmet>
+        <title>{currentCategory?.seo_title || "Bloq"}</title>
+        <meta
+          name="description"
+          content={currentCategory?.seo_description || "Bloq səhifəsi"}
+        />
+        <meta name="keywords" content={currentCategory?.seo_keywords} />
+        {currentCategory?.seo_links || (
+          <link
+            rel="canonical"
+            href={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/${currentCategory?.slug}`}
+          />
+        )}
+        {currentCategory?.seo_scripts || (
+          <script type="application/ld+json"></script>
+        )}
+      </Helmet>
+
+      <Suspense
+        fallback={
+          <Box>
+            <Skeleton variant="rectangular" height={48} />
+          </Box>
+        }
+      >
+        <section className={styles.blogs}>
+          <div className="container">
+            <PageTitle title={"Bloq"} />
+            <ul className="flex alignItemsCenter tabsMenu">
+              {status === "pending" && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    gap: 2,
+                  }}
+                >
+                  {[...Array(4)].map((_, index) => (
+                    <Skeleton
+                      key={index}
+                      variant="rectangular"
+                      width={180}
+                      height={58}
+                      className={styles.tab}
+                      sx={{ borderRadius: "4.8rem" }}
+                    />
+                  ))}
+                </Box>
+              )}
+              {status === "error" && <Box>{error}</Box>}
+              {status === "success" &&
+                blogCategories.map((blogCategory) => (
+                  <Tabs
+                    key={blogCategory.id}
+                    title={blogCategory.title}
+                    to={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/${blogCategory.slug}`}
+                    onClick={() => handleTabClick(blogCategory.id)}
                   />
                 ))}
-              </Box>
-            )}
-            {status === "error" && <Box>{error}</Box>}
-            {status === "success" &&
-              blogCategories.map((blogCategory) => (
-                <Tabs
-                  key={blogCategory.id}
-                  title={blogCategory.title}
-                  to={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/${blogCategory.slug}`}
-                  onClick={() => handleTabClick(blogCategory.id)}
-                />
-              ))}
-          </ul>
-          <Outlet context={{ categoryId }} />
-        </div>
-      </section>
-      <Contact
-        apply
-        title={"Sualın var?"}
-        subTitle={[
-          "Hardan başlamaqda tərəddüd edirsənsə ",
-          <strong>bizə zəng elə</strong>,
-        ]}
-      />
-    </Suspense>
+            </ul>
+            <Outlet context={{ categoryId }} />
+          </div>
+        </section>
+        <Contact
+          apply
+          title={"Sualın var?"}
+          subTitle={[
+            "Hardan başlamaqda tərəddüd edirsənsə ",
+            <strong>bizə zəng elə</strong>,
+          ]}
+        />
+      </Suspense>
+    </>
   );
 };
 
