@@ -5,7 +5,6 @@ import TrainingsMenu from "../../components/trainingsMenu";
 import Button from "../../components/Button";
 import { FaChevronDown } from "react-icons/fa";
 import Contact from "../../components/Contact";
-import blogImg from "../../assets/images/bloq/blog.jpeg";
 import { useParams } from "react-router";
 import {
   useVideoLessonCategory,
@@ -16,7 +15,6 @@ import axios from "axios";
 import BlogPosts from "../../components/blogPosts";
 import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
 import { useBlogContent, useBlogPosts } from "../../features/blog/blogSlice";
-import { Link } from "react-router-dom";
 
 const DetailPage = ({ blog, pageTitle }) => {
   const { lang, videoSlug, blogSlug, categoryId, blogCategoryId } = useParams();
@@ -51,11 +49,17 @@ const DetailPage = ({ blog, pageTitle }) => {
   const apiKey = "AIzaSyAcNaMFfPRTTcuOI5JHkrDC8ZrzDAb4ELQ";
   const [videoLessonId, setVideoLessonId] = useState(videoId);
 
-  const iframeRef = useRef(null);
+  const iframeRef = useRef(videoId);
   const handleVideoId = (id) => {
     setVideoLessonId(id);
 
-    iframeRef.current.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+    if (iframeRef.current) {
+      iframeRef.current.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+    } else {
+      // Set playing to true if iframeRef is null, meaning the video hasn't started yet
+      setPlaying(true);
+      iframeRef.current.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+    }
   };
 
   useEffect(() => {
@@ -74,7 +78,7 @@ const DetailPage = ({ blog, pageTitle }) => {
     };
 
     fetchPlaylistData();
-  }, []);
+  }, [videoId, videoLessonId]);
 
   // const calculateVideoDuration = async (videoId) => {
   //   const apiKey = "AIzaSyAcNaMFfPRTTcuOI5JHkrDC8ZrzDAb4ELQ"; // Replace with your YouTube Data API key
@@ -171,7 +175,19 @@ const DetailPage = ({ blog, pageTitle }) => {
                 {status === "error" && <Box>{error}</Box>}
                 <div className={`${styles.detailMainTop} flex`}>
                   <div className={styles.detailFigure}>
-                    {!playing ? (
+                    {playing ? (
+                      <iframe
+                        ref={iframeRef}
+                        width="100%"
+                        height="100%"
+                        src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                      ></iframe>
+                    ) : (
                       <div
                         className={`${styles.playButtonOverlay} flexCenter`}
                         onClick={handlePlayClick}
@@ -209,18 +225,6 @@ const DetailPage = ({ blog, pageTitle }) => {
                           </defs>
                         </svg>
                       </div>
-                    ) : (
-                      <iframe
-                        ref={iframeRef}
-                        width="100%"
-                        height="100%"
-                        src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-                        title="YouTube video player"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        referrerPolicy="strict-origin-when-cross-origin"
-                        allowFullScreen
-                      ></iframe>
                     )}
                   </div>
                   <div className={styles.detailTopics}>
@@ -243,9 +247,10 @@ const DetailPage = ({ blog, pageTitle }) => {
                             {lesson.links.map((link, index) => (
                               <li
                                 className="flex flexDirectionColumn"
+                                onClick={() => handleVideoId(link.link)}
                                 key={link.id}
                               >
-                                <span onClick={() => handleVideoId(link.link)}>
+                                <span>
                                   1.{index + 1}. {link.title}
                                 </span>
                                 <span className="flex alignItemsCenter">

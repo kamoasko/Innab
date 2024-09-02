@@ -26,8 +26,7 @@
 
 .detailFigure {
   position: relative;
-  width: 100%;
-  max-width: 59.8rem;
+  flex: 3;
   height: 42.6rem;
 }
 
@@ -44,7 +43,7 @@
 }
 
 .detailTopics {
-  flex: 1;
+  flex: 2;
   background-color: var(--color-bg);
   overflow-y: auto;
   height: 42.6rem;
@@ -87,6 +86,7 @@
   background-color: var(--color-dark-white);
   height: 6.5rem;
   cursor: pointer;
+  border-bottom: 0.1rem solid #d7d7d7;
 }
 
 .detailTopic > div h3 {
@@ -109,6 +109,10 @@
 .detailTopic ul li span:last-of-type {
   margin-left: 2.7rem;
   gap: 0.4rem;
+}
+
+.detailTopic > ul > li > span:first-of-type {
+  cursor: pointer;
 }
 
 .detailAbout {
@@ -136,4 +140,72 @@
   max-width: 99.9rem;
   margin: 3.6rem auto 0;
   color: var(--color-dark-black);
+}
+
+@media (max-width: 1200px) {
+  .detailWrapper {
+    flex-direction: column-reverse;
+  }
+
+  .detailWrapper > ul {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 992px) {
+  .detailWrapper > ul {
+    display: none;
+  }
+
+  .detailMain button {
+    display: none;
+  }
+
+  .detailMainTop {
+    gap: 1.6rem;
+    flex-direction: column;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+  }
+
+  .detailFigure {
+    flex: unset;
+    border-radius: 1.2rem;
+    -webkit-border-radius: 1.2rem;
+    -moz-border-radius: 1.2rem;
+    -ms-border-radius: 1.2rem;
+    -o-border-radius: 1.2rem;
+  }
+
+  .detailFigure > iframe {
+    border-radius: 1.2rem;
+    -webkit-border-radius: 1.2rem;
+    -moz-border-radius: 1.2rem;
+    -ms-border-radius: 1.2rem;
+    -o-border-radius: 1.2rem;
+  }
+
+  .detailTopics,
+  .detailTopic > div {
+    border-radius: 0.8rem;
+    -webkit-border-radius: 0.8rem;
+    -moz-border-radius: 0.8rem;
+    -ms-border-radius: 0.8rem;
+    -o-border-radius: 0.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .detailFigure {
+    height: 36rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .detailFigure {
+    height: 23.6rem;
+  }
 }
