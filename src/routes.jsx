@@ -107,7 +107,7 @@ export const generateRoutes = (menuData, lang) => {
             { path: ":slug", element: <NewsDetail /> },
           ],
         },
-        { path: `privacy-policy`, element: <Privacy /> },
+        { path: parentMenu[9]?.slug, element: <Privacy /> },
         ,
       ].filter(Boolean),
     },
