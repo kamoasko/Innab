@@ -150,7 +150,7 @@ const NewsDetail = () => {
               {status === "succeeded" &&
                 news?.data
                   ?.slice(0, 3)
-                  .map((post) => (
+                  ?.map((post) => (
                     <NewsCard
                       key={post.id}
                       title={post.title}
@@ -174,6 +174,7 @@ const NewsDetail = () => {
             "Hardan başlamaqda tərəddüd edirsənsə ",
             <strong>bizə zəng elə</strong>,
           ]}
+          apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
         />
       </Suspense>
     </>

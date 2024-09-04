@@ -43,6 +43,7 @@ const CareerCalculator = () => {
       <Contact
         title={"Sualın var?"}
         subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
+        apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
       />
     </>
   );

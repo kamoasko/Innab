@@ -188,6 +188,11 @@ const SeminarWebinar = ({ workshop }) => {
           <span>dəvət edək</span>,
         ]}
         contactRef={contactRef}
+        apiEndpoint={
+          workshop
+            ? "https://admin.innab.coder.az/api/workshop/post"
+            : "https://admin.innab.coder.az/api/vebinar/post"
+        }
       />
     </>
   );

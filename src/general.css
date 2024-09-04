@@ -271,6 +271,22 @@ input[type="search"]::-webkit-search-cancel-button {
   font-size: 1.4rem;
 }
 
+/* modal */
+
+.ReactModal__Content > div > p:first-of-type {
+  font-weight: 600;
+  font-size: 2.4rem;
+}
+
+.ReactModal__Content > div > p:last-of-type {
+  font-size: 1.8rem;
+  margin-top: 0.8rem;
+}
+
+.ReactModal__Content > button {
+  color: var(--color-main);
+}
+
 .contactBtn {
   font-family: var(--main-font);
   position: relative;

@@ -104,6 +104,9 @@ const Scholarships = () => {
           <strong>bizə zəng elə</strong>,
         ]}
         contactRef={contactRef}
+        apiEndpoint={
+          "https://admin.innab.coder.az/api/carrier_and_schoolarship/post"
+        }
       />
     </>
   );

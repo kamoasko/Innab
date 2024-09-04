@@ -3,7 +3,15 @@ import styles from "./contact.module.css";
 import ContactForm from "./contactForm";
 import ContactDetails from "../contactDetails";
 
-const Contact = ({ apply, join, title, subTitle, training, contactRef }) => {
+const Contact = ({
+  apply,
+  join,
+  title,
+  subTitle,
+  training,
+  contactRef,
+  apiEndpoint,
+}) => {
   return (
     <section ref={contactRef} className={styles.contact}>
       <div className="container">
@@ -24,7 +32,7 @@ const Contact = ({ apply, join, title, subTitle, training, contactRef }) => {
             <ContactDetails marginLeft={"4.4rem"} />
           </div>
           <div className={styles.contactForm}>
-            <ContactForm apply={apply} join={join} />
+            <ContactForm apply={apply} join={join} apiEndpoint={apiEndpoint} />
           </div>
         </div>
       </div>

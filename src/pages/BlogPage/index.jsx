@@ -92,12 +92,12 @@ const BlogPage = () => {
           </div>
         </section>
         <Contact
-          apply
           title={"Sualın var?"}
           subTitle={[
             "Hardan başlamaqda tərəddüd edirsənsə ",
             <strong>bizə zəng elə</strong>,
           ]}
+          apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
         />
       </Suspense>
     </>

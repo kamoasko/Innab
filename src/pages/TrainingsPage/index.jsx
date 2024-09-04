@@ -34,8 +34,6 @@ const TrainingsPage = () => {
     error: contentError,
   } = useTrainingContent(lang, categoryId);
 
-  console.log(trainingContent);
-
   return (
     <>
       <div className="pageTop">
@@ -283,6 +281,7 @@ const TrainingsPage = () => {
             "Hardan başlamaqda tərəddüd edirsənsə ",
             <strong>bizə zəng elə</strong>,
           ]}
+          apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
         />
       </section>
     </>

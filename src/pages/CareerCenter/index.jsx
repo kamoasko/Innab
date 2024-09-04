@@ -118,6 +118,9 @@ const CareerCenter = ({ page }) => {
         apply
         title={"Sualın var?"}
         subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
+        apiEndpoint={
+          "https://admin.innab.coder.az/api/carrier_and_schoolarship/post"
+        }
       />
     </>
   );

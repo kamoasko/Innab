@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./contact.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Button from "../Button";
+import Modal from "./modal";
+import axios from "axios";
 
-const ContactForm = ({ apply, join }) => {
+const ContactForm = ({ apiEndpoint, apply, join }) => {
   const initialValues = apply
     ? {
         name: "",
@@ -58,8 +60,28 @@ const ContactForm = ({ apply, join }) => {
         phone: Yup.string().required("Telefon nömrəsi tələb olunur"),
       });
 
-  const handleSubmit = (values) => {
-    console.log("Form data", values);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleSubmit = async (values) => {
+    try {
+      const formData = new FormData();
+      Object.keys(values).forEach((key) => formData.append(key, values[key]));
+
+      const response = await axios.post(apiEndpoint, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 200) {
+        setIsModalOpen(true);
+        console.log(response.data);
+      } else {
+        console.error("Form submission failed");
+      }
+    } catch (error) {
+      console.error("There was an error submitting the form:", error);
+    }
   };
 
   return (
@@ -76,7 +98,7 @@ const ContactForm = ({ apply, join }) => {
             >
               <div className={`${styles.formGroup} flex flexDirectionColumn`}>
                 <label htmlFor="name">
-                  Ad və Soyad <small>*</small>
+                  Ad və soyad <small>*</small>
                 </label>
                 <Field
                   type="text"
@@ -124,7 +146,11 @@ const ContactForm = ({ apply, join }) => {
                     Doğum tarixi <small>*</small>
                   </label>
                   <Field type="date" id="date" name="date" />
-                  <ErrorMessage name="date" component="span" className="error" />
+                  <ErrorMessage
+                    name="date"
+                    component="span"
+                    className="error"
+                  />
                 </div>
               ) : join ? (
                 ""
@@ -382,7 +408,11 @@ const ContactForm = ({ apply, join }) => {
                       </div>
                     </label>
                   </div>
-                  <ErrorMessage name="voen" component="span" className="error" />
+                  <ErrorMessage
+                    name="voen"
+                    component="span"
+                    className="error"
+                  />
                 </div>
 
                 <div
@@ -411,12 +441,20 @@ const ContactForm = ({ apply, join }) => {
                     CV-nizi əlavə edin <small>*</small>
                   </label>
                   <label htmlFor="cv" className="flexCenter">
-                    <Field
+                    <input
                       id="cv"
                       name="cv"
                       type="file"
                       onChange={(event) => {
-                        setFieldValue("cv", event.currentTarget.files[0]);
+                        const fileReader = new FileReader();
+                        fileReader.onload = () => {
+                          if (fileReader.readyState === 2) {
+                            setFieldValue("cv", fileReader.result);
+                            console.log(fileReader.result);
+                          }
+                        };
+                        fileReader.readAsDataURL(event.target.files[0]);
+                        // setFieldValue("cv", event.currentTarget.files[0]);
                       }}
                     />
                     <svg
@@ -465,6 +503,30 @@ const ContactForm = ({ apply, join }) => {
           </Form>
         )}
       </Formik>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="65"
+          height="64"
+          viewBox="0 0 65 64"
+          fill="none"
+        >
+          <path
+            d="M40.4025 24.7026C41.3398 23.7654 42.8594 23.7654 43.7966 24.7026C44.7339 25.6399 44.7339 27.1595 43.7966 28.0967L31.53 40.3634C30.5927 41.3007 29.0731 41.3007 28.1359 40.3634L21.2025 33.4301C20.2653 32.4928 20.2653 30.9732 21.2025 30.036C22.1398 29.0987 23.6594 29.0987 24.5966 30.036L29.8329 35.2722L40.4025 24.7026Z"
+            fill="#3138E3"
+          />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M32.4996 5.59961C47.0786 5.59961 58.8996 17.4206 58.8996 31.9996C58.8996 46.5786 47.0786 58.3996 32.4996 58.3996C17.9206 58.3996 6.09961 46.5786 6.09961 31.9996C6.09961 17.4206 17.9206 5.59961 32.4996 5.59961ZM32.4996 10.3996C20.5689 10.3996 10.8996 20.0689 10.8996 31.9996C10.8996 43.9303 20.5689 53.5996 32.4996 53.5996C44.4303 53.5996 54.0996 43.9303 54.0996 31.9996C54.0996 20.0689 44.4303 10.3996 32.4996 10.3996Z"
+            fill="#3138E3"
+          />
+        </svg>
+        <div>
+          <p>Müraciətiniz təsdiqləndi!</p>
+          <p>Ən qısa vaxt ərzində sizinlə əlaqə saxlanılacaq</p>
+        </div>
+      </Modal>
     </>
   );
 };

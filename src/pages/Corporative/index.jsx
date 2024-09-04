@@ -221,6 +221,7 @@ const Corporative = () => {
         title={"Sualın var?"}
         subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
         contactRef={contactRef}
+        apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
       />
     </Suspense>
   );

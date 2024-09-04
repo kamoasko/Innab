@@ -4,8 +4,6 @@ import styles from "../../pages/CareerCalculator/calculator.module.css";
 const CareerResults = ({ results }) => {
   // if (!results) return null;
 
-  console.log(results?.investmentPaybackPeriod.slice(-2, -1));
-
   return (
     <div>
       <div className={styles.resultSalary}>

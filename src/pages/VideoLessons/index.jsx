@@ -74,6 +74,7 @@ const VideoLessons = () => {
           "Hardan başlamaqda tərəddüd edirsənsə ",
           <strong>bizə zəng elə</strong>,
         ]}
+        apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
       />
     </Suspense>
   );

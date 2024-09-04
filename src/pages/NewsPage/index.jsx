@@ -106,6 +106,7 @@ const NewsPage = () => {
             "Hardan başlamaqda tərəddüd edirsənsə ",
             <strong>bizə zəng elə</strong>,
           ]}
+          apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
         />
         <Outlet />
       </Suspense>
