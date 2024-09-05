@@ -77,7 +77,7 @@ const TrainingsPage = () => {
             {categories && <TrainingsMenu vidCat={categories} />}
             <div className={`${styles.trainingAbout} flex`}>
               <div className={styles.trainingAboutImg}>
-                <img src={trainingImg} alt="" />
+                <img loading="lazy" src={trainingImg} alt="" />
                 <Button title={"Müraciət et"} borderRadius={"7.7rem"} />
               </div>
 

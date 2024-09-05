@@ -92,7 +92,7 @@ const Footer = () => {
                   {status === "error" && <p>{error}</p>}
                   {status === "success" && (
                     <div className="footerLogo">
-                      <img src={infos.header_footer} alt="" />
+                      <img loading="lazy" src={infos.header_footer} alt="" />
                     </div>
                   )}
                 </div>

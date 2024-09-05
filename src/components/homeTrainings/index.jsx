@@ -8,14 +8,17 @@ import { Scrollbar } from "swiper/modules";
 import { useRef, useState } from "react";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { useParams } from "react-router";
+import { useMenus } from "../../features/menus/useMenu";
 
-const HomeTrainings = ({ trainings }) => {
+const HomeTrainings = ({ trainings, link }) => {
   const { width } = useWindowDimensions();
   const { lang } = useParams();
   const [paginationContent, setPaginationContent] = useState("");
   const [isBeginning, setIsBeginning] = useState(true);
   const [isEnd, setIsEnd] = useState(false);
   const swiperRef = useRef(null);
+  const { data: menus } = useMenus(lang);
+  const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
 
   const onSwiperInit = (swiper) => {
     swiperRef.current = swiper;
@@ -65,6 +68,7 @@ const HomeTrainings = ({ trainings }) => {
                   img={training.icon}
                   title={training.top_text_title}
                   desc={training.short_description}
+                  to={`/${lang}/${parentMenu[1]?.slug}/${link}/${training.slug}`}
                 />
               ))}
             </div>
@@ -97,6 +101,7 @@ const HomeTrainings = ({ trainings }) => {
                 img={training.icon}
                 title={training.top_text_title}
                 desc={training.short_description}
+                to={`/${lang}/${parentMenu[1]?.slug}/${link}/${training.slug}`}
               />
             </SwiperSlide>
           ))}

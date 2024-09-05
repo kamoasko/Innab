@@ -89,7 +89,7 @@ const Projects = ({ book }) => {
                   <h2>"55 dərsə Excel" kitabı</h2>
                   <article className={styles.projectCard}>
                     <picture className={styles.projectCardImg}>
-                      <img src={projectImg} alt="" />
+                      <img loading="lazy" src={projectImg} alt="" />
                     </picture>
                     <div className={styles.projectCardDet}>
                       <h4>"55 dərsə Excel" kitabı</h4>
@@ -130,7 +130,7 @@ const Projects = ({ book }) => {
                   className={`${styles.mobileBookQr} flex alignItemsCenter`}
                 >
                   <picture>
-                    <img src={qrCode} alt="" />
+                    <img loading="lazy" src={qrCode} alt="" />
                   </picture>
                   <figcaption>
                     Telefonunuzun kamerası ilə QR codu scan edin.
@@ -147,7 +147,7 @@ const Projects = ({ book }) => {
                   </div>
                   <div className="flex flexDirectionColumn">
                     <Link to={""} className="flexCenter">
-                      <img src={playStore} alt="" />
+                      <img loading="lazy" src={playStore} alt="" />
                       Google Play
                     </Link>
                     <Link to={""} className="flexCenter">
@@ -157,7 +157,7 @@ const Projects = ({ book }) => {
                   </div>
                 </div>
                 <picture className={styles.mobileBookImg}>
-                  <img src={qrCodeApp} alt="" />
+                  <img loading="lazy" src={qrCodeApp} alt="" />
                 </picture>
               </div>
             </div>

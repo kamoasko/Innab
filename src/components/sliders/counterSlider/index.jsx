@@ -81,7 +81,7 @@ const CounterSlider = ({
         <SwiperSlide key={index}>
           <div className={`${styles.statisticsCard}`}>
             <div>
-              <img src={stat.img} alt="" />
+              <img loading="lazy" src={stat.img} alt="" />
             </div>
             <p>
               {isVisible ? (

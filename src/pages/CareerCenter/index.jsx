@@ -26,13 +26,13 @@ const CareerCenter = ({ page }) => {
               } flex alignItemsCenter`}
             >
               <div className={styles.careerImg}>
-                <img src={career} alt="" />
+                <img loading="lazy" src={career} alt="" />
               </div>
               <div
                 className={`${styles.careerDetails} flex flexDirectionColumn`}
               >
                 <div>
-                  <img src={career} alt="" />
+                  <img loading="lazy" src={career} alt="" />
                 </div>
                 <h2>İşlə təminat və ya məzun layihəsi</h2>
                 <p>

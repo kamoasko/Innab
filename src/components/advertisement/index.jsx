@@ -38,7 +38,7 @@ const Advertisement = ({ speakers = [], time, location, adsImg, onclick }) => {
         />
       </div>
       <div className={styles.advertisementimg}>
-        <img src={adsImg} alt="" />
+        <img loading="lazy" src={adsImg} alt="" />
         <Button title={"Qoşul"} component borderRadius={"7rem"} />
       </div>
     </article>

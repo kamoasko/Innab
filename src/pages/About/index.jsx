@@ -110,9 +110,13 @@ const About = () => {
                     >
                       <article className={styles.timelineCard}>
                         <div className={styles.timelineCardImg}>
-                          <img src={a.image} alt={a.description} />
+                          <img
+                            loading="lazy"
+                            src={a.image}
+                            alt={a.description}
+                          />
                           <div className={`${styles.timelineHover} flexCenter`}>
-                            <img src={logo} alt="" />
+                            <img loading="lazy" src={logo} alt="" />
                           </div>
                         </div>
                         <div className={styles.aboutCardDet}>

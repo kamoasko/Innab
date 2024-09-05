@@ -80,7 +80,7 @@ const CareerCalculator = () => {
                     Gələcək <strong>maaşını</strong> hesabla
                   </h2>
                   <div>
-                    <img src={suitcase} alt="" />
+                    <img loading="lazy" src={suitcase} alt="" />
                   </div>
                 </div>
                 <CareerForm onResults={handleResults} />

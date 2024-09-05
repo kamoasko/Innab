@@ -39,7 +39,7 @@ const Rooms = () => {
             rooms.map((room) => (
               <article key={room.id} className={styles.roomsCard}>
                 <picture>
-                  <img src={room.image} alt="" />
+                  <img loading="lazy" src={room.image} alt="" />
                 </picture>
               </article>
             ))}

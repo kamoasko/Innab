@@ -30,7 +30,7 @@ const Header = memo(({ partnersRef }) => {
           {status === "error" && <p>{error}</p>}
           {status === "success" && (
             <Link to={"/"} className="headerTopLogo">
-              <img src={infos?.header_top} alt="Innab logo" />
+              <img loading="lazy" src={infos?.header_top} alt="Innab logo" />
             </Link>
           )}
           <div className="headerTopRight flex alignItemsCenter justifyContentBetween">

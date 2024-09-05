@@ -103,7 +103,11 @@ const NewsDetail = () => {
                     </time>
                   </div>
                   <div className={styles.newsDetailImg}>
-                    <img src={detailedNews?.image || newsImg} alt="" />
+                    <img
+                      loading="lazy"
+                      src={detailedNews?.image || newsImg}
+                      alt=""
+                    />
                   </div>
                 </div>
                 <div className={styles.newsDetailText}>

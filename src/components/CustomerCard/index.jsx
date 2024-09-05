@@ -5,7 +5,7 @@ const CustomerCard = ({ img }) => {
   return (
     <figure className={styles.customerCard}>
       <picture>
-        <img src={img} alt="" />
+        <img loading="lazy" src={img} alt="" />
       </picture>
     </figure>
   );

@@ -7,7 +7,7 @@ const StatisticsCard = () => {
     <div className={`${styles.statistics} flex alignItemsCenter`}>
       <div className={styles.statisticsCard}>
         <div>
-          <img src={stats1} alt="" />
+          <img loading="lazy" src={stats1} alt="" />
         </div>
         <p>25+</p>
         <span>Təlim növü</span>

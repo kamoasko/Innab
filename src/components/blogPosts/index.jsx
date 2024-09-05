@@ -15,7 +15,7 @@ const BlogPosts = ({ blogs, blogContent }) => {
     <div className={styles.detailMain}>
       <div className={`${styles.detailMainTop} flex`}>
         <div className={styles.detailFigure}>
-          <img src={blogImg} alt="" />
+          <img loading="lazy" src={blogImg} alt="" />
         </div>
         <div className={styles.detailTopics}>
           {blogContent && (

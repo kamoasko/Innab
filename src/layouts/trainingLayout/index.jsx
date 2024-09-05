@@ -1,7 +1,6 @@
 import styles from "../../pages/Homepage/home.module.css";
-import { useState } from "react";
-import { Link, NavLink, Outlet, useParams } from "react-router-dom";
-import TrainingsNavbar from "../../components/trainingsNavbar";
+import { useState, useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
 import HomeTrainings from "../../components/homeTrainings";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
 
@@ -14,6 +13,13 @@ const TrainingLayout = () => {
   } = useTrainingCategories(lang);
   const [activeCategory, setActiveCategory] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
+
+  useEffect(() => {
+    if (trainingStatus === "success" && trainingsCategories.length > 0) {
+      setActiveCategory(trainingsCategories[0]);
+      setSelectedCategory(trainingsCategories[0]);
+    }
+  }, [trainingStatus, trainingsCategories]);
 
   if (trainingStatus === "error") {
     return <div>{trainingsError}</div>;
@@ -32,6 +38,8 @@ const TrainingLayout = () => {
     ? selectedCategory.trainings
     : trainingsCategories[0]?.trainings || [];
 
+  const selectedSlug = selectedCategory ? selectedCategory.slug : "";
+
   return (
     <>
       <nav className={styles.trainingsNavbar}>
@@ -46,14 +54,14 @@ const TrainingLayout = () => {
                 }`}
                 onClick={() => handleCategorySelect(training)}
               >
-                <h3>{training.title}</h3>{" "}
+                <h3>{training.title}</h3>
                 <span>&#123; {training.subtitle} &#125;</span>
               </Link>
             </li>
           ))}
         </ul>
       </nav>
-      <HomeTrainings trainings={selectedTrainings} />
+      <HomeTrainings trainings={selectedTrainings} link={selectedSlug} />
     </>
   );
 };
