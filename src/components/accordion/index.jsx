@@ -4,7 +4,12 @@ import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
-import { AccordionActions, Box, CircularProgress } from "@mui/material";
+import {
+  AccordionActions,
+  Box,
+  CircularProgress,
+  Skeleton,
+} from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVacancies } from "../../features/vacancies/vacanciesSlice";
@@ -27,12 +32,19 @@ export default function CustomizedAccordions() {
         <Box
           sx={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            flexDirection: "column",
             width: "100%",
+            gap: "0.2rem",
           }}
         >
-          <CircularProgress />
+          {[...Array(4)].map((_, index) => (
+            <Skeleton
+              key={index}
+              variant="rectangular"
+              height={150}
+              sx={{ width: "100% !important" }}
+            />
+          ))}
         </Box>
       )}
       {status === "failed" && <p>{error}</p>}

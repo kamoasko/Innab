@@ -79,7 +79,7 @@ const Footer = () => {
                 <div>
                   <h5>Bizi izləyin</h5>
                   <SocialNetworks gap={"2.4rem"} />
-                  {status === "loading" && (
+                  {status === "pending" && (
                     <Box sx={{ width: "100%" }}>
                       <CircularProgress
                         sx={{
@@ -89,7 +89,7 @@ const Footer = () => {
                       />
                     </Box>
                   )}
-                  {status === "failed" && <p>{error}</p>}
+                  {status === "error" && <p>{error}</p>}
                   {status === "success" && (
                     <div className="footerLogo">
                       <img src={infos.header_footer} alt="" />

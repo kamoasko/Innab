@@ -7,8 +7,8 @@ import { Box, CircularProgress, Skeleton } from "@mui/material";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
 
-const Contact = React.lazy(() => import("../../components/Contact"));
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
+const Contact = React.lazy(() => import("../../components/Contact"));
 
 const Privacy = () => {
   const dispatch = useDispatch();
