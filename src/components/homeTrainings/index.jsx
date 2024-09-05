@@ -4,8 +4,6 @@ import "swiper/css/scrollbar";
 import styles from "../../pages/Homepage/home.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import TrainingsCard from "../TrainingsCard";
-import sql from "../../assets/images/homepage/SQL.png";
-import mysql from "../../assets/images/homepage/mysql.png";
 import { Scrollbar } from "swiper/modules";
 import { useRef, useState } from "react";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
@@ -61,108 +59,14 @@ const HomeTrainings = ({ trainings }) => {
         >
           <SwiperSlide>
             <div className={styles.trainingsGrid}>
-              <TrainingsCard
-                img={sql}
-                title={"SQL"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
-              <TrainingsCard
-                img={sql}
-                title={"SQL"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
-              <TrainingsCard
-                img={mysql}
-                title={"Ms Excel"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
-              <TrainingsCard
-                img={mysql}
-                title={"Ms Excel"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
-              <TrainingsCard
-                img={mysql}
-                title={"Ms Excel"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
-              <TrainingsCard
-                img={mysql}
-                title={"Ms Excel"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
-              <TrainingsCard
-                img={mysql}
-                title={"Ms Excel"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
-              <TrainingsCard
-                img={mysql}
-                title={"Ms Excel"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className={styles.trainingsGrid}>
-              <TrainingsCard
-                img={sql}
-                title={"SQL"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
-              <TrainingsCard
-                img={sql}
-                title={"SQL"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
-              <TrainingsCard
-                img={mysql}
-                title={"Ms Excel"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
-              <TrainingsCard
-                img={mysql}
-                title={"Ms Excel"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
-              <TrainingsCard
-                img={mysql}
-                title={"Ms Excel"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
-              <TrainingsCard
-                img={mysql}
-                title={"Ms Excel"}
-                desc={
-                  "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-                }
-              />
+              {trainings.map((training) => (
+                <TrainingsCard
+                  key={training.id}
+                  img={training.icon}
+                  title={training.top_text_title}
+                  desc={training.short_description}
+                />
+              ))}
             </div>
           </SwiperSlide>
         </Swiper>
@@ -172,8 +76,6 @@ const HomeTrainings = ({ trainings }) => {
           spaceBetween={18}
           className="trainingSlider"
           loop={true}
-          // modules={[Autoplay]}
-          // autoplay={{ delay: 3000 }}
           breakpoints={{
             280: {
               slidesPerView: 1,
@@ -189,114 +91,15 @@ const HomeTrainings = ({ trainings }) => {
             },
           }}
         >
-          <SwiperSlide>
-            <TrainingsCard
-              img={sql}
-              title={"SQL"}
-              desc={
-                "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-              }
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <TrainingsCard
-              img={sql}
-              title={"SQL"}
-              desc={
-                "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-              }
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <TrainingsCard
-              img={mysql}
-              title={"Ms Excel"}
-              desc={
-                "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-              }
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <TrainingsCard
-              img={mysql}
-              title={"Ms Excel"}
-              desc={
-                "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-              }
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <TrainingsCard
-              img={mysql}
-              title={"Ms Excel"}
-              desc={
-                "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-              }
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <TrainingsCard
-              img={mysql}
-              title={"Ms Excel"}
-              desc={
-                "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-              }
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <TrainingsCard
-              img={mysql}
-              title={"Ms Excel"}
-              desc={
-                "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-              }
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <TrainingsCard
-              img={mysql}
-              title={"Ms Excel"}
-              desc={
-                "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-              }
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <TrainingsCard
-              img={mysql}
-              title={"Ms Excel"}
-              desc={
-                "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-              }
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <TrainingsCard
-              img={mysql}
-              title={"Ms Excel"}
-              desc={
-                "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-              }
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <TrainingsCard
-              img={mysql}
-              title={"Ms Excel"}
-              desc={
-                "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-              }
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <TrainingsCard
-              img={mysql}
-              title={"Ms Excel"}
-              desc={
-                "SQL kursları ilə sizə Data Analitkasını başqa bir aspektdən öyrənəcəksiniz. SQL kurslarında iştirak edərək siz, Data"
-              }
-            />
-          </SwiperSlide>
+          {trainings.map((training) => (
+            <SwiperSlide key={training.id}>
+              <TrainingsCard
+                img={training.icon}
+                title={training.top_text_title}
+                desc={training.short_description}
+              />
+            </SwiperSlide>
+          ))}
         </Swiper>
       )}
 

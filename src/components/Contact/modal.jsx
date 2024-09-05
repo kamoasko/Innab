@@ -12,6 +12,8 @@ const Modal = ({ isOpen, onClose, children }) => {
       style={{
         overlay: {
           backgroundColor: "rgba(0, 0, 0, 0.5)",
+          overflow: "hidden",
+          zIndex: "9999",
         },
         content: {
           display: "flex",

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../../pages/Homepage/home.module.css";
 import { Link, useParams } from "react-router-dom";
 
-const TrainingsNavbar = ({ trainingsCategory, handleTrainingId }) => {
+const TrainingsNavbar = ({ trainingsCategory, onCategorySelect }) => {
   const { lang } = useParams();
 
   return (
@@ -13,10 +13,11 @@ const TrainingsNavbar = ({ trainingsCategory, handleTrainingId }) => {
         {trainingsCategory?.map((training) => (
           <li key={training.id}>
             <Link
-              to={`/${lang}/telimler/${training.slug || "#"}`}
               className={`flexCenter flexDirectionColumn`}
+              onClick={() => onCategorySelect(training)}
             >
-              <h3>{training.title}</h3> <span>&#123; inData &#125;</span>
+              <h3>{training.title}</h3>{" "}
+              <span>&#123; {training.subtitle} &#125;</span>
             </Link>
           </li>
         ))}
