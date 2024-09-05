@@ -199,6 +199,7 @@
 
 .searchBar {
   display: flex;
+  align-items: center;
   background-color: transparent;
   width: 0;
   opacity: 0;
@@ -224,6 +225,10 @@
   opacity: 1;
 }
 
+.searchBar > svg {
+  color: var(--color-main);
+}
+
 .searchBar > input {
   background-color: transparent;
   font-size: 1.6rem;
@@ -234,6 +239,27 @@
 
 input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
+}
+
+.searchResults {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: var(--color-nav-bg);
+}
+
+.searchResults > .container > ul {
+  gap: 1.6rem;
+  padding: 2.4rem;
+}
+
+.searchResults ul > li > a {
+  gap: 2.4rem;
+}
+
+.searchResults ul > li > a > svg {
+  color: var(--color-main);
 }
 
 /* searchBar ended */
