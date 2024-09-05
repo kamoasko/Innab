@@ -247,11 +247,12 @@ input[type="search"]::-webkit-search-cancel-button {
   left: 0;
   width: 100%;
   background-color: var(--color-nav-bg);
+  padding: 2.4rem 0;
 }
 
 .searchResults > .container > ul {
   gap: 1.6rem;
-  padding: 2.4rem;
+  padding: 0 2.4rem;
 }
 
 .searchResults ul > li > a {
