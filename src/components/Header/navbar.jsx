@@ -495,7 +495,7 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
               </ul>
             </li>
             <li>
-              <button onClick={handleScrollToPartners}>
+              <button type="button" onClick={handleScrollToPartners}>
                 {parentMenu[6].title}
               </button>
             </li>
