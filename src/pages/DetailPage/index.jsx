@@ -47,7 +47,6 @@ const DetailPage = ({ blog, pageTitle }) => {
   );
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
-  console.log(blogContent);
 
   const toggleLesson = (lessonId) => {
     setIsOpened((prev) => ({
@@ -68,7 +67,6 @@ const DetailPage = ({ blog, pageTitle }) => {
     if (iframeRef.current) {
       iframeRef.current.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
     } else {
-      // Set playing to true if iframeRef is null, meaning the video hasn't started yet
       setPlaying(true);
       iframeRef.current.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
     }

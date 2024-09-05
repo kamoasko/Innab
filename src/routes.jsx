@@ -38,52 +38,83 @@ export const generateRoutes = (menuData, lang) => {
         { path: "", element: <Homepage /> },
         {
           path: parentMenu[0]?.slug,
-          element: <About />,
+          children: [
+            { path: "", element: <About /> },
+            {
+              path: aboutMenu[1]?.slug,
+              element: <VacanciesPage />,
+            },
+            {
+              path: aboutMenu[2]?.slug,
+              element: <ContactPage />,
+            },
+          ],
         },
+
         {
-          path: `${parentMenu[0]?.slug}/${aboutMenu[1]?.slug}`,
-          element: <VacanciesPage />,
-        },
-        {
-          path: `${parentMenu[0]?.slug}/${aboutMenu[2]?.slug}`,
-          element: <ContactPage />,
-        },
-        {
-          path: `${parentMenu[1]?.slug}/:slug/:trainingSlug`,
-          element: <TrainingsPage />,
+          path: parentMenu[1]?.slug,
+          children: [
+            {
+              path: ":slug/:trainingSlug",
+              element: <TrainingsPage />,
+            },
+          ],
         },
         { path: parentMenu[2]?.slug, element: <Corporative /> },
         {
-          path: `${parentMenu[3]?.slug}/:slug`,
+          path: parentMenu[3]?.slug,
           children: [
-            { path: "", element: <Projects book /> },
-            { path: "", element: <Projects /> },
+            { path: ":slug", element: <Projects book /> },
+            { path: ":slug", element: <Projects /> },
           ],
         },
-        { path: `${parentMenu[4]?.slug}/:slug`, element: <CareerCenter /> },
+        {
+          path: parentMenu[4]?.slug,
+          children: [{ path: ":slug", element: <CareerCenter /> }],
+        },
         {
           path: parentMenu[5]?.slug,
           children: [
             {
-              path: `${usefulMenu[0]?.slug}/:slug`,
-              element: <VideoLessons />,
-              children: [{ path: "", element: <VideoGrid /> }],
+              path: usefulMenu[0]?.slug,
+              children: [
+                {
+                  path: ":slug",
+                  element: <VideoLessons />,
+                  children: [{ path: "", element: <VideoGrid /> }],
+                },
+              ],
             },
             {
-              path: `${usefulMenu[0]?.slug}/:slug/:videoSlug`,
-              element: <DetailPage pageTitle={"Video dərslər"} />,
+              path: usefulMenu[0]?.slug,
+              children: [
+                {
+                  path: ":slug/:videoSlug",
+                  element: <DetailPage pageTitle={"Video dərslər"} />,
+                },
+              ],
             },
             {
-              path: `${usefulMenu[1]?.slug}/:slug`,
-              element: <BlogPage />,
-              children: [{ path: "", element: <BlogGrid /> }],
+              path: usefulMenu[1]?.slug,
+              children: [
+                {
+                  path: ":slug",
+                  element: <BlogPage />,
+                  children: [{ path: "", element: <BlogGrid /> }],
+                },
+              ],
             },
             {
-              path: `${usefulMenu[1]?.slug}/:slug/:blogSlug`,
-              element: <DetailPage pageTitle={"Bloq"} blog />,
+              path: usefulMenu[1]?.slug,
+              children: [
+                {
+                  path: ":slug/:blogSlug",
+                  element: <DetailPage pageTitle={"Bloq"} blog />,
+                },
+              ],
             },
             {
-              path: `${usefulMenu[5]?.slug}`,
+              path: usefulMenu[5]?.slug,
               element: <CareerCalculator />,
             },
             {

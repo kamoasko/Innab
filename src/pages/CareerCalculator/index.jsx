@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router";
 import { Box, Skeleton } from "@mui/material";
 import { useMenus } from "../../features/menus/useMenu";
+import suitcase from "../../assets/icons/money-suitcase.svg";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
@@ -11,9 +12,6 @@ const CareerResults = React.lazy(() =>
   import("../../components/CareerResults")
 );
 const CareerForm = React.lazy(() => import("../../components/CareerForm"));
-const suitcase = React.lazy(() =>
-  import("../../assets/icons/money-suitcase.svg")
-);
 
 const CareerCalculator = () => {
   const [results, setResults] = useState(null);
