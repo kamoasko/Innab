@@ -66,7 +66,7 @@ const HomeTrainings = ({ trainings, link }) => {
                 <TrainingsCard
                   key={training.id}
                   img={training.icon}
-                  title={training.top_text_title}
+                  title={training.title}
                   desc={training.short_description}
                   to={`/${lang}/${parentMenu[1]?.slug}/${link}/${training.slug}`}
                 />
@@ -99,7 +99,7 @@ const HomeTrainings = ({ trainings, link }) => {
             <SwiperSlide key={training.id}>
               <TrainingsCard
                 img={training.icon}
-                title={training.top_text_title}
+                title={training.title}
                 desc={training.short_description}
                 to={`/${lang}/${parentMenu[1]?.slug}/${link}/${training.slug}`}
               />

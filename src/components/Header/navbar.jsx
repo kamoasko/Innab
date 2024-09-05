@@ -12,6 +12,7 @@ import Button from "../Button";
 import { useMenus } from "../../features/menus/useMenu";
 import { Skeleton } from "@mui/material";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 
 const Navbar = ({ partnersRef, setSearchBarOpen }) => {
   const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
@@ -23,8 +24,8 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
     status: trainingStatus,
     error: trainingError,
   } = useTrainingCategories(lang);
-  // const { data: videoCategories } = useVideoData(lang);
-  // const { data: blogCategories } = useBlogCategories(lang);
+  const { data: blog, isSuccess } = useBlogCategories(lang);
+  const { data: video, isSuccess: videoStatus } = useVideoLessonCategory(lang);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -32,6 +33,10 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
     ?.map((t) => t.trainings)
     ?.flat(Infinity)
     ?.map((s) => s.slug);
+
+  const blogSlug = isSuccess && blog?.map((b) => b.slug);
+  const videoSlug = videoStatus && video?.map((v) => v.slug);
+
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const aboutMenu = menus?.filter((menu) => menu.parent_id === 3);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
@@ -52,8 +57,14 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
     return dropdownPaths.some((path) => location.pathname.startsWith(path));
   };
 
+  const isTrainingDropdownAcive =
+    parentMenu[1].slug === location.pathname.split("/")[2];
+
+  const isUsefulDropdownAcive =
+    parentMenu[5].slug === location.pathname.split("/")[2];
+
   const handleScrollToPartners = () => {
-    navigate("/");
+    navigate(`/${lang}`);
     setTimeout(() => {
       if (partnersRef && partnersRef.current) {
         partnersRef.current.scrollIntoView({ behavior: "smooth" });
@@ -76,9 +87,13 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
           <ul className="navbarMenu flex alignItemsCenter">
             <li className="navbarMenuDy">
               <NavLink
-                className={({ isActive }) =>
+                className={() =>
                   `${openDropdowns[0] ? "opened" : ""} ${
-                    isDropdownActive(["/about", "/vacancies", "/contact"])
+                    isDropdownActive([
+                      `/${lang}/${aboutMenu[0]?.slug}`,
+                      `/${lang}/${parentMenu[0]?.slug}/${aboutMenu[1]?.slug}`,
+                      `/${lang}/${parentMenu[0]?.slug}/${aboutMenu[2]?.slug}`,
+                    ])
                       ? "active"
                       : ""
                   }`
@@ -142,8 +157,11 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
             <li>
               <NavLink
                 to={parentMenu[1]?.slug}
-                end
-                className={openDropdowns[1] ? "opened" : ""}
+                className={({ isActive }) =>
+                  `${openDropdowns[1] ? "opened" : ""} ${
+                    isTrainingDropdownAcive ? "active" : ""
+                  }`
+                }
               >
                 {parentMenu[1].title}
                 {!openDropdowns[1] ? (
@@ -238,7 +256,7 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
                             <Link
                               to={`${parentMenu[1]?.slug}/${training.slug}/${t.slug}`}
                             >
-                              {t.top_text_title}
+                              {t.title}
                             </Link>
                           </li>
                         ))}
@@ -257,10 +275,12 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
             </li>
             <li className="navbarMenuDy">
               <NavLink
-                to={"#"}
                 className={({ isActive }) =>
                   `${openDropdowns[3] ? "opened" : ""} ${
-                    isDropdownActive(["/55-derse-excel-kitabi", "/mini-mba"])
+                    isDropdownActive([
+                      `/${lang}/${parentMenu[3].slug}/55-derse-excel-kitabi`,
+                      `/${lang}/${parentMenu[3].slug}/mini-mba`,
+                    ])
                       ? "active"
                       : ""
                   }`
@@ -319,12 +339,12 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
             <li className="navbarMenuDy">
               <NavLink
                 to={"career-center"}
-                className={({ isActive }) =>
+                className={() =>
                   `${openDropdowns[4] ? "opened" : ""} ${
                     isDropdownActive([
-                      `/${parentMenu[4]?.slug}/employment-or-graduate-project`,
-                      "/issizlikdir",
-                      "/cooperation-with-dma",
+                      `/${lang}/${parentMenu[4]?.slug}/employment-or-graduate-project`,
+                      `/${lang}/issizlikdir`,
+                      `/${lang}/cooperation-with-dma`,
                     ])
                       ? "active"
                       : ""
@@ -392,13 +412,9 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
             </li>
             <li className="navbarMenuDy">
               <NavLink
-                className={({ isActive }) =>
+                className={() =>
                   `${openDropdowns[5] ? "opened" : ""} ${
-                    isDropdownActive([
-                      `${parentMenu[5].slug}/${usefulMenu[0].slug}/data-analitika`,
-                    ])
-                      ? "active"
-                      : ""
+                    isUsefulDropdownAcive ? "active" : ""
                   }`
                 }
               >
@@ -444,14 +460,14 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
               >
                 <li>
                   <Link
-                    to={`${parentMenu[5].slug}/${usefulMenu[0].slug}/data-analitika`}
+                    to={`${parentMenu[5].slug}/${usefulMenu[0].slug}/${videoSlug[0]}`}
                   >
                     {usefulMenu[0].title}
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to={`${parentMenu[5].slug}/${usefulMenu[1].slug}/data-analitika`}
+                    to={`${parentMenu[5].slug}/${usefulMenu[1].slug}/${blogSlug[0]}`}
                   >
                     {usefulMenu[1].title}
                   </Link>
@@ -479,21 +495,12 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
               </ul>
             </li>
             <li>
-              <Link
-                to={"#partners"}
-                onClick={handleScrollToPartners}
-                className={openDropdowns[6] ? "opened" : ""}
-              >
+              <button onClick={handleScrollToPartners}>
                 {parentMenu[6].title}
-              </Link>
+              </button>
             </li>
             <li>
-              <NavLink
-                to={parentMenu[7].slug}
-                className={openDropdowns[7] ? "opened" : ""}
-              >
-                {parentMenu[7].title}
-              </NavLink>
+              <NavLink to={parentMenu[7].slug}>{parentMenu[7].title}</NavLink>
             </li>
           </ul>
 
