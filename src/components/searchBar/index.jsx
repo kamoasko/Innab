@@ -49,8 +49,6 @@ const SearchBar = ({ top, bottom, isOpen, onClose }) => {
     onClose();
   };
 
-  console.log(filteredResults);
-
   return (
     <form action="" className={className}>
       <div className={className2} id="">
