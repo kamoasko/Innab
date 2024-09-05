@@ -49,7 +49,7 @@ export const generateRoutes = (menuData, lang) => {
           element: <ContactPage />,
         },
         {
-          path: `${parentMenu[1]?.slug}/:trainingSlug`,
+          path: `${parentMenu[1]?.slug}/:slug/:trainingSlug`,
           element: <TrainingsPage />,
         },
         { path: parentMenu[2]?.slug, element: <Corporative /> },

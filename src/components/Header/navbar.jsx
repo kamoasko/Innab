@@ -20,21 +20,21 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
   const { data: menus, status, error } = useMenus(lang);
   const {
     data: trainingsCategory,
-    trainingStatus,
-    trainingError,
+    status: trainingStatus,
+    error: trainingError,
   } = useTrainingCategories(lang);
   // const { data: videoCategories } = useVideoData(lang);
   // const { data: blogCategories } = useBlogCategories(lang);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const categorySlug = trainingsCategory?.map((cat) => cat.title);
+  const categorySlug = trainingsCategory
+    ?.map((t) => t.trainings)
+    ?.flat(Infinity)
+    ?.map((s) => s.slug);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const aboutMenu = menus?.filter((menu) => menu.parent_id === 3);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
-
-  // const categorySlug = videoCategories[0]?.slug;
-  //   const blogCategorySlug = blogCategories[0]?.slug;
 
   const toggleDropdown = (index) => {
     setOpenDropdowns((prev) =>
@@ -185,335 +185,66 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
                   openDropdowns[1] ? "open" : ""
                 }`}
               >
-                <li>
-                  <p>
-                    Data analitika
-                    {!openSubMenus[0] ? (
-                      <svg
-                        onClick={() => toggleSubMenu(0)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M10 3.25C10.4142 3.25 10.75 3.58579 10.75 4V9.24999L16 9.25C16.4142 9.25 16.75 9.58579 16.75 10C16.75 10.4142 16.4142 10.75 16 10.75L10.75 10.75V16C10.75 16.4142 10.4142 16.75 10 16.75C9.58581 16.75 9.25002 16.4142 9.25002 16V10.75H4C3.58579 10.75 3.25 10.4142 3.25 9.99999C3.25 9.58578 3.58579 9.24999 4 9.24999H9.25002V4C9.25002 3.58579 9.58581 3.25 10 3.25Z"
-                          fill="#333333"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        onClick={() => toggleSubMenu(0)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M2 9.75C2 9.33579 2.33579 9 2.75 9H17.25C17.6642 9 18 9.33579 18 9.75C18 10.1642 17.6642 10.5 17.25 10.5H2.75C2.33579 10.5 2 10.1642 2 9.75Z"
-                          fill="#3138E3"
-                        />
-                      </svg>
-                    )}
-                  </p>
-                  <ul className={`${openSubMenus[0] ? "open" : ""}`}>
-                    <li>
-                      <Link to={`${parentMenu[1]?.slug}/data-analitika`}>
-                        Data analitika
-                      </Link>
+                {trainingStatus === "pending" && (
+                  <Skeleton
+                    variant="rectangular"
+                    height={10}
+                    sx={{ width: "100% !important" }}
+                  />
+                )}
+                {trainingStatus === "error" && <div>{trainingError}</div>}
+                {trainingStatus === "success" &&
+                  trainingsCategory?.map((training) => (
+                    <li key={training.id}>
+                      <p>
+                        {training.title}
+                        {!openSubMenus[0] ? (
+                          <svg
+                            onClick={() => toggleSubMenu(0)}
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M10 3.25C10.4142 3.25 10.75 3.58579 10.75 4V9.24999L16 9.25C16.4142 9.25 16.75 9.58579 16.75 10C16.75 10.4142 16.4142 10.75 16 10.75L10.75 10.75V16C10.75 16.4142 10.4142 16.75 10 16.75C9.58581 16.75 9.25002 16.4142 9.25002 16V10.75H4C3.58579 10.75 3.25 10.4142 3.25 9.99999C3.25 9.58578 3.58579 9.24999 4 9.24999H9.25002V4C9.25002 3.58579 9.58581 3.25 10 3.25Z"
+                              fill="#333333"
+                            />
+                          </svg>
+                        ) : (
+                          <svg
+                            onClick={() => toggleSubMenu(0)}
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              clipRule="evenodd"
+                              d="M2 9.75C2 9.33579 2.33579 9 2.75 9H17.25C17.6642 9 18 9.33579 18 9.75C18 10.1642 17.6642 10.5 17.25 10.5H2.75C2.33579 10.5 2 10.1642 2 9.75Z"
+                              fill="#3138E3"
+                            />
+                          </svg>
+                        )}
+                      </p>
+                      <ul className={`${openSubMenus[0] ? "open" : ""}`}>
+                        {training?.trainings?.map((t) => (
+                          <li key={t.id}>
+                            <Link
+                              to={`${parentMenu[1]?.slug}/${training.slug}/${t.slug}`}
+                            >
+                              {t.top_text_title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
                     </li>
-                    <li>
-                      <Link>MS Excel</Link>
-                    </li>
-                    <li>
-                      <Link>Biznes Statistikas</Link>
-                    </li>
-                    <li>
-                      <Link>SQL</Link>
-                    </li>
-                    <li>
-                      <Link>Database Developer</Link>
-                    </li>
-                    <li>
-                      <Link>Power Bİ</Link>
-                    </li>
-                    <li>
-                      <Link>Data Reporting (Bİ)</Link>
-                    </li>
-                    <li>
-                      <Link>Python</Link>
-                    </li>
-                    <li>
-                      <Link>R</Link>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <p>
-                    Mühasibatlıq
-                    {!openSubMenus[1] ? (
-                      <svg
-                        onClick={() => toggleSubMenu(1)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M10 3.25C10.4142 3.25 10.75 3.58579 10.75 4V9.24999L16 9.25C16.4142 9.25 16.75 9.58579 16.75 10C16.75 10.4142 16.4142 10.75 16 10.75L10.75 10.75V16C10.75 16.4142 10.4142 16.75 10 16.75C9.58581 16.75 9.25002 16.4142 9.25002 16V10.75H4C3.58579 10.75 3.25 10.4142 3.25 9.99999C3.25 9.58578 3.58579 9.24999 4 9.24999H9.25002V4C9.25002 3.58579 9.58581 3.25 10 3.25Z"
-                          fill="#333333"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        onClick={() => toggleSubMenu(1)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M2 9.75C2 9.33579 2.33579 9 2.75 9H17.25C17.6642 9 18 9.33579 18 9.75C18 10.1642 17.6642 10.5 17.25 10.5H2.75C2.33579 10.5 2 10.1642 2 9.75Z"
-                          fill="#3138E3"
-                        />
-                      </svg>
-                    )}
-                  </p>
-                  <ul className={`${openSubMenus[1] ? "open" : ""}`}>
-                    <li>
-                      <Link>Mühasibat uçotu və 1 C</Link>
-                    </li>
-                    <li>
-                      <Link>Vergi uçotu</Link>
-                    </li>
-                    <li>
-                      <Link>ACCA F3</Link>
-                    </li>
-                    <li>
-                      <Link>PMS</Link>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <p>
-                    Komputer bacarıqları
-                    {!openSubMenus[2] ? (
-                      <svg
-                        onClick={() => toggleSubMenu(2)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M10 3.25C10.4142 3.25 10.75 3.58579 10.75 4V9.24999L16 9.25C16.4142 9.25 16.75 9.58579 16.75 10C16.75 10.4142 16.4142 10.75 16 10.75L10.75 10.75V16C10.75 16.4142 10.4142 16.75 10 16.75C9.58581 16.75 9.25002 16.4142 9.25002 16V10.75H4C3.58579 10.75 3.25 10.4142 3.25 9.99999C3.25 9.58578 3.58579 9.24999 4 9.24999H9.25002V4C9.25002 3.58579 9.58581 3.25 10 3.25Z"
-                          fill="#333333"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        onClick={() => toggleSubMenu(2)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M2 9.75C2 9.33579 2.33579 9 2.75 9H17.25C17.6642 9 18 9.33579 18 9.75C18 10.1642 17.6642 10.5 17.25 10.5H2.75C2.33579 10.5 2 10.1642 2 9.75Z"
-                          fill="#3138E3"
-                        />
-                      </svg>
-                    )}
-                  </p>
-                  <ul className={`${openSubMenus[2] ? "open" : ""}`}>
-                    <li>
-                      <Link>MS Office</Link>
-                    </li>
-                    <li>
-                      <Link>MS Excel</Link>
-                    </li>
-                    <li>
-                      <Link>VBA</Link>
-                    </li>
-                    <li>
-                      <Link>MOSE</Link>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <p>
-                    İnsan resursları
-                    {!openSubMenus[3] ? (
-                      <svg
-                        onClick={() => toggleSubMenu(3)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M10 3.25C10.4142 3.25 10.75 3.58579 10.75 4V9.24999L16 9.25C16.4142 9.25 16.75 9.58579 16.75 10C16.75 10.4142 16.4142 10.75 16 10.75L10.75 10.75V16C10.75 16.4142 10.4142 16.75 10 16.75C9.58581 16.75 9.25002 16.4142 9.25002 16V10.75H4C3.58579 10.75 3.25 10.4142 3.25 9.99999C3.25 9.58578 3.58579 9.24999 4 9.24999H9.25002V4C9.25002 3.58579 9.58581 3.25 10 3.25Z"
-                          fill="#333333"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        onClick={() => toggleSubMenu(3)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M2 9.75C2 9.33579 2.33579 9 2.75 9H17.25C17.6642 9 18 9.33579 18 9.75C18 10.1642 17.6642 10.5 17.25 10.5H2.75C2.33579 10.5 2 10.1642 2 9.75Z"
-                          fill="#3138E3"
-                        />
-                      </svg>
-                    )}
-                  </p>
-                  <ul className={`${openSubMenus[3] ? "open" : ""}`}>
-                    <li>
-                      <Link>Əmək məcəlləsi</Link>
-                    </li>
-                    <li>
-                      <Link>HR Data analitikası</Link>
-                    </li>
-                    <li>
-                      <Link>HR Assisent</Link>
-                    </li>
-                    <li>
-                      <Link>İnsan Resursları İdarə Edilməsi</Link>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <p>
-                    Yumuşaq səriştələr
-                    {!openSubMenus[4] ? (
-                      <svg
-                        onClick={() => toggleSubMenu(4)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M10 3.25C10.4142 3.25 10.75 3.58579 10.75 4V9.24999L16 9.25C16.4142 9.25 16.75 9.58579 16.75 10C16.75 10.4142 16.4142 10.75 16 10.75L10.75 10.75V16C10.75 16.4142 10.4142 16.75 10 16.75C9.58581 16.75 9.25002 16.4142 9.25002 16V10.75H4C3.58579 10.75 3.25 10.4142 3.25 9.99999C3.25 9.58578 3.58579 9.24999 4 9.24999H9.25002V4C9.25002 3.58579 9.58581 3.25 10 3.25Z"
-                          fill="#333333"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        onClick={() => toggleSubMenu(4)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M2 9.75C2 9.33579 2.33579 9 2.75 9H17.25C17.6642 9 18 9.33579 18 9.75C18 10.1642 17.6642 10.5 17.25 10.5H2.75C2.33579 10.5 2 10.1642 2 9.75Z"
-                          fill="#3138E3"
-                        />
-                      </svg>
-                    )}
-                  </p>
-                  <ul className={`${openSubMenus[4] ? "open" : ""}`}>
-                    <li>
-                      <Link>SMM</Link>
-                    </li>
-                    <li>
-                      <Link>Praktiki satış</Link>
-                    </li>
-                    <li>
-                      <Link>Biznes Proseslərin İdarə Edilməsi</Link>
-                    </li>
-                    <li>
-                      <Link>Dövlət satınalmaları</Link>
-                    </li>
-                  </ul>
-                </li>
-                <li>
-                  <p>
-                    Digər Təlimlər
-                    {!openSubMenus[5] ? (
-                      <svg
-                        onClick={() => toggleSubMenu(5)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M10 3.25C10.4142 3.25 10.75 3.58579 10.75 4V9.24999L16 9.25C16.4142 9.25 16.75 9.58579 16.75 10C16.75 10.4142 16.4142 10.75 16 10.75L10.75 10.75V16C10.75 16.4142 10.4142 16.75 10 16.75C9.58581 16.75 9.25002 16.4142 9.25002 16V10.75H4C3.58579 10.75 3.25 10.4142 3.25 9.99999C3.25 9.58578 3.58579 9.24999 4 9.24999H9.25002V4C9.25002 3.58579 9.58581 3.25 10 3.25Z"
-                          fill="#333333"
-                        />
-                      </svg>
-                    ) : (
-                      <svg
-                        onClick={() => toggleSubMenu(5)}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M2 9.75C2 9.33579 2.33579 9 2.75 9H17.25C17.6642 9 18 9.33579 18 9.75C18 10.1642 17.6642 10.5 17.25 10.5H2.75C2.33579 10.5 2 10.1642 2 9.75Z"
-                          fill="#3138E3"
-                        />
-                      </svg>
-                    )}
-                  </p>
-                  <ul className={`${openSubMenus[5] ? "open" : ""}`}>
-                    <li>
-                      <Link>SMM</Link>
-                    </li>
-                    <li>
-                      <Link>Praktiki satış</Link>
-                    </li>
-                    <li>
-                      <Link>Biznes Proseslərin İdarə Edilməsi</Link>
-                    </li>
-                    <li>
-                      <Link>Dövlət satınalmaları</Link>
-                    </li>
-                  </ul>
-                </li>
+                  ))}
               </ul>
             </li>
             <li>

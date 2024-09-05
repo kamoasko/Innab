@@ -92,7 +92,7 @@ const ContactForm = ({ apiEndpoint, apply, join }) => {
         onSubmit={handleSubmit}
       >
         {({ setFieldValue }) => (
-          <Form>
+          <Form encType="multipart/form-data">
             <div
               className={`flex justifyContentBetween ${styles.contactFormDivider}`}
             >
@@ -445,16 +445,10 @@ const ContactForm = ({ apiEndpoint, apply, join }) => {
                       id="cv"
                       name="cv"
                       type="file"
-                      onChange={(event) => {
-                        const fileReader = new FileReader();
-                        fileReader.onload = () => {
-                          if (fileReader.readyState === 2) {
-                            setFieldValue("cv", fileReader.result);
-                            console.log(fileReader.result);
-                          }
-                        };
-                        fileReader.readAsDataURL(event.target.files[0]);
-                        // setFieldValue("cv", event.currentTarget.files[0]);
+                      onChange={(e) => {
+                        if (e.currentTarget.files) {
+                          setFieldValue("cv", e.currentTarget.files[0]);
+                        }
                       }}
                     />
                     <svg

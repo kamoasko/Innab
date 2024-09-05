@@ -14,9 +14,12 @@ import {
 } from "../../features/categories/categorySlice";
 import { Box, CircularProgress, Skeleton } from "@mui/material";
 import Rooms from "../../components/rooms";
+import { useMenus } from "../../features/menus/useMenu";
 
 const TrainingsPage = () => {
-  const { lang, trainingSlug } = useParams();
+  const { lang, trainingSlug, categoryId } = useParams();
+  const { data: menus } = useMenus(lang);
+  const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
 
   const {
     data: categories,
@@ -24,9 +27,7 @@ const TrainingsPage = () => {
     error: categoriesError,
   } = useTrainingCategories(lang);
 
-  const categoryId = categories?.filter(
-    (category) => category.slug == trainingSlug
-  )[0].id;
+  console.log(categories);
 
   const {
     data: trainingContent,
@@ -59,7 +60,7 @@ const TrainingsPage = () => {
                 <Tabs
                   key={category.id}
                   title={category.title}
-                  to={`/${lang}/telimler/${category.slug}`}
+                  to={`/${lang}/${parentMenu[1].slug}/${category.slug}`}
                 />
               ))}
           </ul>

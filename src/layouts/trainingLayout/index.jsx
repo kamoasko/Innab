@@ -12,6 +12,8 @@ const TrainingLayout = () => {
     status: trainingStatus,
   } = useTrainingCategories(lang);
 
+  console.log(trainingsCategories);
+
   if (trainingStatus === "error") {
     return <div>{trainingsError}</div>;
   }

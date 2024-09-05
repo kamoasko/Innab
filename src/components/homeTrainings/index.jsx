@@ -11,7 +11,7 @@ import { useRef, useState } from "react";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { useParams } from "react-router";
 
-const HomeTrainings = () => {
+const HomeTrainings = ({ trainings }) => {
   const { width } = useWindowDimensions();
   const { lang } = useParams();
   const [paginationContent, setPaginationContent] = useState("");
