@@ -17,10 +17,15 @@ import { useEffect, useState } from "react";
 const TrainingsPage = () => {
   const { lang, trainingSlug } = useParams();
   const [selectedTraining, setSelectedTraining] = useState(null);
+  const [openCategoryId, setOpenCategoryId] = useState(null);
+
   const location = useLocation();
   const { data: menus } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
 
+  const toggleTrainingMenu = (categoryId) => {
+    setOpenCategoryId((prevId) => (prevId === categoryId ? null : categoryId));
+  };
   const {
     data: categories,
     isPending,
@@ -83,10 +88,53 @@ const TrainingsPage = () => {
             )}
           </div>
           <div className={`${styles.trainingWrapper} flex`}>
-            {categories && <TrainingsMenu vidCat={categories} />}
+            {categories && (
+              <ul
+                className={`${styles.trainingMenu} trainingMenu flex flexDirectionColumn`}
+              >
+                {categories?.map((category) => (
+                  <li
+                    key={category.id}
+                    className={openCategoryId === category.id ? "opened" : ""}
+                  >
+                    <div
+                      onClick={() => toggleTrainingMenu(category.id)}
+                      className="flex alignItemsCenter"
+                    >
+                      {category.title}{" "}
+                      {openCategoryId === category.id ? (
+                        <FaMinus />
+                      ) : (
+                        <FaPlus />
+                      )}
+                    </div>
+                    {openCategoryId === category.id && (
+                      <ul className="flex flexDirectionColumn">
+                        {category.trainings?.map((training) => (
+                          <li key={training.id}>
+                            <Link
+                              to={`/${lang}/${parentMenu[1]?.slug}/${category.slug}/${training.slug}`}
+                            >
+                              {training.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
             <div className={`${styles.trainingAbout} flex`}>
               <div className={styles.trainingAboutImg}>
-                <img loading="lazy" src={trainingImg} alt="" />
+                <img
+                  loading="lazy"
+                  src={
+                    (selectedTraining && selectedTraining?.main_image) ||
+                    trainingImg
+                  }
+                  alt=""
+                />
                 <Button title={"Müraciət et"} borderRadius={"7.7rem"} />
               </div>
 
