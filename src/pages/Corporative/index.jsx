@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCorporativeDatas } from "../../features/corporative/corporativeSlice";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
+import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
+import { useTrainingCategories } from "../../features/categories/categorySlice";
 
 const Contact = React.lazy(() => import("../../components/Contact"));
 const Customers = React.lazy(() => import("../../components/Customers"));
@@ -22,11 +24,17 @@ const Corporative = () => {
   const { corporative, status, error } = useSelector(
     (state) => state.corporative
   );
+  const { data: categories } = useTrainingCategories(lang);
+  const { data: infos } = useSiteInfos(lang);
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const contactRef = useRef(null);
   const trainingRef = useRef(null);
   const customersRef = useRef(null);
+
+  const allTrainings = categories
+    ?.map((category) => category.trainings)
+    ?.flat(Infinity);
 
   const scrollToSection = function (r) {
     switch (r) {
@@ -252,7 +260,7 @@ const Corporative = () => {
             </div>
             <Button
               title={["Bizimlə əlaqə saxlayın", <HiOutlineArrowLongRight />]}
-              to={""}
+              to={`tel:${infos && infos?.phone1}`}
               borderRadius={"5.9rem"}
             />
           </div>
@@ -264,6 +272,7 @@ const Corporative = () => {
           subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
           contactRef={contactRef}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+          categories={allTrainings && allTrainings}
         />
       </Suspense>
     </>

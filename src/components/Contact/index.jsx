@@ -6,6 +6,7 @@ import ContactDetails from "../contactDetails";
 const Contact = ({
   apply,
   join,
+  categories,
   title,
   subTitle,
   training,
@@ -32,7 +33,12 @@ const Contact = ({
             <ContactDetails marginLeft={"4.4rem"} />
           </div>
           <div className={styles.contactForm}>
-            <ContactForm apply={apply} join={join} apiEndpoint={apiEndpoint} />
+            <ContactForm
+              apply={apply}
+              join={join}
+              apiEndpoint={apiEndpoint}
+              categories={categories}
+            />
           </div>
         </div>
       </div>

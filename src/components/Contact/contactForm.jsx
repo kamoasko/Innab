@@ -6,7 +6,7 @@ import Button from "../Button";
 import Modal from "./modal";
 import axios from "axios";
 
-const ContactForm = ({ apiEndpoint, apply, join }) => {
+const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
   const initialValues = apply
     ? {
         name: "",
@@ -476,10 +476,11 @@ const ContactForm = ({ apiEndpoint, apply, join }) => {
                   İştirak etmək istədiyiniz təlim və ya xidmət
                 </label>
                 <Field as="select" id="service" name="service">
-                  <option value="BPMN təlimi">
-                    Biznes Proseslərinin İdarə edilməsi (BPMN) təlimi
-                  </option>
-                  <option value="Excel təlimi">Excel təlimi</option>
+                  {categories?.map((category) => (
+                    <option key={category.id} value={category.title}>
+                      {category.title}
+                    </option>
+                  ))}
                 </Field>
                 <ErrorMessage
                   name="service"

@@ -45,7 +45,7 @@
     -o-border-radius: 0.8rem;
   }
 
-  > a {
+  > button {
     display: none;
     position: absolute;
     width: 90%;
@@ -250,10 +250,10 @@
 
 .faqTraininMenu {
   display: none;
-  text-align: center;
 
   h2 {
     font-size: 2.2rem;
+    text-align: center;
   }
 
   ul {
@@ -343,7 +343,7 @@
   }
 
   .trainingAboutImg {
-    a {
+    button {
       display: flex;
     }
   }

@@ -964,6 +964,15 @@ footer {
     gap: 0;
   }
 
+  .navbarMenu > li > a,
+  .navbarMenu > li > button {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    border-bottom: 0.1rem solid #f5f5f5;
+    padding: 1.6rem 0;
+  }
+
   .navbarMenu > li > a.active,
   .navbarMenu > li > a:hover {
     position: static;
@@ -972,14 +981,6 @@ footer {
   .navbarMenu > li > a.active::after,
   .navbarMenu > li > a:hover::after {
     content: none;
-  }
-
-  .navbarMenu > li > a {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    border-bottom: 0.1rem solid #f5f5f5;
-    padding: 1.6rem 0;
   }
 
   .navbarMenu > li > a > svg:first-of-type {

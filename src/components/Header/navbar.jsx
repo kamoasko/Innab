@@ -156,7 +156,6 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
             </li>
             <li>
               <NavLink
-                to={parentMenu[1]?.slug}
                 className={() =>
                   `${openDropdowns[1] ? "opened" : ""} ${
                     isTrainingDropdownAcive ? "active" : ""
@@ -338,7 +337,6 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
             </li>
             <li className="navbarMenuDy">
               <NavLink
-                to={"career-center"}
                 className={() =>
                   `${openDropdowns[4] ? "opened" : ""} ${
                     isDropdownActive([
