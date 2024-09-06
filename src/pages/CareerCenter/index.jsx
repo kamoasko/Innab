@@ -1,15 +1,56 @@
 import React, { Suspense } from "react";
 import styles from "./career-center.module.css";
-import PageTitle from "../../components/pageTitle";
 import career from "../../assets/images/career-center/career.png";
-import Contact from "../../components/Contact";
 import { Box, Skeleton } from "@mui/material";
 import { Helmet } from "react-helmet-async";
+import { useParams } from "react-router";
+import {
+  useProjectOrCareer,
+  useProOrCarContent,
+} from "../../features/project/projectSlice";
+
+const PageTitle = React.lazy(() => import("../../components/pageTitle"));
+const Contact = React.lazy(() => import("../../components/Contact"));
 
 const CareerCenter = ({ page }) => {
+  const { lang, slug } = useParams();
+  const { data: projects } = useProjectOrCareer(lang);
+  const {
+    data: projectContent,
+    status,
+    error,
+  } = useProOrCarContent(lang, slug);
+
+  if (status === "pending") {
+    return (
+      <Box>
+        <Skeleton variant="rectangular" height={800} sx={{ width: "100%" }} />
+      </Box>
+    );
+  }
+
+  if (status === "error") {
+    return <Box>{error}</Box>;
+  }
+
   return (
     <>
-      <Helmet></Helmet>
+      <Helmet>
+        {projectContent && (
+          <>
+            <title>{projectContent?.seo_title}</title>
+            <meta
+              name="description"
+              content={projectContent?.seo_description}
+            />
+            <meta name="keywords" content={projectContent?.seo_keywords} />
+            {projectContent?.seo_links}
+            {projectContent?.seo_scripts || (
+              <script type="application/ld+json"></script>
+            )}
+          </>
+        )}
+      </Helmet>
       <Suspense
         fallback={
           <Box>
@@ -25,103 +66,42 @@ const CareerCenter = ({ page }) => {
                 page ? styles.cw1 : ""
               } flex alignItemsCenter`}
             >
-              <div className={styles.careerImg}>
-                <img loading="lazy" src={career} alt="" />
-              </div>
+              <picture className={styles.careerImg}>
+                <img
+                  loading="lazy"
+                  src={projectContent && projectContent?.product_image}
+                  alt={projectContent && projectContent?.title}
+                />
+              </picture>
               <div
                 className={`${styles.careerDetails} flex flexDirectionColumn`}
               >
-                <div>
-                  <img loading="lazy" src={career} alt="" />
-                </div>
-                <h2>İşlə təminat və ya məzun layihəsi</h2>
-                <p>
-                  INNAB Business School gənclərin peşəkar inkişafında dəyər
-                  yaratmaqla kifayətlənməmiş və məzunlarımızın uğurlu
-                  karyerasına öz töhfəsini verməkdə davam edir. INNAB Karyera
-                  Mərkəzi “Məzun layihəsi” çərçivəsində INNAB Business School-un
-                  təlimlərində iştirak edərək, fərqlənmə sertifikatı ilə bitirən
-                  məzunlarımızın işlə təmin olunmasında öz köməyini əsirgəmir.
-                  “İnnab Karyera Mərkəzi”nin əməkdaşlıq etdiyi dövlət və özəl
-                  qurumlarda olan vakansiyalara yuxarıda qeyd edilən
-                  kriteriyalara uyğun məzunların cvləri yönləndirilir. Məhz
-                  bunun sayəsindədir ki, bu günədək 200-dən çox tələbəmizin işlə
-                  təmin edilməsində bizimdə payımız olmuşdur.
-                </p>
+                <h2>{projectContent && projectContent?.title}</h2>
+                <picture>
+                  <img
+                    loading="lazy"
+                    src={projectContent && projectContent?.product_image}
+                    alt={projectContent && projectContent?.title}
+                  />
+                </picture>
+                {projectContent && (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: projectContent?.text,
+                    }}
+                  />
+                )}
               </div>
             </div>
 
-            <div className={styles.careerRequirements}>
-              <h3>Təlimdə iştirak üçün tələblər</h3>
-              <ul className="flex flexDirectionColumn">
-                <li className="flex alignItemsCenter">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="40"
-                    height="40"
-                    viewBox="0 0 40 40"
-                    fill="none"
-                  >
-                    <path
-                      d="M24.9393 15.4394C25.5251 14.8536 26.4749 14.8536 27.0606 15.4394C27.6464 16.0252 27.6464 16.9749 27.0606 17.5607L19.394 25.2274C18.8082 25.8132 17.8584 25.8132 17.2727 25.2274L12.9393 20.894C12.3535 20.3082 12.3535 19.3585 12.9393 18.7727C13.5251 18.1869 14.4749 18.1869 15.0606 18.7727L18.3333 22.0454L24.9393 15.4394Z"
-                      fill="#3138E3"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M20 3.5C29.1119 3.5 36.5 10.8881 36.5 20C36.5 29.1119 29.1119 36.5 20 36.5C10.8881 36.5 3.5 29.1119 3.5 20C3.5 10.8881 10.8881 3.5 20 3.5ZM20 6.5C12.5433 6.5 6.5 12.5433 6.5 20C6.5 27.4567 12.5433 33.5 20 33.5C27.4567 33.5 33.5 27.4567 33.5 20C33.5 12.5433 27.4567 6.5 20 6.5Z"
-                      fill="#3138E3"
-                    />
-                  </svg>
-                  <span>Əyani təhsil alan tələbə statusunuz olmamalı;</span>
-                </li>
-                <li className="flex alignItemsCenter">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="40"
-                    height="40"
-                    viewBox="0 0 40 40"
-                    fill="none"
-                  >
-                    <path
-                      d="M24.9393 15.4394C25.5251 14.8536 26.4749 14.8536 27.0606 15.4394C27.6464 16.0252 27.6464 16.9749 27.0606 17.5607L19.394 25.2274C18.8082 25.8132 17.8584 25.8132 17.2727 25.2274L12.9393 20.894C12.3535 20.3082 12.3535 19.3585 12.9393 18.7727C13.5251 18.1869 14.4749 18.1869 15.0606 18.7727L18.3333 22.0454L24.9393 15.4394Z"
-                      fill="#3138E3"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M20 3.5C29.1119 3.5 36.5 10.8881 36.5 20C36.5 29.1119 29.1119 36.5 20 36.5C10.8881 36.5 3.5 29.1119 3.5 20C3.5 10.8881 10.8881 3.5 20 3.5ZM20 6.5C12.5433 6.5 6.5 12.5433 6.5 20C6.5 27.4567 12.5433 33.5 20 33.5C27.4567 33.5 33.5 27.4567 33.5 20C33.5 12.5433 27.4567 6.5 20 6.5Z"
-                      fill="#3138E3"
-                    />
-                  </svg>
-                  <span>Adınıza aktiv VÖEN olmamalı;</span>
-                </li>
-                <li className="flex alignItemsCenter">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="40"
-                    height="40"
-                    viewBox="0 0 40 40"
-                    fill="none"
-                  >
-                    <path
-                      d="M24.9393 15.4394C25.5251 14.8536 26.4749 14.8536 27.0606 15.4394C27.6464 16.0252 27.6464 16.9749 27.0606 17.5607L19.394 25.2274C18.8082 25.8132 17.8584 25.8132 17.2727 25.2274L12.9393 20.894C12.3535 20.3082 12.3535 19.3585 12.9393 18.7727C13.5251 18.1869 14.4749 18.1869 15.0606 18.7727L18.3333 22.0454L24.9393 15.4394Z"
-                      fill="#3138E3"
-                    />
-                    <path
-                      fillRule="evenodd"
-                      clipRule="evenodd"
-                      d="M20 3.5C29.1119 3.5 36.5 10.8881 36.5 20C36.5 29.1119 29.1119 36.5 20 36.5C10.8881 36.5 3.5 29.1119 3.5 20C3.5 10.8881 10.8881 3.5 20 3.5ZM20 6.5C12.5433 6.5 6.5 12.5433 6.5 20C6.5 27.4567 12.5433 33.5 20 33.5C27.4567 33.5 33.5 27.4567 33.5 20C33.5 12.5433 27.4567 6.5 20 6.5Z"
-                      fill="#3138E3"
-                    />
-                  </svg>
-                  <span>
-                    DMA-da işsiz kimi qeydiyyatda olmalı (qeydiyyatda
-                    deyilsinizsə biz tərəfdən köməklik ediləcəkdir);
-                  </span>
-                </li>
-              </ul>
-            </div>
+            {projectContent && (
+              <div
+                className={styles.careerRequirements}
+                dangerouslySetInnerHTML={{
+                  __html: projectContent?.requirements,
+                }}
+              />
+            )}
           </div>
         </section>
         <Contact

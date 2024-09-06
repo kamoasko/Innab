@@ -1,8 +1,5 @@
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { Suspense, useRef } from "react";
 import styles from "./projects.module.css";
-import projectImg from "../../assets/images/projects/project.png";
-import qrCode from "../../assets/images/projects/qrcode.png";
-import qrCodeApp from "../../assets/images/projects/qrcodeapp.png";
 import playStore from "../../assets/icons/google-play-icon.svg";
 import { Link, useParams } from "react-router-dom";
 import { FaApple } from "react-icons/fa6";
@@ -12,7 +9,6 @@ import {
   useProjectOrCareer,
   useProOrCarContent,
 } from "../../features/project/projectSlice";
-import { useMenus } from "../../features/menus/useMenu";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Button = React.lazy(() => import("../../components/Button"));
@@ -27,8 +23,6 @@ const Projects = ({ book }) => {
     status,
     error,
   } = useProOrCarContent(lang, slug);
-  const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
-  const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
 
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -49,29 +43,16 @@ const Projects = ({ book }) => {
   return (
     <>
       <Helmet>
-        {menuStatus === "pending" && (
+        {projectContent && (
           <>
-            <title>{"Layihələr"}</title>
-            <meta name="description" content={"Layihələr"} />
-            <meta name="keywords" content={"Layihələr"} />
-            <link rel="canonical" href={`/${lang}/layiheler/55-derse-excel`} />
-            <script type="application/ld+json"></script>
-          </>
-        )}
-        {menuStatus === "error" && <noscript>{menuError}</noscript>}
-        {menuStatus === "success" && (
-          <>
-            <title>{projectContent && projectContent?.seo_title}</title>
+            <title>{projectContent?.seo_title}</title>
             <meta
               name="description"
-              content={projectContent && projectContent?.seo_description}
+              content={projectContent?.seo_description}
             />
-            <meta
-              name="keywords"
-              content={projectContent && projectContent?.seo_keywords}
-            />
-            {projectContent && projectContent?.seo_links}
-            {(projectContent && projectContent?.seo_scripts) || (
+            <meta name="keywords" content={projectContent?.seo_keywords} />
+            {projectContent?.seo_links}
+            {projectContent?.seo_scripts || (
               <script type="application/ld+json"></script>
             )}
           </>
@@ -112,7 +93,7 @@ const Projects = ({ book }) => {
                       <img
                         loading="lazy"
                         src={projectContent?.product_image}
-                        alt=""
+                        alt={projectContent?.title}
                       />
                     </picture>
                     <div className={styles.projectCardDet}>
@@ -132,63 +113,68 @@ const Projects = ({ book }) => {
             </div>
           </div>
         </section>
-        <section className={styles.mobileBook}>
-          <div className="container">
-            <div
-              className={`${styles.mobileBookWrapper} flex alignItemsCenter justifyContentBetween`}
-            >
-              <div className={styles.mobileBookDet}>
-                <div
-                  className={`${styles.mobileBookContent} flex flexDirectionColumn`}
-                >
-                  <h2>Mobil Kitab</h2>
-                  <div>{projectContent && projectContent?.mobile_qr_text}</div>
+        {projectContent && projectContent.mobile_product_qr && (
+          <section className={styles.mobileBook}>
+            <div className="container">
+              <div
+                className={`${styles.mobileBookWrapper} flex alignItemsCenter justifyContentBetween`}
+              >
+                <div className={styles.mobileBookDet}>
+                  <div
+                    className={`${styles.mobileBookContent} flex flexDirectionColumn`}
+                  >
+                    <h2>Mobil Kitab</h2>
+                    <div>{projectContent?.mobile_qr_text}</div>
+                  </div>
+                  <figure
+                    className={`${styles.mobileBookQr} flex alignItemsCenter`}
+                  >
+                    <picture>
+                      <img
+                        loading="lazy"
+                        src={projectContent?.mobile_product_qr}
+                        alt="Mobil Kitab QR"
+                      />
+                    </picture>
+                    <figcaption>
+                      Telefonunuzun kamerası ilə QR codu scan edin.
+                    </figcaption>
+                  </figure>
                 </div>
-                <figure
-                  className={`${styles.mobileBookQr} flex alignItemsCenter`}
+                <div
+                  className={`${styles.mobileBookLeft} flex alignItemsCenter`}
                 >
-                  <picture>
+                  <div
+                    className={`${styles.mobileBookDownload} flex flexDirectionColumn`}
+                  >
+                    <div>
+                      Google Play və App store vasitəsilə telefonunza yükləyə
+                      biləraiz
+                    </div>
+                    <div className="flex flexDirectionColumn">
+                      <Link to={""} className="flexCenter">
+                        <img loading="lazy" src={playStore} alt="Google Play" />
+                        Google Play
+                      </Link>
+                      <Link to={""} className="flexCenter">
+                        <FaApple />
+                        App Store
+                      </Link>
+                    </div>
+                  </div>
+                  <picture className={styles.mobileBookImg}>
                     <img
                       loading="lazy"
-                      src={projectContent && projectContent?.mobile_product_qr}
-                      alt=""
+                      src={projectContent?.mobile_product_image}
+                      alt="Mobil Kitab"
                     />
                   </picture>
-                  <figcaption>
-                    Telefonunuzun kamerası ilə QR codu scan edin.
-                  </figcaption>
-                </figure>
-              </div>
-              <div className={`${styles.mobileBookLeft} flex alignItemsCenter`}>
-                <div
-                  className={`${styles.mobileBookDownload} flex flexDirectionColumn`}
-                >
-                  <div>
-                    Google Play və App store vasitəsilə telefonunza yükləyə
-                    biləraiz
-                  </div>
-                  <div className="flex flexDirectionColumn">
-                    <Link to={""} className="flexCenter">
-                      <img loading="lazy" src={playStore} alt="" />
-                      Google Play
-                    </Link>
-                    <Link to={""} className="flexCenter">
-                      <FaApple />
-                      App Store
-                    </Link>
-                  </div>
                 </div>
-                <picture className={styles.mobileBookImg}>
-                  <img
-                    loading="lazy"
-                    src={projectContent && projectContent?.mobile_product_image}
-                    alt=""
-                  />
-                </picture>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
+
         <Contact
           title={"Sualın var?"}
           subTitle={[

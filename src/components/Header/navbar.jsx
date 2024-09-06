@@ -307,7 +307,7 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
               >
                 {projects &&
                   projects.map((project) => (
-                    <li>
+                    <li key={project.id}>
                       <Link to={`${parentMenu[3].slug}/${project.slug}`}>
                         {project.title}
                       </Link>
@@ -365,7 +365,7 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
               >
                 {careers &&
                   careers?.map((career) => (
-                    <li>
+                    <li key={career.id}>
                       <Link to={`${parentMenu[4]?.slug}/${career.slug}`}>
                         {career.title}
                       </Link>
