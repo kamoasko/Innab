@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styles from "../../../pages/Homepage/home.module.css";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -8,28 +8,22 @@ import ProjectCard from "../../ProjectCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa6";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { fetchProjects } from "../../../features/project/projectSlice";
-import { Box, CircularProgress, Skeleton } from "@mui/material";
+import { useProjectOrCareer } from "../../../features/project/projectSlice";
+import { Box, Skeleton } from "@mui/material";
 import { useMenus } from "../../../features/menus/useMenu";
 
 const ProjectSliders = () => {
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { projects, status, error } = useSelector((state) => state.projects);
-  const { data: menus, menuStatus, menuError } = useMenus(lang);
+  const { data: projects, status, error } = useProjectOrCareer(lang);
+  const { data: menus } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const prevRef = useRef(null);
   const nextRef = useRef(null);
 
-  useEffect(() => {
-    dispatch(fetchProjects(lang));
-  }, [lang, dispatch]);
-
   return (
     <div className="projectSliderWrapper">
-      {status === "loading" && (
+      {status === "pending" && (
         <Box
           sx={{
             display: "flex",
@@ -45,7 +39,7 @@ const ProjectSliders = () => {
           />
         </Box>
       )}
-      {status === "failed" && <Box>{error}</Box>}
+      {status === "error" && <Box>{error}</Box>}
       <Swiper
         slidesPerView={3}
         spaceBetween={32}
@@ -73,9 +67,9 @@ const ProjectSliders = () => {
           },
         }}
       >
-        {status === "succeeded" &&
-          projects.map((project, index) => (
-            <SwiperSlide key={index}>
+        {status === "success" &&
+          projects.map((project) => (
+            <SwiperSlide key={project.id}>
               <ProjectCard
                 title={project.title}
                 text={project.card_description}

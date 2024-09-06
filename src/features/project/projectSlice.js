@@ -1,67 +1,28 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../axios";
 
-export const fetchProjects = createAsyncThunk(
-  "projects/fetchProjects",
-  async (lang, { rejectWithValue }) => {
-    try {
+export const useProjectOrCareer = (lang) => {
+  return useQuery({
+    queryKey: ["projectOrCareer", lang],
+    queryFn: async () => {
       const response = await axiosInstance.get(`/${lang}/get_projects`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const fetchProjectContent = createAsyncThunk(
-  "projects/fetchProjectContent",
-  async ({ lang, projectSlug }, { rejectWithValue }) => {
-    try {
-      const response = await axiosInstance.get(
-        `/${lang}/get_project/${projectSlug}`
-      );
 
       return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
+    },
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 30,
+  });
+};
 
-const projectSlice = createSlice({
-  name: "project",
-  initialState: {
-    projects: [],
-    projectContent: {},
-    status: "idle",
-    error: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchProjects.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchProjects.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.projects = action.payload;
-      })
-      .addCase(fetchProjects.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
-      .addCase(fetchProjectContent.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchProjectContent.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.projectContent = action.payload;
-      })
-      .addCase(fetchProjectContent.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
-  },
-});
+export const useProOrCarContent = (lang, slug) => {
+  return useQuery({
+    queryKey: ["proOrCarContent", lang, slug],
+    queryFn: async () => {
+      const response = await axiosInstance.get(`/${lang}/get_project/${slug}`);
 
-export default projectSlice.reducer;
+      return response.data;
+    },
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 30,
+  });
+};

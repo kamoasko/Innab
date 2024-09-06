@@ -13,6 +13,7 @@ import { useMenus } from "../../features/menus/useMenu";
 import { Skeleton } from "@mui/material";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
 import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
+import { useProjectOrCareer } from "../../features/project/projectSlice";
 
 const Navbar = ({ partnersRef, setSearchBarOpen }) => {
   const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
@@ -26,20 +27,21 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
   } = useTrainingCategories(lang);
   const { data: blog, isSuccess } = useBlogCategories(lang);
   const { data: video, isSuccess: videoStatus } = useVideoLessonCategory(lang);
+  const { data: projectOrCareer } = useProjectOrCareer(lang);
   const location = useLocation();
   const navigate = useNavigate();
-
-  const categorySlug = trainingsCategory
-    ?.map((t) => t.trainings)
-    ?.flat(Infinity)
-    ?.map((s) => s.slug);
-
-  const blogSlug = isSuccess && blog?.map((b) => b.slug);
-  const videoSlug = videoStatus && video?.map((v) => v.slug);
 
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const aboutMenu = menus?.filter((menu) => menu.parent_id === 3);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
+  const blogSlug = isSuccess && blog?.map((b) => b.slug);
+  const videoSlug = videoStatus && video?.map((v) => v.slug);
+  const projects = projectOrCareer?.filter(
+    (project) => project.is_corporative === null
+  );
+  const careers = projectOrCareer?.filter(
+    (career) => career.is_corporative === 1
+  );
 
   const toggleDropdown = (index) => {
     setOpenDropdowns((prev) =>
@@ -53,15 +55,9 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
     );
   };
 
-  const isDropdownActive = (dropdownPaths) => {
-    return dropdownPaths.some((path) => location.pathname.startsWith(path));
+  const isMenuActive = (slug) => {
+    return slug === location.pathname.split("/")[2];
   };
-
-  const isTrainingDropdownAcive =
-    parentMenu[1].slug === location.pathname.split("/")[2];
-
-  const isUsefulDropdownAcive =
-    parentMenu[5].slug === location.pathname.split("/")[2];
 
   const handleScrollToPartners = () => {
     navigate(`/${lang}`);
@@ -89,13 +85,7 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
               <NavLink
                 className={() =>
                   `${openDropdowns[0] ? "opened" : ""} ${
-                    isDropdownActive([
-                      `/${lang}/${aboutMenu[0]?.slug}`,
-                      `/${lang}/${parentMenu[0]?.slug}/${aboutMenu[1]?.slug}`,
-                      `/${lang}/${parentMenu[0]?.slug}/${aboutMenu[2]?.slug}`,
-                    ])
-                      ? "active"
-                      : ""
+                    isMenuActive(parentMenu[0]?.slug) ? "active" : ""
                   }`
                 }
               >
@@ -158,7 +148,7 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
               <NavLink
                 className={() =>
                   `${openDropdowns[1] ? "opened" : ""} ${
-                    isTrainingDropdownAcive ? "active" : ""
+                    isMenuActive(parentMenu[1]?.slug) ? "active" : ""
                   }`
                 }
               >
@@ -265,23 +255,13 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
               </ul>
             </li>
             <li>
-              <NavLink
-                to={parentMenu[2].slug}
-                className={openDropdowns[2] ? "opened" : ""}
-              >
-                {parentMenu[2].title}
-              </NavLink>
+              <NavLink to={parentMenu[2].slug}>{parentMenu[2].title}</NavLink>
             </li>
             <li className="navbarMenuDy">
               <NavLink
                 className={({ isActive }) =>
                   `${openDropdowns[3] ? "opened" : ""} ${
-                    isDropdownActive([
-                      `/${lang}/${parentMenu[3].slug}/55-derse-excel-kitabi`,
-                      `/${lang}/${parentMenu[3].slug}/mini-mba`,
-                    ])
-                      ? "active"
-                      : ""
+                    isMenuActive(parentMenu[3]?.slug) ? "active" : ""
                   }`
                 }
               >
@@ -325,27 +305,21 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
                   openDropdowns[3] ? "open" : ""
                 }`}
               >
-                <li>
-                  <Link to={`${parentMenu[3].slug}/55-derse-excel-kitabi`}>
-                    "55 dərsə Excel" kitabı
-                  </Link>
-                </li>
-                <li>
-                  <Link to={`${parentMenu[3].slug}/mini-mba`}>Mini MBA</Link>
-                </li>
+                {projects &&
+                  projects.map((project) => (
+                    <li>
+                      <Link to={`${parentMenu[3].slug}/${project.slug}`}>
+                        {project.title}
+                      </Link>
+                    </li>
+                  ))}
               </ul>
             </li>
             <li className="navbarMenuDy">
               <NavLink
                 className={() =>
                   `${openDropdowns[4] ? "opened" : ""} ${
-                    isDropdownActive([
-                      `/${lang}/${parentMenu[4]?.slug}/employment-or-graduate-project`,
-                      `/${lang}/issizlikdir`,
-                      `/${lang}/cooperation-with-dma`,
-                    ])
-                      ? "active"
-                      : ""
+                    isMenuActive(parentMenu[4]?.slug) ? "active" : ""
                   }`
                 }
               >
@@ -389,30 +363,21 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
                   openDropdowns[4] ? "open" : ""
                 }`}
               >
-                <li>
-                  <Link
-                    to={`${parentMenu[4]?.slug}/employment-or-graduate-project`}
-                  >
-                    İşlə təminat və ya məzun layihəsi
-                  </Link>
-                </li>
-                <li>
-                  <Link to={`${parentMenu[4]?.slug}/issizlikdir`}>
-                    İşSizlikdir
-                  </Link>
-                </li>
-                <li>
-                  <Link to={`${parentMenu[4]?.slug}/cooperation-with-dma`}>
-                    DMA ilə əməkdaşlıq
-                  </Link>
-                </li>
+                {careers &&
+                  careers?.map((career) => (
+                    <li>
+                      <Link to={`${parentMenu[4]?.slug}/${career.slug}`}>
+                        {career.title}
+                      </Link>
+                    </li>
+                  ))}
               </ul>
             </li>
             <li className="navbarMenuDy">
               <NavLink
                 className={() =>
                   `${openDropdowns[5] ? "opened" : ""} ${
-                    isUsefulDropdownAcive ? "active" : ""
+                    isMenuActive(parentMenu[5]?.slug) ? "active" : ""
                   }`
                 }
               >

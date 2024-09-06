@@ -6,10 +6,13 @@ import qrCodeApp from "../../assets/images/projects/qrcodeapp.png";
 import playStore from "../../assets/icons/google-play-icon.svg";
 import { Link, useParams } from "react-router-dom";
 import { FaApple } from "react-icons/fa6";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProjectContent } from "../../features/project/projectSlice";
 import { Box, Skeleton } from "@mui/material";
 import { Helmet } from "react-helmet-async";
+import {
+  useProjectOrCareer,
+  useProOrCarContent,
+} from "../../features/project/projectSlice";
+import { useMenus } from "../../features/menus/useMenu";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Button = React.lazy(() => import("../../components/Button"));
@@ -17,26 +20,63 @@ const Contact = React.lazy(() => import("../../components/Contact"));
 
 const Projects = ({ book }) => {
   const contactRef = useRef(null);
-  const dispatch = useDispatch();
-  const { lang, projectSlug } = useParams();
-  const { projectContent, projects, status, error } = useSelector(
-    (state) => state.projects
-  );
-
-  const [project, setProject] = useState("55-derse-excel-kitabi");
+  const { lang, slug } = useParams();
+  const { data: projects } = useProjectOrCareer(lang);
+  const {
+    data: projectContent,
+    status,
+    error,
+  } = useProOrCarContent(lang, slug);
+  const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
+  const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
 
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    setProject(projectSlug);
-    dispatch(fetchProjectContent({ lang, project }));
-  }, [lang, project, dispatch]);
+  if (status === "pending") {
+    return (
+      <Box>
+        <Skeleton variant="rectangular" height={800} sx={{ width: "100%" }} />
+      </Box>
+    );
+  }
+
+  if (status === "error") {
+    return <Box>{error}</Box>;
+  }
 
   return (
     <>
-      <Helmet></Helmet>
+      <Helmet>
+        {menuStatus === "pending" && (
+          <>
+            <title>{"Layihələr"}</title>
+            <meta name="description" content={"Layihələr"} />
+            <meta name="keywords" content={"Layihələr"} />
+            <link rel="canonical" href={`/${lang}/layiheler/55-derse-excel`} />
+            <script type="application/ld+json"></script>
+          </>
+        )}
+        {menuStatus === "error" && <noscript>{menuError}</noscript>}
+        {menuStatus === "success" && (
+          <>
+            <title>{projectContent && projectContent?.seo_title}</title>
+            <meta
+              name="description"
+              content={projectContent && projectContent?.seo_description}
+            />
+            <meta
+              name="keywords"
+              content={projectContent && projectContent?.seo_keywords}
+            />
+            {projectContent && projectContent?.seo_links}
+            {(projectContent && projectContent?.seo_scripts) || (
+              <script type="application/ld+json"></script>
+            )}
+          </>
+        )}
+      </Helmet>
       <Suspense
         fallback={
           <Box>
@@ -55,46 +95,30 @@ const Projects = ({ book }) => {
               className={`${styles.projectWrapper} flex justifyContentBetween`}
             >
               <div className={styles.projectDetail}>
-                <h2>"55 dərsə Excel" kitabı</h2>
-                <div>
-                  Müasir iş dünyasında sektorundan asılı olmayaraq dövlət və
-                  özəl müəssisələrdə, habelə fiziki şəxslər tərəfindən ən çox
-                  istifadə edilən proqramlardan biri Excel proqramıdır. Excel
-                  vasitəsi ilə məlumatların saxlanılması, emal edilməsi,
-                  hesabatlılığın təmin edilməsi, müxtəlif hesablamaların
-                  aparılması, işlərin təqib edilməsi yerinə yetirilir. Proqramın
-                  çox funksiyalı olmasına nəzərən interfeysinin rahat olması
-                  istifadəçilər tərəfindən daha çox sevilməsinə səbəb olub.
-                  Təsadüfi deyil ki, “Excel” proqramını yüksək səviyyədə bilən
-                  şəxslərin uzunmüddətli dövrdə işsiz olması halına rast
-                  gəlinmir. Bundan əlavə bu proqram təminatını yüksək səviyyədə
-                  bilən işçilərin vəzifə artımları da digərlərinə nəzərən daha
-                  tez olur. Excel derslerini bu mükəmməl kitab ilə indi çox
-                  asanlıqla öyrənə bilərsiniz. <br /> <br /> Excel üzrə ən çox
-                  satılan praktiki kitabın və Excellə bağlı ölkəmizdə bir çox
-                  ilklərə imza atan (“Alo Excel”, “Excelin Atası”, “55 dərsə
-                  Excel” video dərsliyi) İnnab komandası tərəfindən artıq 5-ci
-                  dəfə “55 dərsə Excel” kitabı nəşr edilmişdir. Exceli bu
-                  stolüstü kitab vasitəsi ilə tam öyrənə bilərsiniz. <br />{" "}
-                  <br /> Kitabda 0-dan başlayaraq mükəmmələ doğru Excelin bütün
-                  əmrləri, menyuları (Macro xaric), 222 funksiyası izah
-                  edilmişdir. Kitabın 5-ci nəşrində 2022-ci ildə yenilənən
-                  funksiyalar haqqında da ətraflı məlumat verilmişdir.
-                  Kitabın mündəricatı ilə və bəzi nümunələrlə linklərdən tanış
-                  ola bilərsiniz.
-                </div>
+                <h2>{projectContent && projectContent?.title}</h2>
+                {projectContent && (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: projectContent?.text,
+                    }}
+                  />
+                )}
               </div>
-              {book && (
+              {projectContent && projectContent.mobile_title && (
                 <div className={styles.projectLeft}>
-                  <h2>"55 dərsə Excel" kitabı</h2>
+                  <h2>{projectContent?.title}</h2>
                   <article className={styles.projectCard}>
                     <picture className={styles.projectCardImg}>
-                      <img loading="lazy" src={projectImg} alt="" />
+                      <img
+                        loading="lazy"
+                        src={projectContent?.product_image}
+                        alt=""
+                      />
                     </picture>
                     <div className={styles.projectCardDet}>
-                      <h4>"55 dərsə Excel" kitabı</h4>
-                      <div>Excelin sirrlərini bu kitabdan öyrənin!</div>
-                      <h5>25 AZN</h5>
+                      <h4>{projectContent?.mobile_title}</h4>
+                      <div>{projectContent?.mobile_description}</div>
+                      <h5>{projectContent?.product_price}</h5>
                       <Button
                         component
                         title={"Sifariş ver"}
@@ -118,19 +142,17 @@ const Projects = ({ book }) => {
                   className={`${styles.mobileBookContent} flex flexDirectionColumn`}
                 >
                   <h2>Mobil Kitab</h2>
-                  <div>
-                    Ölkədə ilk dəfə Excel öyrənmək istəyənlər və Excel
-                    istifadəçiləri üçün yaradılmış mobil tətbiqdir. Mobil
-                    tətbiqdə Excelə aid Financial, Logical, Text, Date & Time,
-                    Lookup & References, Math & Trig, Statistical funksiyaları
-                    və Exceldə mövcud olan xəta tipləri yer almışdır.
-                  </div>
+                  <div>{projectContent && projectContent?.mobile_qr_text}</div>
                 </div>
                 <figure
                   className={`${styles.mobileBookQr} flex alignItemsCenter`}
                 >
                   <picture>
-                    <img loading="lazy" src={qrCode} alt="" />
+                    <img
+                      loading="lazy"
+                      src={projectContent && projectContent?.mobile_product_qr}
+                      alt=""
+                    />
                   </picture>
                   <figcaption>
                     Telefonunuzun kamerası ilə QR codu scan edin.
@@ -157,7 +179,11 @@ const Projects = ({ book }) => {
                   </div>
                 </div>
                 <picture className={styles.mobileBookImg}>
-                  <img loading="lazy" src={qrCodeApp} alt="" />
+                  <img
+                    loading="lazy"
+                    src={projectContent && projectContent?.mobile_product_image}
+                    alt=""
+                  />
                 </picture>
               </div>
             </div>
@@ -171,6 +197,7 @@ const Projects = ({ book }) => {
           ]}
           contactRef={contactRef}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+          categories={projects && projects}
         />
       </Suspense>
     </>

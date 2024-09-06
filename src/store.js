@@ -9,7 +9,6 @@ import roomReducer from "./features/rooms/roomSlice";
 import newsReducer from "./features/news/newsSlice";
 import partnersReducer from "./features/partners/partnersSlice";
 import customerReducer from "./features/customers/customerSlice";
-import projectReducer from "./features/project/projectSlice";
 import useTranslation from "./hooks/translation/useTranslation";
 
 export const store = configureStore({
@@ -24,7 +23,6 @@ export const store = configureStore({
     news: newsReducer,
     partners: partnersReducer,
     customers: customerReducer,
-    projects: projectReducer,
     translations: useTranslation,
   },
 });
