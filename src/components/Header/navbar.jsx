@@ -157,7 +157,7 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
             <li>
               <NavLink
                 to={parentMenu[1]?.slug}
-                className={({ isActive }) =>
+                className={() =>
                   `${openDropdowns[1] ? "opened" : ""} ${
                     isTrainingDropdownAcive ? "active" : ""
                   }`

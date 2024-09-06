@@ -2,7 +2,7 @@ import styles from "./trainings.module.css";
 import PageTitle from "../../components/pageTitle";
 import Tabs from "../../components/tabs";
 import { FaArrowRight, FaMinus, FaPlus } from "react-icons/fa6";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import trainingImg from "../../assets/images/trainings/training.png";
 import Button from "../../components/Button";
 import Contact from "../../components/Contact";
@@ -12,17 +12,46 @@ import { useTrainingCategories } from "../../features/categories/categorySlice";
 import { Box, Skeleton } from "@mui/material";
 import Rooms from "../../components/rooms";
 import { useMenus } from "../../features/menus/useMenu";
+import { useEffect, useState } from "react";
 
 const TrainingsPage = () => {
-  const { lang } = useParams();
+  const { lang, trainingSlug } = useParams();
+  const [selectedTraining, setSelectedTraining] = useState(null);
+  const location = useLocation();
   const { data: menus } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
 
   const {
     data: categories,
-    status: categoriesStatus,
+    isPending,
+    isSuccess,
+    isError,
     error: categoriesError,
   } = useTrainingCategories(lang);
+
+  useEffect(() => {
+    if (isSuccess && categories) {
+      const training = categories
+        ?.flatMap((category) => category.trainings)
+        ?.find((training) => training.slug === trainingSlug);
+      setSelectedTraining(training);
+    }
+  }, [categories, isSuccess, trainingSlug]);
+
+  if (isPending) {
+    return (
+      <Box sx={{ width: "100%" }}>
+        <Skeleton
+          variant="rectangular"
+          sx={{ width: "100%", height: "2rem" }}
+        />
+      </Box>
+    );
+  }
+
+  if (isError) {
+    return <p>{categoriesError}</p>;
+  }
 
   return (
     <>
@@ -35,38 +64,23 @@ const TrainingsPage = () => {
       <section className={styles.training}>
         <div className="container">
           <ul className="flex alignItemsCenter tabsMenu">
-            {categoriesStatus === "pending" && (
-              <Box sx={{ width: "100%" }}>
-                <Skeleton
-                  variant="rectangular"
-                  sx={{ width: "100%", height: "2rem" }}
-                />
-              </Box>
-            )}
-            {categoriesStatus === "error" && <p>{categoriesError}</p>}
-            {categoriesStatus === "success" &&
-              categories.map((category) => (
-                <Tabs
-                  key={category.id}
-                  title={category.title}
-                  to={`/${lang}/${parentMenu[1].slug}/${category.slug}`}
-                />
-              ))}
+            {categories?.map((category) => (
+              <Tabs
+                key={category.id}
+                title={category.title}
+                to={`/${lang}/${parentMenu[1].slug}/${category.slug}/${category.trainings[0]?.slug}`}
+                isActive={location.pathname.split("/")[3] === category.slug}
+              />
+            ))}
           </ul>
           <div className={styles.trainingInfo}>
-            <h2>Data Analitik kursu</h2>
+            <h2>{selectedTraining && selectedTraining?.top_text_title}</h2>
 
-            <div>
-              Data Analitik kursu sizə karyeranızda böyük imkanlar yaradacaq. 10
-              -dan çox sahə ekspertinin rəyi və tövsiyyəsi əsasında hazırlanan
-              “Data Analitika” təliminə qoşulmaqla 6 ay müddətində  “Biznes üçün
-              Excel”, “Analitika Metodları”, “SQL ilə data analitika”, “Biznes
-              Statistikası”, “Power Bi ilə vizuallaşdırma” və “Python ilə data
-              analitika”  öyrənəcəksiniz. Data Analitik kurslarının təlim planı
-              ilə aşağlda tanış ola bilərsiniz. Yeni yaranacaq Data Analitika
-              kursu qruplarına qeydiyyatdan keçmək üçün aşağıda sağ sütünda
-              olan “Müraciət et” düyməsinə klik edə bilərsiniz.
-            </div>
+            {selectedTraining && (
+              <div
+                dangerouslySetInnerHTML={{ __html: selectedTraining?.top_text }}
+              />
+            )}
           </div>
           <div className={`${styles.trainingWrapper} flex`}>
             {categories && <TrainingsMenu vidCat={categories} />}
@@ -99,35 +113,23 @@ const TrainingsPage = () => {
                     />
                   </svg>
                 </Link>
-                <div>
-                  142 saat tədris müddəti Biznes üçün Excel və Statistika, SQL,
-                  Power Bi, Python ilə data analitika 300+ praktiki test üçün
-                  Proqramların yüklənməsində bələdçilik Sertifikat
-                </div>
+                {selectedTraining && (
+                  <div
+                    dangerouslySetInnerHTML={{ __html: selectedTraining?.list }}
+                  />
+                )}
               </div>
               <div className={styles.trainingAboutBottom}>
-                <h2>Data Analitik kursu</h2>
-                <div>
-                  “İnnab Business School” komandası tərəfindən ölkənin 10-dan
-                  çox nüfuzlu data ekspertinin tövsiyə və rəyləri əsasında təlim
-                  planı hazırlanmış “Data Analitik” kursuna qoşulmaqla bu sahədə
-                  karyeranızı inkişaf elətdirə biləcəksiniz. Bu gün data
-                  şirkətin ən vacib aktivi hesab edilir. Daha çox dataya sahib
-                  olan müəssisələr daha güclü hesab edilir. Datanı analiz etmək
-                  birbaşa şirkətin performansına təsir etdiyinə görə müəssisələr
-                  üçün həyati əhəmiyyətli hesab edilir. Effektiv data analitika
-                  alətlərindən istifadə edərək şirkətlər müştərilərini daha
-                  yaxından tanıya, onların tələblərinə uyğun marketinq
-                  strategiyalarını inkişaf etdirə, əməliyyat effektivliyni
-                  artıra, məhsullarını müştəri tələblərinə uyğunlaşdıra
-                  bilirlər. Müasir dövrdə data əsaslı qərarvermə strategiyaları
-                  data analitikanın köməkliyi ilə reallaşdırılır. Bütün bu
-                  işlərin hər birini isə qurumlarda “Data analitik”lər
-                  reallaşdırırlar. Məhz, buna görə də əmək bazarında data
-                  analitika sahəsində olan vakansiyaların əmək haqqısı yüksək,
-                  bu səriştələrə sahib olan şəxslərin işsiz qalma ehtimalı xeyli
-                  aşağıdır. 
-                </div>
+                <h2>
+                  {selectedTraining && selectedTraining?.bottom_text_title}
+                </h2>
+                {selectedTraining && (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: selectedTraining?.bottom_text,
+                    }}
+                  />
+                )}
               </div>
             </div>
           </div>

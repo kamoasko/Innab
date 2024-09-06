@@ -13,6 +13,7 @@ import {
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVacancies } from "../../features/vacancies/vacanciesSlice";
+import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 
 const Button = React.lazy(() => import("../Button"));
 const CustomExpandIcon = React.lazy(() => import("./customExpandIcon"));
@@ -21,6 +22,7 @@ export default function CustomizedAccordions() {
   const dispatch = useDispatch();
   const { lang } = useParams();
   const { vacancies, status, error } = useSelector((state) => state.vacancies);
+  const { data: infos, isSuccess } = useSiteInfos(lang);
 
   useEffect(() => {
     dispatch(fetchVacancies(lang));
@@ -146,6 +148,7 @@ export default function CustomizedAccordions() {
                     "CV göndər",
                   ]}
                   borderRadius={"3rem"}
+                  to={isSuccess && `mailto:${infos.email2}`}
                 />
               </div>
             </AccordionActions>
