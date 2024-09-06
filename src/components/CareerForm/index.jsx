@@ -3,6 +3,8 @@ import styles from "../../pages/CareerCalculator/calculator.module.css";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { Box, Slider, styled } from "@mui/material";
+import { useCalcDatas } from "../../features/calculator/useCalculator";
+import { useParams } from "react-router";
 
 const PrettoSlider = styled(Slider)({
   color: "var(--color-main)",
@@ -51,6 +53,9 @@ const PrettoSlider = styled(Slider)({
 });
 
 const CareerForm = ({ onResults }) => {
+  const { lang } = useParams();
+  const { data: calcDatas } = useCalcDatas(lang);
+
   const initialValues = {
     field: "",
     educationType: "",
@@ -68,19 +73,21 @@ const CareerForm = ({ onResults }) => {
   });
 
   const calculateResults = (values) => {
-    const fieldSalaries = {
-      "Frontend Developer": 1200,
-      "Data Analitika": 800,
-      Mühasibatlıq: 600,
+    const fieldSalaries =
+      calcDatas &&
+      calcDatas?.areas
+        ?.map((area) => ({
+          [area.area_name]: area.count,
+        }))
+        ?.reduce((acc, curr) => ({ ...acc, ...curr }), {});
+
+    const educationCoefficients = calcDatas && {
+      "İnnab-da": calcDatas?.calculator?.where_innab,
+      Özüm: calcDatas?.calculator?.where_own,
+      "Digər kurslarda": calcDatas?.calculator?.where_other,
     };
 
-    const educationCoefficients = {
-      "İnnab-da": 1.3,
-      Özüm: 1,
-      "Digər kurslarda": 0.8,
-    };
-
-    const experienceCoefficients = {
+    const durationCoefficients = {
       0: 0.5,
       1: 0.7,
       2: 1,
@@ -89,19 +96,19 @@ const CareerForm = ({ onResults }) => {
       5: 3,
     };
 
-    const languageCoefficients = {
-      Zəif: 0.7,
-      Orta: 1,
-      Güclü: 1.2,
+    const languageCoefficients = calcDatas && {
+      Zəif: calcDatas?.calculator?.english_elementry,
+      Orta: calcDatas?.calculator?.english_medium,
+      Güclü: calcDatas?.calculator?.english_hard,
     };
 
-    const durationCoefficients = {
-      0: 0.5,
-      1: 0.7,
-      2: 1,
-      3: 1.2,
-      4: 1.5,
-      5: 2,
+    const experienceCoefficients = calcDatas && {
+      0: calcDatas?.calculator?.experience_0,
+      1: calcDatas?.calculator?.experience_0_1,
+      2: calcDatas?.calculator?.experience_1_3,
+      3: calcDatas?.calculator?.experience_3_5,
+      4: calcDatas?.calculator?.experience_5_10,
+      5: calcDatas?.calculator?.experience_10_plus,
     };
 
     const educationCosts = {
@@ -139,23 +146,16 @@ const CareerForm = ({ onResults }) => {
       languageCoefficient *
       durationCoefficient;
 
-    const futurePositions = {
-      "Frontend Developer": [
-        "Frontend developer",
-        "Software developer",
-        "Software engineer",
-        "Mobile FrontEnd Developer",
-        "Web developer",
-        "UI/UX developer",
-        "IT project manager",
-      ],
-      "Data Analitika": ["Data analyst", "Business analyst"],
-      Mühasibatlıq: ["Accountant", "Financial analyst"],
-    };
+    const futurePositions =
+      calcDatas &&
+      calcDatas?.areas
+        ?.map((area) => ({
+          [area.area_name]: area.children?.map((child) => child.area_name),
+        }))
+        ?.reduce((acc, curr) => ({ ...acc, ...curr }), {});
 
     const foreignWorkPercentage = futureSalary > 1000 ? 45 : 25;
 
-    // Calculate the investment payback period
     const totalInvestment =
       educationCosts[values.educationType] * educationCoefficient;
     const averageMonthlySalary = futureSalary / 12;
@@ -184,9 +184,12 @@ const CareerForm = ({ onResults }) => {
           <Form className="flex flexDirectionColumn">
             <div className={`${styles.formGroup}`}>
               <Field as="select" name="field" id="field">
-                <option value="Frontend Developer">Frontend Developer</option>
-                <option value="Data Analitika">Data Analitika</option>
-                <option value="Mühasibatlıq">Mühasibatlıq</option>
+                {calcDatas &&
+                  calcDatas.areas?.map((area, index) => (
+                    <option key={index} value={area.area_name}>
+                      {area.area_name}
+                    </option>
+                  ))}
               </Field>
               <ErrorMessage name="field" component="span" className="error" />
             </div>

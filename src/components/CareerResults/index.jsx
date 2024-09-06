@@ -9,7 +9,7 @@ const CareerResults = ({ results }) => {
       <div className={styles.resultSalary}>
         <h4>Ortalama maaşın</h4>
         <h3>
-          {results ? results.futureSalary.slice(-2, -1) : ""}
+          {results ? results.futureSalary.replace(/\.0+$/, "") : ""}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="61"
@@ -44,7 +44,7 @@ const CareerResults = ({ results }) => {
           <span>İnvestisiyanın geri dönüş müddəti</span>
           <h4>
             {results
-              ? results.investmentPaybackPeriod.slice(-2, -1) + " ay"
+              ? results.investmentPaybackPeriod.replace(/\.0+$/, "") + " ay"
               : ""}
           </h4>
         </li>
