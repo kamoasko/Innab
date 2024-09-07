@@ -25,17 +25,15 @@ const BlogPosts = React.lazy(() => import("../../components/blogPosts"));
 const DetailPage = ({ blog, pageTitle }) => {
   const { lang, videoSlug, blogSlug, categoryId, blogCategoryId } = useParams();
   const {
-    data: videoLessonContent,
+    data: content,
     status,
     error,
-  } = useVideoLessonContent(lang, videoSlug);
-  const { data: videoLessonCategory } = useVideoLessonCategory(lang, videoSlug);
-  const { data: blogCategories } = useBlogCategories(lang, blogSlug);
-  const {
-    data: blogContent,
-    status: blogStatus,
-    error: blogError,
-  } = useBlogContent(lang, blogSlug);
+  } = blog
+    ? useBlogContent(lang, blogSlug)
+    : useVideoLessonContent(lang, videoSlug);
+  const { data: category } = blog
+    ? useBlogCategories(lang, blogSlug)
+    : useVideoLessonCategory(lang, videoSlug);
   const { data: posts } = useBlogPosts(lang, blogCategoryId);
   const { data: categories } = useTrainingCategories(lang);
   const allTrainings =
@@ -43,12 +41,9 @@ const DetailPage = ({ blog, pageTitle }) => {
     categories?.map((category) => category.trainings)?.flat(Infinity);
 
   const [isOpened, setIsOpened] = useState({});
-  const [duration, setDuration] = useState("");
   const [playlistData, setPlaylistData] = useState(null);
   const { data: menus } = useMenus(lang);
-  const currentCategory = videoLessonCategory?.find(
-    (category) => category.category_id === categoryId
-  );
+
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
 
@@ -59,7 +54,7 @@ const DetailPage = ({ blog, pageTitle }) => {
     }));
   };
 
-  const links = videoLessonContent?.links;
+  const links = content?.links;
   const videoId = links?.link;
   const apiKey = "AIzaSyAcNaMFfPRTTcuOI5JHkrDC8ZrzDAb4ELQ";
   const [videoLessonId, setVideoLessonId] = useState(videoId);
@@ -69,9 +64,9 @@ const DetailPage = ({ blog, pageTitle }) => {
     setVideoLessonId(id);
 
     if (iframeRef.current) {
-      iframeRef.current.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+      iframeRef.current.src = `https://www.youtube.com/embed/${id}?autoplay=0`;
     } else {
-      iframeRef.current.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+      iframeRef.current.src = `https://www.youtube.com/embed/${id}?autoplay=0`;
     }
   };
 
@@ -147,90 +142,26 @@ const DetailPage = ({ blog, pageTitle }) => {
     fetchPlaylistData();
   }, [videoId, videoLessonId]);
 
-  console.log(playlistData);
-
-  // const calculateVideoDuration = async (videoId) => {
-  //   const apiKey = "AIzaSyAcNaMFfPRTTcuOI5JHkrDC8ZrzDAb4ELQ"; // Replace with your YouTube Data API key
-
-  //   try {
-  //     const response = await axios.get(
-  //       `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoId}&key=${apiKey}`
-  //     );
-
-  //     const durationInSeconds =
-  //       parseInt(response.data.items[0].contentDetails.duration.slice(2, -1)) *
-  //         60 +
-  //       parseInt(response.data.items[0].contentDetails.duration.slice(0, 2));
-  //     return durationInSeconds;
-  //   } catch (error) {
-  //     console.error("Error fetching video duration:", error);
-  //     return 0;
-  //   }
-  // };
-  // const totalDuration = playlistData
-  //   ? playlistData.reduce((acc, item) => {
-  //       const videoId = item.snippet.resourceId.videoId;
-  //       const videoDuration = calculateVideoDuration(videoId);
-  //       return acc + videoDuration;
-  //     }, 0)
-  //   : 0;
-
-  // console.log(totalDuration);
-
-  // useEffect(() => {
-  //   const fetchDuration = async () => {
-  //     const url = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=${apiKey}`;
-
-  //     try {
-  //       const response = await axios.get(url);
-  //       const isoDuration = response.data.items[0].contentDetails.duration;
-  //       const formattedDuration = formatDuration(isoDuration);
-  //       setDuration(formattedDuration);
-  //     } catch (error) {
-  //       console.error("Error fetching video duration:", error);
-  //     }
-  //   };
-
-  //   fetchDuration();
-  // }, [videoId]);
-
-  // const formatDuration = (isoDuration) => {
-  //   const match = isoDuration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-  //   const hours = (match[1] || "").slice(0, -1);
-  //   const minutes = (match[2] || "").slice(0, -1);
-  //   const seconds = (match[3] || "").slice(0, -1);
-
-  //   return [hours, minutes, seconds]
-  //     .filter(Boolean)
-  //     .map((v) => v.padStart(2, "0"))
-  //     .join(":");
-  // };
-
   return (
     <>
       {blog ? (
         <Helmet>
-          <title>{blogContent?.seo_title || "Video dərslər"}</title>
+          <title>{content?.seo_title || "Bloq"}</title>
           <meta
             name="description"
-            content={blogContent?.seo_description || "Video dərslər"}
+            content={content?.seo_description || "Bloq"}
           />
-          <meta
-            name="keywords"
-            content={blogContent?.seo_keywords || "Video dərslər"}
-          />
-          {blogContent?.seo_links || (
+          <meta name="keywords" content={content?.seo_keywords || "Bloq"} />
+          {content?.seo_links || (
             <link
               rel="canonical"
-              href={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/${blogContent?.slug}`}
+              href={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/${content?.slug}`}
             />
           )}
-          {blogContent?.seo_scripts || (
-            <script type="application/ld+json"></script>
-          )}
+          {content?.seo_scripts || <script type="application/ld+json"></script>}
         </Helmet>
       ) : (
-        videoLessonContent?.data?.map((lesson) => (
+        content?.data?.map((lesson) => (
           <Helmet key={lesson.id}>
             <title>{lesson.seo_title || "Video dərslər"}</title>
             <meta
@@ -244,7 +175,7 @@ const DetailPage = ({ blog, pageTitle }) => {
             {lesson.seo_links || (
               <link
                 rel="canonical"
-                href={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/${lesson?.slug}`}
+                href={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[0]?.slug}/${lesson?.slug}`}
               />
             )}
             {lesson.seo_scripts || <script type="application/ld+json"></script>}
@@ -267,13 +198,10 @@ const DetailPage = ({ blog, pageTitle }) => {
         <section className={styles.detail}>
           <div className="container">
             <div className={`${styles.detailWrapper} flex`}>
+              <TrainingsMenu vidCat={category} />
+
               {blog ? (
-                <TrainingsMenu vidCat={blogCategories} />
-              ) : (
-                <TrainingsMenu vidCat={videoLessonCategory} />
-              )}
-              {blog ? (
-                <BlogPosts blogContent={blogContent} blogs={posts} />
+                <BlogPosts blogContent={content} blogs={posts} />
               ) : (
                 <div className={styles.detailMain}>
                   {status === "pending" && (
@@ -300,7 +228,7 @@ const DetailPage = ({ blog, pageTitle }) => {
                         ref={iframeRef}
                         width="100%"
                         height="100%"
-                        src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+                        src={`https://www.youtube.com/embed/${videoId}?autoplay=0`}
                         title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -310,7 +238,7 @@ const DetailPage = ({ blog, pageTitle }) => {
                     </div>
                     <div className={styles.detailTopics}>
                       {status === "success" &&
-                        videoLessonContent.data.map((lesson) => (
+                        content.data.map((lesson) => (
                           <div
                             className={`${styles.detailTopic} detailTopic ${
                               isOpened[lesson.id] ? "active" : ""
@@ -380,7 +308,7 @@ const DetailPage = ({ blog, pageTitle }) => {
         {blog && (
           <div className={styles.detailAbout}>
             <div className="container">
-              {blogContent?.content?.map((blog) => (
+              {content?.content?.map((blog) => (
                 <div key={blog.id}>
                   <div
                     className={styles.detailAboutText}
