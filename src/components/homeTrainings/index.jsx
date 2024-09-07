@@ -62,15 +62,16 @@ const HomeTrainings = ({ trainings, link }) => {
         >
           <SwiperSlide>
             <div className={styles.trainingsGrid}>
-              {trainings.map((training) => (
-                <TrainingsCard
-                  key={training.id}
-                  img={training.icon}
-                  title={training.title}
-                  desc={training.short_description}
-                  to={`/${lang}/${parentMenu[1]?.slug}/${link}/${training.slug}`}
-                />
-              ))}
+              {parentMenu &&
+                trainings.map((training) => (
+                  <TrainingsCard
+                    key={training.id}
+                    img={training.icon}
+                    title={training.title}
+                    desc={training.short_description}
+                    to={`/${lang}/${parentMenu[1]?.slug}/${link}/${training.slug}`}
+                  />
+                ))}
             </div>
           </SwiperSlide>
         </Swiper>

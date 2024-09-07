@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./404.module.css";
 import notFound from "../../assets/images/404/404.png";
 import Button from "../../components/Button";
+import { useParams } from "react-router";
 
 const NotFoundPage = () => {
   return (
@@ -10,7 +11,7 @@ const NotFoundPage = () => {
         <img loading="lazy" src={notFound} alt="404 Not Found" />
       </div>
       <h2>Opps! Page Not Found</h2>
-      <Button title={"BACK TO HOME"} borderRadius={"7rem"} to={"/"} />
+      <Button title={"BACK TO HOME"} borderRadius={"7rem"} to={`/`} />
     </div>
   );
 };

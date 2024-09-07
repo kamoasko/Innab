@@ -68,6 +68,7 @@ const ProjectSliders = () => {
         }}
       >
         {status === "success" &&
+          parentMenu &&
           projects.map((project) => (
             <SwiperSlide key={project.id}>
               <ProjectCard

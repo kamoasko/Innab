@@ -16,8 +16,6 @@ const Footer = () => {
   const { data: categories, error: categoriesError } =
     useTrainingCategories(lang);
 
-  console.log(categories);
-
   return (
     <>
       <Suspense>
