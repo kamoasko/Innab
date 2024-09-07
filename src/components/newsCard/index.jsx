@@ -7,7 +7,7 @@ const NewsCard = React.memo(({ title, img, desc, date, to }) => {
     <article className={`${styles.newsCard} flex flexDirectionColumn`}>
       <Link to={to}>
         <div className={`${styles.newsCardImg} flex flexDirection`}>
-          <img loading="lazy" src={img} alt="" />
+          <img loading="lazy" src={img} alt={title} />
         </div>
         <div className={`${styles.NewsCardContent}`}>
           <h4>{title}</h4>

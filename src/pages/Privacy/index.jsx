@@ -6,6 +6,7 @@ import { fetchPrivacyData } from "../../features/privacy/privacySlicer";
 import { Box, CircularProgress, Skeleton } from "@mui/material";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
+import { useTrainingCategories } from "../../features/categories/categorySlice";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
@@ -14,10 +15,12 @@ const Privacy = () => {
   const dispatch = useDispatch();
   const { lang } = useParams();
   const { privacy, status, error } = useSelector((state) => state.privacy);
-
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
-  const aboutMenu = menus?.filter((menu) => menu.parent_id === 3);
+  const { data: categories } = useTrainingCategories(lang);
+  const allTrainings =
+    categories &&
+    categories?.map((category) => category.trainings)?.flat(Infinity);
 
   useEffect(() => {
     dispatch(fetchPrivacyData(lang));
@@ -119,6 +122,7 @@ const Privacy = () => {
           title={"Sualın var?"}
           subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+          categories={allTrainings && allTrainings}
         />
       </Suspense>
     </>

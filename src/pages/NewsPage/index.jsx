@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { fetchNews } from "../../features/news/newsSlice";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
+import { useTrainingCategories } from "../../features/categories/categorySlice";
 
 const Contact = React.lazy(() => import("../../components/Contact"));
 const NewsCard = React.lazy(() => import("../../components/newsCard"));
@@ -19,6 +20,10 @@ const NewsPage = () => {
     (state) => state.news
   );
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
+  const { data: categories } = useTrainingCategories(lang);
+  const allTrainings =
+    categories &&
+    categories?.map((category) => category.trainings)?.flat(Infinity);
   const [page, setPage] = useState(1);
 
   useEffect(() => {
@@ -107,6 +112,7 @@ const NewsPage = () => {
             <strong>bizə zəng elə</strong>,
           ]}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+          categories={allTrainings && allTrainings}
         />
         <Outlet />
       </Suspense>

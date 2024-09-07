@@ -5,6 +5,7 @@ import { Outlet, useParams } from "react-router";
 import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
+import { useTrainingCategories } from "../../features/categories/categorySlice";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Tabs = React.lazy(() => import("../../components/tabs"));
@@ -17,6 +18,10 @@ const BlogPage = () => {
   const [categoryId, setCategoryId] = useState(5);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
+  const { data: categories } = useTrainingCategories(lang);
+  const allTrainings =
+    categories &&
+    categories?.map((category) => category.trainings)?.flat(Infinity);
 
   const handleTabClick = (id) => {
     setCategoryId(id);
@@ -98,6 +103,7 @@ const BlogPage = () => {
             <strong>bizə zəng elə</strong>,
           ]}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+          categories={allTrainings && allTrainings}
         />
       </Suspense>
     </>

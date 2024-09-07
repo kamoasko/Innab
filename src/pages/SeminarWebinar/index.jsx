@@ -32,6 +32,10 @@ const SeminarWebinar = ({ workshop }) => {
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
+  const date = new Date();
+
+  const today = `${date.getFullYear()}-0${date.getMonth()}-0${date.getDate()} ${date.getHours()}:${date.getSeconds()}`;
+  console.log(today);
 
   const contactRef = useRef(null);
 
@@ -216,9 +220,12 @@ const SeminarWebinar = ({ workshop }) => {
               {status === "pending" && (
                 <Skeleton
                   variant="rectangular"
-                  width={1296}
                   height={595}
-                  sx={{ width: "100%", height: "100%", borderRadius: "2.4rem" }}
+                  sx={{
+                    width: "100% !important",
+                    height: "100%",
+                    borderRadius: "2.4rem",
+                  }}
                 />
               )}
               {status === "error" && <div>{error}</div>}
@@ -231,6 +238,7 @@ const SeminarWebinar = ({ workshop }) => {
                       time={sow.event_datetime?.slice(0, 16)}
                       adsImg={sow.image}
                       location={sow.place}
+                      title={sow.title}
                     />
                   </SwiperSlide>
                 ))}
@@ -242,24 +250,16 @@ const SeminarWebinar = ({ workshop }) => {
             <div className={styles.eventsTitle}>
               <h2>Keçirdiyimiz tədbirlər</h2>
               <div className={styles.lastEventsGrid}>
-                <EventCard
-                  eventImg={eventCardImg}
-                  title={"Ramin Nəsirov"}
-                  date={"2024-01-16 16:00"}
-                  place={"İNNAB business school"}
-                />
-                <EventCard
-                  eventImg={eventCardImg}
-                  title={"Ramin Nəsirov"}
-                  date={"2024-01-16 16:00"}
-                  place={"İNNAB business school"}
-                />
-                <EventCard
-                  eventImg={eventCardImg}
-                  title={"Ramin Nəsirov"}
-                  date={"2024-01-16 16:00"}
-                  place={"İNNAB business school"}
-                />
+                {seminarOrWorkshop &&
+                  seminarOrWorkshop.map((event) => (
+                    <EventCard
+                      key={event.id}
+                      eventImg={eventCardImg}
+                      title={event.spikers[0]}
+                      date={event.event_datetime?.slice(0, 16)}
+                      place={event.place}
+                    />
+                  ))}
               </div>
             </div>
           </div>
@@ -277,6 +277,7 @@ const SeminarWebinar = ({ workshop }) => {
               ? "https://admin.innab.coder.az/api/workshop/post"
               : "https://admin.innab.coder.az/api/vebinar/post"
           }
+          categories={seminarOrWorkshop && seminarOrWorkshop}
         />
       </Suspense>
     </>

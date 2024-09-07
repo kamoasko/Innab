@@ -12,6 +12,7 @@ import { useBlogCategories } from "../../features/blogCategories/blogCategorySli
 import { useBlogContent, useBlogPosts } from "../../features/blog/blogSlice";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
+import { useTrainingCategories } from "../../features/categories/categorySlice";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
@@ -36,6 +37,10 @@ const DetailPage = ({ blog, pageTitle }) => {
     error: blogError,
   } = useBlogContent(lang, blogSlug);
   const { data: posts } = useBlogPosts(lang, blogCategoryId);
+  const { data: categories } = useTrainingCategories(lang);
+  const allTrainings =
+    categories &&
+    categories?.map((category) => category.trainings)?.flat(Infinity);
 
   const [playing, setPlaying] = useState(false);
   const [isOpened, setIsOpened] = useState({});
@@ -382,6 +387,7 @@ const DetailPage = ({ blog, pageTitle }) => {
             <strong>bizə zəng elə</strong>,
           ]}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+          categories={allTrainings && allTrainings}
         />
       </Suspense>
     </>

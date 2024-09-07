@@ -7,7 +7,7 @@ const VideoLessonCard = ({ to, img, title, det }) => {
     <article className={styles.videoLessonCard}>
       <Link className="flex flexDirectionColumn" to={to}>
         <div className={styles.videoCardImg}>
-          <img loading="lazy" src={img} alt="" />
+          <img loading="lazy" src={img} alt={title} />
         </div>
         <div
           className={`${styles.videoLessonContent} flex flexDirectionColumn justifyContentBetween`}

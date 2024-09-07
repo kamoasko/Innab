@@ -7,6 +7,7 @@ import { Box, CircularProgress, Skeleton } from "@mui/material";
 import { fetchNews, fetchNewsDetail } from "../../features/news/newsSlice";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
+import { useTrainingCategories } from "../../features/categories/categorySlice";
 
 const Contact = React.lazy(() => import("../../components/Contact"));
 const NewsCard = React.lazy(() => import("../../components/newsCard"));
@@ -20,8 +21,12 @@ const NewsDetail = () => {
     (state) => state.news
   );
 
-  const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
+  const { data: menus } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
+  const { data: categories } = useTrainingCategories(lang);
+  const allTrainings =
+    categories &&
+    categories?.map((category) => category.trainings)?.flat(Infinity);
 
   useEffect(() => {
     dispatch(fetchNewsDetail({ lang, slug }));
@@ -106,40 +111,13 @@ const NewsDetail = () => {
                     <img
                       loading="lazy"
                       src={detailedNews?.image || newsImg}
-                      alt=""
+                      alt={detailedNews?.title}
                     />
                   </div>
                 </div>
                 <div className={styles.newsDetailText}>
                   {detailedNews?.text}
                 </div>
-                {/* <div
-             className={`${styles.newsDetailParagraphs} flex flexDirectionColumn`}
-           >
-             <div>
-               <h3>
-                 <strong>Frontend developer</strong> kimdir?
-               </h3>
-               <p>
-                 Frontend proqramçılar nə edir? Frontend proqramçı kimdir?
-                 Onlar veb saytların vəya mobil tətbiqlərin vizual hissəsini,
-                 interfeyslərini proqramlaşdırır. Siz hər hansı bir veb-sayta
-                 daxil olduqda, saytda gördüyünüz bütün vizual elementlər
-                 front-end proqramçıların işi hesab edilir. Bunların doğru
-                 işləməsi və lazımi yerə yönlənməsi kimi məsələlər isə
-                 backend proqramçıların işi hesab olunur.    Dizayn edilmiş
-                 maketi frontend proqramçı kodlama vasitəsilə hazırlayır,
-                 bütün elementlərin və vizual effektlərin işləməsini də bu
-                 mütəxəssislər təmin edir. Frontend mütəxəssisin digər bir
-                 öhdəliyi isə hazırladığı səhifələri bütün ekran ölçülərinə
-                 uyğunlaşdırmaq, responsivliyi təmin etməkdir: telefonlar,
-                 kompüter monitorları, noutbuklar, planşetlər, televizorlar
-                 və s. Bu tip responsivlik problemləri istifadəçi təcrübəsinə
-                 mənfi təsir etdiyi üçün frontend developer tərəfindən
-                 diqqətlə yoxlanılır
-               </p>
-             </div>
-           </div> */}
               </>
             )}
           </div>
@@ -179,6 +157,7 @@ const NewsDetail = () => {
             <strong>bizə zəng elə</strong>,
           ]}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+          categories={allTrainings && allTrainings}
         />
       </Suspense>
     </>

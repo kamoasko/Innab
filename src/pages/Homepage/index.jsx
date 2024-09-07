@@ -6,6 +6,7 @@ import HomeTrainings from "../../components/homeTrainings";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { Box, Skeleton } from "@mui/material";
 import { Helmet } from "react-helmet-async";
+import { useTrainingCategories } from "../../features/categories/categorySlice";
 
 const Contact = React.lazy(() => import("../../components/Contact"));
 const Customers = React.lazy(() => import("../../components/Customers"));
@@ -26,6 +27,10 @@ const Homepage = () => {
   const contactRef = useRef(null);
   const { data: infos } = useSiteInfos(lang);
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
+  const { data: categories } = useTrainingCategories(lang);
+  const allTrainings =
+    categories &&
+    categories?.map((category) => category.trainings)?.flat(Infinity);
 
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
@@ -139,7 +144,11 @@ const Homepage = () => {
                     />
                   </svg>
                 }
-                to={`${parentMenu[5]?.slug}/${usefulMenu[0]?.slug}/data-analitika`}
+                to={
+                  parentMenu &&
+                  usefulMenu &&
+                  `${parentMenu[5]?.slug}/${usefulMenu[0]?.slug}/data-analitika`
+                }
               />
               <UsefulCard
                 title={"Bloq"}
@@ -157,7 +166,11 @@ const Homepage = () => {
                     />
                   </svg>
                 }
-                to={`${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/data-analitika`}
+                to={
+                  parentMenu &&
+                  usefulMenu &&
+                  `${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/data-analitika`
+                }
               />
               <UsefulCard
                 title={"Karyera kakulyatoru"}
@@ -267,7 +280,11 @@ const Homepage = () => {
                     </defs>
                   </svg>
                 }
-                to={`${parentMenu[5]?.slug}/${usefulMenu[5]?.slug}`}
+                to={
+                  parentMenu &&
+                  usefulMenu &&
+                  `${parentMenu[5]?.slug}/${usefulMenu[5]?.slug}`
+                }
               />
               <UsefulCard
                 title={"Seminar & Vebinar"}
@@ -307,7 +324,11 @@ const Homepage = () => {
                     </defs>
                   </svg>
                 }
-                to={`${parentMenu[5]?.slug}/${usefulMenu[2]?.slug}`}
+                to={
+                  parentMenu &&
+                  usefulMenu &&
+                  `${parentMenu[5]?.slug}/${usefulMenu[2]?.slug}`
+                }
               />
               <UsefulCard
                 title={"Workshoplar"}
@@ -354,7 +375,11 @@ const Homepage = () => {
                     </defs>
                   </svg>
                 }
-                to={`${parentMenu[5]?.slug}/${usefulMenu[4]?.slug}`}
+                to={
+                  parentMenu &&
+                  usefulMenu &&
+                  `${parentMenu[5]?.slug}/${usefulMenu[4]?.slug}`
+                }
               />
               <UsefulCard
                 title={"Təqaüd proqramları"}
@@ -394,7 +419,11 @@ const Homepage = () => {
                     </defs>
                   </svg>
                 }
-                to={`${parentMenu[5]?.slug}/${usefulMenu[3]?.slug}`}
+                to={
+                  parentMenu &&
+                  usefulMenu &&
+                  `${parentMenu[5]?.slug}/${usefulMenu[3]?.slug}`
+                }
               />
             </div>
           </div>
@@ -407,6 +436,7 @@ const Homepage = () => {
           subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
           contactRef={contactRef}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+          categories={allTrainings && allTrainings}
         />
       </Suspense>
     </>

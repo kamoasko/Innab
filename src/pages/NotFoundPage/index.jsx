@@ -7,7 +7,7 @@ const NotFoundPage = () => {
   return (
     <div className={styles.notFound}>
       <div className={styles.notFoundImg}>
-        <img loading="lazy" src={notFound} alt="" />
+        <img loading="lazy" src={notFound} alt="404 Not Found" />
       </div>
       <h2>Opps! Page Not Found</h2>
       <Button title={"BACK TO HOME"} borderRadius={"7rem"} to={"/"} />

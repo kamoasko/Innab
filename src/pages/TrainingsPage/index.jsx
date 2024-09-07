@@ -184,7 +184,7 @@ const TrainingsPage = () => {
                       (selectedTraining && selectedTraining?.main_image) ||
                       trainingImg
                     }
-                    alt=""
+                    alt={selectedTraining && selectedTraining?.top_text_title}
                   />
                   <Button
                     onClick={scrollToContact}

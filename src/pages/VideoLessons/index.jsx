@@ -4,6 +4,7 @@ import { Outlet, useParams } from "react-router";
 import { Box, CircularProgress, Skeleton } from "@mui/material";
 import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 import { useMenus } from "../../features/menus/useMenu";
+import { useTrainingCategories } from "../../features/categories/categorySlice";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
@@ -16,6 +17,10 @@ const VideoLessons = () => {
   const [categoryId, setCategoryId] = useState(null);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
+  const { data: categories } = useTrainingCategories(lang);
+  const allTrainings =
+    categories &&
+    categories?.map((category) => category.trainings)?.flat(Infinity);
 
   const handleTabClick = (id) => {
     setCategoryId(id);
@@ -75,6 +80,7 @@ const VideoLessons = () => {
           <strong>bizə zəng elə</strong>,
         ]}
         apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+        categories={allTrainings && allTrainings}
       />
     </Suspense>
   );

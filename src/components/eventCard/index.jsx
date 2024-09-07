@@ -5,7 +5,7 @@ const EventCard = ({ eventImg, title, date, place }) => {
   return (
     <article className={`${styles.eventCard} flex flexDirectionColumn`}>
       <picture className={styles.eventCardImg}>
-        <img loading="lazy" src={eventImg} alt="" />
+        <img loading="lazy" src={eventImg} alt={title} />
       </picture>
       <div className={`${styles.eventCardDet} flex flexDirectionColumn`}>
         <h4>{title}</h4>

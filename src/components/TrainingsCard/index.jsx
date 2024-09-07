@@ -7,7 +7,7 @@ const TrainingsCard = ({ title, desc, img, to }) => {
     <article className="trainingsCard">
       <Link className="active" to={to}>
         <div className="trainingsImg">
-          <img src={img} alt="" loading="lazy" />
+          <img src={img} alt={title} loading="lazy" />
         </div>
         <div className="trainingsCardDet">
           <h4>{title}</h4>

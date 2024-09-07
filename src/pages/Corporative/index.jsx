@@ -178,7 +178,11 @@ const Corporative = () => {
                       />
                     </figcaption>
                     <picture className={styles.corporativeImg}>
-                      <img loading="lazy" src={corporative.image} alt="" />
+                      <img
+                        loading="lazy"
+                        src={corporative.image}
+                        alt={corporative.content_title}
+                      />
                     </picture>
                   </figure>
                   <div className={styles.corporativeDet}>

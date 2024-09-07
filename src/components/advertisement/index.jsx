@@ -2,7 +2,14 @@ import React from "react";
 import styles from "./advertisement.module.css";
 import Button from "../Button";
 
-const Advertisement = ({ speakers = [], time, location, adsImg, onclick }) => {
+const Advertisement = ({
+  speakers = [],
+  time,
+  location,
+  adsImg,
+  onclick,
+  title,
+}) => {
   return (
     <article
       className={`${styles.advertisement} flex alignItemsCenter justifyContentBetween`}
@@ -15,9 +22,7 @@ const Advertisement = ({ speakers = [], time, location, adsImg, onclick }) => {
             <h3>Spikerlər</h3>
             <div className="flex">
               {speakers.map((speaker, index) => (
-                <>
-                  <p key={index}>{speaker}</p>
-                </>
+                <p key={index}>{speaker}</p>
               ))}
             </div>
           </li>
@@ -38,7 +43,7 @@ const Advertisement = ({ speakers = [], time, location, adsImg, onclick }) => {
         />
       </div>
       <div className={styles.advertisementimg}>
-        <img loading="lazy" src={adsImg} alt="" />
+        <img loading="lazy" src={adsImg} alt={title} />
         <Button title={"Qoşul"} component borderRadius={"7rem"} />
       </div>
     </article>

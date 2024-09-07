@@ -14,7 +14,7 @@ import CountUp from "react-countup";
 const StatisticCard = ({ stat, isVisible, formatCount, className }) => (
   <div className={`${styles.statisticsCard} ${className}`}>
     <div>
-      <img loading="lazy" src={stat.icon} alt="" />
+      <img loading="lazy" src={stat.icon} alt={stat.text} />
     </div>
     <p>
       {isVisible ? (

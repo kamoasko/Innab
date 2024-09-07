@@ -94,16 +94,31 @@
 }
 
 .navbarMenu > li > a.active,
-.navbarMenu > li > a:hover {
+.navbarMenu > li > a:hover,
+.navbarMenu > li > button.active,
+.navbarMenu > li > button:hover {
   position: relative;
 }
 
 .navbarMenu > li > a.active::after,
-.navbarMenu > li > a:hover::after {
+.navbarMenu > li > a:hover::after,
+.navbarMenu > li > button.active::after,
+.navbarMenu > li > button:hover::after {
   content: "";
   width: 100%;
   height: 0.2rem;
   top: calc(100% + 2.7rem);
+  left: 0;
+  background-color: var(--color-main);
+  position: absolute;
+}
+
+.navbarMenu > li > button.active::after,
+.navbarMenu > li > button:hover::after {
+  content: "";
+  width: 100%;
+  height: 0.2rem;
+  top: calc(100% + 2.5rem);
   left: 0;
   background-color: var(--color-main);
   position: absolute;

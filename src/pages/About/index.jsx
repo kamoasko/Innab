@@ -12,6 +12,7 @@ import { fetchAboutCards } from "../../features/about/aboutSlice";
 import { CircularProgress } from "@mui/material";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
+import { useTrainingCategories } from "../../features/categories/categorySlice";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
@@ -28,6 +29,10 @@ const About = () => {
   const { lang } = useParams();
   const { about, status, error } = useSelector((state) => state.about);
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
+  const { data: categories } = useTrainingCategories(lang);
+  const allTrainings =
+    categories &&
+    categories?.map((category) => category.trainings)?.flat(Infinity);
 
   useEffect(() => {
     dispatch(fetchAboutCards(lang));
@@ -94,9 +99,6 @@ const About = () => {
                         padding: 0,
                         boxShadow: "none",
                       }}
-                      // contentArrowStyle={{
-                      //   borderRight: "7px solid  rgb(33, 150, 243)",
-                      // }}
                       iconStyle={{
                         backgroundColor: "var(--color-black-71)",
                         boxShadow: "none",
@@ -116,7 +118,7 @@ const About = () => {
                             alt={a.description}
                           />
                           <div className={`${styles.timelineHover} flexCenter`}>
-                            <img loading="lazy" src={logo} alt="" />
+                            <img loading="lazy" src={logo} alt="Innab logo" />
                           </div>
                         </div>
                         <div className={styles.aboutCardDet}>
@@ -163,6 +165,7 @@ const About = () => {
             <strong>bizə zəng elə</strong>,
           ]}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+          categories={allTrainings && allTrainings}
         />
       </Suspense>
     </>

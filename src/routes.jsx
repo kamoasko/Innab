@@ -63,10 +63,7 @@ export const generateRoutes = (menuData, lang) => {
         { path: parentMenu[2]?.slug, element: <Corporative /> },
         {
           path: parentMenu[3]?.slug,
-          children: [
-            { path: ":slug", element: <Projects book /> },
-            { path: ":slug", element: <Projects /> },
-          ],
+          children: [{ path: ":slug", element: <Projects /> }],
         },
         {
           path: parentMenu[4]?.slug,

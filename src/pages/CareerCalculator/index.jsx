@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import { Box, Skeleton } from "@mui/material";
 import { useMenus } from "../../features/menus/useMenu";
 import suitcase from "../../assets/icons/money-suitcase.svg";
+import { useTrainingCategories } from "../../features/categories/categorySlice";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
@@ -19,6 +20,10 @@ const CareerCalculator = () => {
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
+  const { data: categories } = useTrainingCategories(lang);
+  const allTrainings =
+    categories &&
+    categories?.map((category) => category.trainings)?.flat(Infinity);
 
   const handleResults = (data) => {
     setResults(data);
@@ -78,7 +83,7 @@ const CareerCalculator = () => {
                     Gələcək <strong>maaşını</strong> hesabla
                   </h2>
                   <div>
-                    <img loading="lazy" src={suitcase} alt="" />
+                    <img loading="lazy" src={suitcase} alt="Career Calculator" />
                   </div>
                 </div>
                 <CareerForm onResults={handleResults} />
@@ -93,6 +98,7 @@ const CareerCalculator = () => {
           title={"Sualın var?"}
           subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+          categories={allTrainings && allTrainings}
         />
       </Suspense>
     </>

@@ -15,7 +15,7 @@ const ProjectCard = ({ title, text, icon, to }) => {
       <div className={`${styles.projectsCardIcon} flexCenter projectsCardS`}>
         <div className="flexCenter">
           <div className="flexCenter">
-            <img loading="lazy" src={icon} alt="" />
+            <img loading="lazy" src={icon} alt={title} />
           </div>
         </div>
       </div>
