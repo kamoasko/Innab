@@ -42,7 +42,6 @@ const DetailPage = ({ blog, pageTitle }) => {
     categories &&
     categories?.map((category) => category.trainings)?.flat(Infinity);
 
-  const [playing, setPlaying] = useState(false);
   const [isOpened, setIsOpened] = useState({});
   const [duration, setDuration] = useState("");
   const [playlistData, setPlaylistData] = useState(null);
@@ -72,28 +71,83 @@ const DetailPage = ({ blog, pageTitle }) => {
     if (iframeRef.current) {
       iframeRef.current.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
     } else {
-      setPlaying(true);
       iframeRef.current.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
     }
+  };
+
+  const convertDuration = (duration) => {
+    const match = duration.match(
+      /P(?:(\d+)D)?T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/
+    );
+    const days = match[1] ? parseInt(match[1], 10) : 0;
+    const hours = match[2] ? parseInt(match[2], 10) : 0;
+    const minutes = match[3] ? parseInt(match[3], 10) : 0;
+    const seconds = match[4] ? parseInt(match[4], 10) : 0;
+
+    const totalHours = days * 24 + hours;
+    const totalMinutes = totalHours * 60 + minutes;
+    const totalSeconds = totalMinutes * 60 + seconds;
+
+    const formattedHours = String(Math.floor(totalSeconds / 3600)).padStart(
+      2,
+      "0"
+    );
+    const formattedMinutes = String(
+      Math.floor((totalSeconds % 3600) / 60)
+    ).padStart(2, "0");
+    const formattedSeconds = String(totalSeconds % 60).padStart(2, "0");
+
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
   };
 
   useEffect(() => {
     const fetchPlaylistData = async () => {
       const playlistId = "PLEmd2D4NKfm6vbuyGBI2C43QdQ6LzlM0b";
+      let nextPageToken = null;
+      let allVideos = [];
 
-      try {
-        const response = await axios.get(
-          `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=${apiKey}`
-        );
+      do {
+        try {
+          const playlistResponse = await axios.get(
+            `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=${apiKey}&maxResults=50${
+              nextPageToken ? `&pageToken=${nextPageToken}` : ""
+            }`
+          );
 
-        setPlaylistData(response.data.items);
-      } catch (error) {
-        console.error("Error fetching playlist data:", error);
-      }
+          const videoIds = playlistResponse.data.items.map(
+            (item) => item.snippet.resourceId.videoId
+          );
+
+          const videoDetailsResponse = await axios.get(
+            `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${videoIds.join(
+              ","
+            )}&key=${apiKey}`
+          );
+
+          const videosWithDurations = playlistResponse.data.items.map(
+            (item, index) => ({
+              ...item,
+              duration: convertDuration(
+                videoDetailsResponse.data.items[index].contentDetails.duration
+              ),
+            })
+          );
+
+          allVideos = allVideos.concat(videosWithDurations);
+          nextPageToken = playlistResponse.data.nextPageToken;
+        } catch (error) {
+          console.error("Error fetching playlist data:", error);
+          break;
+        }
+      } while (nextPageToken);
+
+      setPlaylistData(allVideos);
     };
 
     fetchPlaylistData();
   }, [videoId, videoLessonId]);
+
+  console.log(playlistData);
 
   // const calculateVideoDuration = async (videoId) => {
   //   const apiKey = "AIzaSyAcNaMFfPRTTcuOI5JHkrDC8ZrzDAb4ELQ"; // Replace with your YouTube Data API key
@@ -123,38 +177,34 @@ const DetailPage = ({ blog, pageTitle }) => {
 
   // console.log(totalDuration);
 
-  useEffect(() => {
-    const fetchDuration = async () => {
-      const url = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=${apiKey}`;
+  // useEffect(() => {
+  //   const fetchDuration = async () => {
+  //     const url = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&part=contentDetails&key=${apiKey}`;
 
-      try {
-        const response = await axios.get(url);
-        const isoDuration = response.data.items[0].contentDetails.duration;
-        const formattedDuration = formatDuration(isoDuration);
-        setDuration(formattedDuration);
-      } catch (error) {
-        console.error("Error fetching video duration:", error);
-      }
-    };
+  //     try {
+  //       const response = await axios.get(url);
+  //       const isoDuration = response.data.items[0].contentDetails.duration;
+  //       const formattedDuration = formatDuration(isoDuration);
+  //       setDuration(formattedDuration);
+  //     } catch (error) {
+  //       console.error("Error fetching video duration:", error);
+  //     }
+  //   };
 
-    fetchDuration();
-  }, [videoId]);
+  //   fetchDuration();
+  // }, [videoId]);
 
-  const formatDuration = (isoDuration) => {
-    const match = isoDuration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
-    const hours = (match[1] || "").slice(0, -1);
-    const minutes = (match[2] || "").slice(0, -1);
-    const seconds = (match[3] || "").slice(0, -1);
+  // const formatDuration = (isoDuration) => {
+  //   const match = isoDuration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+  //   const hours = (match[1] || "").slice(0, -1);
+  //   const minutes = (match[2] || "").slice(0, -1);
+  //   const seconds = (match[3] || "").slice(0, -1);
 
-    return [hours, minutes, seconds]
-      .filter(Boolean)
-      .map((v) => v.padStart(2, "0"))
-      .join(":");
-  };
-
-  const handlePlayClick = () => {
-    setPlaying(true);
-  };
+  //   return [hours, minutes, seconds]
+  //     .filter(Boolean)
+  //     .map((v) => v.padStart(2, "0"))
+  //     .join(":");
+  // };
 
   return (
     <>
@@ -236,10 +286,8 @@ const DetailPage = ({ blog, pageTitle }) => {
                     >
                       <Skeleton
                         variant="rectangular"
-                        width={1000}
-                        height={500}
                         sx={{
-                          width: "100$ !important",
+                          width: "100% !important",
                           height: "100% !important",
                         }}
                       />
@@ -248,57 +296,17 @@ const DetailPage = ({ blog, pageTitle }) => {
                   {status === "error" && <Box>{error}</Box>}
                   <div className={`${styles.detailMainTop} flex`}>
                     <div className={styles.detailFigure}>
-                      {playing ? (
-                        <iframe
-                          ref={iframeRef}
-                          width="100%"
-                          height="100%"
-                          src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-                          title="YouTube video player"
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          referrerPolicy="strict-origin-when-cross-origin"
-                          allowFullScreen
-                        ></iframe>
-                      ) : (
-                        <div
-                          className={`${styles.playButtonOverlay} flexCenter`}
-                          onClick={handlePlayClick}
-                          style={{ backgroundImage: "" }}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="73"
-                            height="72"
-                            viewBox="0 0 73 72"
-                            fill="none"
-                          >
-                            <g clipPath="url(#clip0_739_9109)">
-                              <circle
-                                cx="36.0498"
-                                cy="36"
-                                r="36"
-                                fill="#333333"
-                                fillOpacity="0.5"
-                              />
-                              <path
-                                d="M28.1267 20.4976L53.0895 34.395C54.0074 34.906 54.3225 36.0388 53.7932 36.9251C53.6246 37.2075 53.3819 37.4419 53.0895 37.6047L28.1267 51.5021C27.2088 52.0131 26.0357 51.7088 25.5065 50.8225C25.3384 50.5411 25.25 50.222 25.25 49.8972V22.1025C25.25 21.0794 26.1089 20.25 27.1685 20.25C27.5048 20.25 27.8353 20.3354 28.1267 20.4976Z"
-                                fill="white"
-                              />
-                            </g>
-                            <defs>
-                              <clipPath id="clip0_739_9109">
-                                <rect
-                                  width="72"
-                                  height="72"
-                                  fill="white"
-                                  transform="translate(0.0498047)"
-                                />
-                              </clipPath>
-                            </defs>
-                          </svg>
-                        </div>
-                      )}
+                      <iframe
+                        ref={iframeRef}
+                        width="100%"
+                        height="100%"
+                        src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerPolicy="strict-origin-when-cross-origin"
+                        allowFullScreen
+                      ></iframe>
                     </div>
                     <div className={styles.detailTopics}>
                       {status === "success" &&
@@ -347,7 +355,13 @@ const DetailPage = ({ blog, pageTitle }) => {
                                         fill="currentColor"
                                       />
                                     </svg>
-                                    1:33 dəqiqə
+                                    {(playlistData &&
+                                      playlistData.find(
+                                        (item) =>
+                                          item.snippet.resourceId.videoId ===
+                                          link.link
+                                      )?.duration) ||
+                                      "00:00:00"}
                                   </span>
                                 </li>
                               ))}
