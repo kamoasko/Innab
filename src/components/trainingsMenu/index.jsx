@@ -28,13 +28,11 @@ const TrainingsMenu = React.memo(({ vidCat, posts }) => {
           </div>
           {openCategoryId === category.id && (
             <ul className="flex flexDirectionColumn">
-              {posts
-                ?.filter((post) => post.categoryId === category.id)
-                ?.map((post) => (
-                  <li key={post.id}>
-                    <Link to={`/post/${post.slug}`}>{post.title}</Link>
-                  </li>
-                ))}
+              {posts?.map((post) => (
+                <li key={post.id}>
+                  <Link to={`/post/${post.slug}`}>{post.title}</Link>
+                </li>
+              ))}
             </ul>
           )}
         </li>

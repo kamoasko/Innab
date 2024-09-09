@@ -15,9 +15,16 @@ import { useTrainingCategories } from "../../features/categories/categorySlice";
 import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 import { useProjectOrCareer } from "../../features/project/projectSlice";
 
-const Navbar = ({ partnersRef, setSearchBarOpen }) => {
-  const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
-  const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
+const Navbar = ({
+  partnersRef,
+  setSearchBarOpen,
+  openDropdowns,
+  openSubMenus,
+  setOpenDropdowns,
+  setOpenSubMenus,
+}) => {
+  // const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
+  // const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
   const { lang } = useParams();
   const { data: menus, status, error } = useMenus(lang);
   const {
@@ -201,13 +208,13 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
                 )}
                 {trainingStatus === "error" && <div>{trainingError}</div>}
                 {trainingStatus === "success" &&
-                  trainingsCategory?.map((training) => (
+                  trainingsCategory?.map((training, index) => (
                     <li key={training.id}>
                       <p>
                         {training.title}
-                        {!openSubMenus[0] ? (
+                        {!openSubMenus[index] ? (
                           <svg
-                            onClick={() => toggleSubMenu(0)}
+                            onClick={() => toggleSubMenu(index)}
                             xmlns="http://www.w3.org/2000/svg"
                             width="20"
                             height="20"
@@ -223,7 +230,7 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
                           </svg>
                         ) : (
                           <svg
-                            onClick={() => toggleSubMenu(0)}
+                            onClick={() => toggleSubMenu(index)}
                             xmlns="http://www.w3.org/2000/svg"
                             width="20"
                             height="20"
@@ -239,7 +246,7 @@ const Navbar = ({ partnersRef, setSearchBarOpen }) => {
                           </svg>
                         )}
                       </p>
-                      <ul className={`${openSubMenus[0] ? "open" : ""}`}>
+                      <ul className={`${openSubMenus[index] ? "open" : ""}`}>
                         {training?.trainings?.map((t) => (
                           <li key={t.id}>
                             <Link

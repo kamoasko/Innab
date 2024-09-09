@@ -1,81 +1,83 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import "./circle-animation.css";
+import { motion, useInView } from "framer-motion";
 
-const AnimatedElement = ({ children, delay }) => {
+// Example data to be animated
+const elements = [
+  {
+    id: 1,
+    text: "Təlim müddətində və təlimdən sonra sualların cavablandırılması",
+  },
+  { id: 2, text: "8+ illik təcrübə" },
+  { id: 3, text: "Dövlət qurumları ilə əməkdaşlıq" },
+  { id: 4, text: "900+ öyrədici youtube videoları" },
+  { id: 5, text: "Əhatəli təlim planı" },
+  { id: 6, text: "Peşəkar müəllimlər" },
+  { id: 7, text: "En əsas bilikimizi paylaşmağı sevən mehriban komanda!" },
+  { id: 8, text: "INNAB-ın peşəkar iş əlaqələrindən istifadə" },
+  { id: 9, text: "Müasir ofis şəraiti" },
+];
+
+const DropAnimation = () => {
   const ref = useRef(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add("animate");
-          }, delay);
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, [delay]);
+  const isInView = useInView(ref, { once: true, threshold: 0.5 }); // triggers when 50% of the section is in view
 
   return (
-    <div ref={ref} className="animated-element">
-      {children}
+    <div className="venn-container" ref={ref}>
+      <motion.div
+        className="circle left-circle"
+        style={{ position: "relative" }}
+      >
+        {elements.slice(0, 5).map((el, index) => (
+          <motion.div
+            key={el.id}
+            initial={{ y: -150 }}
+            animate={isInView ? { y: 0 } : {}}
+            transition={{
+              type: "spring",
+              damping: 10,
+              stiffness: 100,
+              delay: index * 0.2,
+            }}
+            className="element"
+          >
+            {el.text}
+          </motion.div>
+        ))}
+      </motion.div>
+
+      <motion.div
+        className="center-text"
+        initial={{ scale: 0 }}
+        animate={isInView ? { scale: 1 } : {}} // Only animate if in view
+        transition={{ type: "spring", stiffness: 150, damping: 15 }}
+      >
+        İnnab
+      </motion.div>
+
+      <motion.div
+        className="circle right-circle"
+        style={{ position: "relative" }}
+      >
+        {elements.slice(5).map((el, index) => (
+          <motion.div
+            key={el.id}
+            initial={{ y: -150 }}
+            animate={isInView ? { y: 0 } : {}}
+            transition={{
+              type: "spring",
+              damping: 10,
+              stiffness: 100,
+              delay: index * 0.2,
+            }}
+            className="element"
+          >
+            {el.text}
+          </motion.div>
+        ))}
+      </motion.div>
     </div>
   );
 };
 
-const Animation = () => {
-  const baseDelay = 200; // Adjust this value to control the overall speed
-
-  return (
-    <div className="animation-container">
-      <div className="circle circle-left">
-        <AnimatedElement delay={baseDelay * 1}>
-          Təlim müddətində və təlimdən sonra sualların cavablandırılması
-        </AnimatedElement>
-        <AnimatedElement delay={baseDelay * 2}>
-          8+ illik təcrübə
-        </AnimatedElement>
-        <AnimatedElement delay={baseDelay * 3}>
-          Əhatəli təlim planı
-        </AnimatedElement>
-        <AnimatedElement delay={baseDelay * 4}>
-          Dövlət qurumları ilə əməkdaşlıq
-        </AnimatedElement>
-        <AnimatedElement delay={baseDelay * 5}>
-          Peşəkar müəllimlər
-        </AnimatedElement>
-      </div>
-      <div className="circle circle-right">
-        <AnimatedElement delay={baseDelay * 1}>
-          Ən əsası biliyimizi paylaşmağı sevən mehriban komanda!
-        </AnimatedElement>
-        <AnimatedElement delay={baseDelay * 2}>
-          INNAB-ın peşəkar iş əlaqələrindən istifadə
-        </AnimatedElement>
-        <AnimatedElement delay={baseDelay * 3}>
-          Əhatəli təlim planı
-        </AnimatedElement>
-        <AnimatedElement delay={baseDelay * 4}>
-          900+ öyrədici youtube videoları
-        </AnimatedElement>
-        <AnimatedElement delay={baseDelay * 5}>
-          Müasir ofis şəraiti
-        </AnimatedElement>
-      </div>
-      <div className="innab">innab</div>
-    </div>
-  );
-};
-
-export default Animation;
+export default DropAnimation;

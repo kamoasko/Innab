@@ -97,16 +97,13 @@ export const generateRoutes = (menuData, lang) => {
                 {
                   path: ":slug",
                   element: <BlogPage />,
-                  children: [{ path: "", element: <BlogGrid /> }],
-                },
-              ],
-            },
-            {
-              path: usefulMenu[1]?.slug,
-              children: [
-                {
-                  path: ":slug/:blogSlug",
-                  element: <DetailPage pageTitle={"Bloq"} blog />,
+                  children: [
+                    { path: "", element: <BlogGrid /> },
+                    {
+                      path: ":blogSlug",
+                      element: <DetailPage pageTitle={"Bloq"} blog />,
+                    },
+                  ],
                 },
               ],
             },

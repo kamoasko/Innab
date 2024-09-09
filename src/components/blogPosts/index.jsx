@@ -3,6 +3,7 @@ import blogImg from "../../assets/images/bloq/blog.jpeg";
 import { FaChevronDown } from "react-icons/fa6";
 import Button from "../Button";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const BlogPosts = ({ blogs, blogContent }) => {
   const [isActive, setIsActive] = useState(false);
@@ -35,9 +36,9 @@ const BlogPosts = ({ blogs, blogContent }) => {
               <ul className="flex flexDirectionColumn">
                 {blogContent?.content?.map((blog, index) => (
                   <li key={blog.id} className="flex flexDirectionColumn">
-                    <span>
+                    <Link>
                       1.{index + 1} {blog.title}
-                    </span>
+                    </Link>
                   </li>
                 ))}
               </ul>

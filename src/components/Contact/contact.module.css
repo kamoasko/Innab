@@ -361,9 +361,10 @@
 }
 
 @media (max-width: 768px) {
-  form {
+  .contactForm form {
     button {
       height: 4.9rem;
+      font-size: 1.4rem;
     }
   }
 

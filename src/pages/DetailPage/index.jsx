@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import styles from "./details.module.css";
 import { FaChevronDown } from "react-icons/fa";
-import { useParams } from "react-router";
+import { useOutletContext, useParams } from "react-router";
 import {
   useVideoLessonCategory,
   useVideoLessonContent,
@@ -23,6 +23,7 @@ const Button = React.lazy(() => import("../../components/Button"));
 const BlogPosts = React.lazy(() => import("../../components/blogPosts"));
 
 const DetailPage = ({ blog, pageTitle }) => {
+  const { categoryId: contextCategoryId } = useOutletContext();
   const { lang, videoSlug, blogSlug, categoryId, blogCategoryId } = useParams();
   const {
     data: content,
@@ -31,10 +32,12 @@ const DetailPage = ({ blog, pageTitle }) => {
   } = blog
     ? useBlogContent(lang, blogSlug)
     : useVideoLessonContent(lang, videoSlug);
+
   const { data: category } = blog
     ? useBlogCategories(lang, blogSlug)
     : useVideoLessonCategory(lang, videoSlug);
-  const { data: posts } = useBlogPosts(lang, blogCategoryId);
+
+  const { data: posts } = useBlogPosts(lang, contextCategoryId);
   const { data: categories } = useTrainingCategories(lang);
   const allTrainings =
     categories &&
@@ -58,8 +61,8 @@ const DetailPage = ({ blog, pageTitle }) => {
   const videoId = links?.link;
   const apiKey = "AIzaSyAcNaMFfPRTTcuOI5JHkrDC8ZrzDAb4ELQ";
   const [videoLessonId, setVideoLessonId] = useState(videoId);
-
   const iframeRef = useRef(videoId);
+
   const handleVideoId = (id) => {
     setVideoLessonId(id);
 
@@ -189,12 +192,6 @@ const DetailPage = ({ blog, pageTitle }) => {
           </Box>
         }
       >
-        <div className="pageTop">
-          <div className="container">
-            <PageTitle title={pageTitle} />
-          </div>
-        </div>
-
         <section className={styles.detail}>
           <div className="container">
             <div className={`${styles.detailWrapper} flex`}>
@@ -322,15 +319,17 @@ const DetailPage = ({ blog, pageTitle }) => {
           </div>
         )}
 
-        <Contact
-          title={"Sualın var?"}
-          subTitle={[
-            "Hardan başlamaqda tərəddüd edirsənsə ",
-            <strong>bizə zəng elə</strong>,
-          ]}
-          apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
-          categories={allTrainings && allTrainings}
-        />
+        {!blog && (
+          <Contact
+            title={"Sualın var?"}
+            subTitle={[
+              "Hardan başlamaqda tərəddüd edirsənsə ",
+              <strong>bizə zəng elə</strong>,
+            ]}
+            apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+            categories={allTrainings && allTrainings}
+          />
+        )}
       </Suspense>
     </>
   );

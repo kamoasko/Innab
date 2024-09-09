@@ -1,5 +1,5 @@
-import React, { memo, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { memo, useEffect, useRef, useState } from "react";
+import { Link, useLocation, useParams } from "react-router-dom";
 import SocialNetworks from "../SocialNetworks";
 import Button from "../Button";
 import LangForm from "../langForm";
@@ -11,12 +11,29 @@ import Navbar from "./navbar";
 const Header = memo(({ partnersRef }) => {
   const [searchBarOpen, setSearchBarOpen] = useState(false);
   const [mobMenuOpen, setMobMenuOpen] = useState(false);
+  const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
+  const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
   const { lang } = useParams();
   const { data: infos, status, error } = useSiteInfos(lang);
+  const location = useLocation();
+  const prevLocationRef = useRef(location);
 
   const toggleMobMenu = () => {
     setMobMenuOpen((prev) => !prev);
+    if (openDropdowns.some((isOpen) => isOpen)) {
+      setOpenDropdowns(Array(7).fill(false));
+      setOpenSubMenus(Array(6).fill(false));
+    }
   };
+
+  useEffect(() => {
+    if (location.pathname !== prevLocationRef.current.pathname) {
+      setMobMenuOpen(false);
+      setOpenDropdowns(Array(7).fill(false));
+      setOpenSubMenus(Array(6).fill(false));
+    }
+    prevLocationRef.current = location;
+  }, [location]);
 
   return (
     <header>
@@ -154,6 +171,10 @@ const Header = memo(({ partnersRef }) => {
           </div>
         ) : (
           <Navbar
+            openDropdowns={openDropdowns}
+            openSubMenus={openSubMenus}
+            setOpenDropdowns={setOpenDropdowns}
+            setOpenSubMenus={setOpenSubMenus}
             partnersRef={partnersRef}
             setSearchBarOpen={setSearchBarOpen}
           />
