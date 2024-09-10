@@ -60,6 +60,12 @@
       align-items: center;
       gap: 2.4rem;
 
+      > svg {
+        width: 4rem;
+        height: 4rem;
+        flex-shrink: 0;
+      }
+
       span {
         flex: 1;
       }
@@ -119,7 +125,7 @@
       li {
         gap: 1.2rem;
 
-        svg {
+        > svg {
           width: 2.4rem;
           height: 2.4rem;
         }
