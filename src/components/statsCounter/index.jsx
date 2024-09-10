@@ -90,7 +90,12 @@ const StatsCounter = React.memo(() => {
             height={123}
             className={getCardClass(index)}
             animation="wave"
-            sx={{ borderRadius: "1.06rem", zIndex: 1 }}
+            sx={{
+              borderRadius: "1.06rem",
+              zIndex: 1,
+              backgroundColor: "var(--color-white)",
+              boxShadow: "0px 0px 4.424px 0px rgba(91, 89, 89, 0.13)",
+            }}
           />
         ))}
       {status === "error" && <p>{error}</p>}
