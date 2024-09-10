@@ -59,7 +59,7 @@ const TrainingsPage = () => {
     });
     const link = document.createElement("a");
     link.href = window.URL.createObjectURL(blob);
-    link.download = "training.pdf";
+    link.download = selectedTraining?.title;
     link.click();
   };
 
@@ -218,7 +218,10 @@ const TrainingsPage = () => {
                   <Link className="flex justifyContentBetween">
                     Müştəri rəyləri <FaArrowRight />
                   </Link>
-                  <Link className="flex justifyContentBetween" to={"#"}>
+                  <button
+                    className="flex justifyContentBetween"
+                    onClick={downloadTrainingFile}
+                  >
                     Təlim planı
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -234,7 +237,7 @@ const TrainingsPage = () => {
                         fill="currentColor"
                       />
                     </svg>
-                  </Link>
+                  </button>
                   {selectedTraining && (
                     <div
                       dangerouslySetInnerHTML={{
