@@ -363,13 +363,12 @@
     }
 
     svg {
-      path {
-        transition: 0.3s ease;
-        -webkit-transition: 0.3s ease;
-        -moz-transition: 0.3s ease;
-        -ms-transition: 0.3s ease;
-        -o-transition: 0.3s ease;
-      }
+      color: #b0b0b0;
+      transition: 0.3s ease;
+      -webkit-transition: 0.3s ease;
+      -moz-transition: 0.3s ease;
+      -ms-transition: 0.3s ease;
+      -o-transition: 0.3s ease;
     }
   }
 }
@@ -380,9 +379,7 @@
   clip-path: inset(0 0 0 0.2rem);
 
   svg {
-    path {
-      fill: var(--color-main);
-    }
+    color: var(--color-main);
   }
 }
 
