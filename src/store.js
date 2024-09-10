@@ -3,7 +3,6 @@ import languageReducer from "./features/languages/languageSlice";
 import privacyReducer from "./features/privacy/privacySlicer";
 import corporativeReducer from "./features/corporative/corporativeSlice";
 import vacanciesReducer from "./features/vacancies/vacanciesSlice";
-import statisticReducer from "./features/statistics/statisticSlice";
 import roomReducer from "./features/rooms/roomSlice";
 import newsReducer from "./features/news/newsSlice";
 import partnersReducer from "./features/partners/partnersSlice";
@@ -16,7 +15,6 @@ export const store = configureStore({
     privacy: privacyReducer,
     corporative: corporativeReducer,
     vacancies: vacanciesReducer,
-    statistics: statisticReducer,
     rooms: roomReducer,
     news: newsReducer,
     partners: partnersReducer,

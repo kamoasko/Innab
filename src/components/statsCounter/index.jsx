@@ -3,12 +3,11 @@ import styles from "../../pages/Homepage/home.module.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import { Box, CircularProgress } from "@mui/material";
+import { Skeleton } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { fetchStatistics } from "../../features/statistics/statisticSlice";
+import { useStatistics } from "../../features/statistics/statisticSlice";
 import CountUp from "react-countup";
 
 const StatisticCard = ({ stat, isVisible, formatCount, className }) => (
@@ -29,11 +28,8 @@ const StatisticCard = ({ stat, isVisible, formatCount, className }) => (
 );
 
 const StatsCounter = React.memo(() => {
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { statistics, status, error } = useSelector(
-    (state) => state.statistics
-  );
+  const { data: statistics, status, error } = useStatistics(lang);
   const { width } = useWindowDimensions();
   const [isVisible, setIsVisible] = useState(false);
   const statsRef = useRef(null);
@@ -44,10 +40,6 @@ const StatsCounter = React.memo(() => {
     }
     return count;
   };
-
-  useEffect(() => {
-    dispatch(fetchStatistics(lang));
-  }, [lang, dispatch]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -89,20 +81,20 @@ const StatsCounter = React.memo(() => {
       className={`${styles.statistics} stats flex alignItemsCenter justifyContentBetween`}
       ref={statsRef}
     >
-      {status === "loading" && (
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-          }}
-        >
-          <CircularProgress />
-        </Box>
-      )}
-      {status === "failed" && <p>{error}</p>}
-      {status === "succeeded" && (
+      {status === "pending" &&
+        [...Array(6)].map((_, index) => (
+          <Skeleton
+            key={index}
+            variant="rectangular"
+            width={127}
+            height={123}
+            className={getCardClass(index)}
+            animation="wave"
+            sx={{ borderRadius: "1.06rem", zIndex: 1 }}
+          />
+        ))}
+      {status === "error" && <p>{error}</p>}
+      {status === "success" && (
         <>
           {width >= 1024 ? (
             statistics.map((stat, index) => (
