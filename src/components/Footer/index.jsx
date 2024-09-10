@@ -25,7 +25,7 @@ const Footer = () => {
               <div className="footerTopWrapper flex justifyContentBetween">
                 <div>
                   <h5>Linklər</h5>
-                  {parentMenu && (
+                  {parentMenu && categories && (
                     <ul className="flex flexDirectionColumn">
                       <li>
                         <Link to={parentMenu[0]?.slug}>
@@ -41,18 +41,24 @@ const Footer = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link to={`${parentMenu[1]?.slug}/data-analitika`}>
-                          Data analitika
+                        <Link
+                          to={`${parentMenu[1]?.slug}/${categories[0]?.slug}/${categories[0]?.trainings[0]?.slug}`}
+                        >
+                          {categories[0]?.title}
                         </Link>
                       </li>
                       <li>
-                        <Link to={`${parentMenu[1]?.slug}/muhasibatliq`}>
-                          Mühasibatlıq
+                        <Link
+                          to={`${parentMenu[1]?.slug}/${categories[1]?.slug}/${categories[1]?.trainings[0]?.slug}}`}
+                        >
+                          {categories[1]?.title}
                         </Link>
                       </li>
                       <li>
-                        <Link to={`${parentMenu[1]?.slug}/komputer-bilikler`}>
-                          Kompüter bilikləri
+                        <Link
+                          to={`${parentMenu[1]?.slug}/${categories[2]?.slug}/${categories[2]?.trainings[0]?.slug}}`}
+                        >
+                          {categories[2]?.title}
                         </Link>
                       </li>
                       <li>
@@ -61,8 +67,10 @@ const Footer = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link to={`${parentMenu[1]?.slug}/diger-telimler`}>
-                          Digər təlimlər
+                        <Link
+                          to={`${parentMenu[1]?.slug}/${categories[5].slug}/${categories[5]?.trainings[0]?.slug}`}
+                        >
+                          {categories[5]?.title}
                         </Link>
                       </li>
                       <li>
