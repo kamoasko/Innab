@@ -191,7 +191,11 @@ const DetailPage = ({ blog, pageTitle }) => {
               <TrainingsMenu
                 vidCat={category}
                 lang={lang}
-                usefulMenu={blog ? usefulMenu[1].slug : usefulMenu[0].slug}
+                slug={
+                  parentMenu && usefulMenu && blog
+                    ? `${parentMenu[5].slug}/${usefulMenu[1].slug}`
+                    : `${parentMenu[5].slug}/${usefulMenu[0].slug}`
+                }
               />
 
               {blog ? (
