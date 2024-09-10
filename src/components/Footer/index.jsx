@@ -4,6 +4,7 @@ import { Box, CircularProgress } from "@mui/material";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { useMenus } from "../../features/menus/useMenu";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useProjectOrCareer } from "../../features/project/projectSlice";
 
 const ContactDetails = React.lazy(() => import("../contactDetails"));
 const SocialNetworks = React.lazy(() => import("../SocialNetworks"));
@@ -15,6 +16,10 @@ const Footer = () => {
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const { data: categories, error: categoriesError } =
     useTrainingCategories(lang);
+  const { data: projectOrCareer } = useProjectOrCareer(lang);
+  const careers =
+    projectOrCareer &&
+    projectOrCareer?.filter((career) => career.is_corporative === 1);
 
   return (
     <>
@@ -33,7 +38,7 @@ const Footer = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link to="about">Onlayn qeydiyyat</Link>
+                        <Link to="/">Onlayn qeydiyyat</Link>
                       </li>
                       <li>
                         <Link to={parentMenu[2]?.slug}>
@@ -62,7 +67,11 @@ const Footer = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link to={`${parentMenu[4].slug}/`}>
+                        <Link
+                          to={`${parentMenu[4].slug}/${
+                            careers && careers[0].slug
+                          }`}
+                        >
                           İnsan resursları
                         </Link>
                       </li>
