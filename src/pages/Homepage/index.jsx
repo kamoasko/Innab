@@ -16,6 +16,7 @@ import {
   WorkshopSvg,
 } from "../../components/usefulCardSvgs/usefulCardSvgs";
 import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
+import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 
 const Contact = React.lazy(() => import("../../components/Contact"));
 const Customers = React.lazy(() => import("../../components/Customers"));
@@ -36,6 +37,7 @@ const Homepage = () => {
   const contactRef = useRef(null);
   const { data: infos } = useSiteInfos(lang);
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
+  const { data: videoCategories } = useVideoLessonCategory(lang);
   const { data: blogCategories } = useBlogCategories(lang);
   const { data: categories } = useTrainingCategories(lang);
   const allTrainings =
@@ -134,7 +136,9 @@ const Homepage = () => {
                 to={
                   parentMenu &&
                   usefulMenu &&
-                  `${parentMenu[5]?.slug}/${usefulMenu[0]?.slug}/data-analitika`
+                  `${parentMenu[5]?.slug}/${usefulMenu[0]?.slug}/${
+                    videoCategories && videoCategories[0]?.slug
+                  }`
                 }
               />
               <UsefulCard
