@@ -188,7 +188,11 @@ const DetailPage = ({ blog, pageTitle }) => {
         <section className={styles.detail}>
           <div className="container">
             <div className={`${styles.detailWrapper} flex`}>
-              <TrainingsMenu vidCat={category} />
+              <TrainingsMenu
+                vidCat={category}
+                lang={lang}
+                usefulMenu={blog ? usefulMenu[1].slug : usefulMenu[0].slug}
+              />
 
               {blog ? (
                 <BlogPosts blogContent={content} blogs={posts} />

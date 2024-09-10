@@ -3,7 +3,10 @@ import styles from "./trainings.module.css";
 import { FaArrowRight, FaMinus, FaPlus } from "react-icons/fa6";
 import { Link, useLocation, useParams } from "react-router-dom";
 import trainingImg from "../../assets/images/trainings/training.png";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import {
+  useTrainingCategories,
+  useTrainingFaqs,
+} from "../../features/categories/categorySlice";
 import { Box, Skeleton } from "@mui/material";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
@@ -49,6 +52,21 @@ const TrainingsPage = () => {
       setSelectedTraining(training);
     }
   }, [categories, isSuccess, trainingSlug]);
+
+  const downloadTrainingFile = () => {
+    const blob = new Blob(selectedTraining && [selectedTraining?.file], {
+      type: "application/pdf",
+    });
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = "training.pdf";
+    link.click();
+  };
+
+  const { data: trainingFaq } = useTrainingFaqs(
+    lang,
+    selectedTraining && selectedTraining?.id
+  );
 
   const scrollToContact = () => {
     if (contactRef) {
@@ -152,7 +170,7 @@ const TrainingsPage = () => {
                         onClick={() => toggleTrainingMenu(category.id)}
                         className="flex alignItemsCenter"
                       >
-                        {category.title}{" "}
+                        {category.title}
                         {openCategoryId === category.id ? (
                           <FaMinus />
                         ) : (
@@ -259,8 +277,8 @@ const TrainingsPage = () => {
                     className={`${styles.educationLeftBtns} flex alignItemsCenter`}
                   >
                     <Button
+                      component
                       color={"white"}
-                      to={""}
                       title={[
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -278,11 +296,14 @@ const TrainingsPage = () => {
                         </svg>,
                         "PDF yüklə",
                       ]}
+                      onClick={downloadTrainingFile}
                       borderRadius={"8.5rem"}
                     />
                     <Button
+                      onClick={() => scrollToContact(contactRef)}
                       title={"Sınaq dərsinə gəl"}
                       borderRadius={"7.2rem"}
+                      component
                     />
                   </div>
                 </div>
@@ -321,36 +342,14 @@ const TrainingsPage = () => {
               <h2>Tez-tez verilən suallar</h2>
             </div>
             <div className={styles.faqWrapper}>
-              <AccordionSecond
-                summary={"Data analitika kursunda ilkin tələblər nələrdir?"}
-                details={
-                  "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
-                }
-              />
-              <AccordionSecond
-                summary={"Data analitika kursunda ilkin tələblər nələrdir?"}
-                details={
-                  "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
-                }
-              />
-              <AccordionSecond
-                summary={"Data analitika kursunda ilkin tələblər nələrdir?"}
-                details={
-                  "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
-                }
-              />
-              <AccordionSecond
-                summary={"Data analitika kursunda ilkin tələblər nələrdir?"}
-                details={
-                  "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
-                }
-              />
-              <AccordionSecond
-                summary={"Data analitika kursunda ilkin tələblər nələrdir?"}
-                details={
-                  "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
-                }
-              />
+              {trainingFaq &&
+                trainingFaq?.map((faq) => (
+                  <AccordionSecond
+                    key={faq.id}
+                    summary={faq.question}
+                    details={faq.answer}
+                  />
+                ))}
             </div>
           </div>
           <div className={styles.faqTraininMenu}>

@@ -154,9 +154,17 @@
   margin-top: 3.2rem;
   gap: 1.5rem;
 
-  a:first-of-type {
+  button:first-of-type {
     color: var(--color-black);
     border-color: var(--color-main) !important;
+
+    &:hover {
+      color: var(--color-white);
+    }
+
+    > div {
+      background-color: var(--color-main);
+    }
 
     span {
       display: flex;
@@ -272,7 +280,7 @@
 
 @media (max-width: 1180px) {
   .educationLeftBtns {
-    a {
+    button {
       width: 18.4rem;
     }
   }
@@ -422,8 +430,7 @@
   .educationLeftBtns {
     justify-content: center;
 
-    a,
-    a:first-of-type {
+    button {
       font-size: 1.4rem;
 
       span {
@@ -433,7 +440,7 @@
       }
     }
 
-    a {
+    button {
       width: auto;
       height: 4.1rem;
     }
@@ -500,7 +507,7 @@
   }
 
   .educationLeftBtns {
-    a {
+    button {
       padding: 1rem;
     }
   }

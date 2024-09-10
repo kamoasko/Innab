@@ -129,66 +129,44 @@ const Homepage = () => {
         <section className={styles.useful}>
           <SectionTitle title={"Sizə faydalı"} />
           <div className="container">
-            <div className={styles.usefulGrid}>
-              <UsefulCard
-                title={"Video dərslər"}
-                icon={<VideoLessonSvg />}
-                to={
-                  parentMenu &&
-                  usefulMenu &&
-                  `${parentMenu[5]?.slug}/${usefulMenu[0]?.slug}/${
+            {usefulMenu && parentMenu && (
+              <div className={styles.usefulGrid}>
+                <UsefulCard
+                  title={usefulMenu[0]?.title}
+                  icon={<VideoLessonSvg />}
+                  to={`${parentMenu[5]?.slug}/${usefulMenu[0]?.slug}/${
                     videoCategories && videoCategories[0]?.slug
-                  }`
-                }
-              />
-              <UsefulCard
-                title={"Bloq"}
-                icon={<BlogSvg />}
-                to={
-                  parentMenu &&
-                  usefulMenu &&
-                  `${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/${
+                  }`}
+                />
+                <UsefulCard
+                  title={usefulMenu[1]?.title}
+                  icon={<BlogSvg />}
+                  to={`${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/${
                     blogCategories && blogCategories[0]?.slug
-                  }`
-                }
-              />
-              <UsefulCard
-                title={"Karyera kakulyatoru"}
-                icon={<CalculatorSvg />}
-                to={
-                  parentMenu &&
-                  usefulMenu &&
-                  `${parentMenu[5]?.slug}/${usefulMenu[5]?.slug}`
-                }
-              />
-              <UsefulCard
-                title={"Seminar & Vebinar"}
-                icon={<SeminarSvg />}
-                to={
-                  parentMenu &&
-                  usefulMenu &&
-                  `${parentMenu[5]?.slug}/${usefulMenu[2]?.slug}`
-                }
-              />
-              <UsefulCard
-                title={"Workshoplar"}
-                icon={<WorkshopSvg />}
-                to={
-                  parentMenu &&
-                  usefulMenu &&
-                  `${parentMenu[5]?.slug}/${usefulMenu[4]?.slug}`
-                }
-              />
-              <UsefulCard
-                title={"Təqaüd proqramları"}
-                icon={<ScholarshipSvg />}
-                to={
-                  parentMenu &&
-                  usefulMenu &&
-                  `${parentMenu[5]?.slug}/${usefulMenu[3]?.slug}`
-                }
-              />
-            </div>
+                  }`}
+                />
+                <UsefulCard
+                  title={usefulMenu[5]?.title}
+                  icon={<CalculatorSvg />}
+                  to={`${parentMenu[5]?.slug}/${usefulMenu[5]?.slug}`}
+                />
+                <UsefulCard
+                  title={usefulMenu[2]?.title}
+                  icon={<SeminarSvg />}
+                  to={`${parentMenu[5]?.slug}/${usefulMenu[2]?.slug}`}
+                />
+                <UsefulCard
+                  title={usefulMenu[4]?.title}
+                  icon={<WorkshopSvg />}
+                  to={`${parentMenu[5]?.slug}/${usefulMenu[4]?.slug}`}
+                />
+                <UsefulCard
+                  title={usefulMenu[3]?.title}
+                  icon={<ScholarshipSvg />}
+                  to={`${parentMenu[5]?.slug}/${usefulMenu[3]?.slug}`}
+                />
+              </div>
+            )}
           </div>
         </section>
 

@@ -3,7 +3,7 @@ import styles from "./trainings-menu.module.css";
 import { Link } from "react-router-dom";
 import { FaMinus, FaPlus } from "react-icons/fa6";
 
-const TrainingsMenu = React.memo(({ vidCat, posts }) => {
+const TrainingsMenu = React.memo(({ vidCat, posts, lang, usefulMenu }) => {
   const [openCategoryId, setOpenCategoryId] = useState(null);
 
   const toggleTrainingMenu = (categoryId) => {
@@ -28,9 +28,13 @@ const TrainingsMenu = React.memo(({ vidCat, posts }) => {
           </div>
           {openCategoryId === category.id && (
             <ul className="flex flexDirectionColumn">
-              {posts?.map((post) => (
+              {category?.blogs?.map((post) => (
                 <li key={post.id}>
-                  <Link to={`/post/${post.slug}`}>{post.title}</Link>
+                  <Link
+                    to={`/${lang}/${usefulMenu}/${category.slug}/${post.slug}`}
+                  >
+                    {post.title}
+                  </Link>
                 </li>
               ))}
             </ul>
