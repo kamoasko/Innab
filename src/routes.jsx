@@ -78,19 +78,25 @@ export const generateRoutes = (menuData, lang) => {
                 {
                   path: ":slug",
                   element: <VideoLessons />,
-                  children: [{ path: "", element: <VideoGrid /> }],
+                  children: [
+                    { path: "", element: <VideoGrid /> },
+                    {
+                      path: ":videoSlug",
+                      element: <DetailPage pageTitle={"Video dərslər"} />,
+                    },
+                  ],
                 },
               ],
             },
-            {
-              path: usefulMenu[0]?.slug,
-              children: [
-                {
-                  path: ":slug/:videoSlug",
-                  element: <DetailPage pageTitle={"Video dərslər"} />,
-                },
-              ],
-            },
+            // {
+            //   path: usefulMenu[0]?.slug,
+            //   children: [
+            //     {
+            //       path: ":slug/:videoSlug",
+            //       element: <DetailPage pageTitle={"Video dərslər"} />,
+            //     },
+            //   ],
+            // },
             {
               path: usefulMenu[1]?.slug,
               children: [

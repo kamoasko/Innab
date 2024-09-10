@@ -26,6 +26,10 @@ const VideoLessons = () => {
     setCategoryId(id);
   };
 
+  const isDetailPage = location.pathname.includes(
+    location.pathname.split("/")[5]
+  );
+
   useEffect(() => {
     if (status === "success" && videoCategories.length > 0) {
       setCategoryId(videoCategories[0].id);
@@ -60,6 +64,7 @@ const VideoLessons = () => {
             )}
             {status === "error" && <Box>{error}</Box>}
             {status === "success" &&
+              !isDetailPage &&
               videoCategories.map((category) => (
                 <Tabs
                   key={category.id}

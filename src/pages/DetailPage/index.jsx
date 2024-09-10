@@ -6,16 +6,13 @@ import {
   useVideoLessonCategory,
   useVideoLessonContent,
 } from "../../features/videoLessons/videoLessonSlice";
-import { Box, CircularProgress, Skeleton } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import axios from "axios";
 import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
 import { useBlogContent, useBlogPosts } from "../../features/blog/blogSlice";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
 
-const PageTitle = React.lazy(() => import("../../components/pageTitle"));
-const Contact = React.lazy(() => import("../../components/Contact"));
 const TrainingsMenu = React.lazy(() =>
   import("../../components/trainingsMenu")
 );
@@ -24,7 +21,7 @@ const BlogPosts = React.lazy(() => import("../../components/blogPosts"));
 
 const DetailPage = ({ blog, pageTitle }) => {
   const { categoryId: contextCategoryId } = useOutletContext();
-  const { lang, videoSlug, blogSlug, categoryId, blogCategoryId } = useParams();
+  const { lang, videoSlug, blogSlug, categoryId } = useParams();
   const {
     data: content,
     status,
@@ -37,11 +34,7 @@ const DetailPage = ({ blog, pageTitle }) => {
     ? useBlogCategories(lang, blogSlug)
     : useVideoLessonCategory(lang, videoSlug);
 
-  const { data: posts } = useBlogPosts(lang, contextCategoryId);
-  const { data: categories } = useTrainingCategories(lang);
-  const allTrainings =
-    categories &&
-    categories?.map((category) => category.trainings)?.flat(Infinity);
+  const { data: posts } = blog ? useBlogPosts(lang, contextCategoryId) : "";
 
   const [isOpened, setIsOpened] = useState({});
   const [playlistData, setPlaylistData] = useState(null);
@@ -317,18 +310,6 @@ const DetailPage = ({ blog, pageTitle }) => {
               ))}
             </div>
           </div>
-        )}
-
-        {!blog && (
-          <Contact
-            title={"Sualın var?"}
-            subTitle={[
-              "Hardan başlamaqda tərəddüd edirsənsə ",
-              <strong>bizə zəng elə</strong>,
-            ]}
-            apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
-            categories={allTrainings && allTrainings}
-          />
         )}
       </Suspense>
     </>

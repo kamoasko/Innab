@@ -32,7 +32,6 @@ const BlogPage = () => {
     (category) => category.id === categoryId
   );
 
-  // Check if the current path is the blog detail page
   const isDetailPage = location.pathname.includes(
     location.pathname.split("/")[5]
   );
@@ -104,17 +103,16 @@ const BlogPage = () => {
             <Outlet context={{ categoryId }} />
           </div>
         </section>
-        {!isDetailPage && (
-          <Contact
-            title={"Sualın var?"}
-            subTitle={[
-              "Hardan başlamaqda tərəddüd edirsənsə ",
-              <strong>bizə zəng elə</strong>,
-            ]}
-            apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
-            categories={allTrainings && allTrainings}
-          />
-        )}
+
+        <Contact
+          title={"Sualın var?"}
+          subTitle={[
+            "Hardan başlamaqda tərəddüd edirsənsə ",
+            <strong>bizə zəng elə</strong>,
+          ]}
+          apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+          categories={allTrainings && allTrainings}
+        />
       </Suspense>
     </>
   );
