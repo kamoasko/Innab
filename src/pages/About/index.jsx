@@ -6,10 +6,9 @@ import {
 } from "react-vertical-timeline-component";
 import "react-vertical-timeline-component/style.min.css";
 import logo from "../../assets/images/about-logo.png";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { fetchAboutCards } from "../../features/about/aboutSlice";
-import { CircularProgress } from "@mui/material";
+import { useAboutDatas } from "../../features/about/aboutSlice";
+import { Box, CircularProgress, Skeleton } from "@mui/material";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
@@ -25,18 +24,13 @@ const CircleAnimation = React.lazy(() =>
 );
 
 const About = () => {
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { about, status, error } = useSelector((state) => state.about);
+  const { data: about, status, error } = useAboutDatas(lang);
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const { data: categories } = useTrainingCategories(lang);
   const allTrainings =
     categories &&
     categories?.map((category) => category.trainings)?.flat(Infinity);
-
-  useEffect(() => {
-    dispatch(fetchAboutCards(lang));
-  }, [lang, dispatch]);
 
   return (
     <>
@@ -86,9 +80,29 @@ const About = () => {
                 className={styles.timelineWrapper}
                 lineColor="#C1C1C1"
               >
-                {status === "loading" && <CircularProgress />}
-                {status === "failed" && <p>{error}</p>}
-                {status === "succeeded" &&
+                {status === "pending" && (
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "100%",
+                      gap: 2,
+                    }}
+                  >
+                    {[...Array(4)].map((_, index) => (
+                      <Skeleton
+                        key={index}
+                        variant="rectangular"
+                        width={330}
+                        height={375}
+                        className={styles.timelineCard}
+                        sx={{ borderRadius: "0.8rem" }}
+                      />
+                    ))}
+                  </Box>
+                )}
+                {status === "error" && <p>{error}</p>}
+                {status === "success" &&
                   about.map((a, index) => (
                     <VerticalTimelineElement
                       className="vertical-timeline-element--work"

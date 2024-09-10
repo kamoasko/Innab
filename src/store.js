@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import languageReducer from "./features/languages/languageSlice";
-import aboutReducer from "./features/about/aboutSlice";
 import privacyReducer from "./features/privacy/privacySlicer";
 import corporativeReducer from "./features/corporative/corporativeSlice";
 import vacanciesReducer from "./features/vacancies/vacanciesSlice";
@@ -14,7 +13,6 @@ import useTranslation from "./hooks/translation/useTranslation";
 export const store = configureStore({
   reducer: {
     languages: languageReducer,
-    about: aboutReducer,
     privacy: privacyReducer,
     corporative: corporativeReducer,
     vacancies: vacanciesReducer,
