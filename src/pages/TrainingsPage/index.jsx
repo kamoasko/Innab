@@ -136,14 +136,15 @@ const TrainingsPage = () => {
         <section className={styles.training}>
           <div className="container">
             <ul className="flex alignItemsCenter tabsMenu">
-              {categories?.map((category) => (
-                <Tabs
-                  key={category.id}
-                  title={category.title}
-                  to={`/${lang}/${parentMenu[1].slug}/${category.slug}/${category.trainings[0]?.slug}`}
-                  isActive={location.pathname.split("/")[3] === category.slug}
-                />
-              ))}
+              {parentMenu &&
+                categories?.map((category) => (
+                  <Tabs
+                    key={category.id}
+                    title={category.title}
+                    to={`/${lang}/${parentMenu[1].slug}/${category.slug}/${category.trainings[0]?.slug}`}
+                    isActive={location.pathname.split("/")[3] === category.slug}
+                  />
+                ))}
             </ul>
             <div className={styles.trainingInfo}>
               <h2>{selectedTraining && selectedTraining?.top_text_title}</h2>

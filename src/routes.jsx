@@ -88,15 +88,6 @@ export const generateRoutes = (menuData, lang) => {
                 },
               ],
             },
-            // {
-            //   path: usefulMenu[0]?.slug,
-            //   children: [
-            //     {
-            //       path: ":slug/:videoSlug",
-            //       element: <DetailPage pageTitle={"Video dərslər"} />,
-            //     },
-            //   ],
-            // },
             {
               path: usefulMenu[1]?.slug,
               children: [
