@@ -1,21 +1,20 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchLanguages,
-  setLanguage,
-} from "../../features/languages/languageSlice";
 import { useNavigate, useParams } from "react-router";
 import { Skeleton } from "@mui/material";
+import { useQueryClient } from "@tanstack/react-query";
+import { useLanguages } from "../../features/languages/languageSlice";
 
 const LangForm = () => {
   const { lang } = useParams();
-  const { languages, status, error } = useSelector((state) => state.languages);
+  const { data: languages, status, error } = useLanguages();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
   const handleLanguageChange = (event) => {
     const selectedLang = event.target.value;
-    dispatch(setLanguage(selectedLang));
+
+    // Invalidate the language-related queries when language is changed
+    queryClient.invalidateQueries(["languages"]);
 
     const newUrl = window.location.pathname.replace(
       `/${lang}`,
@@ -24,22 +23,18 @@ const LangForm = () => {
     navigate(newUrl);
   };
 
-  useEffect(() => {
-    dispatch(fetchLanguages());
-  }, [dispatch]);
-
   if (status === "loading") {
     return <Skeleton variant="rectangular" width={50} height={30} />;
   }
 
-  if (status === "failed") {
+  if (status === "error") {
     return <div>{error}</div>;
   }
 
   return (
     <>
-      {status === "succeeded" && (
-        <form action="" className="headerTopLang">
+      {status === "success" && (
+        <form className="headerTopLang">
           <select
             name="language"
             id="language"
