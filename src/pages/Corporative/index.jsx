@@ -33,7 +33,7 @@ const Corporative = () => {
   const customersRef = useRef(null);
 
   const allTrainings = categories
-    ?.map((category) => category.trainings)
+    ?.map((category) => category.subData)
     ?.flat(Infinity);
 
   const scrollToSection = function (r) {
@@ -205,7 +205,7 @@ const Corporative = () => {
 
         <section className={styles.faq}>
           <div className="container">
-            <div className={styles.faqAccordions}>
+            <div className={`${styles.faqAccordions} faqAccordions`}>
               {categories &&
                 categories?.map((category) => (
                   <AccordionSecond
@@ -213,7 +213,7 @@ const Corporative = () => {
                     summary={category.title}
                     details={[
                       <ol>
-                        {category.trainings?.map((training) => (
+                        {category.subData?.map((training) => (
                           <li key={training.id}>{training.title}</li>
                         ))}
                       </ol>,

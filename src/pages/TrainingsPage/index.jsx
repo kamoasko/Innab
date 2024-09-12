@@ -41,13 +41,13 @@ const TrainingsPage = () => {
   };
 
   const allTrainings = categories
-    ?.map((category) => category.trainings)
+    ?.map((category) => category.subData)
     ?.flat(Infinity);
 
   useEffect(() => {
     if (isSuccess && categories) {
       const training = categories
-        ?.flatMap((category) => category.trainings)
+        ?.flatMap((category) => category.subData)
         ?.find((training) => training.slug === trainingSlug);
       setSelectedTraining(training);
     }
@@ -141,7 +141,7 @@ const TrainingsPage = () => {
                   <Tabs
                     key={category.id}
                     title={category.title}
-                    to={`/${lang}/${parentMenu[1].slug}/${category.slug}/${category.trainings[0]?.slug}`}
+                    to={`/${lang}/${parentMenu[1].slug}/${category.slug}/${category.subData[0]?.slug}`}
                     isActive={location.pathname.split("/")[3] === category.slug}
                   />
                 ))}
@@ -180,7 +180,7 @@ const TrainingsPage = () => {
                       </div>
                       {openCategoryId === category.id && (
                         <ul className="flex flexDirectionColumn">
-                          {category.trainings?.map((training) => (
+                          {category.subData?.map((training) => (
                             <li key={training.id}>
                               <Link
                                 to={`/${lang}/${parentMenu[1]?.slug}/${category.slug}/${training.slug}`}
@@ -380,7 +380,7 @@ const TrainingsPage = () => {
                     </div>
                     {openCategoryId === category.id && (
                       <ul className="flex flexDirectionColumn">
-                        {category.trainings?.map((training) => (
+                        {category.subData?.map((training) => (
                           <li key={training.id}>
                             <Link
                               to={`/${lang}/${parentMenu[1]?.slug}/${category.slug}/${training.slug}`}

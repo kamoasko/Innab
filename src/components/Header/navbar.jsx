@@ -247,7 +247,7 @@ const Navbar = ({
                         )}
                       </p>
                       <ul className={`${openSubMenus[index] ? "open" : ""}`}>
-                        {training?.trainings?.map((t) => (
+                        {training?.subData?.map((t) => (
                           <li key={t.id}>
                             <Link
                               to={`${parentMenu[1]?.slug}/${training.slug}/${t.slug}`}

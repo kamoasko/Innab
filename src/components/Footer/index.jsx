@@ -47,21 +47,21 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={`${parentMenu[1]?.slug}/${categories[0]?.slug}/${categories[0]?.trainings[0]?.slug}`}
+                          to={`${parentMenu[1]?.slug}/${categories[0]?.slug}/${categories[0]?.subData[0]?.slug}`}
                         >
                           {categories[0]?.title}
                         </Link>
                       </li>
                       <li>
                         <Link
-                          to={`${parentMenu[1]?.slug}/${categories[1]?.slug}/${categories[1]?.trainings[0]?.slug}}`}
+                          to={`${parentMenu[1]?.slug}/${categories[1]?.slug}/${categories[1]?.subData[0]?.slug}}`}
                         >
                           {categories[1]?.title}
                         </Link>
                       </li>
                       <li>
                         <Link
-                          to={`${parentMenu[1]?.slug}/${categories[2]?.slug}/${categories[2]?.trainings[0]?.slug}}`}
+                          to={`${parentMenu[1]?.slug}/${categories[2]?.slug}/${categories[2]?.subData[0]?.slug}}`}
                         >
                           {categories[2]?.title}
                         </Link>
@@ -77,7 +77,7 @@ const Footer = () => {
                       </li>
                       <li>
                         <Link
-                          to={`${parentMenu[1]?.slug}/${categories[5].slug}/${categories[5]?.trainings[0]?.slug}`}
+                          to={`${parentMenu[1]?.slug}/${categories[5].slug}/${categories[5]?.subData[0]?.slug}`}
                         >
                           {categories[5]?.title}
                         </Link>

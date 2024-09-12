@@ -23,7 +23,7 @@ const SearchBar = ({ top, bottom, isOpen, onClose }) => {
     if (query) {
       const results = trainings
         ?.flatMap((category) =>
-          category.trainings.map((training) => ({
+          category.subData?.map((training) => ({
             ...training,
             categorySlug: category.slug, // Store the parent category slug here
           }))

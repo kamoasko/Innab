@@ -135,6 +135,15 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 0 8rem;
+  align-items: start;
+  align-content: start;
+  justify-content: start;
+  justify-items: start;
+
+  > div {
+    justify-self: start;
+    align-self: self-start;
+  }
 
   ol {
     font-size: 1.6rem;

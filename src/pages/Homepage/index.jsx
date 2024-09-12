@@ -42,7 +42,7 @@ const Homepage = () => {
   const { data: categories } = useTrainingCategories(lang);
   const allTrainings =
     categories &&
-    categories?.map((category) => category.trainings)?.flat(Infinity);
+    categories?.map((category) => category.subData)?.flat(Infinity);
 
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);

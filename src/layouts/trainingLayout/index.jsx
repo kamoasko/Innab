@@ -35,8 +35,8 @@ const TrainingLayout = () => {
   };
 
   const selectedTrainings = selectedCategory
-    ? selectedCategory.trainings
-    : trainingsCategories[0]?.trainings || [];
+    ? selectedCategory.subData
+    : trainingsCategories[0]?.subData || [];
 
   const selectedSlug = selectedCategory ? selectedCategory.slug : "";
 

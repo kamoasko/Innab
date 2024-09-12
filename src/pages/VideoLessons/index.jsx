@@ -20,7 +20,7 @@ const VideoLessons = () => {
   const { data: categories } = useTrainingCategories(lang);
   const allTrainings =
     categories &&
-    categories?.map((category) => category.trainings)?.flat(Infinity);
+    categories?.map((category) => category.subData)?.flat(Infinity);
 
   const handleTabClick = (id) => {
     setCategoryId(id);

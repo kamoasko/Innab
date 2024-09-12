@@ -21,7 +21,7 @@ const BlogPosts = React.lazy(() => import("../../components/blogPosts"));
 
 const DetailPage = ({ blog, pageTitle }) => {
   const { categoryId: contextCategoryId } = useOutletContext();
-  const { lang, videoSlug, blogSlug, categoryId } = useParams();
+  const { lang, videoSlug, blogSlug } = useParams();
   const {
     data: content,
     status,
@@ -42,6 +42,8 @@ const DetailPage = ({ blog, pageTitle }) => {
 
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
+
+  console.log(content && content);
 
   const toggleLesson = (lessonId) => {
     setIsOpened((prev) => ({
@@ -196,6 +198,7 @@ const DetailPage = ({ blog, pageTitle }) => {
                     ? `${parentMenu[5].slug}/${usefulMenu[1].slug}`
                     : `${parentMenu[5].slug}/${usefulMenu[0].slug}`
                 }
+                subData={blog ? false : true}
               />
 
               {blog ? (

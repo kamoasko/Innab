@@ -23,7 +23,7 @@ const CareerCalculator = () => {
   const { data: categories } = useTrainingCategories(lang);
   const allTrainings =
     categories &&
-    categories?.map((category) => category.trainings)?.flat(Infinity);
+    categories?.map((category) => category.subData)?.flat(Infinity);
 
   const handleResults = (data) => {
     setResults(data);
@@ -83,7 +83,11 @@ const CareerCalculator = () => {
                     Gələcək <strong>maaşını</strong> hesabla
                   </h2>
                   <div>
-                    <img loading="lazy" src={suitcase} alt="Career Calculator" />
+                    <img
+                      loading="lazy"
+                      src={suitcase}
+                      alt="Career Calculator"
+                    />
                   </div>
                 </div>
                 <CareerForm onResults={handleResults} />
