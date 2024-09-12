@@ -42,8 +42,8 @@ const DetailPage = ({ blog, pageTitle }) => {
 
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
-
-  console.log(content && content);
+  // const selectedCategory =
+  //   category && category?.find((c) => c.id === contextCategoryId);
 
   const toggleLesson = (lessonId) => {
     setIsOpened((prev) => ({
@@ -202,7 +202,7 @@ const DetailPage = ({ blog, pageTitle }) => {
               />
 
               {blog ? (
-                <BlogPosts blogContent={content} blogs={posts} />
+                <BlogPosts blogContent={content} />
               ) : (
                 <div className={styles.detailMain}>
                   {status === "pending" && (
