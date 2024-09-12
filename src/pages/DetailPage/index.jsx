@@ -19,7 +19,7 @@ const TrainingsMenu = React.lazy(() =>
 const Button = React.lazy(() => import("../../components/Button"));
 const BlogPosts = React.lazy(() => import("../../components/blogPosts"));
 
-const DetailPage = ({ blog, pageTitle }) => {
+const DetailPage = ({ blog }) => {
   const { categoryId: contextCategoryId } = useOutletContext();
   const { lang, videoSlug, blogSlug } = useParams();
   const {
@@ -34,10 +34,11 @@ const DetailPage = ({ blog, pageTitle }) => {
     ? useBlogCategories(lang, blogSlug)
     : useVideoLessonCategory(lang, videoSlug);
 
-  const { data: posts } = blog ? useBlogPosts(lang, contextCategoryId) : "";
+  // const { data: posts } = blog ? useBlogPosts(lang, contextCategoryId) : "";
 
   const [isOpened, setIsOpened] = useState({});
   const [playlistData, setPlaylistData] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { data: menus } = useMenus(lang);
 
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
@@ -299,7 +300,12 @@ const DetailPage = ({ blog, pageTitle }) => {
                         ))}
                     </div>
                   </div>
-                  <Button component title={"Abunə ol"} />
+                  <Button
+                    component
+                    title={"Abunə ol"}
+                    onClick={() => setIsModalOpen(true)}
+                  />
+                  {isModalOpen && <p>hello</p>}
                 </div>
               )}
             </div>

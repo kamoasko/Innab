@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "../../pages/ContactPage/contact-page.module.css";
 import SocialNetworks from "../SocialNetworks";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { Box, CircularProgress } from "@mui/material";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
@@ -10,20 +9,16 @@ const ContactSection = React.memo(({ h2 }) => {
   const { lang } = useParams();
   const { data: infos, status, error } = useSiteInfos(lang);
 
-  // useEffect(() => {
-  //   useSiteInfos(lang);
-  // }, [lang]);
-
   return (
     <div className={`${styles.contactWrapper} flex alignItemsCenter`}>
-      {status === "loading" && (
+      {status === "pending" && (
         <Box sx={{ width: "100%" }}>
           <CircularProgress
             sx={{ width: "2rem !important", height: "2rem !important" }}
           />
         </Box>
       )}
-      {status === "failed" && <p>{error}</p>}
+      {status === "error" && <p>{error}</p>}
 
       {status === "success" && (
         <div

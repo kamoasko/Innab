@@ -21,6 +21,7 @@ const Button = ({ component, title, borderRadius, to, color, onClick }) => {
             backgroundColor: bgColor,
             borderColor: bgColor,
           }}
+          type="button"
         >
           <span>{title}</span>
           <div className="btnHoverBg"></div>

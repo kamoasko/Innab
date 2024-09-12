@@ -9,6 +9,7 @@ const fetchTranslations = async (lang, group, keyword) => {
     const response = await axios.get(`${apiUrl}/${lang}/get_translate`, {
       params: { group, keyword },
     });
+    console.log("Fetched translation:", response.data.data.value);
     return response.data.data.value;
   } catch (error) {
     console.error("Error fetching translation:", error);
@@ -28,7 +29,7 @@ i18next.use(initReactI18next).init({
 
 export const changeLanguage = async (lang, group, keyword) => {
   const translation = await fetchTranslations(lang, group, keyword);
-  i18next.addResource(lang, group, keyword, translation);
+  i18next.addResource(lang, group, keyword, translation, { ns: group });
   i18next.changeLanguage(lang);
 };
 

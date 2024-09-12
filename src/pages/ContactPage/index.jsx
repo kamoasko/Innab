@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import styles from "./contact-page.module.css";
 import { useTranslation } from "react-i18next";
 import { changeLanguage } from "../../i18n";
@@ -13,24 +13,30 @@ const ContactSection = React.lazy(() =>
 );
 
 const ContactPage = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation("site");
   const { lang } = useParams();
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const aboutMenu = menus?.filter((menu) => menu.parent_id === 3);
 
+  const [isTranslationsLoaded, setIsTranslationsLoaded] = useState(false);
+
   useEffect(() => {
     const fetchTranslations = async () => {
-      await changeLanguage(lang, "form", "name_surname_label");
-      // await changeLanguage(
-      //   "az",
-      //   "contact",
-      //   "Hardan başlamanda tərəddüd edirsə bizə zəng elə"
-      // );
+      await changeLanguage(lang, "site", "contact_title");
+      setIsTranslationsLoaded(true);
     };
 
     fetchTranslations();
-  }, []);
+  }, [lang]);
+
+  if (!isTranslationsLoaded) {
+    return (
+      <Box>
+        <Skeleton variant="rectangular" height={48} />
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -71,10 +77,9 @@ const ContactPage = () => {
       >
         <section className={styles.contact}>
           <div className="container">
-            <PageTitle title={"Əlaqə"} />
+            <PageTitle title={t("contact_title")} />
             <div className={styles.contactTitle}>
               <h2>
-                {t("name_surname_label")}
                 Hardan başlamanda tərəddüd edirsənsə
                 <strong> bizə zəng elə</strong>
               </h2>
