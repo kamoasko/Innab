@@ -24,11 +24,13 @@ function App() {
 
   useEffect(() => {
     const langFromPath = location.pathname.split("/")[1];
-    if (
+    if (!langFromPath) {
+      navigate(`/${selectedLanguage}`, { replace: true });
+    } else if (
       languages &&
       !languages.some((lang) => lang.site_code === langFromPath)
     ) {
-      navigate(`/${selectedLanguage}${location.pathname}`, { replace: true });
+      navigate(`/${selectedLanguage}`, { replace: true });
     } else if (langFromPath !== selectedLanguage) {
       setSelectedLanguage(langFromPath);
     }

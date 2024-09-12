@@ -206,61 +206,20 @@ const Corporative = () => {
         <section className={styles.faq}>
           <div className="container">
             <div className={styles.faqAccordions}>
-              <AccordionSecond
-                summary={"Kompüter bilikləri"}
-                details={[
-                  <ol>
-                    <li>MS Excel</li>
-                    <li>MS Office</li>
-                    <li>MS VBA</li>
-                    <li>MOSE</li>
-                  </ol>,
-                ]}
-              />
-              <AccordionSecond
-                summary={"Kompüter bilikləri"}
-                details={[
-                  <ol>
-                    <li>MS Excel</li>
-                    <li>MS Office</li>
-                    <li>MS VBA</li>
-                    <li>MOSE</li>
-                  </ol>,
-                ]}
-              />
-              <AccordionSecond
-                summary={"Kompüter bilikləri"}
-                details={[
-                  <ol>
-                    <li>MS Excel</li>
-                    <li>MS Office</li>
-                    <li>MS VBA</li>
-                    <li>MOSE</li>
-                  </ol>,
-                ]}
-              />
-              <AccordionSecond
-                summary={"Kompüter bilikləri"}
-                details={[
-                  <ol>
-                    <li>MS Excel</li>
-                    <li>MS Office</li>
-                    <li>MS VBA</li>
-                    <li>MOSE</li>
-                  </ol>,
-                ]}
-              />
-              <AccordionSecond
-                summary={"Kompüter bilikləri"}
-                details={[
-                  <ol>
-                    <li>MS Excel</li>
-                    <li>MS Office</li>
-                    <li>MS VBA</li>
-                    <li>MOSE</li>
-                  </ol>,
-                ]}
-              />
+              {categories &&
+                categories?.map((category) => (
+                  <AccordionSecond
+                    key={category.id}
+                    summary={category.title}
+                    details={[
+                      <ol>
+                        {category.trainings?.map((training) => (
+                          <li key={training.id}>{training.title}</li>
+                        ))}
+                      </ol>,
+                    ]}
+                  />
+                ))}
             </div>
             <Button
               title={["Bizimlə əlaqə saxlayın", <HiOutlineArrowLongRight />]}
