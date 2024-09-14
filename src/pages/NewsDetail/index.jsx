@@ -4,7 +4,7 @@ import newsImg from "../../assets/images/news/news-img.jpeg";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { Box, CircularProgress, Skeleton } from "@mui/material";
-import { fetchNews, fetchNewsDetail } from "../../features/news/newsSlice";
+import { useGetNews, useGetNewsDetail } from "../../features/news/newsSlice";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
@@ -15,11 +15,14 @@ const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Button = React.lazy(() => import("../../components/Button"));
 
 const NewsDetail = () => {
-  const dispatch = useDispatch();
   const { lang, slug } = useParams();
-  const { news, detailedNews, status, error } = useSelector(
-    (state) => state.news
-  );
+  const { data: news, status, error } = useGetNews(lang);
+
+  const {
+    data: detailedNews,
+    status: detailedNewsStatus,
+    error: detailedNewsError,
+  } = useGetNewsDetail(lang, slug);
 
   const { data: menus } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
@@ -28,39 +31,25 @@ const NewsDetail = () => {
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
 
-  useEffect(() => {
-    dispatch(fetchNewsDetail({ lang, slug }));
-    dispatch(fetchNews(lang));
-  }, [lang, slug, dispatch]);
-
-  if (status === "loading") {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          width: "100%",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  if (status === "failed") {
-    return <Box>{error}</Box>;
-  }
-
   return (
     <>
       <Helmet>
-        <title>{detailedNews?.seo_title}</title>
-        <meta name="description" content={detailedNews?.seo_description} />
-        <meta name="keywords" content={detailedNews?.seo_keywords} />
+        <title>{detailedNews && detailedNews?.seo_title}</title>
+        <meta
+          name="description"
+          content={detailedNews && detailedNews?.seo_description}
+        />
+        <meta
+          name="keywords"
+          content={detailedNews && detailedNews?.seo_keywords}
+        />
         {detailedNews?.seo_links || (
-          <link rel="canonical" href={`/${lang}/${detailedNews?.slug}`} />
+          <link
+            rel="canonical"
+            href={`/${lang}/${detailedNews && detailedNews?.slug}`}
+          />
         )}
-        {detailedNews?.seo_scripts || (
+        {(detailedNews && detailedNews?.seo_scripts) || (
           <script type="application/ld+json"></script>
         )}
       </Helmet>
@@ -74,7 +63,8 @@ const NewsDetail = () => {
         <section className={styles.newsDetail}>
           <div className="container">
             <PageTitle title={"Xəbərlər"} />
-            {status === "loading" && (
+            {detailedNewsStatus === "error" && <Box>{detailedNewsError}</Box>}
+            {detailedNewsStatus === "pending" && (
               <>
                 <div
                   className={`${styles.newsDetailWrapper} flex alignItemsCenter justifyContentBetween`}
@@ -82,19 +72,19 @@ const NewsDetail = () => {
                   <div
                     className={`${styles.newsDetailWrapperContent} flex flexDirectionColumn justifyContentBetween`}
                   >
-                    <Skeleton variant="rectangular" />
-                    <Skeleton variant="rectangular" />
+                    <Skeleton variant="rectangular" height={50} />
+                    <Skeleton variant="rectangular" height={50} />
                   </div>
                   <div className={styles.newsDetailImg}>
-                    <Skeleton variant="rectangular" />
+                    <Skeleton variant="rectangular" height={371} />
                   </div>
                 </div>
                 <div className={styles.newsDetailText}>
-                  <Skeleton variant="rectangular" />
+                  <Skeleton variant="rectangular" height={600} />
                 </div>
               </>
             )}
-            {status === "succeeded" && (
+            {detailedNewsStatus === "success" && (
               <>
                 <div
                   className={`${styles.newsDetailWrapper} flex alignItemsCenter justifyContentBetween`}
@@ -129,7 +119,18 @@ const NewsDetail = () => {
               <h2>Digər xəbərlər</h2>
             </div>
             <div className={`${styles.otherNewsWrapper} flexCenter`}>
-              {status === "succeeded" &&
+              {status === "pending" &&
+                [...Array(3)].map((_, index) => (
+                  <Skeleton
+                    key={index}
+                    variant="rectangular"
+                    width={406}
+                    height={398}
+                    sx={{ borderRadius: "2rem" }}
+                  />
+                ))}
+              {status === "error" && <Box>{error}</Box>}
+              {news &&
                 news?.data
                   ?.slice(0, 3)
                   ?.map((post) => (

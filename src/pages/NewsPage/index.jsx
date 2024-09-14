@@ -4,7 +4,7 @@ import { Outlet, useParams } from "react-router";
 import { Box, CircularProgress, Pagination, Skeleton } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchNews } from "../../features/news/newsSlice";
+import { useGetNews } from "../../features/news/newsSlice";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
@@ -14,21 +14,16 @@ const NewsCard = React.lazy(() => import("../../components/newsCard"));
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 
 const NewsPage = () => {
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { news, status, error, pagination } = useSelector(
-    (state) => state.news
-  );
+  const [page, setPage] = useState(1);
+  const { data: news, status, error } = useGetNews(lang, page);
+  const { data: pagination } = useGetNews(lang, page);
+
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const { data: categories } = useTrainingCategories(lang);
   const allTrainings =
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    dispatch(fetchNews({ lang, page }));
-  }, [lang, page, dispatch]);
 
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -72,8 +67,8 @@ const NewsPage = () => {
           <div className="container">
             <PageTitle title={"Xəbərlər"} />
             <div className={styles.newsGrid}>
-              {status === "loading" &&
-                [...Array(5)].map((_, index) => (
+              {status === "pending" &&
+                [...Array(6)].map((_, index) => (
                   <Skeleton
                     key={index}
                     variant="rectangular"
@@ -82,8 +77,9 @@ const NewsPage = () => {
                     sx={{ borderRadius: "2rem" }}
                   />
                 ))}
-              {status === "failed" && <Box>{error}</Box>}
-              {status === "succeeded" &&
+              {status === "error" && <Box>{error}</Box>}
+              {status === "success" &&
+                pagination?.pagination &&
                 news?.data?.map((post) => (
                   <NewsCard
                     key={post.id}
@@ -98,9 +94,9 @@ const NewsPage = () => {
             <Pagination
               className="flex justifyContentCenter"
               sx={{ marginTop: "7.2rem", fontSize: "1.6rem" }}
-              count={pagination.last_page}
+              count={pagination?.pagination?.last_page}
               size="large"
-              page={page}
+              page={page || 3}
               onChange={handlePageChange}
             />
           </div>
