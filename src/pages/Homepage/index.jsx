@@ -1,8 +1,7 @@
-import React, { Suspense, useRef } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import styles from "./home.module.css";
 import { useParams } from "react-router-dom";
 import { useMenus } from "../../features/menus/useMenu";
-import HomeTrainings from "../../components/homeTrainings";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { Box, Skeleton } from "@mui/material";
 import { Helmet } from "react-helmet-async";
@@ -17,6 +16,8 @@ import {
 } from "../../components/usefulCardSvgs/usefulCardSvgs";
 import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
 import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
+import { useTranslation } from "react-i18next";
+import { changeLanguage } from "../../i18n";
 
 const Contact = React.lazy(() => import("../../components/Contact"));
 const Customers = React.lazy(() => import("../../components/Customers"));
@@ -35,6 +36,7 @@ const TrainingLayout = React.lazy(() => import("../../layouts/trainingLayout"));
 const Homepage = () => {
   const { lang } = useParams();
   const contactRef = useRef(null);
+  const { t } = useTranslation("site");
   const { data: infos } = useSiteInfos(lang);
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const { data: videoCategories } = useVideoLessonCategory(lang);
@@ -50,6 +52,36 @@ const Homepage = () => {
   const handleScrollToContact = () => {
     contactRef?.current.scrollIntoView({ behavior: "smooth" });
   };
+
+  const [isTranslationsLoaded, setIsTranslationsLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetchAllTranslations = async () => {
+      const keywords = [
+        "homepage_title",
+        "home_trainings_title",
+        "home_partners_title",
+        "home_project_title",
+        "home_useful_title",
+        "home_customers_title",
+        "customers_text",
+      ];
+
+      await changeLanguage(lang, "site", keywords);
+
+      setIsTranslationsLoaded(true);
+    };
+
+    fetchAllTranslations();
+  }, [lang]);
+
+  if (!isTranslationsLoaded) {
+    return (
+      <Box>
+        <Skeleton variant="rectangular" height={48} />
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -101,8 +133,13 @@ const Homepage = () => {
               <div
                 className={`${styles.heroTitle} flex flexDirectionColumn alignItemsCenter`}
               >
-                <h1>Peşəkar inkişafınız üçün fərdi və korporativ təlimlər.</h1>
-                <Button title={"Müraciət et"} to={"#contact"} color="orange" />
+                <h1>{t("homepage_title")}</h1>
+                <Button
+                  title={"Müraciət et"}
+                  component
+                  onClick={handleScrollToContact}
+                  color="orange"
+                />
               </div>
 
               <StatsCounter />
@@ -111,23 +148,26 @@ const Homepage = () => {
         </section>
 
         <section className={`${styles.trainings} trainings`}>
-          <SectionTitle title={"Təlimlər"} />
+          <SectionTitle title={t("home_trainings_title")} />
           <div className="container">
             <TrainingLayout />
           </div>
         </section>
 
-        <PartnersSection onClick={handleScrollToContact} />
+        <PartnersSection
+          onClick={handleScrollToContact}
+          partnersTitle={t("home_partners_title")}
+        />
 
         <section className={styles.projects}>
-          <SectionTitle title={"Lahiyələr"} />
+          <SectionTitle title={t("home_project_title")} />
           <div className="container">
             <ProjectSliders />
           </div>
         </section>
 
         <section className={styles.useful}>
-          <SectionTitle title={"Sizə faydalı"} />
+          <SectionTitle title={t("home_useful_title")} />
           <div className="container">
             {usefulMenu && parentMenu && (
               <div className={styles.usefulGrid}>
@@ -170,7 +210,11 @@ const Homepage = () => {
           </div>
         </section>
 
-        <Customers homepage />
+        <Customers
+          homepage
+          customersTitle={t("home_customers_title")}
+          text={t("customers_text")}
+        />
 
         <Contact
           title={"Sualın var?"}

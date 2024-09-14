@@ -26,7 +26,7 @@
   color: var(--color-white);
 }
 
-.heroTitle > a {
+.heroTitle > button {
   display: none;
   width: 15.4rem;
   height: 4.1rem;
@@ -508,7 +508,7 @@
     line-height: 7.1rem;
   }
 
-  .heroTitle > a {
+  .heroTitle > button {
     display: flex;
   }
 

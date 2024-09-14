@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPartners } from "../../features/partners/partnersSlice";
 import { Box, CircularProgress } from "@mui/material";
 
-const PartnersSection = ({ onClick }) => {
+const PartnersSection = ({ onClick, partnersTitle }) => {
   const dispatch = useDispatch();
   const { lang } = useParams();
   const { partners, status, error } = useSelector((state) => state.partners);
@@ -30,7 +30,7 @@ const PartnersSection = ({ onClick }) => {
       ref={partnersRef}
       id="#partners"
     >
-      <SectionTitle title={"Partnyorlar"} />
+      <SectionTitle title={partnersTitle} />
       <div className="container">
         {status === "loading" && (
           <Box
