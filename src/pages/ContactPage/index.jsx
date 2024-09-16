@@ -1,7 +1,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import styles from "./contact-page.module.css";
 import { useTranslation } from "react-i18next";
-import { changeLanguage } from "../../i18n";
 import { useParams } from "react-router";
 import { Box, Skeleton } from "@mui/material";
 import { useMenus } from "../../features/menus/useMenu";
@@ -18,25 +17,6 @@ const ContactPage = () => {
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const aboutMenu = menus?.filter((menu) => menu.parent_id === 3);
-
-  const [isTranslationsLoaded, setIsTranslationsLoaded] = useState(false);
-
-  useEffect(() => {
-    const fetchTranslations = async () => {
-      await changeLanguage(lang, "site", "contact_title");
-      setIsTranslationsLoaded(true);
-    };
-
-    fetchTranslations();
-  }, [lang]);
-
-  if (!isTranslationsLoaded) {
-    return (
-      <Box>
-        <Skeleton variant="rectangular" height={48} />
-      </Box>
-    );
-  }
 
   return (
     <>
@@ -77,7 +57,7 @@ const ContactPage = () => {
       >
         <section className={styles.contact}>
           <div className="container">
-            <PageTitle title={t("contact_title")} />
+            <PageTitle title="Bizimlə əlaqə" />
             <div className={styles.contactTitle}>
               <h2>
                 Hardan başlamanda tərəddüd edirsənsə

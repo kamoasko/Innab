@@ -16,8 +16,7 @@ import {
 } from "../../components/usefulCardSvgs/usefulCardSvgs";
 import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
 import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
-import { useTranslation } from "react-i18next";
-import { changeLanguage } from "../../i18n";
+import { useTranslations } from "../../features/translations/translations";
 
 const Contact = React.lazy(() => import("../../components/Contact"));
 const Customers = React.lazy(() => import("../../components/Customers"));
@@ -36,7 +35,6 @@ const TrainingLayout = React.lazy(() => import("../../layouts/trainingLayout"));
 const Homepage = () => {
   const { lang } = useParams();
   const contactRef = useRef(null);
-  const { t } = useTranslation("site");
   const { data: infos } = useSiteInfos(lang);
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const { data: videoCategories } = useVideoLessonCategory(lang);
@@ -53,35 +51,20 @@ const Homepage = () => {
     contactRef?.current.scrollIntoView({ behavior: "smooth" });
   };
 
-  const [isTranslationsLoaded, setIsTranslationsLoaded] = useState(false);
-
-  useEffect(() => {
-    const fetchAllTranslations = async () => {
-      const keywords = [
-        "homepage_title",
-        "home_trainings_title",
-        "home_partners_title",
-        "home_project_title",
-        "home_useful_title",
-        "home_customers_title",
-        "customers_text",
-      ];
-
-      await changeLanguage(lang, "site", keywords);
-
-      setIsTranslationsLoaded(true);
-    };
-
-    fetchAllTranslations();
-  }, [lang]);
-
-  if (!isTranslationsLoaded) {
-    return (
-      <Box>
-        <Skeleton variant="rectangular" height={48} />
-      </Box>
-    );
-  }
+  const keywords = [
+    "homepage_title",
+    "home_trainings_title",
+    "home_partners_title",
+    "home_project_title",
+    "home_useful_title",
+    "home_customers_title",
+    "customers_text",
+  ];
+  const {
+    data: translations,
+    isLoading,
+    error,
+  } = useTranslations(lang, "site", keywords);
 
   return (
     <>
@@ -113,7 +96,7 @@ const Homepage = () => {
       <Suspense
         fallback={
           <Box>
-            <Skeleton variant="rectangular" height={48} />
+            <Skeleton variant="rectangular" height={500} />
           </Box>
         }
       >
@@ -133,7 +116,13 @@ const Homepage = () => {
               <div
                 className={`${styles.heroTitle} flex flexDirectionColumn alignItemsCenter`}
               >
-                <h1>{t("homepage_title")}</h1>
+                <h1>
+                  {isLoading && (
+                    <Skeleton variant="text" width={500} height={100} />
+                  )}
+                  {translations && translations["homepage_title"]}
+                </h1>
+
                 <Button
                   title={"Müraciət et"}
                   component
@@ -148,7 +137,20 @@ const Homepage = () => {
         </section>
 
         <section className={`${styles.trainings} trainings`}>
-          <SectionTitle title={t("home_trainings_title")} />
+          <SectionTitle
+            title={
+              isLoading ? (
+                <Skeleton
+                  variant="text"
+                  width={200}
+                  height={60}
+                  sx={{ margin: "0 auto" }}
+                />
+              ) : (
+                translations && translations["home_trainings_title"]
+              )
+            }
+          />
           <div className="container">
             <TrainingLayout />
           </div>
@@ -156,18 +158,55 @@ const Homepage = () => {
 
         <PartnersSection
           onClick={handleScrollToContact}
-          partnersTitle={t("home_partners_title")}
+          partnersTitle={
+            isLoading ? (
+              <Skeleton
+                variant="text"
+                height={60}
+                width={200}
+                sx={{ margin: "0 auto" }}
+              />
+            ) : (
+              translations && translations["home_partners_title"]
+            )
+          }
         />
 
         <section className={styles.projects}>
-          <SectionTitle title={t("home_project_title")} />
+          <SectionTitle
+            title={
+              isLoading ? (
+                <Skeleton
+                  variant="text"
+                  height={60}
+                  width={200}
+                  sx={{ margin: "0 auto" }}
+                />
+              ) : (
+                translations && translations["home_project_title"]
+              )
+            }
+          />
           <div className="container">
             <ProjectSliders />
           </div>
         </section>
 
         <section className={styles.useful}>
-          <SectionTitle title={t("home_useful_title")} />
+          <SectionTitle
+            title={
+              isLoading ? (
+                <Skeleton
+                  variant="text"
+                  height={60}
+                  width={200}
+                  sx={{ margin: "0 auto" }}
+                />
+              ) : (
+                translations && translations["home_useful_title"]
+              )
+            }
+          />
           <div className="container">
             {usefulMenu && parentMenu && (
               <div className={styles.usefulGrid}>
@@ -212,8 +251,44 @@ const Homepage = () => {
 
         <Customers
           homepage
-          customersTitle={t("home_customers_title")}
-          text={t("customers_text")}
+          customersTitle={
+            isLoading ? (
+              <Skeleton
+                variant="text"
+                height={60}
+                width={200}
+                sx={{ margin: "0 auto" }}
+              />
+            ) : (
+              translations && translations["home_customers_title"]
+            )
+          }
+          text={
+            isLoading ? (
+              <>
+                <Skeleton
+                  variant="text"
+                  width={800}
+                  height={20}
+                  sx={{ margin: "0 auto" }}
+                />
+                <Skeleton
+                  variant="text"
+                  width={600}
+                  height={20}
+                  sx={{ margin: "0 auto" }}
+                />
+                <Skeleton
+                  variant="text"
+                  width={300}
+                  height={20}
+                  sx={{ margin: "0 auto" }}
+                />
+              </>
+            ) : (
+              translations && translations["customers_text"]
+            )
+          }
         />
 
         <Contact

@@ -5,8 +5,12 @@ import * as Yup from "yup";
 import Button from "../Button";
 import Modal from "./modal";
 import axios from "axios";
+import { useTranslations } from "../../features/translations/translations";
+import { useParams } from "react-router";
+import { Skeleton } from "@mui/material";
 
 const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
+  const { lang } = useParams();
   const initialValues = apply
     ? {
         name: "",
@@ -36,28 +40,99 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
         service: "",
       };
 
+  const keywords = [
+    "name_surname_label",
+    "full_name_label",
+    "name_surname_validation",
+    "phone_validation",
+    "pin_validation",
+    "email_validation",
+    "full_name_validation",
+    "birthday_validation",
+    "address_validation",
+    "cv_validation",
+    "pin_label",
+    "phone_label",
+    "formType_label",
+    "mail_label",
+    "select_services_label",
+    "individual_label",
+    "corporate_label",
+    "name_placeholder",
+    "mail_placeholder",
+    "form_title",
+    "form_subtitle",
+    "form_title_2",
+    "form_subtitle_2",
+    "birthday_label",
+    "phone_placeholder",
+    "project_label",
+    "education_label",
+    "student_label",
+    "work_label",
+    "tin_label",
+    "address_label",
+    "cv_label",
+    "cvFile_label",
+    "apply_button",
+    "send_button",
+    "submit_button",
+    "yes_label",
+    "no_label",
+    "other_label",
+    "secondary_edu_label",
+    "bachelor_edu_label",
+    "master_edu_label",
+    "qualification_edu_label",
+    "modal_title",
+    "modal_text",
+  ];
+  const {
+    data: translations,
+    isLoading,
+    error,
+  } = useTranslations(lang, "form", keywords);
+
   const validationSchema = apply
     ? Yup.object({
-        name: Yup.string().required("Ad, Soyad və Ata adi tələb olunur"),
-        fin: Yup.string().required("FIN tələb olunur"),
-        date: Yup.date().required("Doğum tarixi tələb olunur"),
-        phone: Yup.string().required("Telefon nömrəsi tələb olunur"),
-        project: Yup.string().required("Layihə tələb olunur"),
-        education: Yup.string().required("Təhsil tələb olunur"),
-        studentStatus: Yup.string().required("Təhsil statusunuz tələb olunur"),
-        workStatus: Yup.string().required("Is statusunuz tələb olunur"),
-        voen: Yup.string().required("VÖEN tələb olunur"),
-        address: Yup.string().required("Ünvan tələb olunur"),
-        cv: Yup.mixed().required("CV tələb olunur"),
+        name: Yup.string().required(
+          translations && translations["full_name_validation"]
+        ),
+        fin: Yup.string().required(
+          translations && translations["pin_validation"]
+        ),
+        date: Yup.date().required(
+          translations && translations["birthday_validation"]
+        ),
+        phone: Yup.string().required(
+          translations && translations["phone_validation"]
+        ),
+        // project: Yup.string().required("Layihə tələb olunur"),
+        // education: Yup.string().required("Təhsil tələb olunur"),
+        // studentStatus: Yup.string().required("Təhsil statusunuz tələb olunur"),
+        // workStatus: Yup.string().required("Is statusunuz tələb olunur"),
+        // voen: Yup.string().required("VÖEN tələb olunur"),
+        address: Yup.string().required(
+          translations && translations["address_validation"]
+        ),
+        cv: Yup.mixed().required(translations && translations["cv_validation"]),
       })
     : join
     ? Yup.object({
-        name: Yup.string().required("Ad və Soyad tələb olunur"),
-        phone: Yup.string().required("Telefon nömrəsi tələb olunur"),
+        name: Yup.string().required(
+          translations && translations["name_surname_validation"]
+        ),
+        phone: Yup.string().required(
+          translations && translations["phone_validation"]
+        ),
       })
     : Yup.object({
-        name: Yup.string().required("Ad və Soyad tələb olunur"),
-        phone: Yup.string().required("Telefon nömrəsi tələb olunur"),
+        name: Yup.string().required(
+          translations && translations["name_surname_validation"]
+        ),
+        phone: Yup.string().required(
+          translations && translations["phone_validation"]
+        ),
       });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -98,13 +173,25 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
             >
               <div className={`${styles.formGroup} flex flexDirectionColumn`}>
                 <label htmlFor="name">
-                  Ad və soyad <small>*</small>
+                  {isLoading && (
+                    <Skeleton
+                      variant="text"
+                      width={120}
+                      height={20}
+                      sx={{ display: "inline-block" }}
+                    />
+                  )}
+                  {translations &&
+                    (apply
+                      ? translations["full_name_label"]
+                      : translations["name_surname_label"])}
+                  <small>*</small>
                 </label>
                 <Field
                   type="text"
                   id="name"
                   name="name"
-                  placeholder="İslam Bağırlı"
+                  placeholder={translations && translations["name_placeholder"]}
                 />
                 <ErrorMessage name="name" component="span" className="error" />
               </div>
@@ -112,21 +199,45 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
               {apply ? (
                 <div className={`${styles.formGroup} flex flexDirectionColumn`}>
                   <label htmlFor="fin">
-                    FIN <small>*</small>
+                    {isLoading && (
+                      <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{ display: "inline-block" }}
+                      />
+                    )}
+                    {translations && translations["pin_label"]} <small>*</small>
                   </label>
-                  <Field type="text" id="fin" name="fin" placeholder="FIN" />
+                  <Field
+                    type="text"
+                    id="fin"
+                    name="fin"
+                    placeholder={translations && translations["pin_label"]}
+                  />
                   <ErrorMessage name="fin" component="span" className="error" />
                 </div>
               ) : (
                 <div className={`${styles.formGroup} flex flexDirectionColumn`}>
                   <label htmlFor="phone">
-                    Telefon nömrəsi <small>*</small>
+                    {isLoading && (
+                      <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{ display: "inline-block" }}
+                      />
+                    )}
+                    {translations && translations["phone_label"]}{" "}
+                    <small>*</small>
                   </label>
                   <Field
                     type="tel"
                     id="phone"
                     name="phone"
-                    placeholder="(99) - 999 - 99 - 99"
+                    placeholder={
+                      translations && translations["phone_placeholder"]
+                    }
                   />
                   <ErrorMessage
                     name="phone"
@@ -143,7 +254,16 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
               {apply ? (
                 <div className={`${styles.formGroup} flex flexDirectionColumn`}>
                   <label htmlFor="date">
-                    Doğum tarixi <small>*</small>
+                    {isLoading && (
+                      <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{ display: "inline-block" }}
+                      />
+                    )}
+                    {translations && translations["birthday_label"]}{" "}
+                    <small>*</small>
                   </label>
                   <Field type="date" id="date" name="date" />
                   <ErrorMessage
@@ -156,19 +276,53 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                 ""
               ) : (
                 <div className={`${styles.formGroup} flex flexDirectionColumn`}>
-                  <label>Müraciət formanız</label>
+                  <label>
+                    {isLoading && (
+                      <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{ display: "inline-block" }}
+                      />
+                    )}
+                    {translations && translations["formType_label"]}{" "}
+                  </label>
                   <div
                     role="group"
                     aria-labelledby="formType"
                     className={`${styles.formGroupTypes} flex alignItemsCenter`}
                   >
                     <label>
-                      <Field type="radio" name="formType" value="Fərdi" />
-                      Fərdi
+                      <Field
+                        type="radio"
+                        name="formType"
+                        value={translations && translations["individual_label"]}
+                      />
+                      {isLoading && (
+                        <Skeleton
+                          variant="text"
+                          width={120}
+                          height={20}
+                          sx={{ display: "inline-block" }}
+                        />
+                      )}
+                      {translations && translations["individual_label"]}
                     </label>
                     <label>
-                      <Field type="radio" name="formType" value="Korporativ" />
-                      Korporativ
+                      <Field
+                        type="radio"
+                        name="formType"
+                        value={translations && translations["corporate_label"]}
+                      />
+                      {isLoading && (
+                        <Skeleton
+                          variant="text"
+                          width={120}
+                          height={20}
+                          sx={{ display: "inline-block" }}
+                        />
+                      )}
+                      {translations && translations["corporate_label"]}
                     </label>
                   </div>
                 </div>
@@ -177,13 +331,16 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
               {apply ? (
                 <div className={`${styles.formGroup} flex flexDirectionColumn`}>
                   <label htmlFor="phone">
-                    Telefon nömrəsi <small>*</small>
+                    {translations && translations["phone_label"]}{" "}
+                    <small>*</small>
                   </label>
                   <Field
                     type="tel"
                     id="phone"
                     name="phone"
-                    placeholder="(99) - 999 - 99 - 99"
+                    placeholder={
+                      translations && translations["phone_placeholder"]
+                    }
                   />
                   <ErrorMessage
                     name="phone"
@@ -197,12 +354,24 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                     join ? styles.fge : ""
                   } flex flexDirectionColumn`}
                 >
-                  <label htmlFor="email">E-poçt</label>
+                  <label htmlFor="email">
+                    {isLoading && (
+                      <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{ display: "inline-block" }}
+                      />
+                    )}
+                    {translations && translations["mail_label"]}{" "}
+                  </label>
                   <Field
                     type="email"
                     id="email"
                     name="email"
-                    placeholder="test@mail.com"
+                    placeholder={
+                      translations && translations["mail_placeholder"]
+                    }
                   />
                   <ErrorMessage
                     name="email"
@@ -218,7 +387,17 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                 <div
                   className={`${styles.formGroup} ${styles.fgp} flex flexDirectionColumn`}
                 >
-                  <label>İştirak etmək istədiyiniz layihə</label>
+                  <label>
+                    {isLoading && (
+                      <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{ display: "inline-block" }}
+                      />
+                    )}
+                    {translations && translations["project_label"]}{" "}
+                  </label>
                   <div
                     role="group"
                     aria-labelledby="project"
@@ -249,9 +428,13 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                       SMM
                     </label>
                     <label>
-                      <Field type="radio" name="project" value="Digər" />
+                      <Field
+                        type="radio"
+                        name="project"
+                        value={translations && translations["other_label"]}
+                      />
                       <div className="flex">
-                        Digər:
+                        {translations && translations["other_label"]}
                         <Field type="text" name="projectOther" placeholder="" />
                       </div>
                     </label>
@@ -266,36 +449,109 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                 <div
                   className={`${styles.formGroup} ${styles.fgp} flex flexDirectionColumn`}
                 >
-                  <label>Təhsiliniz:</label>
+                  <label>
+                    {isLoading && (
+                      <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{ display: "inline-block" }}
+                      />
+                    )}
+                    {translations && translations["education_label"]}{" "}
+                  </label>
                   <div
                     role="group"
                     aria-labelledby="education"
                     className={`${styles.formGroupTypes} flex flexDirectionColumn`}
                   >
                     <label>
-                      <Field type="radio" name="education" value="Orta" />
-                      Orta
+                      <Field
+                        type="radio"
+                        name="education"
+                        value={
+                          translations && translations["secondary_edu_label"]
+                        }
+                      />
+                      {isLoading && (
+                        <Skeleton
+                          variant="text"
+                          width={120}
+                          height={20}
+                          sx={{ display: "inline-block" }}
+                        />
+                      )}
+                      {translations && translations["secondary_edu_label"]}
                     </label>
                     <label>
                       <Field
                         type="radio"
                         name="education"
-                        value="Orta ixtisas (peşə)"
+                        value={
+                          translations &&
+                          translations["qualification_edu_label"]
+                        }
                       />
-                      Orta ixtisas (peşə)
+                      {isLoading && (
+                        <Skeleton
+                          variant="text"
+                          width={120}
+                          height={20}
+                          sx={{ display: "inline-block" }}
+                        />
+                      )}
+                      {translations && translations["qualification_edu_label"]}
                     </label>
                     <label>
-                      <Field type="radio" name="education" value="Bakalavr" />
-                      Bakalavr
+                      <Field
+                        type="radio"
+                        name="education"
+                        value={
+                          translations && translations["bachelor_edu_label"]
+                        }
+                      />
+                      {isLoading && (
+                        <Skeleton
+                          variant="text"
+                          width={120}
+                          height={20}
+                          sx={{ display: "inline-block" }}
+                        />
+                      )}
+                      {translations && translations["bachelor_edu_label"]}
                     </label>
                     <label>
-                      <Field type="radio" name="education" value="Magistr" />
-                      Magistr
+                      <Field
+                        type="radio"
+                        name="education"
+                        value={translations && translations["master_edu_label"]}
+                      />
+                      {isLoading && (
+                        <Skeleton
+                          variant="text"
+                          width={120}
+                          height={20}
+                          sx={{ display: "inline-block" }}
+                        />
+                      )}
+                      {translations && translations["master_edu_label"]}
                     </label>
                     <label>
-                      <Field type="radio" name="education" value="Digər" />
+                      <Field
+                        type="radio"
+                        name="education"
+                        value={translations && translations["other_label"]}
+                      />
                       <div className="flex">
-                        Digər:
+                        {isLoading && (
+                          <Skeleton
+                            variant="text"
+                            width={120}
+                            height={20}
+                            sx={{ display: "inline-block" }}
+                          />
+                        )}
+                        {translations && translations["other_label"]}
                         <Field
                           type="text"
                           name="educationOther"
@@ -314,24 +570,46 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                 <div
                   className={`${styles.formGroup} ${styles.fgp} flex flexDirectionColumn`}
                 >
-                  <label>Hal-hazırda tələbəsinizmi?</label>
+                  <label>
+                    {isLoading && (
+                      <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{ display: "inline-block" }}
+                      />
+                    )}
+                    {translations && translations["student_label"]}
+                  </label>
                   <div
                     role="group"
                     aria-labelledby="studentStatus"
                     className={`${styles.formGroupTypes} flex flexDirectionColumn`}
                   >
                     <label>
-                      <Field type="radio" name="studentStatus" value="Bəli" />
-                      Bəli
+                      <Field
+                        type="radio"
+                        name="studentStatus"
+                        value={translations && translations["yes_label"]}
+                      />
+                      {translations && translations["yes_label"]}
                     </label>
                     <label>
-                      <Field type="radio" name="studentStatus" value="Xeyr" />
-                      Xeyr
+                      <Field
+                        type="radio"
+                        name="studentStatus"
+                        value={translations && translations["no_label"]}
+                      />
+                      {translations && translations["no_label"]}
                     </label>
                     <label>
-                      <Field type="radio" name="studentStatus" value="Digər" />
+                      <Field
+                        type="radio"
+                        name="studentStatus"
+                        value={translations && translations["other_label"]}
+                      />
                       <div className="flex">
-                        Digər:
+                        {translations && translations["other_label"]}
                         <Field
                           type="text"
                           name="studentStatusOther"
@@ -350,24 +628,46 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                 <div
                   className={`${styles.formGroup} ${styles.fgp} flex flexDirectionColumn`}
                 >
-                  <label>Hal-hazırda işləyirsinizmi?</label>
+                  <label>
+                    {isLoading && (
+                      <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{ display: "inline-block" }}
+                      />
+                    )}
+                    {translations && translations["work_label"]}
+                  </label>
                   <div
                     role="group"
                     aria-labelledby="workStatus"
                     className={`${styles.formGroupTypes} flex flexDirectionColumn`}
                   >
                     <label>
-                      <Field type="radio" name="workStatus" value="Bəli" />
-                      Bəli
+                      <Field
+                        type="radio"
+                        name="workStatus"
+                        value={translations && translations["yes_label"]}
+                      />
+                      {translations && translations["yes_label"]}
                     </label>
                     <label>
-                      <Field type="radio" name="workStatus" value="Xeyr" />
-                      Xeyr
+                      <Field
+                        type="radio"
+                        name="workStatus"
+                        value={translations && translations["no_label"]}
+                      />
+                      {translations && translations["no_label"]}
                     </label>
                     <label>
-                      <Field type="radio" name="workStatus" value="Digər" />
+                      <Field
+                        type="radio"
+                        name="workStatus"
+                        value={translations && translations["other_label"]}
+                      />
                       <div className="flex">
-                        Digər:
+                        {translations && translations["other_label"]}
                         <Field
                           type="text"
                           name="workStatusOther"
@@ -386,24 +686,46 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                 <div
                   className={`${styles.formGroup} ${styles.fgp} flex flexDirectionColumn`}
                 >
-                  <label>Adınıza aktiv VÖEN varmı?</label>
+                  <label>
+                    {isLoading && (
+                      <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{ display: "inline-block" }}
+                      />
+                    )}
+                    {translations && translations["tin_label"]}
+                  </label>
                   <div
                     role="group"
                     aria-labelledby="voen"
                     className={`${styles.formGroupTypes} flex flexDirectionColumn`}
                   >
                     <label>
-                      <Field type="radio" name="voen" value="Bəli" />
-                      Bəli
+                      <Field
+                        type="radio"
+                        name="voen"
+                        value={translations && translations["yes_label"]}
+                      />
+                      {translations && translations["yes_label"]}
                     </label>
                     <label>
-                      <Field type="radio" name="voen" value="Xeyr" />
-                      Xeyr
+                      <Field
+                        type="radio"
+                        name="voen"
+                        value={translations && translations["no_label"]}
+                      />
+                      {translations && translations["no_label"]}
                     </label>
                     <label>
-                      <Field type="radio" name="voen" value="Digər" />
+                      <Field
+                        type="radio"
+                        name="voen"
+                        value={translations && translations["other_label"]}
+                      />
                       <div className="flex">
-                        Digər:
+                        {translations && translations["other_label"]}
                         <Field type="text" name="voenOther" placeholder="" />
                       </div>
                     </label>
@@ -419,7 +741,16 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                   className={`${styles.formGroup} ${styles.adress} flex flexDirectionColumn`}
                 >
                   <label htmlFor="address">
-                    Faktiki yaşadığınız ünvan <small>*</small>
+                    {isLoading && (
+                      <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{ display: "inline-block" }}
+                      />
+                    )}
+                    {translations && translations["address_label"]}
+                    <small>*</small>
                   </label>
                   <Field
                     type="text"
@@ -438,7 +769,15 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                   className={`${styles.formGroup} ${styles.upload} flex flexDirectionColumn`}
                 >
                   <label>
-                    CV-nizi əlavə edin <small>*</small>
+                    {isLoading && (
+                      <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{ display: "inline-block" }}
+                      />
+                    )}
+                    {translations && translations["cv_label"]} <small>*</small>
                   </label>
                   <label htmlFor="cv" className="flexCenter">
                     <input
@@ -465,7 +804,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                         fill="#3138E3"
                       />
                     </svg>
-                    <span>Dosya yüklə</span>
+                    <span>{translations && translations["cvFile_label"]}</span>
                   </label>
                   <ErrorMessage name="cv" component="span" className="error" />
                 </div>
@@ -473,7 +812,15 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
             ) : (
               <div className={`${styles.formGroup} flex flexDirectionColumn`}>
                 <label htmlFor="service">
-                  İştirak etmək istədiyiniz təlim və ya xidmət
+                  {isLoading && (
+                    <Skeleton
+                      variant="text"
+                      width={120}
+                      height={20}
+                      sx={{ display: "inline-block" }}
+                    />
+                  )}
+                  {translations && translations["select_services_label"]}
                 </label>
                 <Field as="select" id="service" name="service">
                   {categories?.map((category) => (
@@ -492,7 +839,14 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
 
             <Button
               component
-              title={apply ? "Göndər" : join ? "Təsdiq et" : "Müraciət et"}
+              title={
+                translations &&
+                (apply
+                  ? translations["send_button"]
+                  : join
+                  ? translations["submit_button"]
+                  : translations["apply_button"])
+              }
               borderRadius={"7rem"}
             />
           </Form>
@@ -518,8 +872,8 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
           />
         </svg>
         <div>
-          <p>Müraciətiniz təsdiqləndi!</p>
-          <p>Ən qısa vaxt ərzində sizinlə əlaqə saxlanılacaq</p>
+          <p>{translations && translations["modal_title"]}</p>
+          <p>{translations && translations["modal_text"]}</p>
         </div>
       </Modal>
     </>

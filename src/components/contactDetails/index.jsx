@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "../Contact/contact.module.css";
 import { Link, useParams } from "react-router-dom";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import { useDispatch, useSelector } from "react-redux";
 import { Box, CircularProgress } from "@mui/material";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 
@@ -11,10 +10,6 @@ const ContactDetails = ({ marginLeft, email }) => {
 
   const { lang } = useParams();
   const { data: infos, status, error } = useSiteInfos(lang);
-
-  // useEffect(() => {
-  //   useSiteInfos(lang);
-  // }, [lang]);
 
   return (
     <>
