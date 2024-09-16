@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
 import {
   Link,
@@ -14,6 +13,7 @@ import { Skeleton } from "@mui/material";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
 import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 import { useProjectOrCareer } from "../../features/project/projectSlice";
+import { useTranslations } from "../../features/translations/translations";
 
 const Navbar = ({
   partnersRef,
@@ -23,8 +23,6 @@ const Navbar = ({
   setOpenDropdowns,
   setOpenSubMenus,
 }) => {
-  // const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
-  // const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
   const { lang } = useParams();
   const { data: menus, status, error } = useMenus(lang);
   const {
@@ -49,6 +47,9 @@ const Navbar = ({
   const careers = projectOrCareer?.filter(
     (career) => career.is_corporative === 1
   );
+
+  const keywords = ["h_apply_button", "h_follow_us"];
+  const { data: translations } = useTranslations(lang, "header", keywords);
 
   const toggleDropdown = (index) => {
     setOpenDropdowns((prev) =>
@@ -502,10 +503,14 @@ const Navbar = ({
               </svg>
             </button>
             <div className="headerBottomSocials flexDirectionColumn">
-              <p>Bizi izləyin</p>
+              <p>{translations && translations["h_follow_us"]}</p>
               <SocialNetworks gap="2rem" />
             </div>
-            <Button title={"Müraciət et"} to={"#contact"} color="orange" />
+            <Button
+              title={translations && translations["h_apply_button"]}
+              component
+              color="orange"
+            />
           </div>
         </nav>
       )}

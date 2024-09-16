@@ -7,6 +7,7 @@ import SearchBar from "../searchBar";
 import { Box, Skeleton } from "@mui/material";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import Navbar from "./navbar";
+import { useTranslations } from "../../features/translations/translations";
 
 const Header = memo(({ partnersRef }) => {
   const [searchBarOpen, setSearchBarOpen] = useState(false);
@@ -25,6 +26,9 @@ const Header = memo(({ partnersRef }) => {
       setOpenSubMenus(Array(6).fill(false));
     }
   };
+
+  const keywords = ["h_apply_button"];
+  const { data: translations } = useTranslations(lang, "header", keywords);
 
   useEffect(() => {
     if (location.pathname !== prevLocationRef.current.pathname) {
@@ -117,7 +121,12 @@ const Header = memo(({ partnersRef }) => {
               </button>
             ) : (
               <>
-                <Button title={"Müraciət et"} to={"#contact"} color="orange" />
+                <Button
+                  title={translations && translations["h_apply_button"]}
+                  component
+                  color="orange"
+                  borderRadius={"3.3rem"}
+                />
                 <button onClick={() => setSearchBarOpen(true)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -3,6 +3,7 @@ import { useTrainingCategories } from "../../features/categories/categorySlice";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useMenus } from "../../features/menus/useMenu";
+import { useTranslations } from "../../features/translations/translations";
 
 const SearchBar = ({ top, bottom, isOpen, onClose }) => {
   const { lang } = useParams();
@@ -15,6 +16,9 @@ const SearchBar = ({ top, bottom, isOpen, onClose }) => {
   const [showResults, setShowResults] = useState(false);
   const className = top ? `searchForm ${isOpen ? "open" : ""}` : "";
   const className2 = bottom ? `searchBar ${isOpen ? "open" : ""}` : "searchBar";
+
+  const keywords = ["search_placeholder"];
+  const { data: translations } = useTranslations(lang, "header", keywords);
 
   const handleSearchChange = (e) => {
     const query = e.target.value.toLowerCase();
@@ -70,7 +74,7 @@ const SearchBar = ({ top, bottom, isOpen, onClose }) => {
           name="search"
           value={searchQuery}
           onChange={handleSearchChange}
-          placeholder="Search trainings..."
+          placeholder={translations && translations["search_placeholder"]}
         />
         <button type="button" name="" id="" onClick={handleClose}>
           <svg
