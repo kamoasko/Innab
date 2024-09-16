@@ -5,6 +5,7 @@ import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { useMenus } from "../../features/menus/useMenu";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
 import { useProjectOrCareer } from "../../features/project/projectSlice";
+import { useTranslations } from "../../features/translations/translations";
 
 const ContactDetails = React.lazy(() => import("../contactDetails"));
 const SocialNetworks = React.lazy(() => import("../SocialNetworks"));
@@ -21,6 +22,22 @@ const Footer = () => {
     projectOrCareer &&
     projectOrCareer?.filter((career) => career.is_corporative === 1);
 
+  const keywords = [
+    "links_label",
+    "online_regisration",
+    "human_resources",
+    "f_address_label",
+    "f_contact_label",
+    "f_follow_us",
+    "copyrights",
+  ];
+
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "footer",
+    keywords
+  );
+
   return (
     <>
       <Suspense>
@@ -29,7 +46,7 @@ const Footer = () => {
             <div className="container">
               <div className="footerTopWrapper flex justifyContentBetween">
                 <div>
-                  <h5>Linklər</h5>
+                  <h5>{translations && translations["links_label"]}</h5>
                   {parentMenu && categories && (
                     <ul className="flex flexDirectionColumn">
                       <li>
@@ -38,7 +55,9 @@ const Footer = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link to="/">Onlayn qeydiyyat</Link>
+                        <Link to="/">
+                          {translations && translations["online_regisration"]}
+                        </Link>
                       </li>
                       <li>
                         <Link to={parentMenu[2]?.slug}>
@@ -72,7 +91,7 @@ const Footer = () => {
                             careers && careers[0].slug
                           }`}
                         >
-                          İnsan resursları
+                          {translations && translations["human_resources"]}
                         </Link>
                       </li>
                       <li>
@@ -91,15 +110,15 @@ const Footer = () => {
                   )}
                 </div>
                 <div>
-                  <h5>Ünvan</h5>
+                  <h5>{translations && translations["f_address_label"]}</h5>
                   <div>{status === "success" && <p>{infos.address}</p>}</div>
                 </div>
                 <div>
-                  <h5>Əlaqə</h5>
+                  <h5>{translations && translations["f_contact_label"]}</h5>
                   <ContactDetails email />
                 </div>
                 <div>
-                  <h5>Bizi izləyin</h5>
+                  <h5>{translations && translations["f_follow_us"]}</h5>
                   <SocialNetworks gap={"2.4rem"} />
                   {status === "pending" && (
                     <Box sx={{ width: "100%" }}>
@@ -127,7 +146,7 @@ const Footer = () => {
           </div>
           <div className="footerCopy">
             <div className="container">
-              <p>© 2024 INNAB. All rights reserved.</p>
+              <p>&copy; {translations && translations["copyrights"]}</p>
             </div>
           </div>
         </footer>
