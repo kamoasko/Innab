@@ -5,6 +5,7 @@ import { Box, CircularProgress, Skeleton } from "@mui/material";
 import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 import { useMenus } from "../../features/menus/useMenu";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTranslations } from "../../features/translations/translations";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
@@ -21,6 +22,14 @@ const VideoLessons = () => {
   const allTrainings =
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
+
+  const keywords = ["video_lessons_title"];
+
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
 
   const handleTabClick = (id) => {
     setCategoryId(id);
@@ -40,7 +49,9 @@ const VideoLessons = () => {
     <Suspense fallback={<CircularProgress />}>
       <section className={styles.videoLessons}>
         <div className="container">
-          <PageTitle title={"Video dərslər"} />
+          <PageTitle
+            title={translations && translations["video_lessons_title"]}
+          />
           <ul className="flex alignItemsCenter tabsMenu">
             {status === "pending" && (
               <Box

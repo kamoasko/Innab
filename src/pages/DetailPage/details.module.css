@@ -142,6 +142,21 @@
   color: var(--color-dark-black);
 }
 
+/* others */
+
+.others {
+  display: none;
+  margin-top: 7.2rem;
+}
+
+.others > h2 {
+  font-size: 2.2rem;
+}
+
+.others > ul {
+  margin-top: 2.4rem;
+}
+
 @media (max-width: 1200px) {
   .detailWrapper {
     flex-direction: column-reverse;
@@ -195,6 +210,10 @@
     -moz-border-radius: 0.8rem;
     -ms-border-radius: 0.8rem;
     -o-border-radius: 0.8rem;
+  }
+
+  .others {
+    display: block;
   }
 }
 

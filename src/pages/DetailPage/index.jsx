@@ -12,6 +12,7 @@ import { useBlogCategories } from "../../features/blogCategories/blogCategorySli
 import { useBlogContent, useBlogPosts } from "../../features/blog/blogSlice";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
+import { useTranslations } from "../../features/translations/translations";
 
 const TrainingsMenu = React.lazy(() =>
   import("../../components/trainingsMenu")
@@ -52,6 +53,9 @@ const DetailPage = ({ blog }) => {
       [lessonId]: !prev[lessonId],
     }));
   };
+
+  const keywords = ["other_video_lessons_title", "other_blog_title"];
+  const { data: translations } = useTranslations(lang, "site", keywords);
 
   const links = content?.links;
   const videoId = links?.link;
@@ -328,6 +332,25 @@ const DetailPage = ({ blog }) => {
             </div>
           </div>
         )}
+
+        <div className={`container ${styles.others}`}>
+          <h2>
+            {translations &&
+              (blog
+                ? translations["other_blog_title"]
+                : translations["other_video_lessons_title"])}
+          </h2>
+          <TrainingsMenu
+            vidCat={category}
+            lang={lang}
+            slug={
+              parentMenu && usefulMenu && blog
+                ? `${parentMenu[5].slug}/${usefulMenu[1].slug}`
+                : `${parentMenu[5].slug}/${usefulMenu[0].slug}`
+            }
+            subData={blog ? false : true}
+          />
+        </div>
       </Suspense>
     </>
   );

@@ -6,6 +6,7 @@ import { useBlogCategories } from "../../features/blogCategories/blogCategorySli
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTranslations } from "../../features/translations/translations";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Tabs = React.lazy(() => import("../../components/tabs"));
@@ -23,6 +24,9 @@ const BlogPage = () => {
   const allTrainings =
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
+
+  const keywords = ["blog_page_title"];
+  const { data: translations } = useTranslations(lang, "site", keywords);
 
   const handleTabClick = (id) => {
     setCategoryId(id);
@@ -65,7 +69,9 @@ const BlogPage = () => {
       >
         <section className={styles.blogs}>
           <div className="container">
-            <PageTitle title={"Bloq"} />
+            <PageTitle
+              title={translations && translations["blog_page_title"]}
+            />
             {!isDetailPage && (
               <ul className="flex alignItemsCenter tabsMenu">
                 {status === "pending" && (
