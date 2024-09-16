@@ -152,11 +152,6 @@ const NewsDetail = () => {
           </div>
         </section>
         <Contact
-          title={"Sualın var?"}
-          subTitle={[
-            "Hardan başlamaqda tərəddüd edirsənsə ",
-            <strong>bizə zəng elə</strong>,
-          ]}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
           categories={allTrainings && allTrainings}
         />

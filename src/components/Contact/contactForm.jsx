@@ -87,11 +87,11 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
     "modal_title",
     "modal_text",
   ];
-  const {
-    data: translations,
-    isLoading,
-    error,
-  } = useTranslations(lang, "form", keywords);
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "form",
+    keywords
+  );
 
   const validationSchema = apply
     ? Yup.object({

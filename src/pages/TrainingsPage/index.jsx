@@ -398,11 +398,6 @@ const TrainingsPage = () => {
           </div>
           <Contact
             training
-            title={"Sualın var?"}
-            subTitle={[
-              "Hardan başlamaqda tərəddüd edirsənsə ",
-              <strong>bizə zəng elə</strong>,
-            ]}
             contactRef={contactRef}
             apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
             categories={allTrainings && allTrainings}

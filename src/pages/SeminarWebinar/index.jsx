@@ -32,10 +32,10 @@ const SeminarWebinar = ({ workshop }) => {
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
-  const date = new Date();
+  // const date = new Date();
 
-  const today = `${date.getFullYear()}-0${date.getMonth()}-0${date.getDate()} ${date.getHours()}:${date.getSeconds()}`;
-  console.log(today);
+  // const today = `${date.getFullYear()}-0${date.getMonth()}-0${date.getDate()} ${date.getHours()}:${date.getSeconds()}`;
+  // console.log(today);
 
   const contactRef = useRef(null);
 
@@ -266,11 +266,6 @@ const SeminarWebinar = ({ workshop }) => {
         </section>
         <Contact
           join
-          title={"Növbəti tədbirdə xəbər edək?"}
-          subTitle={[
-            "Formu doldur, növbəti tədbirlərə səni də ",
-            <span>dəvət edək</span>,
-          ]}
           contactRef={contactRef}
           apiEndpoint={
             workshop

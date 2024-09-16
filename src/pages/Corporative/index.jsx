@@ -231,8 +231,6 @@ const Corporative = () => {
 
         <Customers about corporative ref={customersRef} />
         <Contact
-          title={"Sualın var?"}
-          subTitle={"Hardan başlamaqda tərəddüd edirsənsə bizə zəng elə"}
           contactRef={contactRef}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
           categories={allTrainings && allTrainings}

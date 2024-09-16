@@ -143,11 +143,6 @@ const Scholarships = () => {
         </section>
         <Contact
           apply
-          title={"Sualın var?"}
-          subTitle={[
-            "Hardan başlamaqda tərəddüd edirsənsə ",
-            <strong>bizə zəng elə</strong>,
-          ]}
           contactRef={contactRef}
           apiEndpoint={
             "https://admin.innab.coder.az/api/carrier_and_schoolarship/post"

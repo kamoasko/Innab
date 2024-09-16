@@ -1,8 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import styles from "../../pages/Homepage/home.module.css";
-import partnerCardBg from "../../assets/images/homepage/partners.jpeg";
-import partnerCardBg1 from "../../assets/images/homepage/partners1.png";
-import partnerCardBg2 from "../../assets/images/homepage/partners2.jpeg";
 import PartnersCard from "../PartnersCard";
 import SectionTitle from "../SectionTitle";
 import { useOutletContext, useParams } from "react-router";

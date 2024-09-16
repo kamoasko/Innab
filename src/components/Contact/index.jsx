@@ -2,17 +2,31 @@ import React from "react";
 import styles from "./contact.module.css";
 import ContactForm from "./contactForm";
 import ContactDetails from "../contactDetails";
+import { useParams } from "react-router";
+import { useTranslations } from "../../features/translations/translations";
 
 const Contact = ({
   apply,
   join,
   categories,
-  title,
-  subTitle,
   training,
   contactRef,
   apiEndpoint,
 }) => {
+  const { lang } = useParams();
+  const keywords = [
+    "form_title",
+    "form_subtitle",
+    "form_title_2",
+    "form_subtitle_2",
+  ];
+
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "form",
+    keywords
+  );
+
   return (
     <section ref={contactRef} className={styles.contact}>
       <div className="container">
@@ -27,8 +41,18 @@ const Contact = ({
                 join ? styles.cti : ""
               } flex flexDirectionColumn`}
             >
-              <h2>{title}</h2>
-              <p>{subTitle}</p>
+              <h2>
+                {translations &&
+                  (join
+                    ? translations["form_title_2"]
+                    : translations["form_title"])}
+              </h2>
+              <p>
+                {translations &&
+                  (join
+                    ? translations["form_subtitle_2"]
+                    : translations["form_subtitle"])}
+              </p>
             </div>
             <ContactDetails marginLeft={"4.4rem"} />
           </div>

@@ -2,25 +2,37 @@ import React from "react";
 import styles from "../Contact/contact.module.css";
 import { Link, useParams } from "react-router-dom";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Skeleton } from "@mui/material";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
+import { useTranslations } from "../../features/translations/translations";
 
 const ContactDetails = ({ marginLeft, email }) => {
   const { width } = useWindowDimensions();
-
   const { lang } = useParams();
   const { data: infos, status, error } = useSiteInfos(lang);
+  const keywords = [
+    "individual_phone",
+    "corporate_phone",
+    "project_phone",
+    "phone_word",
+  ];
+
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
 
   return (
     <>
-      {status === "loading" && (
+      {status === "pending" && (
         <Box sx={{ width: "100%" }}>
           <CircularProgress
             sx={{ width: "2rem !important", height: "2rem !important" }}
           />
         </Box>
       )}
-      {status === "failed" && <p>{error}</p>}
+      {status === "error" && <p>{error}</p>}
       {status === "success" && (
         <>
           {email ? (
@@ -29,24 +41,48 @@ const ContactDetails = ({ marginLeft, email }) => {
               style={{ marginLeft: marginLeft }}
             >
               <li className="flex flexDirectionColumn">
-                <span>Fiziki şəxslər üçün</span>
                 <span>
-                  Tel: <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
+                  {isLoading && (
+                    <Skeleton variant="text" width={150} height={20} />
+                  )}
+                  {translations && translations["individual_phone"]}
+                </span>
+                <span>
+                  {isLoading && (
+                    <Skeleton width={100} height={20} variant="text" />
+                  )}
+                  {translations && translations["phone_word"]}{" "}
+                  <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
                 </span>
               </li>
               <li className="flex flexDirectionColumn">
-                <span>Korporativ müştərilər üçün</span>
                 <span>
-                  Tel: <Link to={`tel:${infos.phone2}`}>{infos.phone2}</Link>
+                  {isLoading && (
+                    <Skeleton width={150} height={20} variant="text" />
+                  )}
+                  {translations && translations["corporate_phone"]}
+                </span>
+                <span>
+                  {isLoading && (
+                    <Skeleton width={100} height={20} variant="text" />
+                  )}
+                  {translations && translations["phone_word"]}
+                  <Link to={`tel:${infos.phone2}`}>{infos.phone2}</Link>
                 </span>
               </li>
               <li className="flex flexDirectionColumn">
                 <span>
-                  DMA, Technest, Qaçqınkom və digər dövlətlə əməkdaşlıq
-                  layihələri üçün
+                  {isLoading && (
+                    <Skeleton width={150} height={20} variant="text" />
+                  )}
+                  {translations && translations["project_phone"]}
                 </span>
                 <span>
-                  Tel: <Link to={`tel:${infos.phone2}`}>{infos.phone2}</Link>
+                  {isLoading && (
+                    <Skeleton width={100} height={20} variant="text" />
+                  )}
+                  {translations && translations["phone_word"]}
+                  <Link to={`tel:${infos.phone2}`}>{infos.phone2}</Link>
                 </span>
               </li>
               <li className="flex flexDirectionColumn">
@@ -61,24 +97,48 @@ const ContactDetails = ({ marginLeft, email }) => {
               style={{ marginLeft: marginLeft }}
             >
               <li className="flex flexDirectionColumn">
-                <span>Fiziki şəxslər üçün</span>
                 <span>
-                  Tel: <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
+                  {isLoading && (
+                    <Skeleton variant="text" width={150} height={20} />
+                  )}
+                  {translations && translations["individual_phone"]}
+                </span>
+                <span>
+                  {isLoading && (
+                    <Skeleton width={100} height={20} variant="text" />
+                  )}
+                  {translations && translations["phone_word"]}{" "}
+                  <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
                 </span>
               </li>
               <li className="flex flexDirectionColumn">
-                <span>Korporativ müştərilər üçün</span>
                 <span>
-                  Tel: <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
+                  {isLoading && (
+                    <Skeleton width={150} height={20} variant="text" />
+                  )}
+                  {translations && translations["corporate_phone"]}
+                </span>
+                <span>
+                  {isLoading && (
+                    <Skeleton width={100} height={20} variant="text" />
+                  )}
+                  {translations && translations["phone_word"]}{" "}
+                  <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
                 </span>
               </li>
               <li className="flex flexDirectionColumn">
                 <span>
-                  DMA, Technest, Qaçqınkom və digər dövlətlə əməkdaşlıq
-                  layihələri üçün
+                  {isLoading && (
+                    <Skeleton width={150} height={20} variant="text" />
+                  )}
+                  {translations && translations["project_phone"]}
                 </span>
                 <span>
-                  Tel: <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
+                  {isLoading && (
+                    <Skeleton width={100} height={20} variant="text" />
+                  )}
+                  {translations && translations["phone_word"]}{" "}
+                  <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
                 </span>
               </li>
             </ul>

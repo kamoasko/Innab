@@ -1,6 +1,5 @@
 import React, { Suspense, useEffect, useState } from "react";
 import styles from "./contact-page.module.css";
-import { useTranslation } from "react-i18next";
 import { useParams } from "react-router";
 import { Box, Skeleton } from "@mui/material";
 import { useMenus } from "../../features/menus/useMenu";
@@ -12,7 +11,6 @@ const ContactSection = React.lazy(() =>
 );
 
 const ContactPage = () => {
-  const { t } = useTranslation("site");
   const { lang } = useParams();
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
