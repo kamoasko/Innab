@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 import { fetchRooms } from "../../features/rooms/roomSlice";
 import { Box, CircularProgress } from "@mui/material";
 
-const Rooms = () => {
+const Rooms = ({ title }) => {
   const dispatch = useDispatch();
   const { lang } = useParams();
   const { rooms, status, error } = useSelector((state) => state.rooms);
@@ -19,7 +19,7 @@ const Rooms = () => {
     <section className={styles.rooms}>
       <div className="container">
         <div className={styles.roomsTitle}>
-          <h2>Dərs alacağın otaqlar</h2>
+          <h2>{title}</h2>
         </div>
         <div className={styles.roomsGrid}>
           {status === "loading" && (
