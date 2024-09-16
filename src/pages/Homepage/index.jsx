@@ -53,6 +53,7 @@ const Homepage = () => {
 
   const keywords = [
     "homepage_title",
+    "s_apply_button",
     "home_trainings_title",
     "home_partners_title",
     "home_project_title",
@@ -124,7 +125,7 @@ const Homepage = () => {
                 </h1>
 
                 <Button
-                  title={"Müraciət et"}
+                  title={translations && translations["s_apply_button"]}
                   component
                   onClick={handleScrollToContact}
                   color="orange"
