@@ -4,6 +4,7 @@ import ContactForm from "./contactForm";
 import ContactDetails from "../contactDetails";
 import { useParams } from "react-router";
 import { useTranslations } from "../../features/translations/translations";
+import { Skeleton } from "@mui/material";
 
 const Contact = ({
   apply,
@@ -42,12 +43,18 @@ const Contact = ({
               } flex flexDirectionColumn`}
             >
               <h2>
+                {isLoading && (
+                  <Skeleton variant="text" width={300} height={"100%"} />
+                )}
                 {translations &&
                   (join
                     ? translations["form_title_2"]
                     : translations["form_title"])}
               </h2>
               <p>
+                {isLoading && (
+                  <Skeleton variant="text" width={"100%"} height={"100%"} />
+                )}
                 {translations &&
                   (join
                     ? translations["form_subtitle_2"]
