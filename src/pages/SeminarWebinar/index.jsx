@@ -13,6 +13,7 @@ import { useParams } from "react-router";
 import { Box, Skeleton } from "@mui/material";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
+import { useTranslations } from "../../features/translations/translations";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const UsefulPageCard = React.lazy(() =>
@@ -34,6 +35,21 @@ const SeminarWebinar = ({ workshop }) => {
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
+
+  const keywords = [
+    "seminar_top_text",
+    "workshops_top_text",
+    "seminar_page_title",
+    "workshop_page_title",
+    "active_seminars",
+    "active_workshops",
+    "last_events",
+  ];
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
   // const date = new Date();
 
   // const today = `${date.getFullYear()}-0${date.getMonth()}-0${date.getDate()} ${date.getHours()}:${date.getSeconds()}`;
@@ -118,18 +134,39 @@ const SeminarWebinar = ({ workshop }) => {
       <Suspense
         fallback={
           <Box>
-            <Skeleton variant="rectangular" height={48} />
+            <Skeleton variant="rectangular" height={48} width={"100%"} />
           </Box>
         }
       >
         <section className={styles.eventsFirst}>
           <div className="container">
-            <PageTitle title={workshop ? "Vorkshoplar" : "Seminar & Vebinar"} />
+            <PageTitle
+              title={
+                isLoading ? (
+                  <Skeleton
+                    variant="text"
+                    width={"100%"}
+                    height={100}
+                    sx={{ borderRadius: "0.8rem" }}
+                  />
+                ) : (
+                  translations &&
+                  (workshop
+                    ? translations["workshop_page_title"]
+                    : translations["seminar_page_title"])
+                )
+              }
+            />
             <UsefulPageCard
               desc={
-                workshop
-                  ? "Vorkshop Proqramlaşdırma sahəsində tədbirlərdən xəbərdar olun. Biz, səktorun ən maraqlı və aktual tədbirlərini təşkil edirik. Mövzularımız arasında yeni texnologiyalar, proqramlaşdırmada trendlər əsas yer alır. Bu tədbirlərdə sizin proqramlaşdırma biliklərinizi genişləndirə bilər və digər ekspertlərlə görüşmə imkanı əldə edəcəksiniz."
-                  : "Proqramlaşdırma sahəsində tədbirlərdən xəbərdar olun. Biz, səktorun ən maraqlı və aktual tədbirlərini təşkil edirik. Mövzularımız arasında yeni texnologiyalar, proqramlaşdırmada trendlər əsas yer alır. Bu tədbirlərdə sizin proqramlaşdırma biliklərinizi genişləndirə bilər və digər ekspertlərlə görüşmə imkanı əldə edəcəksiniz."
+                isLoading ? (
+                  <Skeleton variant="text" width={"100%"} height={200} />
+                ) : (
+                  translations &&
+                  (workshop
+                    ? translations["workshops_top_text"]
+                    : translations["seminar_top_text"])
+                )
               }
               icon={
                 workshop ? (
@@ -207,9 +244,14 @@ const SeminarWebinar = ({ workshop }) => {
           <div className="container">
             <div className={styles.eventsTitle}>
               <h2>
-                {workshop
-                  ? "Aktiv vorkshoplar"
-                  : "Aktiv seminarlar və vebinarlar"}
+                {isLoading ? (
+                  <Skeleton variant="text" width={"100%"} height={40} />
+                ) : (
+                  translations &&
+                  (workshop
+                    ? translations["active_workshops"]
+                    : translations["active_seminars"])
+                )}
               </h2>
             </div>
             <Swiper
@@ -250,7 +292,13 @@ const SeminarWebinar = ({ workshop }) => {
         <section className={styles.lastEvents}>
           <div className="container">
             <div className={styles.eventsTitle}>
-              <h2>Keçirdiyimiz tədbirlər</h2>
+              <h2>
+                {isLoading ? (
+                  <Skeleton variant="text" width={"100%"} height={40} />
+                ) : (
+                  translations && translations["last_events"]
+                )}
+              </h2>
               <div className={styles.lastEventsGrid}>
                 {seminarOrWorkshop &&
                   seminarOrWorkshop.map((event) => (

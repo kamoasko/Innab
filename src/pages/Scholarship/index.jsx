@@ -5,6 +5,7 @@ import { useScholarshipProgram } from "../../features/scholarshipProgram/useScho
 import { Box, Skeleton } from "@mui/material";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
+import { useTranslations } from "../../features/translations/translations";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const UsefulPageCard = React.lazy(() =>
@@ -20,6 +21,16 @@ const Scholarships = () => {
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
+  const keywords = [
+    "scholarship_page_title",
+    "scholarships_top_text",
+    "active_scholarships",
+  ];
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
 
   const handleScrollToContact = () => {
     contactRef?.current.scrollIntoView({ behavior: "smooth" });
@@ -67,10 +78,27 @@ const Scholarships = () => {
       >
         <section className={styles.internships}>
           <div className="container">
-            <PageTitle title={"Təqaüd proqramları"} />
+            <PageTitle
+              title={
+                isLoading ? (
+                  <Skeleton
+                    variant="text"
+                    width={"100%"}
+                    height={100}
+                    sx={{ borderRadius: "0.8rem" }}
+                  />
+                ) : (
+                  translations && translations["scholarship_page_title"]
+                )
+              }
+            />
             <UsefulPageCard
               desc={
-                "Hər sahə üzrə tədrisə 18-30 yaş arasında və müvafiq sahə üzrə 1 il iş təcrübəsi olan və ya sahə üzrə bilik və bacarığını təsdiq edən sertifikatı olan şəxslər müraciət edə bilər. IT əmək bazarında başlanğıc mərhələdə olan şəxslər bu tədrisi bitirdikdən sonra karyeralarını daha yüksək pilləyə qaldıra biləcəklər."
+                isLoading ? (
+                  <Skeleton variant="text" width={"100%"} height={200} />
+                ) : (
+                  translations && translations["scholarships_top_text"]
+                )
               }
               icon={
                 <svg
@@ -114,7 +142,13 @@ const Scholarships = () => {
         <section className={styles.activePrograms}>
           <div className="container">
             <div className={styles.activeProgramsTitle}>
-              <h2>Aktiv təqaüd proqramları</h2>
+              <h2>
+                {isLoading ? (
+                  <Skeleton variant="text" height={60} width={200} />
+                ) : (
+                  translations && translations["active_scholarships"]
+                )}
+              </h2>
             </div>
             <div className={styles.programsGrid}>
               {status === "pending" &&

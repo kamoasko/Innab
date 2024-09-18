@@ -1,6 +1,6 @@
 .card {
   margin-top: 6rem;
-  width: 1293px;
+  /* width: 1293px; */
   padding: 6.4rem;
   gap: 3rem;
   border-radius: 2.4rem;
@@ -15,6 +15,7 @@
 .cardDesc {
   font-size: 2rem;
   line-height: 3.2rem;
+  width: 100%;
   max-width: 88.4rem;
 }
 

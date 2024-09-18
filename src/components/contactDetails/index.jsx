@@ -26,10 +26,11 @@ const ContactDetails = ({ marginLeft, email }) => {
   return (
     <>
       {status === "pending" && (
-        <Box sx={{ width: "100%" }}>
-          <CircularProgress
-            sx={{ width: "2rem !important", height: "2rem !important" }}
-          />
+        <Box sx={{ width: "100%" }} className="flex flexDirectionColumn">
+          <Skeleton variant="text" width={200} height={20} />
+          <Skeleton variant="text" width={100} height={20} />
+          <Skeleton variant="text" width={200} height={20} />
+          <Skeleton variant="text" width={100} height={20} />
         </Box>
       )}
       {status === "error" && <p>{error}</p>}
@@ -49,7 +50,12 @@ const ContactDetails = ({ marginLeft, email }) => {
                 </span>
                 <span>
                   {isLoading && (
-                    <Skeleton width={100} height={20} variant="text" />
+                    <Skeleton
+                      width={30}
+                      height={20}
+                      variant="text"
+                      sx={{ display: "inline-block" }}
+                    />
                   )}
                   {translations && translations["phone_word"]}{" "}
                   <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
@@ -64,7 +70,12 @@ const ContactDetails = ({ marginLeft, email }) => {
                 </span>
                 <span>
                   {isLoading && (
-                    <Skeleton width={100} height={20} variant="text" />
+                    <Skeleton
+                      width={30}
+                      height={20}
+                      variant="text"
+                      sx={{ display: "inline-block" }}
+                    />
                   )}
                   {translations && translations["phone_word"]}
                   <Link to={`tel:${infos.phone2}`}>{infos.phone2}</Link>
@@ -79,7 +90,12 @@ const ContactDetails = ({ marginLeft, email }) => {
                 </span>
                 <span>
                   {isLoading && (
-                    <Skeleton width={100} height={20} variant="text" />
+                    <Skeleton
+                      width={30}
+                      height={20}
+                      variant="text"
+                      sx={{ display: "inline-block" }}
+                    />
                   )}
                   {translations && translations["phone_word"]}
                   <Link to={`tel:${infos.phone2}`}>{infos.phone2}</Link>
@@ -105,7 +121,12 @@ const ContactDetails = ({ marginLeft, email }) => {
                 </span>
                 <span>
                   {isLoading && (
-                    <Skeleton width={100} height={20} variant="text" />
+                    <Skeleton
+                      width={30}
+                      height={20}
+                      variant="text"
+                      sx={{ display: "inline-block" }}
+                    />
                   )}
                   {translations && translations["phone_word"]}{" "}
                   <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
@@ -120,7 +141,12 @@ const ContactDetails = ({ marginLeft, email }) => {
                 </span>
                 <span>
                   {isLoading && (
-                    <Skeleton width={100} height={20} variant="text" />
+                    <Skeleton
+                      width={30}
+                      height={20}
+                      variant="text"
+                      sx={{ display: "inline-block" }}
+                    />
                   )}
                   {translations && translations["phone_word"]}{" "}
                   <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
@@ -135,7 +161,12 @@ const ContactDetails = ({ marginLeft, email }) => {
                 </span>
                 <span>
                   {isLoading && (
-                    <Skeleton width={100} height={20} variant="text" />
+                    <Skeleton
+                      width={30}
+                      height={20}
+                      variant="text"
+                      sx={{ display: "inline-block" }}
+                    />
                   )}
                   {translations && translations["phone_word"]}{" "}
                   <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
