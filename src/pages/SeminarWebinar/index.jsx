@@ -1,5 +1,7 @@
 import React, { Suspense, useRef } from "react";
 import styles from "./events.module.css";
+import "swiper/css";
+import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import eventCardImg from "../../assets/images/advertisement/event-card.png";

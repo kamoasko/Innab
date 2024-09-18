@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import PartnersCard from "../../PartnersCard";
 import { Autoplay } from "swiper/modules";

@@ -51,6 +51,12 @@ const Homepage = () => {
     contactRef?.current.scrollIntoView({ behavior: "smooth" });
   };
 
+  function stripHtml(html) {
+    if (!html) return ""; // return empty string if the input is null or undefined
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.textContent || "";
+  }
+
   const keywords = [
     "homepage_title",
     "s_apply_button",
@@ -73,8 +79,8 @@ const Homepage = () => {
         {menuStatus === "pending" && (
           <>
             <title>{"İnnab - Ana səhifə"}</title>
-            <meta name="description" content={"İnnab - Ana səhifə"} />
-            <meta name="keywords" content={"İnnab - Ana səhifə"} />
+            <meta name="description" content="İnnab - Ana səhifə" />
+            <meta name="keywords" content="İnnab - Ana səhifə" />
             <link rel="canonical" href={`/${lang}`} />
             <script type="application/ld+json"></script>
           </>
@@ -83,8 +89,14 @@ const Homepage = () => {
         {menuStatus === "success" && (
           <>
             <title>{parentMenu[8]?.seo_title}</title>
-            <meta name="description" content={parentMenu[8]?.seo_description} />
-            <meta name="keywords" content={parentMenu[8]?.seo_keywords} />
+            <meta
+              name="description"
+              content={stripHtml(parentMenu[8]?.seo_description)}
+            />
+            <meta
+              name="keywords"
+              content={stripHtml(parentMenu[8]?.seo_keywords)}
+            />
             {parentMenu[8]?.seo_links || (
               <link rel="canonical" href={`/${lang}`} />
             )}

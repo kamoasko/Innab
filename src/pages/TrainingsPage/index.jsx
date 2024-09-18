@@ -6,6 +6,7 @@ import trainingImg from "../../assets/images/trainings/training.png";
 import {
   useTrainingCategories,
   useTrainingFaqs,
+  useTrainingTopics,
 } from "../../features/categories/categorySlice";
 import { Box, Skeleton } from "@mui/material";
 import { useMenus } from "../../features/menus/useMenu";
@@ -81,6 +82,11 @@ const TrainingsPage = () => {
     link.download = selectedTraining?.title;
     link.click();
   };
+
+  const { data: trainingTopics } = useTrainingTopics(
+    lang,
+    selectedTraining && selectedTraining?.id
+  );
 
   const { data: trainingFaq } = useTrainingFaqs(
     lang,
@@ -337,24 +343,14 @@ const TrainingsPage = () => {
               <div
                 className={`${styles.educationTopics} educationT flex flexDirectionColumn`}
               >
-                <AccordionSecond
-                  summary={"Python ilə data analitika"}
-                  details={
-                    "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
-                  }
-                />
-                <AccordionSecond
-                  summary={"Python ilə data analitika"}
-                  details={
-                    "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
-                  }
-                />
-                <AccordionSecond
-                  summary={"Python ilə data analitika"}
-                  details={
-                    "Bu modulda məlumatların işlənməsi, manipulyasiya edilməsi və vizuallaşdırılmasını daha az zamanda və daha peşəkar formada icra edə biləcəksiniz. "
-                  }
-                />
+                {trainingTopics &&
+                  trainingTopics.map((topic) => (
+                    <AccordionSecond
+                      key={topic.id}
+                      summary={topic.name}
+                      details={topic.description}
+                    />
+                  ))}
               </div>
             </div>
           </div>
