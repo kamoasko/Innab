@@ -67,11 +67,11 @@ const Homepage = () => {
     "home_customers_title",
     "customers_text",
   ];
-  const {
-    data: translations,
-    isLoading,
-    error,
-  } = useTranslations(lang, "site", keywords);
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
 
   return (
     <>

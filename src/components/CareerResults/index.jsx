@@ -1,13 +1,33 @@
-// CareerResults.jsx
+import { useParams } from "react-router";
+import { useTranslations } from "../../features/translations/translations";
 import styles from "../../pages/CareerCalculator/calculator.module.css";
+import { Skeleton } from "@mui/material";
 
 const CareerResults = ({ results }) => {
+  const { lang } = useParams();
+  const keywords = [
+    "avarage_salary",
+    "payback_period",
+    "months",
+    "future_position",
+    "work_offer_chances",
+  ];
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
   // if (!results) return null;
 
   return (
     <div>
       <div className={styles.resultSalary}>
-        <h4>Ortalama maaşın</h4>
+        <h4>
+          {isLoading && (
+            <Skeleton variant="text" width={"100%"} height={"100%"} />
+          )}
+          {translations && translations["avarage_salary"]}
+        </h4>
         <h3>
           {results ? results.futureSalary.replace(/\.0+$/, "") : ""}
           <svg
@@ -41,7 +61,12 @@ const CareerResults = ({ results }) => {
       </div>
       <ol className={`${styles.resultDetails} flex flexDirectionColumn`}>
         <li>
-          <span>İnvestisiyanın geri dönüş müddəti</span>
+          <span>
+            {isLoading && (
+              <Skeleton variant="text" width={"100%"} height={20} />
+            )}
+            {translations && translations["payback_period"]}
+          </span>
           <h4>
             {results
               ? results.investmentPaybackPeriod.replace(/\.0+$/, "") + " ay"
@@ -49,11 +74,21 @@ const CareerResults = ({ results }) => {
           </h4>
         </li>
         <li>
-          <span>Gələcək vəzifən</span>
+          <span>
+            {isLoading && (
+              <Skeleton variant="text" width={"100%"} height={20} />
+            )}
+            {translations && translations["future_position"]}
+          </span>
           <h4>{results ? results.futurePositions.join(", ") : ""}</h4>
         </li>
         <li>
-          <span>Xarici şirkətlərdən iş təklifi alma ehtimalın</span>
+          <span>
+            {isLoading && (
+              <Skeleton variant="text" width={"100%"} height={20} />
+            )}
+            {translations && translations["work_offer_chances"]}
+          </span>
           <h4>{results ? results.foreignWorkPercentage + "%" : ""}</h4>
         </li>
       </ol>

@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import styles from "../../pages/CareerCalculator/calculator.module.css";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Box, Slider, styled } from "@mui/material";
+import { Box, Skeleton, Slider, styled } from "@mui/material";
 import { useCalcDatas } from "../../features/calculator/useCalculator";
 import { useParams } from "react-router";
+import { useTranslations } from "../../features/translations/translations";
 
 const PrettoSlider = styled(Slider)({
   color: "var(--color-main)",
@@ -71,6 +72,26 @@ const CareerForm = ({ onResults }) => {
     language: Yup.string().required("Required"),
     experience: Yup.number().required("Required"),
   });
+
+  const keywords = [
+    "how_to_learn",
+    "in_innab",
+    "myself",
+    "other_courses",
+    "how_many_works",
+    "hour",
+    "english_knowledge",
+    "beginner",
+    "intermediate",
+    "advanced",
+    "experience",
+    "year",
+  ];
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
 
   const calculateResults = (values) => {
     const fieldSalaries =
@@ -195,7 +216,12 @@ const CareerForm = ({ onResults }) => {
             </div>
 
             <div className={`${styles.formGroup} flex flexDirectionColumn`}>
-              <h4>Necə öyrənəcəksən?</h4>
+              <h4>
+                {isLoading && (
+                  <Skeleton variant="text" height={20} width={"100%"} />
+                )}
+                {translations && translations["how_to_learn"]}
+              </h4>
               <div
                 className={`${styles.formGroupWrapper} flex alignItemsCenter justifyContentBetween`}
                 role="group"
@@ -206,14 +232,20 @@ const CareerForm = ({ onResults }) => {
                   className="flex alignItemsCenter"
                 >
                   <Field type="radio" name="educationType" value="İnnab-da" />
-                  İnnab-da
+                  {isLoading && (
+                    <Skeleton variant="text" height={20} width={"100%"} />
+                  )}
+                  {translations && translations["in_innab"]}
                 </label>
                 <label
                   htmlFor="educationType"
                   className="flex alignItemsCenter"
                 >
                   <Field type="radio" name="educationType" value="Özüm" />
-                  Özüm
+                  {isLoading && (
+                    <Skeleton variant="text" height={20} width={"100%"} />
+                  )}
+                  {translations && translations["myself"]}
                 </label>
                 <label
                   htmlFor="educationType"
@@ -224,7 +256,10 @@ const CareerForm = ({ onResults }) => {
                     name="educationType"
                     value="Digər kurslarda"
                   />
-                  Digər kurslarda
+                  {isLoading && (
+                    <Skeleton variant="text" height={20} width={"100%"} />
+                  )}
+                  {translations && translations["other_courses"]}
                 </label>
               </div>
               <ErrorMessage
@@ -236,10 +271,20 @@ const CareerForm = ({ onResults }) => {
 
             <div className={`${styles.formGroup}`}>
               <div>
-                <label>Gündə neçə saat məşğul olacaqsan?</label>
+                <label>
+                  {isLoading && (
+                    <Skeleton variant="text" height={20} width={"100%"} />
+                  )}
+                  {translations && translations["how_many_works"]}
+                </label>
                 <div className="flex justifyContentBetween">
                   <span>{values.duration}</span>
-                  <span>saat</span>
+                  <span>
+                    {isLoading && (
+                      <Skeleton variant="text" height={20} width={"100%"} />
+                    )}
+                    {translations && translations["hour"]}
+                  </span>
                 </div>
                 <Box>
                   <PrettoSlider
@@ -264,21 +309,35 @@ const CareerForm = ({ onResults }) => {
               role="group"
               aria-labelledby="language"
             >
-              <h4>İngilis dili biliyin</h4>
+              <h4>
+                {isLoading && (
+                  <Skeleton variant="text" height={20} width={"100%"} />
+                )}
+                {translations && translations["english_knowledge"]}
+              </h4>
               <div
                 className={`${styles.formGroupWrapper} flex alignItemsCenter justifyContentBetween`}
               >
                 <label htmlFor="language" className="flex alignItemsCenter">
                   <Field type="radio" name="language" value="Zəif" />
-                  Zəif
+                  {isLoading && (
+                    <Skeleton variant="text" height={20} width={"100%"} />
+                  )}
+                  {translations && translations["beginner"]}
                 </label>
                 <label htmlFor="language" className="flex alignItemsCenter">
                   <Field type="radio" name="language" value="Orta" />
-                  Orta
+                  {isLoading && (
+                    <Skeleton variant="text" height={20} width={"100%"} />
+                  )}
+                  {translations && translations["intermediate"]}
                 </label>
                 <label htmlFor="language" className="flex alignItemsCenter">
                   <Field type="radio" name="language" value="Güclü" />
-                  Güclü
+                  {isLoading && (
+                    <Skeleton variant="text" height={20} width={"100%"} />
+                  )}
+                  {translations && translations["advanced"]}
                 </label>
               </div>
               <ErrorMessage
@@ -290,10 +349,20 @@ const CareerForm = ({ onResults }) => {
 
             <div className={`${styles.formGroup}`}>
               <div>
-                <label>Neçə il təcrübən var?</label>
+                <label>
+                  {isLoading && (
+                    <Skeleton variant="text" height={20} width={"100%"} />
+                  )}
+                  {translations && translations["experience"]}
+                </label>
                 <div className="flex justifyContentBetween">
                   <span>{values.experience}</span>
-                  <span>il</span>
+                  <span>
+                    {isLoading && (
+                      <Skeleton variant="text" height={20} width={"100%"} />
+                    )}
+                    {translations && translations["year"]}
+                  </span>
                 </div>
                 <Box>
                   <PrettoSlider

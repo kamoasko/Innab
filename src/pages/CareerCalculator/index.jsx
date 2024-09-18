@@ -6,6 +6,7 @@ import { Box, Skeleton } from "@mui/material";
 import { useMenus } from "../../features/menus/useMenu";
 import suitcase from "../../assets/icons/money-suitcase.svg";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTranslations } from "../../features/translations/translations";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
@@ -24,6 +25,13 @@ const CareerCalculator = () => {
   const allTrainings =
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
+
+  const keywords = ["calculator_page_title", "calculator_title"];
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
 
   const handleResults = (data) => {
     setResults(data);
@@ -65,13 +73,21 @@ const CareerCalculator = () => {
       <Suspense
         fallback={
           <Box>
-            <Skeleton variant="rectangular" height={48} />
+            <Skeleton variant="rectangular" height={"100vh"} />
           </Box>
         }
       >
         <div className="pageTop">
           <div className="container">
-            <PageTitle title={"Karyera kakulyatoru"} />
+            <PageTitle
+              title={
+                isLoading ? (
+                  <Skeleton variant="text" width={"100%"} height={100} />
+                ) : (
+                  translations && translations["calculator_page_title"]
+                )
+              }
+            />
           </div>
         </div>
         <section className={styles.calculator}>
@@ -79,9 +95,22 @@ const CareerCalculator = () => {
             <div className={`${styles.calculatorWrapper} flex`}>
               <div className={styles.calculatorForm}>
                 <div className={`${styles.calculatorTitle} flex`}>
-                  <h2>
-                    Gələcək <strong>maaşını</strong> hesabla
-                  </h2>
+                  {isLoading && (
+                    <Skeleton
+                      variant="text"
+                      width={"100%"}
+                      height={"100%"}
+                      sx={{ borderRadius: "0.8rem" }}
+                    />
+                  )}
+                  {translations && (
+                    <h2
+                      dangerouslySetInnerHTML={{
+                        __html: translations["calculator_title"],
+                      }}
+                    />
+                  )}
+
                   <div>
                     <img
                       loading="lazy"
