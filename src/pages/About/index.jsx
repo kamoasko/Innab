@@ -12,6 +12,7 @@ import { Box, CircularProgress, Skeleton } from "@mui/material";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTranslations } from "../../features/translations/translations";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
@@ -31,6 +32,19 @@ const About = () => {
   const allTrainings =
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
+
+  const keywords = [
+    "about_page_title",
+    "about_top_text",
+    "why_innab",
+    "about_bottom_text",
+    "about_contact",
+  ];
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
 
   return (
     <>
@@ -62,7 +76,15 @@ const About = () => {
       <Suspense fallback={<CircularProgress />}>
         <div className="pageTop">
           <div className="container">
-            <PageTitle title={"Haqqımızda"} />
+            <PageTitle
+              title={
+                isLoading ? (
+                  <Skeleton variant="text" width={"100%"} height={100} />
+                ) : (
+                  translations && translations["about_page_title"]
+                )
+              }
+            />
           </div>
         </div>
 
@@ -70,9 +92,11 @@ const About = () => {
           <div className="container">
             <div className={styles.timelineText}>
               <p>
-                2015-ci ildə fəaliyyətə başlayan INNAB yüksək texnologiyalar
-                sahəsində təcrübəli mütəxəssislər hazırlayan tədris
-                müəssisəsidir.
+                {isLoading ? (
+                  <Skeleton variant="text" width={"100%"} height={100} />
+                ) : (
+                  translations && translations["about_top_text"]
+                )}
               </p>
             </div>
             <div className={styles.timelineContainer}>
@@ -149,11 +173,22 @@ const About = () => {
 
         <section className={styles.innab}>
           <div className={styles.innabTitle}>
-            <h2>
-              Niyə <strong>INNAB?</strong>
-            </h2>
+            {isLoading ? (
+              <Skeleton variant="text" width={"100%"} height={100} />
+            ) : (
+              translations && (
+                <h2
+                  dangerouslySetInnerHTML={{
+                    __html: translations["why_innab"],
+                  }}
+                />
+              )
+            )}
             <div>
-              Biz danışmırıq, iş görürük. Gördüyümüz iş isə ölkəyə səs salır.
+              {isLoading && (
+                <Skeleton variant="text" width={"100%"} height={100} />
+              )}
+              {translations && translations["about_bottom_text"]}
             </div>
           </div>
           <div className="container">
@@ -165,7 +200,12 @@ const About = () => {
 
         <section className={styles.contact}>
           <div className="container">
-            <h2>Əlaqə</h2>
+            <h2>
+              {isLoading && (
+                <Skeleton variant="text" width={"100%"} height={48} />
+              )}
+              {translations && translations["about_contact"]}
+            </h2>
             <ContactSection h2 />
           </div>
         </section>

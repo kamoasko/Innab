@@ -64,8 +64,6 @@ const Homepage = () => {
     "home_partners_title",
     "home_project_title",
     "home_useful_title",
-    "home_customers_title",
-    "customers_text",
   ];
   const { data: translations, isLoading } = useTranslations(
     lang,
@@ -262,47 +260,7 @@ const Homepage = () => {
           </div>
         </section>
 
-        <Customers
-          homepage
-          customersTitle={
-            isLoading ? (
-              <Skeleton
-                variant="text"
-                height={60}
-                width={200}
-                sx={{ margin: "0 auto" }}
-              />
-            ) : (
-              translations && translations["home_customers_title"]
-            )
-          }
-          text={
-            isLoading ? (
-              <>
-                <Skeleton
-                  variant="text"
-                  width={800}
-                  height={20}
-                  sx={{ margin: "0 auto" }}
-                />
-                <Skeleton
-                  variant="text"
-                  width={600}
-                  height={20}
-                  sx={{ margin: "0 auto" }}
-                />
-                <Skeleton
-                  variant="text"
-                  width={300}
-                  height={20}
-                  sx={{ margin: "0 auto" }}
-                />
-              </>
-            ) : (
-              translations && translations["customers_text"]
-            )
-          }
-        />
+        <Customers homepage />
 
         <Contact
           contactRef={contactRef}
