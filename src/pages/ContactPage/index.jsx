@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense } from "react";
 import styles from "./contact-page.module.css";
 import { useParams } from "react-router";
 import { Box, Skeleton } from "@mui/material";

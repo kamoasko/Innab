@@ -9,6 +9,7 @@ import {
   useProjectOrCareer,
   useProOrCarContent,
 } from "../../features/project/projectSlice";
+import { useTranslations } from "../../features/translations/translations";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Button = React.lazy(() => import("../../components/Button"));
@@ -23,6 +24,19 @@ const Projects = ({ book }) => {
     status,
     error,
   } = useProOrCarContent(lang, slug);
+
+  const keywords = [
+    "project_page_title",
+    "order_btn",
+    "mobile_book",
+    "qr_code_text",
+    "application_text",
+  ];
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
 
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -67,7 +81,15 @@ const Projects = ({ book }) => {
       >
         <div className="pageTop">
           <div className="container">
-            <PageTitle title={"Lahiyələr"} />
+            <PageTitle
+              title={
+                isLoading ? (
+                  <Skeleton variant="text" width={"100%"} height={100} />
+                ) : (
+                  translations && translations?.project_page_title
+                )
+              }
+            />
           </div>
         </div>
         <section className={styles.project}>
@@ -102,7 +124,17 @@ const Projects = ({ book }) => {
                       <h5>{projectContent?.product_price}</h5>
                       <Button
                         component
-                        title={"Sifariş ver"}
+                        title={
+                          isLoading ? (
+                            <Skeleton
+                              variant="text"
+                              width={"100%"}
+                              height={20}
+                            />
+                          ) : (
+                            translations && translations?.order_btn
+                          )
+                        }
                         borderRadius={"7.8rem"}
                         onClick={scrollToContact}
                       />
@@ -123,7 +155,12 @@ const Projects = ({ book }) => {
                   <div
                     className={`${styles.mobileBookContent} flex flexDirectionColumn`}
                   >
-                    <h2>Mobil Kitab</h2>
+                    <h2>
+                      {isLoading && (
+                        <Skeleton variant="text" width={"100%"} height={48} />
+                      )}
+                      {translations && translations?.mobile_book}
+                    </h2>
                     <div>{projectContent?.mobile_qr_text}</div>
                   </div>
                   <figure
@@ -137,7 +174,10 @@ const Projects = ({ book }) => {
                       />
                     </picture>
                     <figcaption>
-                      Telefonunuzun kamerası ilə QR codu scan edin.
+                      {isLoading && (
+                        <Skeleton variant="text" width={"100%"} height={50} />
+                      )}
+                      {translations && translations?.qr_code_text}
                     </figcaption>
                   </figure>
                 </div>
@@ -148,8 +188,10 @@ const Projects = ({ book }) => {
                     className={`${styles.mobileBookDownload} flex flexDirectionColumn`}
                   >
                     <div>
-                      Google Play və App store vasitəsilə telefonunza yükləyə
-                      biləraiz
+                      {isLoading && (
+                        <Skeleton variant="text" width={"100%"} height={48} />
+                      )}
+                      {translations && translations?.application_text}
                     </div>
                     <div className="flex flexDirectionColumn">
                       <Link to={""} className="flexCenter">

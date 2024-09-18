@@ -1,30 +1,37 @@
 import React, { Suspense } from "react";
 import styles from "./career-center.module.css";
-import career from "../../assets/images/career-center/career.png";
 import { Box, Skeleton } from "@mui/material";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router";
-import {
-  useProjectOrCareer,
-  useProOrCarContent,
-} from "../../features/project/projectSlice";
+import { useProOrCarContent } from "../../features/project/projectSlice";
+import { useTranslations } from "../../features/translations/translations";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
 
 const CareerCenter = ({ page }) => {
   const { lang, slug } = useParams();
-  const { data: projects } = useProjectOrCareer(lang);
   const {
     data: projectContent,
     status,
     error,
   } = useProOrCarContent(lang, slug);
 
+  const keywords = ["career_page_title"];
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
+
   if (status === "pending") {
     return (
       <Box>
-        <Skeleton variant="rectangular" height={800} sx={{ width: "100%" }} />
+        <Skeleton
+          variant="rectangular"
+          height={"100vh"}
+          sx={{ width: "100%" }}
+        />
       </Box>
     );
   }
@@ -54,13 +61,21 @@ const CareerCenter = ({ page }) => {
       <Suspense
         fallback={
           <Box>
-            <Skeleton variant="rectangular" height={48} />
+            <Skeleton variant="rectangular" height={"100vh"} width={"100%"} />
           </Box>
         }
       >
         <section className={styles.career}>
           <div className="container">
-            <PageTitle title={"Karyera mərkəzi"} />
+            <PageTitle
+              title={
+                isLoading ? (
+                  <Skeleton variant="text" width={"100%"} height={100} />
+                ) : (
+                  translations && translations["career_page_title"]
+                )
+              }
+            />
             <div
               className={`${styles.careerWrapper} ${
                 page ? styles.cw1 : ""

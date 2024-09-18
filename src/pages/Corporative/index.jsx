@@ -9,6 +9,7 @@ import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTranslations } from "../../features/translations/translations";
 
 const Contact = React.lazy(() => import("../../components/Contact"));
 const Customers = React.lazy(() => import("../../components/Customers"));
@@ -56,6 +57,18 @@ const Corporative = () => {
   useEffect(() => {
     dispatch(fetchCorporativeDatas(lang));
   }, [lang, dispatch]);
+
+  const keywords = [
+    "corporative_trainings",
+    "corporative_customers",
+    "corporative_apply",
+    "corporative_contact_us",
+  ];
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
 
   return (
     <>
@@ -137,7 +150,10 @@ const Corporative = () => {
                         to={"#"}
                         onClick={() => scrollToSection(trainingRef)}
                       >
-                        Təlimlər
+                        {isLoading && (
+                          <Skeleton variant="text" width={"100%"} height={20} />
+                        )}
+                        {translations && translations?.corporative_trainings}
                       </Link>
                     </li>
                     <li>
@@ -145,7 +161,10 @@ const Corporative = () => {
                         to={"#"}
                         onClick={() => scrollToSection(customersRef)}
                       >
-                        Bizi seçənlər
+                        {isLoading && (
+                          <Skeleton variant="text" width={"100%"} height={20} />
+                        )}
+                        {translations && translations?.corporative_customers}
                       </Link>
                     </li>
                     <li>
@@ -153,7 +172,10 @@ const Corporative = () => {
                         to={"#"}
                         onClick={() => scrollToSection(contactRef)}
                       >
-                        Müraciət
+                        {isLoading && (
+                          <Skeleton variant="text" width={"100%"} height={20} />
+                        )}
+                        {translations && translations?.corporative_apply}
                       </Link>
                     </li>
                   </ol>
@@ -222,7 +244,14 @@ const Corporative = () => {
                 ))}
             </div>
             <Button
-              title={["Bizimlə əlaqə saxlayın", <HiOutlineArrowLongRight />]}
+              title={[
+                isLoading ? (
+                  <Skeleton variant="text" width={"100%"} height={20} />
+                ) : (
+                  translations?.corporative_contact_us
+                ),
+                <HiOutlineArrowLongRight />,
+              ]}
               to={`tel:${infos && infos?.phone1}`}
               borderRadius={"5.9rem"}
             />

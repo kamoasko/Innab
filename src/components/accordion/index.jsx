@@ -18,7 +18,7 @@ import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 const Button = React.lazy(() => import("../Button"));
 const CustomExpandIcon = React.lazy(() => import("./customExpandIcon"));
 
-export default function CustomizedAccordions() {
+export default function CustomizedAccordions({ btn_text }) {
   const dispatch = useDispatch();
   const { lang } = useParams();
   const { vacancies, status, error } = useSelector((state) => state.vacancies);
@@ -145,7 +145,7 @@ export default function CustomizedAccordions() {
                         fill="currentColor"
                       />
                     </svg>,
-                    "CV göndər",
+                    btn_text,
                   ]}
                   borderRadius={"3rem"}
                   to={isSuccess && `mailto:${infos.email2}`}
