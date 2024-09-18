@@ -1,13 +1,12 @@
 import React, { Suspense, useState } from "react";
 import styles from "./news-page.module.css";
 import { Outlet, useParams } from "react-router";
-import { Box, CircularProgress, Pagination, Skeleton } from "@mui/material";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { Box, Pagination, Skeleton } from "@mui/material";
 import { useGetNews } from "../../features/news/newsSlice";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTranslations } from "../../features/translations/translations";
 
 const Contact = React.lazy(() => import("../../components/Contact"));
 const NewsCard = React.lazy(() => import("../../components/newsCard"));
@@ -24,6 +23,13 @@ const NewsPage = () => {
   const allTrainings =
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
+
+  const keywords = ["news_page_title"];
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
 
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -59,13 +65,21 @@ const NewsPage = () => {
       <Suspense
         fallback={
           <Box>
-            <Skeleton variant="rectangular" height={48} />
+            <Skeleton variant="rectangular" height={"100vh"} width={"100%"} />
           </Box>
         }
       >
         <section className={styles.news}>
           <div className="container">
-            <PageTitle title={"Xəbərlər"} />
+            <PageTitle
+              title={
+                isLoading ? (
+                  <Skeleton variant="text" width={"100%"} height={100} />
+                ) : (
+                  translations && translations["news_page_title"]
+                )
+              }
+            />
             <div className={styles.newsGrid}>
               {status === "pending" &&
                 [...Array(6)].map((_, index) => (

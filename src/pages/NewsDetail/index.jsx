@@ -8,6 +8,7 @@ import { useGetNews, useGetNewsDetail } from "../../features/news/newsSlice";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTranslations } from "../../features/translations/translations";
 
 const Contact = React.lazy(() => import("../../components/Contact"));
 const NewsCard = React.lazy(() => import("../../components/newsCard"));
@@ -30,6 +31,13 @@ const NewsDetail = () => {
   const allTrainings =
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
+
+  const keywords = ["other_news_title", "see_all_button"];
+  const { data: translations, isLoading } = useTranslations(
+    lang,
+    "site",
+    keywords
+  );
 
   return (
     <>
@@ -116,7 +124,12 @@ const NewsDetail = () => {
         <section className={styles.otherNews}>
           <div className="container">
             <div className={styles.otherNewsTitle}>
-              <h2>Digər xəbərlər</h2>
+              <h2>
+                {isLoading && (
+                  <Skeleton variant="text" width={"100%"} height={48} />
+                )}
+                {translations && translations["other_news_title"]}
+              </h2>
             </div>
             <div className={`${styles.otherNewsWrapper} flexCenter`}>
               {status === "pending" &&
@@ -145,7 +158,13 @@ const NewsDetail = () => {
                   ))}
             </div>
             <Button
-              title={"Hamısına bax"}
+              title={
+                isLoading ? (
+                  <Skeleton variant="text" width={"100%"} height={20} />
+                ) : (
+                  translations && translations["see_all_button"]
+                )
+              }
               borderRadius={"6.3rem"}
               to={`/${lang}/${parentMenu[7]?.slug}`}
             />

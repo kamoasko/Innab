@@ -73,7 +73,7 @@ const CareerCalculator = () => {
       <Suspense
         fallback={
           <Box>
-            <Skeleton variant="rectangular" height={"100vh"} />
+            <Skeleton variant="rectangular" height={"100vh"} width={"100%"} />
           </Box>
         }
       >
