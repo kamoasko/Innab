@@ -65,6 +65,8 @@ const TrainingsPage = () => {
     "classrooms",
     "faq",
     "other_trainings_title",
+    "training_edu_text",
+    "training_edu_title",
   ];
 
   const { data: translations, isLoading } = useTranslations(
@@ -148,7 +150,7 @@ const TrainingsPage = () => {
       <Suspense
         fallback={
           <Box>
-            <Skeleton variant="rectangular" height={48} />
+            <Skeleton variant="rectangular" height={"100vh"} />
           </Box>
         }
       >
@@ -297,14 +299,24 @@ const TrainingsPage = () => {
             <div className={`${styles.educationWrapper} flex`}>
               <div className={styles.educationLeftBg}></div>
               <div className={styles.educationLeft}>
-                <h2>
-                  <strong>Tədris</strong> mövzuları
-                </h2>
+                {isLoading && (
+                  <Skeleton variant="text" width={"100%"} height={50} />
+                )}
+                <h2
+                  dangerouslySetInnerHTML={{
+                    __html: translations && translations["training_edu_title"],
+                  }}
+                />
                 <div>
-                  <div className={styles.educationLeftContent}>
-                    <strong>Öyrənməyə</strong> nə vaxt istəsən{" "}
-                    <strong>başla, planlamanı</strong> indi elə
-                  </div>
+                  {isLoading && (
+                    <Skeleton variant="text" width={"100%"} height={80} />
+                  )}
+                  <div
+                    className={styles.educationLeftContent}
+                    dangerouslySetInnerHTML={{
+                      __html: translations && translations["training_edu_text"],
+                    }}
+                  />
                   <div
                     className={`${styles.educationLeftBtns} flex alignItemsCenter`}
                   >

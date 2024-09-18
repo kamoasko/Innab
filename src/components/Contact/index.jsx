@@ -51,15 +51,18 @@ const Contact = ({
                     ? translations["form_title_2"]
                     : translations["form_title"])}
               </h2>
-              <p>
-                {isLoading && (
-                  <Skeleton variant="text" width={"100%"} height={"100%"} />
-                )}
-                {translations &&
-                  (join
-                    ? translations["form_subtitle_2"]
-                    : translations["form_subtitle"])}
-              </p>
+              {isLoading && (
+                <Skeleton variant="text" width={"100%"} height={"100%"} />
+              )}
+              <p
+                dangerouslySetInnerHTML={{
+                  __html:
+                    translations &&
+                    (join
+                      ? translations["form_subtitle_2"]
+                      : translations["form_subtitle"]),
+                }}
+              />
             </div>
             <ContactDetails marginLeft={"4.4rem"} />
           </div>
