@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import { Box, CircularProgress } from "@mui/material";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 
-const ContactSection = React.memo(({ h2 }) => {
+const ContactSection = React.memo(({ h2, title }) => {
   const { lang } = useParams();
   const { data: infos, status, error } = useSiteInfos(lang);
 
@@ -30,7 +30,7 @@ const ContactSection = React.memo(({ h2 }) => {
       )}
 
       <div className={`${styles.contactInfos} flex flexDirectionColumn`}>
-        {h2 && <h2>Əlaqə</h2>}
+        {h2 && <h2>{title}</h2>}
         {status === "success" && (
           <ul className="flex flexDirectionColumn">
             <li>{infos.address}</li>

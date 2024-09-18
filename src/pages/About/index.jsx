@@ -206,7 +206,10 @@ const About = () => {
               )}
               {translations && translations["about_contact"]}
             </h2>
-            <ContactSection h2 />
+            <ContactSection
+              h2
+              title={translations && translations["about_contact"]}
+            />
           </div>
         </section>
 
