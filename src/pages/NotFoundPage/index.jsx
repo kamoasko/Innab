@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./404.module.css";
 import notFound from "../../assets/images/404/404.png";
 import Button from "../../components/Button";
-import { useParams } from "react-router";
 
 const NotFoundPage = () => {
   return (
