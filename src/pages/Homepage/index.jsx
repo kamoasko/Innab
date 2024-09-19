@@ -1,6 +1,7 @@
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import styles from "./home.module.css";
 import { useParams } from "react-router-dom";
+import StatsCounter from "../../components/statsCounter";
 import { useMenus } from "../../features/menus/useMenu";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { Box, Skeleton } from "@mui/material";
@@ -17,20 +18,19 @@ import {
 import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
 import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 import { useTranslations } from "../../features/translations/translations";
+import Contact from "../../components/Contact";
+import SectionTitle from "../../components/SectionTitle";
+import Button from "../../components/Button";
 
-const Contact = React.lazy(() => import("../../components/Contact"));
-const Customers = React.lazy(() => import("../../components/Customers"));
-const UsefulCard = React.lazy(() => import("../../components/UsefulCard"));
-const ProjectSliders = React.lazy(() =>
-  import("../../components/sliders/ProjectSlider")
-);
-const Button = React.lazy(() => import("../../components/Button"));
-const SectionTitle = React.lazy(() => import("../../components/SectionTitle"));
-const StatsCounter = React.lazy(() => import("../../components/statsCounter"));
+const TrainingLayout = React.lazy(() => import("../../layouts/trainingLayout"));
 const PartnersSection = React.lazy(() =>
   import("../../components/partnersSection")
 );
-const TrainingLayout = React.lazy(() => import("../../layouts/trainingLayout"));
+const ProjectSliders = React.lazy(() =>
+  import("../../components/sliders/ProjectSlider")
+);
+const UsefulCard = React.lazy(() => import("../../components/UsefulCard"));
+const Customers = React.lazy(() => import("../../components/Customers"));
 
 const Homepage = () => {
   const { lang } = useParams();
@@ -52,7 +52,7 @@ const Homepage = () => {
   };
 
   function stripHtml(html) {
-    if (!html) return ""; // return empty string if the input is null or undefined
+    if (!html) return "";
     const doc = new DOMParser().parseFromString(html, "text/html");
     return doc.body.textContent || "";
   }
@@ -107,7 +107,7 @@ const Homepage = () => {
       <Suspense
         fallback={
           <Box>
-            <Skeleton variant="rectangular" height={500} />
+            <Skeleton variant="rectangular" height={"100vh"} width={"100%"} />
           </Box>
         }
       >

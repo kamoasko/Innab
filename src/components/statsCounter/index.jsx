@@ -27,7 +27,7 @@ const StatisticCard = ({ stat, isVisible, formatCount, className }) => (
   </div>
 );
 
-const StatsCounter = React.memo(() => {
+const StatsCounter = () => {
   const { lang } = useParams();
   const { data: statistics, status, error } = useStatistics(lang);
   const { width } = useWindowDimensions();
@@ -142,6 +142,6 @@ const StatsCounter = React.memo(() => {
       )}
     </div>
   );
-});
+};
 
 export default StatsCounter;

@@ -1,30 +1,29 @@
-import React, { Suspense, useEffect, useRef } from "react";
+import React, { Suspense, useRef } from "react";
 import styles from "./corporative.module.css";
+import banner from "../../assets/images/corporative/corporative.png";
+import corporativeImg from "../../assets/images/corporative/corporative-img.jpeg";
 import { Link, useParams } from "react-router-dom";
 import { HiOutlineArrowLongRight } from "react-icons/hi2";
-import { Box, CircularProgress, Skeleton } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCorporativeDatas } from "../../features/corporative/corporativeSlice";
+import { Box, Skeleton } from "@mui/material";
+import { useCorporatives } from "../../features/corporative/corporativeSlice";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
 import { useTranslations } from "../../features/translations/translations";
+import Contact from "../../components/Contact";
+import PageTitle from "../../components/pageTitle";
 
-const Contact = React.lazy(() => import("../../components/Contact"));
-const Customers = React.lazy(() => import("../../components/Customers"));
 const Button = React.lazy(() => import("../../components/Button"));
+const Customers = React.lazy(() => import("../../components/Customers"));
 const AccordionSecond = React.lazy(() =>
   import("../../components/customAccrodionSecond")
 );
-const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 
 const Corporative = () => {
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { corporative, status, error } = useSelector(
-    (state) => state.corporative
-  );
+  const { data: corporative, status, error } = useCorporatives(lang);
+
   const { data: categories } = useTrainingCategories(lang);
   const { data: infos } = useSiteInfos(lang);
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
@@ -53,10 +52,6 @@ const Corporative = () => {
         break;
     }
   };
-
-  useEffect(() => {
-    dispatch(fetchCorporativeDatas(lang));
-  }, [lang, dispatch]);
 
   const keywords = [
     "corporative_trainings",
@@ -104,126 +99,136 @@ const Corporative = () => {
           </Box>
         }
       >
-        {status === "loading" && (
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-              marginTop: "20rem",
-            }}
-          >
-            <CircularProgress />
-          </Box>
-        )}
-        {status === "failed" && <p>{error}</p>}
         <div className={`${styles.pgtC} pageTop`}>
           <div className="container">
-            <PageTitle title={corporative.banner_title} />
+            <PageTitle
+              title={
+                status === "pending" ? (
+                  <Skeleton variant="text" width={"100%"} height={100} />
+                ) : (
+                  corporative && corporative?.banner_title
+                )
+              }
+            />
           </div>
         </div>
 
-        {status === "succeeded" && (
-          <>
-            <section
-              className={styles.pageHeader}
-              style={{
-                background: `linear-gradient(90deg, var(--color-main) -1.51%, rgba(3, 5, 51, 0.00) 81.73%), url(${corporative.banner}) lightgray center / cover no-repeat`,
-              }}
+        <section
+          className={styles.pageHeader}
+          style={{
+            background: `linear-gradient(90deg, var(--color-main) -1.51%, rgba(3, 5, 51, 0.00) 81.73%), url(${
+              banner || (corporative && corporative?.banner)
+            }) lightgray center / cover no-repeat`,
+          }}
+        >
+          <div className="container">
+            <div
+              className={`${styles.pageHeaderWrapper} flex flexDirectionColumn justifyContentBetween`}
             >
-              <div className="container">
-                <div
-                  className={`${styles.pageHeaderWrapper} flex flexDirectionColumn justifyContentBetween`}
-                >
-                  <div
-                    className={`${styles.pageHeaderTitle} flex flexDirectionColumn`}
-                  >
-                    <PageTitle title={corporative.banner_title} />
-                    <div>{corporative.banner_description}</div>
-                  </div>
-                  <ol
-                    className={`${styles.pageHeaderBottom} flex alignItemsCenter`}
-                  >
-                    <li>
-                      <Link
-                        to={"#"}
-                        onClick={() => scrollToSection(trainingRef)}
-                      >
-                        {isLoading && (
-                          <Skeleton variant="text" width={"100%"} height={20} />
-                        )}
-                        {translations && translations?.corporative_trainings}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to={"#"}
-                        onClick={() => scrollToSection(customersRef)}
-                      >
-                        {isLoading && (
-                          <Skeleton variant="text" width={"100%"} height={20} />
-                        )}
-                        {translations && translations?.corporative_customers}
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to={"#"}
-                        onClick={() => scrollToSection(contactRef)}
-                      >
-                        {isLoading && (
-                          <Skeleton variant="text" width={"100%"} height={20} />
-                        )}
-                        {translations && translations?.corporative_apply}
-                      </Link>
-                    </li>
-                  </ol>
+              <div
+                className={`${styles.pageHeaderTitle} flex flexDirectionColumn`}
+              >
+                <PageTitle
+                  title={
+                    status === "pending" ? (
+                      <Skeleton variant="text" width={"100%"} height={100} />
+                    ) : (
+                      corporative && corporative?.banner_title
+                    )
+                  }
+                />
+                <div>
+                  {status === "pending" && (
+                    <Skeleton variant="text" width={"100%"} height={20} />
+                  )}
+                  {corporative && corporative?.banner_description}
                 </div>
               </div>
-            </section>
+              <ol
+                className={`${styles.pageHeaderBottom} flex alignItemsCenter`}
+              >
+                <li>
+                  <Link to={"#"} onClick={() => scrollToSection(trainingRef)}>
+                    {isLoading && (
+                      <Skeleton variant="text" width={"100%"} height={20} />
+                    )}
+                    {translations && translations?.corporative_trainings}
+                  </Link>
+                </li>
+                <li>
+                  <Link to={"#"} onClick={() => scrollToSection(customersRef)}>
+                    {isLoading && (
+                      <Skeleton variant="text" width={"100%"} height={20} />
+                    )}
+                    {translations && translations?.corporative_customers}
+                  </Link>
+                </li>
+                <li>
+                  <Link to={"#"} onClick={() => scrollToSection(contactRef)}>
+                    {isLoading && (
+                      <Skeleton variant="text" width={"100%"} height={20} />
+                    )}
+                    {translations && translations?.corporative_apply}
+                  </Link>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </section>
 
-            <section className={styles.corporative} ref={trainingRef}>
-              <div className="container">
-                <div className={styles.corporativeTitle}>
-                  <h2>{corporative.content_title}</h2>
-                </div>
+        <section className={styles.corporative} ref={trainingRef}>
+          <div className="container">
+            <div className={styles.corporativeTitle}>
+              <h2>
+                {status === "pending" && (
+                  <Skeleton variant="text" width={"100%"} height={50} />
+                )}
+                {corporative && corporative?.content_title}
+              </h2>
+            </div>
+            <div
+              className={`${styles.corporativeWrapper} flex alignItemsCenter justifyContentBetween`}
+            >
+              <figure className={styles.corporativeLeft}>
+                <figcaption>
+                  {status === "pending" && (
+                    <Skeleton variant="text" width={"100%"} height={30} />
+                  )}
+                  <h3
+                    dangerouslySetInnerHTML={{
+                      __html: corporative && corporative?.content_top_text,
+                    }}
+                  />
+                </figcaption>
+                <picture className={styles.corporativeImg}>
+                  <img
+                    loading="lazy"
+                    src={corporativeImg || (corporative && corporative?.image)}
+                    alt={corporative && corporative?.content_title}
+                  />
+                </picture>
+              </figure>
+              <div className={styles.corporativeDet}>
+                {status === "pending" && (
+                  <Skeleton variant="text" width={"100%"} height={40} />
+                )}
+                <h3
+                  dangerouslySetInnerHTML={{
+                    __html: corporative && corporative?.content_top_text,
+                  }}
+                />
+                {status === "pending" && (
+                  <Skeleton variant="text" width={"100%"} height={40} />
+                )}
                 <div
-                  className={`${styles.corporativeWrapper} flex alignItemsCenter justifyContentBetween`}
-                >
-                  <figure className={styles.corporativeLeft}>
-                    <figcaption>
-                      <h3
-                        dangerouslySetInnerHTML={{
-                          __html: corporative.content_top_text,
-                        }}
-                      />
-                    </figcaption>
-                    <picture className={styles.corporativeImg}>
-                      <img
-                        loading="lazy"
-                        src={corporative.image}
-                        alt={corporative.content_title}
-                      />
-                    </picture>
-                  </figure>
-                  <div className={styles.corporativeDet}>
-                    <h3
-                      dangerouslySetInnerHTML={{
-                        __html: corporative.content_top_text,
-                      }}
-                    />
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: corporative.content_text,
-                      }}
-                    />
-                  </div>
-                </div>
+                  dangerouslySetInnerHTML={{
+                    __html: corporative && corporative?.content_text,
+                  }}
+                />
               </div>
-            </section>
-          </>
-        )}
+            </div>
+          </div>
+        </section>
 
         <section className={styles.faq}>
           <div className="container">
