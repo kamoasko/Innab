@@ -5,11 +5,11 @@ import corporativeImg from "../../assets/images/corporative/corporative-img.jpeg
 import { Link, useParams } from "react-router-dom";
 import { HiOutlineArrowLongRight } from "react-icons/hi2";
 import { Box, Skeleton } from "@mui/material";
-import { useCorporatives } from "../../features/corporative/corporativeSlice";
+import { useCorporatives } from "../../features/corporative/useCorporatives";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useTranslations } from "../../features/translations/translations";
 import Contact from "../../components/Contact";
 import PageTitle from "../../components/pageTitle";

@@ -4,7 +4,7 @@ import styles from "./customers.module.css";
 import CustomerCard from "../CustomerCard";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { useParams } from "react-router";
-import { useGetCustomers } from "../../features/customers/customerSlice";
+import { useGetCustomers } from "../../features/customers/useGetCustomers";
 import { Box, Skeleton } from "@mui/material";
 import CustomerSlider from "../sliders/customerSlider";
 import GoogleReviews from "../googleReviews";

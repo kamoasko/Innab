@@ -7,7 +7,7 @@ import {
   useTrainingCategories,
   useTrainingFaqs,
   useTrainingTopics,
-} from "../../features/categories/categorySlice";
+} from "../../features/categories/useCategory";
 import { Box, Skeleton } from "@mui/material";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";

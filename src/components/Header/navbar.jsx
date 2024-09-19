@@ -1,4 +1,4 @@
-import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
+import { useBlogCategories } from "../../features/blogCategories/useBlogCategory";
 import {
   Link,
   NavLink,
@@ -10,7 +10,7 @@ import SocialNetworks from "../SocialNetworks";
 import Button from "../Button";
 import { useMenus } from "../../features/menus/useMenu";
 import { Skeleton } from "@mui/material";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 import { useProjectOrCareer } from "../../features/project/projectSlice";
 import { useTranslations } from "../../features/translations/translations";

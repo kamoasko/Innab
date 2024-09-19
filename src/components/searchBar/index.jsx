@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { useMenus } from "../../features/menus/useMenu";

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import styles from "./about.module.css";
 import {
   VerticalTimeline,
@@ -11,10 +11,10 @@ import { useAboutDatas } from "../../features/about/aboutSlice";
 import { Box, CircularProgress, Skeleton } from "@mui/material";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useTranslations } from "../../features/translations/translations";
+import PageTitle from "../../components/pageTitle";
 
-const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
 const Customers = React.lazy(() => import("../../components/Customers"));
 const ContactSection = React.lazy(() =>

@@ -5,7 +5,7 @@ import { useGetPrivacy } from "../../features/privacy/privacySlicer";
 import { Box, Skeleton } from "@mui/material";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTrainingCategories } from "../../features/categories/useCategory";
 import PageTitle from "../../components/pageTitle";
 
 const Contact = React.lazy(() => import("../../components/Contact"));

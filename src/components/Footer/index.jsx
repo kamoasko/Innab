@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Box, CircularProgress } from "@mui/material";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { useMenus } from "../../features/menus/useMenu";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useProjectOrCareer } from "../../features/project/projectSlice";
 import { useTranslations } from "../../features/translations/translations";
 

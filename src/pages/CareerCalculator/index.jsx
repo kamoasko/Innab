@@ -5,7 +5,7 @@ import { useParams } from "react-router";
 import { Box, Skeleton } from "@mui/material";
 import { useMenus } from "../../features/menus/useMenu";
 import suitcase from "../../assets/icons/money-suitcase.svg";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useTranslations } from "../../features/translations/translations";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));

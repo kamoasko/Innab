@@ -4,7 +4,7 @@ import { useRoutes, useNavigate, useLocation } from "react-router-dom";
 import { generateRoutes } from "./routes";
 import { useMenus } from "./features/menus/useMenu";
 import { Box } from "@mui/material";
-import { useLanguages } from "./features/languages/languageSlice";
+import { useLanguages } from "./features/languages/useLanguages";
 
 function App() {
   const { data: languages } = useLanguages();

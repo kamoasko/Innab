@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import styles from "../../pages/BlogPage/blogs.module.css";
 import { useOutletContext, useParams } from "react-router";
 import { Box, Skeleton } from "@mui/material";
-import { useBlogPosts } from "../../features/blog/blogSlice";
+import { useBlogPosts } from "../../features/blog/useGetBlogs";
 
 const BlogCard = React.lazy(() => import("../../components/blogCard"));
 

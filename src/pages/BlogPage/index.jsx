@@ -2,10 +2,10 @@ import React, { Suspense, useState } from "react";
 import styles from "./blogs.module.css";
 import { Box, Skeleton } from "@mui/material";
 import { Outlet, useParams, useLocation } from "react-router";
-import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
+import { useBlogCategories } from "../../features/blogCategories/useBlogCategory";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useTranslations } from "../../features/translations/translations";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));

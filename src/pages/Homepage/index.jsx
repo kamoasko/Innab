@@ -6,7 +6,7 @@ import { useMenus } from "../../features/menus/useMenu";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { Box, Skeleton } from "@mui/material";
 import { Helmet } from "react-helmet-async";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTrainingCategories } from "../../features/categories/useCategory";
 import {
   BlogSvg,
   CalculatorSvg,
@@ -15,7 +15,7 @@ import {
   VideoLessonSvg,
   WorkshopSvg,
 } from "../../components/usefulCardSvgs/usefulCardSvgs";
-import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
+import { useBlogCategories } from "../../features/blogCategories/useBlogCategory";
 import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 import { useTranslations } from "../../features/translations/translations";
 import Contact from "../../components/Contact";

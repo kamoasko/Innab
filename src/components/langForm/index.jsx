@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Skeleton } from "@mui/material";
-import { useLanguages } from "../../features/languages/languageSlice";
+import { useLanguages } from "../../features/languages/useLanguages";
 import { LanguageContext } from "../../App";
 
 const LangForm = () => {

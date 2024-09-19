@@ -2,7 +2,7 @@ import styles from "../../pages/Homepage/home.module.css";
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import HomeTrainings from "../../components/homeTrainings";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTrainingCategories } from "../../features/categories/useCategory";
 
 const TrainingLayout = () => {
   const { lang } = useParams();

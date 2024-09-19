@@ -8,8 +8,8 @@ import {
 } from "../../features/videoLessons/videoLessonSlice";
 import { Box, Skeleton } from "@mui/material";
 import axios from "axios";
-import { useBlogCategories } from "../../features/blogCategories/blogCategorySlice";
-import { useBlogContent, useBlogPosts } from "../../features/blog/blogSlice";
+import { useBlogCategories } from "../../features/blogCategories/useBlogCategory";
+import { useBlogContent, useBlogPosts } from "../../features/blog/useGetBlogs";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
 import { useTranslations } from "../../features/translations/translations";

@@ -2,10 +2,10 @@ import React, { Suspense, useState } from "react";
 import styles from "./news-page.module.css";
 import { Outlet, useParams } from "react-router";
 import { Box, Pagination, Skeleton } from "@mui/material";
-import { useGetNews } from "../../features/news/newsSlice";
+import { useGetNews } from "../../features/news/useNews";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useTranslations } from "../../features/translations/translations";
 
 const Contact = React.lazy(() => import("../../components/Contact"));

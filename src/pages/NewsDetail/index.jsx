@@ -4,10 +4,10 @@ import newsImg from "../../assets/images/news/news-img.jpeg";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
 import { Box, CircularProgress, Skeleton } from "@mui/material";
-import { useGetNews, useGetNewsDetail } from "../../features/news/newsSlice";
+import { useGetNews, useGetNewsDetail } from "../../features/news/useNews";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useTranslations } from "../../features/translations/translations";
 
 const Contact = React.lazy(() => import("../../components/Contact"));

@@ -4,7 +4,7 @@ import { Outlet, useParams } from "react-router";
 import { Box, CircularProgress, Skeleton } from "@mui/material";
 import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 import { useMenus } from "../../features/menus/useMenu";
-import { useTrainingCategories } from "../../features/categories/categorySlice";
+import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useTranslations } from "../../features/translations/translations";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
