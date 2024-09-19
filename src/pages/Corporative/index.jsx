@@ -22,7 +22,7 @@ const AccordionSecond = React.lazy(() =>
 
 const Corporative = () => {
   const { lang } = useParams();
-  const { data: corporative, status, error } = useCorporatives(lang);
+  const { data: corporatives, status, error } = useCorporatives(lang);
 
   const { data: categories } = useTrainingCategories(lang);
   const { data: infos } = useSiteInfos(lang);
@@ -65,6 +65,10 @@ const Corporative = () => {
     keywords
   );
 
+  if (status === "error") {
+    return <p>{error}</p>;
+  }
+
   return (
     <>
       <Helmet>
@@ -106,7 +110,7 @@ const Corporative = () => {
                 status === "pending" ? (
                   <Skeleton variant="text" width={"100%"} height={100} />
                 ) : (
-                  corporative && corporative?.banner_title
+                  corporatives && corporatives?.banner_title
                 )
               }
             />
@@ -117,7 +121,7 @@ const Corporative = () => {
           className={styles.pageHeader}
           style={{
             background: `linear-gradient(90deg, var(--color-main) -1.51%, rgba(3, 5, 51, 0.00) 81.73%), url(${
-              banner || (corporative && corporative?.banner)
+              banner || (corporatives && corporatives?.banner)
             }) lightgray center / cover no-repeat`,
           }}
         >
@@ -133,7 +137,7 @@ const Corporative = () => {
                     status === "pending" ? (
                       <Skeleton variant="text" width={"100%"} height={100} />
                     ) : (
-                      corporative && corporative?.banner_title
+                      corporatives && corporatives?.banner_title
                     )
                   }
                 />
@@ -141,7 +145,7 @@ const Corporative = () => {
                   {status === "pending" && (
                     <Skeleton variant="text" width={"100%"} height={20} />
                   )}
-                  {corporative && corporative?.banner_description}
+                  {corporatives && corporatives?.banner_description}
                 </div>
               </div>
               <ol
@@ -183,7 +187,7 @@ const Corporative = () => {
                 {status === "pending" && (
                   <Skeleton variant="text" width={"100%"} height={50} />
                 )}
-                {corporative && corporative?.content_title}
+                {corporatives && corporatives?.content_title}
               </h2>
             </div>
             <div
@@ -196,15 +200,17 @@ const Corporative = () => {
                   )}
                   <h3
                     dangerouslySetInnerHTML={{
-                      __html: corporative && corporative?.content_top_text,
+                      __html: corporatives && corporatives?.content_top_text,
                     }}
                   />
                 </figcaption>
                 <picture className={styles.corporativeImg}>
                   <img
                     loading="lazy"
-                    src={corporativeImg || (corporative && corporative?.image)}
-                    alt={corporative && corporative?.content_title}
+                    src={
+                      corporativeImg || (corporatives && corporatives?.image)
+                    }
+                    alt={corporatives && corporatives?.content_title}
                   />
                 </picture>
               </figure>
@@ -214,7 +220,7 @@ const Corporative = () => {
                 )}
                 <h3
                   dangerouslySetInnerHTML={{
-                    __html: corporative && corporative?.content_top_text,
+                    __html: corporatives && corporatives?.content_top_text,
                   }}
                 />
                 {status === "pending" && (
@@ -222,7 +228,7 @@ const Corporative = () => {
                 )}
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: corporative && corporative?.content_text,
+                    __html: corporatives && corporatives?.content_text,
                   }}
                 />
               </div>
@@ -233,15 +239,15 @@ const Corporative = () => {
         <section className={styles.faq}>
           <div className="container">
             <div className={`${styles.faqAccordions} faqAccordions`}>
-              {categories &&
-                categories?.map((category) => (
+              {corporatives &&
+                corporatives?.corporative_trainings?.map((category, index) => (
                   <AccordionSecond
-                    key={category.id}
+                    key={index}
                     summary={category.title}
                     details={[
                       <ol>
-                        {category.subData?.map((training) => (
-                          <li key={training.id}>{training.title}</li>
+                        {category.trainings?.map((training, index) => (
+                          <li key={index}>{training}</li>
                         ))}
                       </ol>,
                     ]}

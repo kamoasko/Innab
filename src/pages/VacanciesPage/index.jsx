@@ -5,11 +5,9 @@ import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
 import { useParams } from "react-router";
 import { useTranslations } from "../../features/translations/translations";
+import CustomizedAccordions from "../../components/accordion";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
-const CustomizedAccordions = React.lazy(() =>
-  import("../../components/accordion")
-);
 
 const VacanciesPage = () => {
   const { lang } = useParams();

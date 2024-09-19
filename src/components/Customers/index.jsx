@@ -1,25 +1,19 @@
-import React, { forwardRef, useEffect, useState } from "react";
+import React, { forwardRef } from "react";
 import SectionTitle from "../SectionTitle";
 import styles from "./customers.module.css";
 import CustomerCard from "../CustomerCard";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { fetchCustomers } from "../../features/customers/customerSlice";
-import { Box, CircularProgress, Skeleton } from "@mui/material";
+import { useGetCustomers } from "../../features/customers/customerSlice";
+import { Box, Skeleton } from "@mui/material";
 import CustomerSlider from "../sliders/customerSlider";
 import GoogleReviews from "../googleReviews";
 import { useTranslations } from "../../features/translations/translations";
 
 const Customers = forwardRef(({ homepage, about, corporative }, ref) => {
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { customers, status, error } = useSelector((state) => state.customers);
+  const { data: customers, status, error } = useGetCustomers(lang);
   const { width } = useWindowDimensions();
-
-  useEffect(() => {
-    dispatch(fetchCustomers(lang));
-  }, [lang, dispatch]);
 
   const keywords = ["home_customers_title", "customers_text"];
   const { data: translations, isLoading } = useTranslations(
@@ -74,20 +68,26 @@ const Customers = forwardRef(({ homepage, about, corporative }, ref) => {
           )}
         </p>
       </div>
-      {status === "loading" && (
+      {status === "pending" && (
         <Box
           sx={{
             display: "flex",
             justifyContent: "center",
+            alignItems: "center",
             width: "100%",
           }}
         >
-          <CircularProgress />
+          <Skeleton
+            variant="rectangular"
+            width={"100%"}
+            height={300}
+            className="customerCard"
+          />
         </Box>
       )}
-      {status === "failed" && <Box>{error}</Box>}
+      {status === "error" && <Box>{error}</Box>}
       <div className={styles.customerSliderWrapper}>
-        {status === "succeeded" && (
+        {status === "success" && (
           <>
             {corporative && width > 768 ? (
               <div className="container">

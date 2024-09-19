@@ -1,40 +1,15 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "../../axios";
 
-export const fetchVacancies = createAsyncThunk(
-  "vacancies/fetchVacancies",
-  async (lang, { rejectWithValue }) => {
-    try {
+export const useGetVacancies = (lang) => {
+  return useQuery({
+    queryKey: ["vacancies", lang],
+    queryFn: async () => {
       const response = await axiosInstance.get(`/${lang}/get_vacancy`);
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
 
-const vacanciesSlice = createSlice({
-  name: "vacancies",
-  initialState: {
-    vacancies: [],
-    status: "idle",
-    error: null,
-  },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(fetchVacancies.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchVacancies.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.vacancies = action.payload;
-      })
-      .addCase(fetchVacancies.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      });
-  },
-});
-
-export default vacanciesSlice.reducer;
+      return response?.data;
+    },
+    staleTime: 1000 * 60 * 5,
+    cacheTime: 1000 * 60 * 30,
+  });
+};

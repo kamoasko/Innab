@@ -1,25 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import styles from "../../pages/Homepage/home.module.css";
 import PartnersCard from "../PartnersCard";
 import SectionTitle from "../SectionTitle";
 import { useOutletContext, useParams } from "react-router";
 import PartnersSlider from "../sliders/partnersSlider";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPartners } from "../../features/partners/partnersSlice";
-import { Box, CircularProgress } from "@mui/material";
+import { useGetPartners } from "../../features/partners/partnersSlice";
+import { Box, Skeleton } from "@mui/material";
 
 const PartnersSection = ({ onClick, partnersTitle }) => {
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { partners, status, error } = useSelector((state) => state.partners);
+  const { data: partners, status, error } = useGetPartners(lang);
 
   const { width } = useWindowDimensions();
   const { partnersRef } = useOutletContext();
-
-  useEffect(() => {
-    dispatch(fetchPartners(lang));
-  }, [lang, dispatch]);
 
   return (
     <section
@@ -29,23 +23,26 @@ const PartnersSection = ({ onClick, partnersTitle }) => {
     >
       <SectionTitle title={partnersTitle} />
       <div className="container">
-        {status === "loading" && (
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              width: "100%",
-            }}
-          >
-            <CircularProgress />
+        {status === "pending" && (
+          <Box className={styles.partnersGrid}>
+            {[...Array(6)].map((_, index) => (
+              <Skeleton
+                key={index}
+                component={"div"}
+                variant="rectangular"
+                width={"100%"}
+                height={360}
+                className={`${styles.partnersCard} flex flexDirectionColumn justifyContentBetween`}
+              />
+            ))}
           </Box>
         )}
-        {status === "failed" && <Box>{error}</Box>}
-        {status === "succeeded" && (
+        {status === "error" && <Box>{error}</Box>}
+        {status === "success" && (
           <>
             {width >= 1024 ? (
               <div className={styles.partnersGrid}>
-                {partners.map((partner) => (
+                {partners?.map((partner) => (
                   <PartnersCard
                     key={partner.id}
                     cardtTitle={partner.name}

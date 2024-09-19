@@ -1,30 +1,24 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import styles from "./privacy.module.css";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { fetchPrivacyData } from "../../features/privacy/privacySlicer";
-import { Box, CircularProgress, Skeleton } from "@mui/material";
+import { useGetPrivacy } from "../../features/privacy/privacySlicer";
+import { Box, Skeleton } from "@mui/material";
 import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
 import { useTrainingCategories } from "../../features/categories/categorySlice";
+import PageTitle from "../../components/pageTitle";
 
-const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
 
 const Privacy = () => {
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { privacy, status, error } = useSelector((state) => state.privacy);
+  const { data: privacy, status, error } = useGetPrivacy(lang);
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const { data: categories } = useTrainingCategories(lang);
   const allTrainings =
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
-
-  useEffect(() => {
-    dispatch(fetchPrivacyData(lang));
-  }, [lang, dispatch]);
 
   return (
     <>
@@ -62,11 +56,11 @@ const Privacy = () => {
       >
         <section className={styles.privacy}>
           <div className="container">
-            {status === "loading" && (
+            {status === "pending" && (
               <>
                 <Skeleton
                   className="pagetitle"
-                  variant="rectangular"
+                  variant="text"
                   sx={{ width: "100% important", marginTop: "5.6rem" }}
                   width={545}
                   height={80}
@@ -80,34 +74,34 @@ const Privacy = () => {
                     marginTop: "6rem",
                   }}
                 >
-                  <Skeleton variant="rectangular" width={200} height={10} />
+                  <Skeleton variant="text" width={200} height={10} />
                   <Skeleton
-                    variant="rectangular"
+                    variant="text"
                     sx={{ width: "100% important" }}
                     height={150}
                   />
-                  <Skeleton variant="rectangular" width={200} height={10} />
+                  <Skeleton variant="text" width={200} height={10} />
                   <Skeleton
-                    variant="rectangular"
+                    variant="text"
                     sx={{ width: "100% important" }}
                     height={150}
                   />
-                  <Skeleton variant="rectangular" width={200} height={10} />
+                  <Skeleton variant="text" width={200} height={10} />
                   <Skeleton
-                    variant="rectangular"
+                    variant="text"
                     sx={{ width: "100% important" }}
                     height={150}
                   />
                   <Skeleton
-                    variant="rectangular"
+                    variant="text"
                     sx={{ width: "100% important" }}
                     height={150}
                   />
                 </Box>
               </>
             )}
-            {status === "failed" && <p>{error}</p>}
-            {status === "succeeded" && (
+            {status === "error" && <p>{error}</p>}
+            {status === "success" && (
               <>
                 <PageTitle title={privacy.page_title} />
                 <div

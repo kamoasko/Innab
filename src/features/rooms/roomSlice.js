@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useGetRooms = (lang) => {
   return useQuery({
-    queryKey: ["corporatives", lang],
+    queryKey: ["rooms", lang],
     queryFn: async () => {
       const response = await axiosInstance.get(`/${lang}/get_rooms`);
 

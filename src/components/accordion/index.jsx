@@ -3,34 +3,21 @@ import styles from "./accordion.module.css";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import {
-  AccordionActions,
-  Box,
-  CircularProgress,
-  Skeleton,
-} from "@mui/material";
+import { AccordionActions, Box, Skeleton, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchVacancies } from "../../features/vacancies/vacanciesSlice";
+import { useGetVacancies } from "../../features/vacancies/vacanciesSlice";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
-
-const Button = React.lazy(() => import("../Button"));
-const CustomExpandIcon = React.lazy(() => import("./customExpandIcon"));
+import Button from "../Button";
+import CustomExpandIcon from "./customExpandIcon";
 
 export default function CustomizedAccordions({ btn_text }) {
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { vacancies, status, error } = useSelector((state) => state.vacancies);
+  const { data: vacancies, status, error } = useGetVacancies(lang);
   const { data: infos, isSuccess } = useSiteInfos(lang);
 
-  useEffect(() => {
-    dispatch(fetchVacancies(lang));
-  }, [lang, dispatch]);
-
   return (
-    <Suspense fallback={<CircularProgress />}>
-      {status === "loading" && (
+    <>
+      {status === "pending" && (
         <Box
           sx={{
             display: "flex",
@@ -49,8 +36,8 @@ export default function CustomizedAccordions({ btn_text }) {
           ))}
         </Box>
       )}
-      {status === "failed" && <p>{error}</p>}
-      {status === "succeeded" &&
+      {status === "error" && <p>{error}</p>}
+      {status === "success" &&
         vacancies.map((vacancy, index) => (
           <Accordion
             sx={{
@@ -154,6 +141,6 @@ export default function CustomizedAccordions({ btn_text }) {
             </AccordionActions>
           </Accordion>
         ))}
-    </Suspense>
+    </>
   );
 }

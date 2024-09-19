@@ -3,22 +3,8 @@ import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import PartnersCard from "../../PartnersCard";
 import { Autoplay } from "swiper/modules";
-import partnerCardBg from "../../../assets/images/homepage/partners.jpeg";
-import partnerCardBg1 from "../../../assets/images/homepage/partners1.png";
-import partnerCardBg2 from "../../../assets/images/homepage/partners2.jpeg";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
-import { fetchPartners } from "../../../features/partners/partnersSlice";
 
 const PartnersSlider = ({ partnerSlider, onclick }) => {
-  // const dispatch = useDispatch();
-  // const { lang } = useParams();
-  // const { partners, status, error } = useSelector((state) => state.partners);
-
-  // useEffect(() => {
-  //   dispatch(fetchPartners(lang));
-  // }, [lang, dispatch]);
-
   return (
     <Swiper
       slidesPerView={3}
