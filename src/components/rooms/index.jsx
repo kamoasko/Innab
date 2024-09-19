@@ -1,19 +1,12 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styles from "../../pages/TrainingsPage/trainings.module.css";
-import room from "../../assets/images/trainings/room.jpeg";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { fetchRooms } from "../../features/rooms/roomSlice";
-import { Box, CircularProgress } from "@mui/material";
+import { useGetRooms } from "../../features/rooms/roomSlice";
+import { Skeleton } from "@mui/material";
 
 const Rooms = ({ title }) => {
-  const dispatch = useDispatch();
   const { lang } = useParams();
-  const { rooms, status, error } = useSelector((state) => state.rooms);
-
-  useEffect(() => {
-    dispatch(fetchRooms(lang));
-  }, [lang, dispatch]);
+  const { data: rooms, status, error } = useGetRooms(lang);
 
   return (
     <section className={styles.rooms}>
@@ -22,20 +15,17 @@ const Rooms = ({ title }) => {
           <h2>{title}</h2>
         </div>
         <div className={styles.roomsGrid}>
-          {status === "loading" && (
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%",
-              }}
-            >
-              <CircularProgress />
-            </Box>
-          )}
-          {status === "failed" && <p>{error}</p>}
-          {status === "succeeded" &&
+          {status === "pending" &&
+            [...Array(6)].map((_, index) => (
+              <Skeleton
+                key={index}
+                variant="rectangular"
+                height={300}
+                className={styles.roomsCard}
+              />
+            ))}
+          {status === "error" && <p>{error}</p>}
+          {status === "success" &&
             rooms.map((room) => (
               <article key={room.id} className={styles.roomsCard}>
                 <picture>

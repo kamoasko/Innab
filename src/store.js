@@ -3,7 +3,6 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import privacyReducer from "./features/privacy/privacySlicer";
 import vacanciesReducer from "./features/vacancies/vacanciesSlice";
-import roomReducer from "./features/rooms/roomSlice";
 import partnersReducer from "./features/partners/partnersSlice";
 import customerReducer from "./features/customers/customerSlice";
 
@@ -15,7 +14,6 @@ const persistConfig = {
 const rootReducer = combineReducers({
   privacy: privacyReducer,
   vacancies: vacanciesReducer,
-  rooms: roomReducer,
   partners: partnersReducer,
   customers: customerReducer,
 });

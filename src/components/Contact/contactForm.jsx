@@ -56,6 +56,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
     "formType_label",
     "mail_label",
     "select_services_label",
+    "select_default_opt",
     "individual_label",
     "corporate_label",
     "name_placeholder",
@@ -823,6 +824,17 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                   {translations && translations["select_services_label"]}
                 </label>
                 <Field as="select" id="service" name="service">
+                  <option value="">
+                    {isLoading && (
+                      <Skeleton
+                        variant="text"
+                        width={120}
+                        height={20}
+                        sx={{ display: "inline-block" }}
+                      />
+                    )}
+                    {translations && translations["select_default_opt"]}
+                  </option>
                   {categories?.map((category) => (
                     <option key={category.id} value={category.title}>
                       {category.title}
