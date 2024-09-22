@@ -18,19 +18,45 @@ import {
 import { useBlogCategories } from "../../features/blogCategories/useBlogCategory";
 import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 import { useTranslations } from "../../features/translations/translations";
-import Contact from "../../components/Contact";
 import SectionTitle from "../../components/SectionTitle";
 import Button from "../../components/Button";
 
-const TrainingLayout = React.lazy(() => import("../../layouts/trainingLayout"));
+const TrainingLayout = React.lazy(() =>
+  import("../../layouts/trainingLayout").then((module) => ({
+    default: module.default,
+    translations: module.translations, // Assuming translations are exported from the module
+  }))
+);
 const PartnersSection = React.lazy(() =>
-  import("../../components/partnersSection")
+  import("../../components/partnersSection").then((module) => ({
+    default: module.default,
+    translations: module.translations, // Assuming translations are exported from the module
+  }))
 );
 const ProjectSliders = React.lazy(() =>
-  import("../../components/sliders/ProjectSlider")
+  import("../../components/sliders/ProjectSlider").then((module) => ({
+    default: module.default,
+    translations: module.translations, // Assuming translations are exported from the module
+  }))
 );
-const UsefulCard = React.lazy(() => import("../../components/UsefulCard"));
-const Customers = React.lazy(() => import("../../components/Customers"));
+const UsefulCard = React.lazy(() =>
+  import("../../components/UsefulCard").then((module) => ({
+    default: module.default,
+    translations: module.translations, // Assuming translations are exported from the module
+  }))
+);
+const Customers = React.lazy(() =>
+  import("../../components/Customers").then((module) => ({
+    default: module.default,
+    translations: module.translations, // Assuming translations are exported from the module
+  }))
+);
+const Contact = React.lazy(() =>
+  import("../../components/Contact").then((module) => ({
+    default: module.default,
+    translations: module.translations, // Assuming translations are exported from the module
+  }))
+);
 
 const Homepage = () => {
   const { lang } = useParams();
@@ -104,69 +130,81 @@ const Homepage = () => {
           </>
         )}
       </Helmet>
+      <section
+        className={styles.hero}
+        style={{
+          background: `
+            linear-gradient(180deg, var(--color-main) 3%, rgba(0, 0, 0, 0.3) 100%), 
+            linear-gradient(270deg, rgba(0, 0, 0, 0.3) 5%, rgba(5, 5, 5, 0.1) 10%),
+            linear-gradient(45deg, rgba(0, 0, 0, 0.3) 5%, rgba(5, 5, 5, 0.1) 10%),
+            url(${infos?.header_image}) rgba(247, 247, 254, 0.87) center / cover no-repeat
+            `,
+        }}
+      >
+        <div className="container" style={{ height: "100%" }}>
+          <div className={`${styles.heroWrapper} flex flexDirectionColumn`}>
+            <div
+              className={`${styles.heroTitle} flex flexDirectionColumn alignItemsCenter`}
+            >
+              <h1>
+                {isLoading && (
+                  <Skeleton variant="text" width={500} height={100} />
+                )}
+                {translations && translations["homepage_title"]}
+              </h1>
+
+              <Button
+                title={translations && translations["s_apply_button"]}
+                component
+                onClick={handleScrollToContact}
+                color="orange"
+              />
+            </div>
+
+            <StatsCounter />
+          </div>
+        </div>
+      </section>
+
+      <section className={`${styles.trainings} trainings`}>
+        <SectionTitle
+          title={
+            isLoading ? (
+              <Skeleton
+                variant="text"
+                width={200}
+                height={60}
+                sx={{ margin: "0 auto" }}
+              />
+            ) : (
+              translations && translations["home_trainings_title"]
+            )
+          }
+        />
+        <div className="container">
+          <Suspense
+            fallback={
+              <Box>
+                <Skeleton
+                  variant="rectangular"
+                  height={"100%"}
+                  width={"100%"}
+                />
+              </Box>
+            }
+          >
+            <TrainingLayout />
+          </Suspense>
+        </div>
+      </section>
+
       <Suspense
         fallback={
           <Box>
-            <Skeleton variant="rectangular" height={"100vh"} width={"100%"} />
+            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
           </Box>
         }
       >
-        <section
-          className={styles.hero}
-          style={{
-            background: `
-          linear-gradient(180deg, var(--color-main) 3%, rgba(0, 0, 0, 0.3) 100%), 
-          linear-gradient(270deg, rgba(0, 0, 0, 0.3) 5%, rgba(5, 5, 5, 0.1) 10%),
-          linear-gradient(45deg, rgba(0, 0, 0, 0.3) 5%, rgba(5, 5, 5, 0.1) 10%),
-          url(${infos?.header_image}) rgba(247, 247, 254, 0.87) center / cover no-repeat
-        `,
-          }}
-        >
-          <div className="container" style={{ height: "100%" }}>
-            <div className={`${styles.heroWrapper} flex flexDirectionColumn`}>
-              <div
-                className={`${styles.heroTitle} flex flexDirectionColumn alignItemsCenter`}
-              >
-                <h1>
-                  {isLoading && (
-                    <Skeleton variant="text" width={500} height={100} />
-                  )}
-                  {translations && translations["homepage_title"]}
-                </h1>
-
-                <Button
-                  title={translations && translations["s_apply_button"]}
-                  component
-                  onClick={handleScrollToContact}
-                  color="orange"
-                />
-              </div>
-
-              <StatsCounter />
-            </div>
-          </div>
-        </section>
-
-        <section className={`${styles.trainings} trainings`}>
-          <SectionTitle
-            title={
-              isLoading ? (
-                <Skeleton
-                  variant="text"
-                  width={200}
-                  height={60}
-                  sx={{ margin: "0 auto" }}
-                />
-              ) : (
-                translations && translations["home_trainings_title"]
-              )
-            }
-          />
-          <div className="container">
-            <TrainingLayout />
-          </div>
-        </section>
-
         <PartnersSection
           onClick={handleScrollToContact}
           partnersTitle={
@@ -182,45 +220,68 @@ const Homepage = () => {
             )
           }
         />
-
-        <section className={styles.projects}>
-          <SectionTitle
-            title={
-              isLoading ? (
+      </Suspense>
+      <section className={styles.projects}>
+        <SectionTitle
+          title={
+            isLoading ? (
+              <Skeleton
+                variant="text"
+                height={60}
+                width={200}
+                sx={{ margin: "0 auto" }}
+              />
+            ) : (
+              translations && translations["home_project_title"]
+            )
+          }
+        />
+        <div className="container">
+          <Suspense
+            fallback={
+              <Box>
                 <Skeleton
-                  variant="text"
-                  height={60}
-                  width={200}
-                  sx={{ margin: "0 auto" }}
+                  variant="rectangular"
+                  height={"100%"}
+                  width={"100%"}
                 />
-              ) : (
-                translations && translations["home_project_title"]
-              )
+              </Box>
             }
-          />
-          <div className="container">
+          >
             <ProjectSliders />
-          </div>
-        </section>
+          </Suspense>
+        </div>
+      </section>
 
-        <section className={styles.useful}>
-          <SectionTitle
-            title={
-              isLoading ? (
-                <Skeleton
-                  variant="text"
-                  height={60}
-                  width={200}
-                  sx={{ margin: "0 auto" }}
-                />
-              ) : (
-                translations && translations["home_useful_title"]
-              )
-            }
-          />
-          <div className="container">
-            {usefulMenu && parentMenu && (
-              <div className={styles.usefulGrid}>
+      <section className={styles.useful}>
+        <SectionTitle
+          title={
+            isLoading ? (
+              <Skeleton
+                variant="text"
+                height={60}
+                width={200}
+                sx={{ margin: "0 auto" }}
+              />
+            ) : (
+              translations && translations["home_useful_title"]
+            )
+          }
+        />
+        <div className="container">
+          {usefulMenu && parentMenu && (
+            <div className={styles.usefulGrid}>
+              <Suspense
+                fallback={
+                  <Box>
+                    <Skeleton
+                      variant="rectangular"
+                      height={"100%"}
+                      width={"100%"}
+                    />
+                  </Box>
+                }
+              >
                 <UsefulCard
                   title={usefulMenu[0]?.title}
                   icon={<VideoLessonSvg />}
@@ -255,13 +316,29 @@ const Homepage = () => {
                   icon={<ScholarshipSvg />}
                   to={`${parentMenu[5]?.slug}/${usefulMenu[3]?.slug}`}
                 />
-              </div>
-            )}
-          </div>
-        </section>
+              </Suspense>
+            </div>
+          )}
+        </div>
+      </section>
 
+      <Suspense
+        fallback={
+          <Box>
+            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+          </Box>
+        }
+      >
         <Customers homepage />
+      </Suspense>
 
+      <Suspense
+        fallback={
+          <Box>
+            <Skeleton variant="rectangular" height={"100%"} width={"100%"} />
+          </Box>
+        }
+      >
         <Contact
           contactRef={contactRef}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
