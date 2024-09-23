@@ -4,7 +4,7 @@
 
 .pageHeader {
   margin-top: 5.6rem;
-  height: calc(100vh - 24.6rem);
+  height: 50rem;
   position: relative;
 }
 
@@ -154,7 +154,7 @@
 
 @media (max-width: 992px) {
   .pageHeader {
-    height: calc(100vh - 17.3rem);
+    height: 30rem;
   }
 
   .corporativeWrapper {
@@ -194,7 +194,7 @@
   }
 
   .pageHeader {
-    height: 100vh;
+    height: 28rem;
     margin-top: 4rem;
     padding: 3.5rem 0 0;
     font-size: 1.8rem;

@@ -132,13 +132,15 @@ const Footer = () => {
                   )}
                   {status === "error" && <p>{error}</p>}
                   {status === "success" && (
-                    <div className="footerLogo">
-                      <img
-                        loading="lazy"
-                        src={infos.header_footer}
-                        alt="Innab logo"
-                      />
-                    </div>
+                    <Link to={"/"}>
+                      <figure className="footerLogo">
+                        <img
+                          loading="lazy"
+                          src={infos.header_footer}
+                          alt="Innab logo"
+                        />
+                      </figure>
+                    </Link>
                   )}
                 </div>
               </div>

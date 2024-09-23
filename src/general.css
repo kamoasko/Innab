@@ -782,6 +782,8 @@ footer {
     width: max-content;
 
     h5 {
+      font-weight: 600;
+      font-size: 2rem;
       color: var(--color-black);
     }
 
@@ -803,12 +805,12 @@ footer {
       }
     }
   }
+}
 
-  div.footerLogo {
-    margin-top: 4.3rem;
-    width: 15.1rem;
-    height: 6.9rem;
-  }
+.footerLogo {
+  margin-top: 4.3rem;
+  width: 15.1rem;
+  height: 6.9rem;
 }
 
 .footerCopy {
@@ -1233,12 +1235,12 @@ footer {
         font-size: 1.4rem;
       }
     }
+  }
 
-    div.footerLogo {
-      margin-top: 2rem;
-      width: 7.9rem;
-      height: 3.6rem;
-    }
+  .footerLogo {
+    margin-top: 2rem;
+    width: 7.9rem;
+    height: 3.6rem;
   }
 
   .footerCopy {
