@@ -864,7 +864,13 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
           </Form>
         )}
       </Formik>
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        height={"25.3rem"}
+        padding={"0 9.6rem"}
+        contentLabel={"Success Modal"}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="65"

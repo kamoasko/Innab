@@ -2,12 +2,19 @@ import React from "react";
 import { FaX } from "react-icons/fa6";
 import ReactModal from "react-modal";
 
-const Modal = ({ isOpen, onClose, children }) => {
+const Modal = ({
+  isOpen,
+  onClose,
+  children,
+  height,
+  padding,
+  contentLabel,
+}) => {
   return (
     <ReactModal
       isOpen={isOpen}
       onRequestClose={onClose}
-      contentLabel="Success Modal"
+      contentLabel={contentLabel}
       ariaHideApp={false}
       style={{
         overlay: {
@@ -26,10 +33,10 @@ const Modal = ({ isOpen, onClose, children }) => {
           left: "50%",
           right: "auto",
           bottom: "auto",
-          height: "25.3rem",
+          height: height,
           marginRight: "-50%",
           transform: "translate(-50%, -50%)",
-          padding: "0 9.6rem",
+          padding: padding,
           borderRadius: "2.4rem",
           boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
         },

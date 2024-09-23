@@ -13,6 +13,7 @@ import { useBlogContent, useBlogPosts } from "../../features/blog/useGetBlogs";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
 import { useTranslations } from "../../features/translations/translations";
+import Modal from "../../components/Contact/modal";
 
 const TrainingsMenu = React.lazy(() =>
   import("../../components/trainingsMenu")
@@ -309,7 +310,21 @@ const DetailPage = ({ blog }) => {
                     title={"Abunə ol"}
                     onClick={() => setIsModalOpen(true)}
                   />
-                  {isModalOpen && <p>hello</p>}
+                  <Modal
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    height={"20rem"}
+                    padding={"3rem"}
+                    contentLabel={"Follow Modal"}
+                  >
+                    <form
+                      action=""
+                      className={`flex alignItemsCenter ${styles.modalForm}`}
+                    >
+                      <input type="text" name="" id="" placeholder="E-mail" />
+                      <Button title={"Abunə ol"} component />
+                    </form>
+                  </Modal>
                 </div>
               )}
             </div>

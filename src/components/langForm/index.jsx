@@ -8,7 +8,7 @@ const LangForm = () => {
   const { selectedLanguage, handleLanguageChange } =
     useContext(LanguageContext);
 
-  if (status === "loading") {
+  if (status === "pending") {
     return <Skeleton variant="rectangular" width={50} height={30} />;
   }
 
