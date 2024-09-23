@@ -27,6 +27,10 @@ const Header = memo(({ partnersRef }) => {
     }
   };
 
+  const handleScrollToContact = () => {
+    document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
+  };
+
   const keywords = ["h_apply_button"];
   const { data: translations } = useTranslations(lang, "header", keywords);
 
@@ -126,6 +130,7 @@ const Header = memo(({ partnersRef }) => {
                   component
                   color="orange"
                   borderRadius={"3.3rem"}
+                  onClick={handleScrollToContact}
                 />
                 <button onClick={() => setSearchBarOpen(true)}>
                   <svg
@@ -180,6 +185,7 @@ const Header = memo(({ partnersRef }) => {
           </div>
         ) : (
           <Navbar
+            setMobMenuOpen={setMobMenuOpen}
             openDropdowns={openDropdowns}
             openSubMenus={openSubMenus}
             setOpenDropdowns={setOpenDropdowns}

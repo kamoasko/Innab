@@ -29,7 +29,7 @@ const Contact = ({
   );
 
   return (
-    <section ref={contactRef} className={styles.contact}>
+    <section ref={contactRef} className={styles.contact} id="contact">
       <div className="container">
         <div
           className={`${styles.contactWrapper} ${

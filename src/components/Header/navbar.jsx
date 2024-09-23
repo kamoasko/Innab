@@ -22,6 +22,7 @@ const Navbar = ({
   openSubMenus,
   setOpenDropdowns,
   setOpenSubMenus,
+  setMobMenuOpen,
 }) => {
   const { lang } = useParams();
   const { data: menus, status, error } = useMenus(lang);
@@ -65,6 +66,13 @@ const Navbar = ({
 
   const isMenuActive = (slug) => {
     return slug === location.pathname.split("/")[2];
+  };
+
+  const handleScrollToContact = () => {
+    document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
+    setMobMenuOpen(false);
+    setOpenDropdowns(Array(7).fill(false));
+    setOpenSubMenus(Array(6).fill(false));
   };
 
   const handleScrollToPartners = () => {
@@ -510,6 +518,7 @@ const Navbar = ({
               title={translations && translations["h_apply_button"]}
               component
               color="orange"
+              onClick={handleScrollToContact}
             />
           </div>
         </nav>
