@@ -8,12 +8,15 @@ import { Box, Skeleton } from "@mui/material";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import Navbar from "./navbar";
 import { useTranslations } from "../../features/translations/translations";
+import useWindowDimensions from "../../hooks/useWindowDimensions";
 
 const Header = memo(({ partnersRef }) => {
+  const { width } = useWindowDimensions();
   const [searchBarOpen, setSearchBarOpen] = useState(false);
   const [mobMenuOpen, setMobMenuOpen] = useState(false);
   const [openDropdowns, setOpenDropdowns] = useState(Array(7).fill(false));
   const [openSubMenus, setOpenSubMenus] = useState(Array(6).fill(false));
+  const [isFixed, setIsFixed] = useState(false);
   const { lang } = useParams();
   const { data: infos, status, error } = useSiteInfos(lang);
   const location = useLocation();
@@ -42,6 +45,22 @@ const Header = memo(({ partnersRef }) => {
     }
     prevLocationRef.current = location;
   }, [location]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsFixed(true);
+      } else {
+        setIsFixed(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   return (
     <header>
@@ -174,7 +193,11 @@ const Header = memo(({ partnersRef }) => {
         onClose={() => setSearchBarOpen(false)}
         top
       />
-      <div className={`headerBottom ${mobMenuOpen ? "opened" : ""}`}>
+      <div
+        className={`headerBottom ${mobMenuOpen ? "opened" : ""} ${
+          width > "992" && isFixed ? "fixed" : ""
+        }`}
+      >
         {searchBarOpen ? (
           <div className="container">
             <SearchBar

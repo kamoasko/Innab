@@ -28,13 +28,6 @@
 
 /* header css */
 
-header {
-  z-index: 9999;
-  width: 100%;
-  background-color: #fff;
-  height: max-content;
-}
-
 .headerTop {
   padding: 2.4rem 0;
 }
@@ -88,6 +81,16 @@ header {
   padding: 1rem 0 1.1rem;
   background-color: var(--color-nav-bg);
   position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  transition: all 0.3s ease-in-out;
+}
+
+.headerBottom.fixed {
+  position: fixed;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .headerBottomRight {
@@ -610,7 +613,7 @@ input[type="search"]::-webkit-search-cancel-button {
   -o-border-radius: 50%;
   position: absolute;
   top: 50%;
-  z-index: 999999;
+  z-index: 999;
   overflow: hidden;
 }
 
