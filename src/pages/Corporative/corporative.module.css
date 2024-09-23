@@ -110,25 +110,35 @@
 
 .faq {
   margin-top: 8rem;
+}
 
-  a {
-    margin-top: 4rem;
-    height: 6rem;
-    width: 32rem;
-    font-size: 1.6rem;
+.faqContact {
+  margin-top: 4rem;
+  width: max-content;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+}
 
-    span {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 1.2rem;
+.faqContact > div {
+  font-weight: 600;
+}
 
-      svg {
-        width: 3rem;
-        height: 3rem;
-      }
-    }
-  }
+.faqContact > button {
+  height: 6rem;
+  width: 32rem;
+  font-size: 1.6rem;
+}
+
+.faqContact > button > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.faqContact > button > span > svg {
+  width: 3rem;
+  height: 3rem;
 }
 
 .faqAccordions {
@@ -242,10 +252,8 @@
     }
   }
 
-  .faq {
-    a {
-      font-size: 1.4rem;
-    }
+  .faqContact > button {
+    font-size: 1.4rem;
   }
 
   .faqAccordions {
@@ -270,22 +278,19 @@
     height: 26.1rem;
   }
 
-  .faq {
-    a {
-      width: auto;
-      margin-top: 4.9rem;
-      height: 4.1rem;
-      border-radius: 8rem;
-      -webkit-border-radius: 8rem;
-      -moz-border-radius: 8rem;
-      -ms-border-radius: 8rem;
-      -o-border-radius: 8rem;
+  .faqContact > button {
+    width: auto;
+    height: 4.1rem;
+    border-radius: 8rem;
+    -webkit-border-radius: 8rem;
+    -moz-border-radius: 8rem;
+    -ms-border-radius: 8rem;
+    -o-border-radius: 8rem;
 
-      span {
-        svg {
-          height: 2.4rem;
-          width: 2.4rem;
-        }
+    span {
+      svg {
+        height: 2.4rem;
+        width: 2.4rem;
       }
     }
   }

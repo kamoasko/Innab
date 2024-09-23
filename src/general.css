@@ -28,6 +28,13 @@
 
 /* header css */
 
+header {
+  z-index: 9999;
+  width: 100%;
+  background-color: #fff;
+  height: max-content;
+}
+
 .headerTop {
   padding: 2.4rem 0;
 }

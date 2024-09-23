@@ -254,18 +254,25 @@ const Corporative = () => {
                   />
                 ))}
             </div>
-            <Button
-              title={[
-                isLoading ? (
-                  <Skeleton variant="text" width={"100%"} height={20} />
-                ) : (
-                  translations?.corporative_contact_us
-                ),
-                <HiOutlineArrowLongRight />,
-              ]}
-              to={`tel:${infos && infos?.phone1}`}
-              borderRadius={"5.9rem"}
-            />
+
+            <div
+              className={`${styles.faqContact} flex alignItemsCenter flexDirectionColumn`}
+            >
+              <div>Tel: (+994) 50 290 61 21</div>
+              <Button
+                title={[
+                  isLoading ? (
+                    <Skeleton variant="text" width={"100%"} height={20} />
+                  ) : (
+                    translations?.corporative_contact_us
+                  ),
+                  <HiOutlineArrowLongRight />,
+                ]}
+                component
+                onClick={() => scrollToSection(contactRef)}
+                borderRadius={"5.9rem"}
+              />
+            </div>
           </div>
         </section>
 
