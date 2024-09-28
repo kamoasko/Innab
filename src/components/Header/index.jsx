@@ -104,7 +104,7 @@ const Header = memo(({ partnersRef }) => {
                       {infos?.phone1}
                     </Link>
                   </li>
-                  <li>
+                  <li className="headerTopEmail">
                     <Link to={`mailto:${infos?.email2}`}>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

@@ -60,6 +60,11 @@
   gap: 1.2rem;
 }
 
+.headerTopContact > li.headerTopEmail > a {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+}
+
 .headerTopContact > li > a:hover {
   color: var(--color-main);
 }
