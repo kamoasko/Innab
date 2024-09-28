@@ -13,6 +13,7 @@ const Contact = ({
   training,
   contactRef,
   apiEndpoint,
+  corporative,
 }) => {
   const { lang } = useParams();
   const keywords = [
@@ -72,6 +73,7 @@ const Contact = ({
               join={join}
               apiEndpoint={apiEndpoint}
               categories={categories}
+              corporative={corporative}
             />
           </div>
         </div>

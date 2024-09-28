@@ -9,7 +9,7 @@ import { useTranslations } from "../../features/translations/translations";
 import { useParams } from "react-router";
 import { Skeleton } from "@mui/material";
 
-const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
+const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
   const { lang } = useParams();
   const initialValues = apply
     ? {
@@ -87,6 +87,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
     "qualification_edu_label",
     "modal_title",
     "modal_text",
+    "corporate_order",
   ];
   const { data: translations, isLoading } = useTranslations(
     lang,
@@ -824,7 +825,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                   {translations && translations["select_services_label"]}
                 </label>
                 <Field as="select" id="service" name="service">
-                  <option value="">
+                  <option value="" hidden>
                     {isLoading && (
                       <Skeleton
                         variant="text"
@@ -833,7 +834,10 @@ const ContactForm = ({ categories, apiEndpoint, apply, join }) => {
                         sx={{ display: "inline-block" }}
                       />
                     )}
-                    {translations && translations["select_default_opt"]}
+                    {translations &&
+                      (corporative
+                        ? translations["corporate_order"]
+                        : translations["select_default_opt"])}
                   </option>
                   {categories?.map((category) => (
                     <option key={category.id} value={category.title}>
