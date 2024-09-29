@@ -119,7 +119,8 @@
 
   label {
     small {
-      color: var(--color-red);
+      font-size: 1.6rem;
+      color: #ff0000;
     }
   }
 
@@ -419,7 +420,8 @@
       font-size: 1.4rem;
 
       small {
-        color: var(--color-red);
+        font-size: 1.6rem;
+        color: #ff0000;
       }
     }
 

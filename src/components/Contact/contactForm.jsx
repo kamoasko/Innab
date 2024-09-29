@@ -186,7 +186,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                   {translations &&
                     (apply
                       ? translations["full_name_label"]
-                      : translations["name_surname_label"])}
+                      : translations["name_surname_label"])}{" "}
                   <small>*</small>
                 </label>
                 <Field
