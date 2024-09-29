@@ -38,12 +38,8 @@ const TrainingsPage = () => {
   } = useTrainingCategories(lang);
   const contactRef = useRef(null);
 
-  console.log(location.pathname.split("/")[3]);
-
-  const addActiveClass = (slug) => {
-    if (location.pathname.split("/")[4] === slug) {
-      return true;
-    }
+  const isMenuActive = (slug) => {
+    return slug === location.pathname.split("/")[4];
   };
 
   const toggleTrainingMenu = (categoryId) => {
@@ -180,6 +176,7 @@ const TrainingsPage = () => {
                     title={category.title}
                     to={`/${lang}/${parentMenu[1].slug}/${category.slug}/${category.subData[0]?.slug}`}
                     isActive={location.pathname.split("/")[3] === category.slug}
+                    onClick={() => setOpenCategoryId(category.id)}
                   />
                 ))}
             </ul>
@@ -203,8 +200,7 @@ const TrainingsPage = () => {
                     <li
                       key={category.id}
                       className={`${
-                        openCategoryId === category.id ? "opened" : ""
-                      } ${
+                        openCategoryId === category.id &&
                         location.pathname.split("/")[3] === category.slug
                           ? "opened"
                           : ""
@@ -215,25 +211,35 @@ const TrainingsPage = () => {
                         className="flex alignItemsCenter"
                       >
                         {category.title}
-                        {openCategoryId === category.id ? (
+                        {openCategoryId === category.id &&
+                        location.pathname.split("/")[3] === category.slug ? (
                           <FaMinus />
                         ) : (
                           <FaPlus />
                         )}
                       </div>
-                      {openCategoryId === category.id && (
-                        <ul className="flex flexDirectionColumn">
-                          {category.subData?.map((training) => (
-                            <li key={training.id}>
-                              <Link
-                                to={`/${lang}/${parentMenu[1]?.slug}/${category.slug}/${training.slug}`}
+                      {openCategoryId === category.id &&
+                        location.pathname.split("/")[3] === category.slug && (
+                          <ul className="flex flexDirectionColumn">
+                            {category.subData?.map((training) => (
+                              <li
+                                key={training.id}
+                                className={
+                                  location.pathname.split("/")[4] ===
+                                  training.slug
+                                    ? "active"
+                                    : ""
+                                }
                               >
-                                {training.title}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                                <Link
+                                  to={`/${lang}/${parentMenu[1]?.slug}/${category.slug}/${training.slug}`}
+                                >
+                                  {training.title}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
                     </li>
                   ))}
                 </ul>

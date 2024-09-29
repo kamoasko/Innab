@@ -736,13 +736,22 @@ input[type="search"]::-webkit-search-cancel-button {
   overflow: visible;
   /* height: calc(100%); */
   height: max-content;
-  background-color: var(--color-main);
-  color: var(--color-white);
+  /* background-color: var(--color-main); */
+  /* color: var(--color-main); */
   border-radius: 2.4rem;
   -webkit-border-radius: 2.4rem;
   -moz-border-radius: 2.4rem;
   -ms-border-radius: 2.4rem;
   -o-border-radius: 2.4rem;
+}
+
+.trainingMenu > li.opened > div {
+  color: var(--color-main);
+}
+
+.trainingMenu > li.opened > ul > li.active,
+.trainingMenu > li.opened > ul > li:hover {
+  color: var(--color-main);
 }
 
 .trainingMenu > li div {
