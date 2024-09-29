@@ -116,7 +116,7 @@ export default function CustomizedAccordions({ btn_text }) {
                     __html: vacancy.vacancy_footer_text,
                   }}
                 />
-                <Button
+                {/* <Button
                   title={[
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +136,7 @@ export default function CustomizedAccordions({ btn_text }) {
                   ]}
                   borderRadius={"3rem"}
                   to={isSuccess && `mailto:${infos.email2}`}
-                />
+                /> */}
               </div>
             </AccordionActions>
           </Accordion>
