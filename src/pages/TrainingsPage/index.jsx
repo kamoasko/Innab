@@ -38,6 +38,14 @@ const TrainingsPage = () => {
   } = useTrainingCategories(lang);
   const contactRef = useRef(null);
 
+  console.log(location.pathname.split("/")[3]);
+
+  const addActiveClass = (slug) => {
+    if (location.pathname.split("/")[4] === slug) {
+      return true;
+    }
+  };
+
   const toggleTrainingMenu = (categoryId) => {
     setOpenCategoryId((prevId) => (prevId === categoryId ? null : categoryId));
   };
@@ -194,7 +202,13 @@ const TrainingsPage = () => {
                   {categories?.map((category) => (
                     <li
                       key={category.id}
-                      className={openCategoryId === category.id ? "opened" : ""}
+                      className={`${
+                        openCategoryId === category.id ? "opened" : ""
+                      } ${
+                        location.pathname.split("/")[3] === category.slug
+                          ? "opened"
+                          : ""
+                      }`}
                     >
                       <div
                         onClick={() => toggleTrainingMenu(category.id)}
