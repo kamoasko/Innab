@@ -793,7 +793,7 @@ input[type="search"]::-webkit-search-cancel-button {
 /* footer */
 
 footer {
-  margin-top: 13rem;
+  margin-top: 8rem;
 }
 
 .footerTop {
@@ -1262,7 +1262,7 @@ footer {
 
 @media (max-width: 500px) {
   footer {
-    margin-top: 7.2rem;
+    margin-top: 5.2rem;
   }
 }
 

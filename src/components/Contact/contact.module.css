@@ -1,5 +1,5 @@
 .contact {
-  margin-top: 13rem;
+  margin-top: 8rem;
   padding: 6rem 0;
   background-color: var(--color-bg);
 }
@@ -95,7 +95,7 @@
     }
 
     > button {
-      margin-top: 6.1rem;
+      margin-top: 4.1rem;
       font-size: 2rem;
       width: 100% !important;
       height: 6.8rem;
@@ -358,10 +358,16 @@
 @media (max-width: 992px) {
   .contactWrapper {
     flex-direction: column;
+    gap: 3.5rem;
   }
 }
 
 @media (max-width: 768px) {
+  .contact {
+    margin-top: 3rem;
+    padding: 3.2rem 0;
+  }
+
   .contactForm form {
     button {
       height: 4.9rem;

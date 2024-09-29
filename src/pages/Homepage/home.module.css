@@ -128,7 +128,7 @@
 /* trainings section */
 
 .trainings {
-  margin-top: 22.3rem;
+  margin-top: 18.3rem;
   padding: 2rem 0;
 }
 
@@ -187,7 +187,7 @@
 /* partners */
 
 .partners {
-  margin-top: 12.3rem;
+  margin-top: 8.3rem;
   padding: 2rem 0;
 }
 
@@ -255,7 +255,7 @@
 /* projects */
 
 .projects {
-  margin-top: 11.3rem;
+  margin-top: 8.3rem;
   padding: 2rem 0;
 }
 
@@ -331,7 +331,7 @@
 /* useful */
 
 .useful {
-  margin-top: 11.3rem;
+  margin-top: 8.3rem;
   padding: 2rem 0;
 }
 
@@ -487,7 +487,7 @@
   }
 
   .trainings {
-    margin-top: 5.2rem;
+    margin-top: 3.2rem;
     padding: 2rem 0;
   }
 
@@ -496,7 +496,7 @@
   }
 
   .partners {
-    margin-top: 5rem;
+    margin-top: 3rem;
   }
 
   .partnersCard {
@@ -551,6 +551,10 @@
 }
 
 @media (max-width: 768px) {
+  .projects {
+    margin-top: 3.2rem;
+  }
+
   .projectsCard {
     h3 {
       font-size: 2rem;
@@ -567,6 +571,14 @@
   .projectsCardIcon {
     width: 15.5rem;
     height: 15.5rem;
+  }
+
+  .useful {
+    margin-top: 3.2rem;
+  }
+
+  .usefulGrid {
+    margin-top: 3.2rem;
   }
 
   .usefulCard {
