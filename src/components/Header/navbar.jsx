@@ -105,6 +105,7 @@ const Navbar = ({
                       isMenuActive(parentMenu[0]?.slug) ? "active" : ""
                     }`
                   }
+                  to={aboutMenu[0]?.slug}
                 >
                   {parentMenu[0].title}
                 </NavLink>
