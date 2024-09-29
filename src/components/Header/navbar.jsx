@@ -98,14 +98,16 @@ const Navbar = ({
         <nav className="navbar flex alignItemsCenter justifyContentBetween container">
           <ul className="navbarMenu flex alignItemsCenter">
             <li className="navbarMenuDy">
-              <NavLink
-                className={() =>
-                  `${openDropdowns[0] ? "opened" : ""} ${
-                    isMenuActive(parentMenu[0]?.slug) ? "active" : ""
-                  }`
-                }
-              >
-                {parentMenu[0].title}
+              <div>
+                <NavLink
+                  className={() =>
+                    `${openDropdowns[0] ? "opened" : ""} ${
+                      isMenuActive(parentMenu[0]?.slug) ? "active" : ""
+                    }`
+                  }
+                >
+                  {parentMenu[0].title}
+                </NavLink>
                 {!openDropdowns[0] ? (
                   <svg
                     onClick={() => toggleDropdown(0)}
@@ -139,7 +141,7 @@ const Navbar = ({
                     />
                   </svg>
                 )}
-              </NavLink>
+              </div>
               <ul
                 className={`dropdown dy flex justifyContentBetween ${
                   openDropdowns[0] ? "open" : ""
@@ -161,14 +163,16 @@ const Navbar = ({
               </ul>
             </li>
             <li>
-              <NavLink
-                className={() =>
-                  `${openDropdowns[1] ? "opened" : ""} ${
-                    isMenuActive(parentMenu[1]?.slug) ? "active" : ""
-                  }`
-                }
-              >
-                {parentMenu[1].title}
+              <div>
+                <NavLink
+                  className={() =>
+                    `${openDropdowns[1] ? "opened" : ""} ${
+                      isMenuActive(parentMenu[1]?.slug) ? "active" : ""
+                    }`
+                  }
+                >
+                  {parentMenu[1].title}
+                </NavLink>
                 {!openDropdowns[1] ? (
                   <svg
                     onClick={() => toggleDropdown(1)}
@@ -202,7 +206,7 @@ const Navbar = ({
                     />
                   </svg>
                 )}
-              </NavLink>
+              </div>
               <ul
                 className={`dropdown flex justifyContentBetween ${
                   openDropdowns[1] ? "open" : ""
@@ -270,18 +274,65 @@ const Navbar = ({
                   ))}
               </ul>
             </li>
-            <li>
-              <NavLink to={parentMenu[2].slug}>{parentMenu[2].title}</NavLink>
+            <li className="navbarMenuDy">
+              <div>
+                <NavLink to={parentMenu[2].slug}>{parentMenu[2].title}</NavLink>
+                {!openDropdowns[2] ? (
+                  <svg
+                    onClick={() => toggleDropdown(2)}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M10 3.25C10.4142 3.25 10.75 3.58579 10.75 4V9.24999L16 9.25C16.4142 9.25 16.75 9.58579 16.75 10C16.75 10.4142 16.4142 10.75 16 10.75L10.75 10.75V16C10.75 16.4142 10.4142 16.75 10 16.75C9.58581 16.75 9.25002 16.4142 9.25002 16V10.75H4C3.58579 10.75 3.25 10.4142 3.25 9.99999C3.25 9.58578 3.58579 9.24999 4 9.24999H9.25002V4C9.25002 3.58579 9.58581 3.25 10 3.25Z"
+                      fill="#333333"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    onClick={() => toggleDropdown(2)}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M2 9.75C2 9.33579 2.33579 9 2.75 9H17.25C17.6642 9 18 9.33579 18 9.75C18 10.1642 17.6642 10.5 17.25 10.5H2.75C2.33579 10.5 2 10.1642 2 9.75Z"
+                      fill="#3138E3"
+                    />
+                  </svg>
+                )}
+              </div>
+
+              <ul
+                className={`dropdown dy kdy flex justifyContentBetween ${
+                  openDropdowns[2] ? "open" : ""
+                }`}
+              >
+                <li>Bizi seçənlər</li>
+                <li>Təlimlər</li>
+                <li>Müraciət</li>
+              </ul>
             </li>
             <li className="navbarMenuDy">
-              <NavLink
-                className={({ isActive }) =>
-                  `${openDropdowns[3] ? "opened" : ""} ${
-                    isMenuActive(parentMenu[3]?.slug) ? "active" : ""
-                  }`
-                }
-              >
-                {parentMenu[3].title}
+              <div>
+                <NavLink
+                  className={({ isActive }) =>
+                    `${openDropdowns[3] ? "opened" : ""} ${
+                      isMenuActive(parentMenu[3]?.slug) ? "active" : ""
+                    }`
+                  }
+                >
+                  {parentMenu[3].title}
+                </NavLink>
                 {!openDropdowns[3] ? (
                   <svg
                     onClick={() => toggleDropdown(3)}
@@ -315,7 +366,7 @@ const Navbar = ({
                     />
                   </svg>
                 )}
-              </NavLink>
+              </div>
               <ul
                 className={`dropdown dy flex justifyContentBetween ${
                   openDropdowns[3] ? "open" : ""
@@ -332,14 +383,16 @@ const Navbar = ({
               </ul>
             </li>
             <li className="navbarMenuDy">
-              <NavLink
-                className={() =>
-                  `${openDropdowns[4] ? "opened" : ""} ${
-                    isMenuActive(parentMenu[4]?.slug) ? "active" : ""
-                  }`
-                }
-              >
-                {parentMenu[4].title}
+              <div>
+                <NavLink
+                  className={() =>
+                    `${openDropdowns[4] ? "opened" : ""} ${
+                      isMenuActive(parentMenu[4]?.slug) ? "active" : ""
+                    }`
+                  }
+                >
+                  {parentMenu[4].title}
+                </NavLink>
                 {!openDropdowns[4] ? (
                   <svg
                     onClick={() => toggleDropdown(4)}
@@ -373,7 +426,7 @@ const Navbar = ({
                     />
                   </svg>
                 )}
-              </NavLink>
+              </div>
               <ul
                 className={`dropdown dy flex justifyContentBetween ${
                   openDropdowns[4] ? "open" : ""
@@ -390,14 +443,16 @@ const Navbar = ({
               </ul>
             </li>
             <li className="navbarMenuDy">
-              <NavLink
-                className={() =>
-                  `${openDropdowns[5] ? "opened" : ""} ${
-                    isMenuActive(parentMenu[5]?.slug) ? "active" : ""
-                  }`
-                }
-              >
-                {parentMenu[5].title}
+              <div>
+                <NavLink
+                  className={() =>
+                    `${openDropdowns[5] ? "opened" : ""} ${
+                      isMenuActive(parentMenu[5]?.slug) ? "active" : ""
+                    }`
+                  }
+                >
+                  {parentMenu[5].title}
+                </NavLink>
                 {!openDropdowns[5] ? (
                   <svg
                     onClick={() => toggleDropdown(5)}
@@ -431,7 +486,7 @@ const Navbar = ({
                     />
                   </svg>
                 )}
-              </NavLink>
+              </div>
               <ul
                 className={`dropdown dy flex justifyContentBetween ${
                   openDropdowns[5] ? "open" : ""

@@ -2,7 +2,7 @@ import React, { Suspense, useRef } from "react";
 import styles from "./corporative.module.css";
 import banner from "../../assets/images/corporative/corporative.png";
 import corporativeImg from "../../assets/images/corporative/corporative-img.jpeg";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { HiOutlineArrowLongRight } from "react-icons/hi2";
 import { Box, Skeleton } from "@mui/material";
 import { useCorporatives } from "../../features/corporative/useCorporatives";
@@ -151,29 +151,23 @@ const Corporative = () => {
               <ol
                 className={`${styles.pageHeaderBottom} flex alignItemsCenter`}
               >
-                <li>
-                  <Link to={"#"} onClick={() => scrollToSection(trainingRef)}>
-                    {isLoading && (
-                      <Skeleton variant="text" width={"100%"} height={20} />
-                    )}
-                    {translations && translations?.corporative_trainings}
-                  </Link>
+                <li onClick={() => scrollToSection(trainingRef)}>
+                  {isLoading && (
+                    <Skeleton variant="text" width={"100%"} height={20} />
+                  )}
+                  {translations && translations?.corporative_trainings}
                 </li>
-                <li>
-                  <Link to={"#"} onClick={() => scrollToSection(customersRef)}>
-                    {isLoading && (
-                      <Skeleton variant="text" width={"100%"} height={20} />
-                    )}
-                    {translations && translations?.corporative_customers}
-                  </Link>
+                <li onClick={() => scrollToSection(customersRef)}>
+                  {isLoading && (
+                    <Skeleton variant="text" width={"100%"} height={20} />
+                  )}
+                  {translations && translations?.corporative_customers}
                 </li>
-                <li>
-                  <Link to={"#"} onClick={() => scrollToSection(contactRef)}>
-                    {isLoading && (
-                      <Skeleton variant="text" width={"100%"} height={20} />
-                    )}
-                    {translations && translations?.corporative_apply}
-                  </Link>
+                <li onClick={() => scrollToSection(contactRef)}>
+                  {isLoading && (
+                    <Skeleton variant="text" width={"100%"} height={20} />
+                  )}
+                  {translations && translations?.corporative_apply}
                 </li>
               </ol>
             </div>
