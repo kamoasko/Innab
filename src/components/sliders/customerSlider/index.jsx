@@ -10,7 +10,8 @@ const CustomerSlider = ({ customers }) => {
       spaceBetween={20}
       loop={true}
       modules={[Autoplay]}
-      autoplay={{ delay: 3000 }}
+      autoplay={{ delay: 0, disableOnInteraction: false }}
+      speed={2500}
       breakpoints={{
         280: {
           slidesPerView: 2,
