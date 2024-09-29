@@ -1,6 +1,7 @@
 .tab {
   position: relative;
-  padding: 1.8rem 3.4rem;
+  padding: 1.8rem 0.2rem;
+  text-align: center;
   background-color: var(--color-tab-bg);
   color: var(--color-dark-black);
   border-radius: 4.8rem;
@@ -42,10 +43,16 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 970px) {
   .tab {
-    padding: 1.4rem 2rem;
+    padding: 1.4rem 0.2rem;
     font-size: 1rem;
     line-height: normal;
+  }
+}
+
+@media (max-width: 630px) {
+  .tab {
+    padding: 1.2rem 1rem;
   }
 }

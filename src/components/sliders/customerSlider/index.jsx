@@ -2,16 +2,21 @@ import React from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CustomerCard from "../../CustomerCard";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, FreeMode } from "swiper/modules";
 
 const CustomerSlider = ({ customers }) => {
   return (
     <Swiper
       spaceBetween={20}
       loop={true}
-      modules={[Autoplay]}
-      autoplay={{ delay: 0, disableOnInteraction: false }}
-      speed={2500}
+      modules={[Autoplay, FreeMode]}
+      allowTouchMove={false}
+      autoplay={{
+        delay: 0,
+        disableOnInteraction: false,
+      }}
+      freeMode={true}
+      speed={1500}
       breakpoints={{
         280: {
           slidesPerView: 2,

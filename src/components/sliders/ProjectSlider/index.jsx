@@ -8,7 +8,7 @@ import ProjectCard from "../../ProjectCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa6";
-import { useParams } from "react-router";
+import { useOutletContext, useParams } from "react-router";
 import { useProjectOrCareer } from "../../../features/project/projectSlice";
 import { Box, Skeleton } from "@mui/material";
 import { useMenus } from "../../../features/menus/useMenu";
@@ -20,9 +20,10 @@ const ProjectSliders = () => {
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+  const { projectsRef } = useOutletContext();
 
   return (
-    <div className="projectSliderWrapper">
+    <div className="projectSliderWrapper" ref={projectsRef}>
       {status === "pending" && (
         <Box
           sx={{

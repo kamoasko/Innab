@@ -5,6 +5,9 @@ import Footer from "../../components/Footer";
 
 const MainLayout = () => {
   const partnersRef = useRef(null);
+  const trainingsRef = useRef(null);
+  const projectsRef = useRef(null);
+  const useFullRef = useRef(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -13,10 +16,17 @@ const MainLayout = () => {
 
   return (
     <>
-      <Header partnersRef={partnersRef} />
+      <Header
+        partnersRef={partnersRef}
+        trainingsRef={trainingsRef}
+        projectsRef={projectsRef}
+        useFullRef={useFullRef}
+      />
 
       <main>
-        <Outlet context={{ partnersRef }} />
+        <Outlet
+          context={{ partnersRef, trainingsRef, projectsRef, useFullRef }}
+        />
       </main>
       <Footer />
     </>

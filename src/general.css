@@ -234,6 +234,16 @@
 
 /* dropdown style end */
 
+/* swiper free mode */
+
+.swiper-free-mode > .swiper-wrapper {
+  transition-timing-function: linear;
+  -webkit-transition-timing-function: linear;
+  -moz-transition-timing-function: linear;
+  -ms-transition-timing-function: linear;
+  -o-transition-timing-function: linear;
+}
+
 /* searchBar start */
 
 .searchBar {
@@ -676,6 +686,10 @@ input[type="search"]::-webkit-search-cancel-button {
   margin-top: 6rem;
   gap: 2rem;
   flex-wrap: wrap;
+}
+
+.tabsMenu > li {
+  flex: 1;
 }
 
 .tab.active {
@@ -1223,6 +1237,12 @@ footer {
 
   .footerCopy {
     padding: 1.5rem 0;
+  }
+}
+
+@media (max-width: 630px) {
+  .tabsMenu > li {
+    flex: unset;
   }
 }
 

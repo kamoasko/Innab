@@ -17,6 +17,9 @@ import { useTranslations } from "../../features/translations/translations";
 
 const Navbar = ({
   partnersRef,
+  trainingsRef,
+  projectsRef,
+  useFullRef,
   setSearchBarOpen,
   openDropdowns,
   openSubMenus,
@@ -75,11 +78,11 @@ const Navbar = ({
     setOpenSubMenus(Array(6).fill(false));
   };
 
-  const handleScrollToPartners = () => {
+  const handleScrollToSect = (sectRef) => {
     navigate(`/${lang}`);
     setTimeout(() => {
-      if (partnersRef && partnersRef.current) {
-        partnersRef.current.scrollIntoView({ behavior: "smooth" });
+      if (sectRef && sectRef.current) {
+        sectRef.current.scrollIntoView({ behavior: "smooth" });
       }
     }, 0);
   };
@@ -171,6 +174,7 @@ const Navbar = ({
                       isMenuActive(parentMenu[1]?.slug) ? "active" : ""
                     }`
                   }
+                  onClick={() => handleScrollToSect(trainingsRef)}
                 >
                   {parentMenu[1].title}
                 </NavLink>
@@ -331,6 +335,7 @@ const Navbar = ({
                       isMenuActive(parentMenu[3]?.slug) ? "active" : ""
                     }`
                   }
+                  onClick={() => handleScrollToSect(projectsRef)}
                 >
                   {parentMenu[3].title}
                 </NavLink>
@@ -451,6 +456,7 @@ const Navbar = ({
                       isMenuActive(parentMenu[5]?.slug) ? "active" : ""
                     }`
                   }
+                  onClick={() => handleScrollToSect(useFullRef)}
                 >
                   {parentMenu[5].title}
                 </NavLink>
@@ -530,7 +536,10 @@ const Navbar = ({
               </ul>
             </li>
             <li>
-              <button type="button" onClick={handleScrollToPartners}>
+              <button
+                type="button"
+                onClick={() => handleScrollToSect(partnersRef)}
+              >
                 {parentMenu[6].title}
               </button>
             </li>

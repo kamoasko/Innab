@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect, useRef, useState } from "react";
 import styles from "./home.module.css";
-import { useParams } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import StatsCounter from "../../components/statsCounter";
 import { useMenus } from "../../features/menus/useMenu";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
@@ -61,6 +61,7 @@ const Contact = React.lazy(() =>
 const Homepage = () => {
   const { lang } = useParams();
   const contactRef = useRef(null);
+  const { useFullRef } = useOutletContext();
   const { data: infos } = useSiteInfos(lang);
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const { data: videoCategories } = useVideoLessonCategory(lang);
@@ -253,7 +254,7 @@ const Homepage = () => {
         </div>
       </section>
 
-      <section className={styles.useful}>
+      <section className={styles.useful} ref={useFullRef}>
         <SectionTitle
           title={
             isLoading ? (

@@ -147,8 +147,12 @@
   -o-border-radius: 5.9rem;
 }
 
+.trainingsNavbarMenu > li {
+  flex: 1;
+}
+
 .trainingsNavbarMenu > li > a {
-  padding: 1.2rem 3.1rem;
+  padding: 1.2rem 2rem;
   font-weight: 600;
 }
 
