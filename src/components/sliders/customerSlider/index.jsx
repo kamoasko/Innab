@@ -1,12 +1,28 @@
-import React from "react";
+import React, { useRef } from "react";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import CustomerCard from "../../CustomerCard";
 import { Autoplay, FreeMode } from "swiper/modules";
 
 const CustomerSlider = ({ customers }) => {
+  const swiperRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (swiperRef.current && swiperRef.current.autoplay) {
+      swiperRef.current.autoplay.stop();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (swiperRef.current && swiperRef.current.autoplay) {
+      swiperRef.current.autoplay.start();
+    }
+  };
+
   return (
     <Swiper
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       spaceBetween={20}
       loop={true}
       modules={[Autoplay, FreeMode]}
@@ -51,10 +67,13 @@ const CustomerSlider = ({ customers }) => {
           slidesPerView: 8,
         },
       }}
+      onSwiper={(swiper) => {
+        swiperRef.current = swiper;
+      }}
     >
       {customers?.map((customer) => (
         <SwiperSlide key={customer.id}>
-          <CustomerCard img={customer.image} />
+          <CustomerCard img={customer.image} to={customer.link} />
         </SwiperSlide>
       ))}
     </Swiper>

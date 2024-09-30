@@ -93,7 +93,11 @@ const Customers = forwardRef(({ homepage, about, corporative }, ref) => {
               <div className="container">
                 <div className="customerCard">
                   {customers.map((customer) => (
-                    <CustomerCard img={customer.image} key={customer.id} />
+                    <CustomerCard
+                      img={customer.image}
+                      key={customer.id}
+                      to={customer.link}
+                    />
                   ))}
                 </div>
               </div>

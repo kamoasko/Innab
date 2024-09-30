@@ -1,12 +1,15 @@
 import React from "react";
 import styles from "../Customers/customers.module.css";
+import { Link } from "react-router-dom";
 
-const CustomerCard = ({ img }) => {
+const CustomerCard = ({ img, to }) => {
   return (
     <figure className={styles.customerCard}>
-      <picture>
-        <img loading="lazy" src={img} alt="" />
-      </picture>
+      <Link to={to}>
+        <picture>
+          <img loading="lazy" src={img} alt="" />
+        </picture>
+      </Link>
     </figure>
   );
 };
