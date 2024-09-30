@@ -1,4 +1,12 @@
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, {
+  memo,
+  Suspense,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import styles from "./home.module.css";
 import { useOutletContext, useParams } from "react-router-dom";
 import StatsCounter from "../../components/statsCounter";
@@ -29,8 +37,8 @@ const TrainingLayout = React.lazy(() =>
 );
 const PartnersSection = React.lazy(() =>
   import("../../components/partnersSection").then((module) => ({
-    default: module.default,
-    translations: module.translations, // Assuming translations are exported from the module
+    default: memo(module.default), // Memoize the exported component
+    translations: module.translations,
   }))
 );
 const ProjectSliders = React.lazy(() =>
@@ -47,13 +55,13 @@ const UsefulCard = React.lazy(() =>
 );
 const Customers = React.lazy(() =>
   import("../../components/Customers").then((module) => ({
-    default: module.default,
+    default: memo(module.default),
     translations: module.translations, // Assuming translations are exported from the module
   }))
 );
 const Contact = React.lazy(() =>
   import("../../components/Contact").then((module) => ({
-    default: module.default,
+    default: memo(module.default),
     translations: module.translations, // Assuming translations are exported from the module
   }))
 );
@@ -67,16 +75,25 @@ const Homepage = () => {
   const { data: videoCategories } = useVideoLessonCategory(lang);
   const { data: blogCategories } = useBlogCategories(lang);
   const { data: categories } = useTrainingCategories(lang);
-  const allTrainings =
-    categories &&
-    categories?.map((category) => category.subData)?.flat(Infinity);
+  const allTrainings = useMemo(
+    () =>
+      categories &&
+      categories?.map((category) => category.subData)?.flat(Infinity),
+    [categories]
+  );
 
-  const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
-  const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
+  const parentMenu = useMemo(
+    () => menus?.filter((menu) => menu.parent_id === 0),
+    [menus]
+  );
+  const usefulMenu = useMemo(
+    () => menus?.filter((menu) => menu.parent_id === 8),
+    [menus]
+  );
 
-  const handleScrollToContact = () => {
+  const handleScrollToContact = useCallback(() => {
     contactRef?.current.scrollIntoView({ behavior: "smooth" });
-  };
+  }, []);
 
   function stripHtml(html) {
     if (!html) return "";
@@ -84,19 +101,11 @@ const Homepage = () => {
     return doc.body.textContent || "";
   }
 
-  const keywords = [
-    "homepage_title",
-    "s_apply_button",
-    "home_trainings_title",
-    "home_partners_title",
-    "home_project_title",
-    "home_useful_title",
-  ];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   return (
     <>
@@ -151,11 +160,11 @@ const Homepage = () => {
                 {isLoading && (
                   <Skeleton variant="text" width={500} height={100} />
                 )}
-                {translations && translations["homepage_title"]}
+                {translations && getTranslation("homepage_title")}
               </h1>
 
               <Button
-                title={translations && translations["s_apply_button"]}
+                title={translations && getTranslation("s_apply_button")}
                 component
                 onClick={handleScrollToContact}
                 color="orange"
@@ -178,7 +187,7 @@ const Homepage = () => {
                 sx={{ margin: "0 auto" }}
               />
             ) : (
-              translations && translations["home_trainings_title"]
+              translations && getTranslation("home_trainings_title")
             )
           }
         />
@@ -217,7 +226,7 @@ const Homepage = () => {
                 sx={{ margin: "0 auto" }}
               />
             ) : (
-              translations && translations["home_partners_title"]
+              translations && getTranslation("home_partners_title")
             )
           }
         />
@@ -233,7 +242,7 @@ const Homepage = () => {
                 sx={{ margin: "0 auto" }}
               />
             ) : (
-              translations && translations["home_project_title"]
+              translations && getTranslation("home_project_title")
             )
           }
         />
@@ -265,7 +274,7 @@ const Homepage = () => {
                 sx={{ margin: "0 auto" }}
               />
             ) : (
-              translations && translations["home_useful_title"]
+              translations && getTranslation("home_useful_title")
             )
           }
         />

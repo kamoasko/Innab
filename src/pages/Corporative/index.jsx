@@ -53,17 +53,11 @@ const Corporative = () => {
     }
   };
 
-  const keywords = [
-    "corporative_trainings",
-    "corporative_customers",
-    "corporative_apply",
-    "corporative_contact_us",
-  ];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   if (status === "error") {
     return <p>{error}</p>;
@@ -155,19 +149,19 @@ const Corporative = () => {
                   {isLoading && (
                     <Skeleton variant="text" width={"100%"} height={20} />
                   )}
-                  {translations && translations?.corporative_trainings}
+                  {translations && getTranslation("corporative_trainings")}
                 </li>
                 <li onClick={() => scrollToSection(customersRef)}>
                   {isLoading && (
                     <Skeleton variant="text" width={"100%"} height={20} />
                   )}
-                  {translations && translations?.corporative_customers}
+                  {translations && getTranslation("corporative_customers")}
                 </li>
                 <li onClick={() => scrollToSection(contactRef)}>
                   {isLoading && (
                     <Skeleton variant="text" width={"100%"} height={20} />
                   )}
-                  {translations && translations?.corporative_apply}
+                  {translations && getTranslation("corporative_apply")}
                 </li>
               </ol>
             </div>
@@ -258,7 +252,7 @@ const Corporative = () => {
                   isLoading ? (
                     <Skeleton variant="text" width={"100%"} height={20} />
                   ) : (
-                    translations?.corporative_contact_us
+                    getTranslation("corporative_contact_us")
                   ),
                   <HiOutlineArrowLongRight />,
                 ]}

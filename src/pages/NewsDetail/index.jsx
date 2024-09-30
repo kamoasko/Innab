@@ -32,12 +32,11 @@ const NewsDetail = () => {
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
 
-  const keywords = ["other_news_title", "see_all_button"];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   return (
     <>
@@ -128,7 +127,7 @@ const NewsDetail = () => {
                 {isLoading && (
                   <Skeleton variant="text" width={"100%"} height={48} />
                 )}
-                {translations && translations["other_news_title"]}
+                {translations && getTranslation("other_news_title")}
               </h2>
             </div>
             <div className={`${styles.otherNewsWrapper} flexCenter`}>
@@ -162,7 +161,7 @@ const NewsDetail = () => {
                 isLoading ? (
                   <Skeleton variant="text" width={"100%"} height={20} />
                 ) : (
-                  translations && translations["see_all_button"]
+                  translations && getTranslation("see_all_button")
                 )
               }
               borderRadius={"6.3rem"}

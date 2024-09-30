@@ -59,25 +59,11 @@ const TrainingsPage = () => {
     }
   }, [categories, isSuccess, trainingSlug]);
 
-  const keywords = [
-    "trainings_page_title",
-    "s_apply_button",
-    "customer_reviews",
-    "training_plan",
-    "download_pdf",
-    "come_trial_lesson",
-    "classrooms",
-    "faq",
-    "other_trainings_title",
-    "training_edu_text",
-    "training_edu_title",
-  ];
-
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   const downloadTrainingFile = () => {
     const blob = new Blob(selectedTraining && [selectedTraining?.file], {
@@ -161,7 +147,7 @@ const TrainingsPage = () => {
         <div className="pageTop">
           <div className="container">
             <PageTitle
-              title={translations && translations["trainings_page_title"]}
+              title={translations && getTranslation("trainings_page_title")}
             />
           </div>
         </div>
@@ -257,7 +243,7 @@ const TrainingsPage = () => {
                   <Button
                     onClick={scrollToContact}
                     component
-                    title={translations && translations["s_apply_button"]}
+                    title={translations && getTranslation("s_apply_button")}
                     borderRadius={"7.7rem"}
                   />
                 </div>
@@ -266,14 +252,14 @@ const TrainingsPage = () => {
                   className={`${styles.trainingAboutDet} flex flexDirectionColumn`}
                 >
                   <Link className="flex justifyContentBetween">
-                    {translations && translations["customer_reviews"]}{" "}
+                    {translations && getTranslation("customer_reviews")}{" "}
                     <FaArrowRight />
                   </Link>
                   <button
                     className="flex justifyContentBetween"
                     onClick={downloadTrainingFile}
                   >
-                    {translations && translations["training_plan"]}
+                    {translations && getTranslation("training_plan")}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="24"
@@ -324,7 +310,8 @@ const TrainingsPage = () => {
                 )}
                 <h2
                   dangerouslySetInnerHTML={{
-                    __html: translations && translations["training_edu_title"],
+                    __html:
+                      translations && getTranslation("training_edu_title"),
                   }}
                 />
                 <div>
@@ -334,7 +321,8 @@ const TrainingsPage = () => {
                   <div
                     className={styles.educationLeftContent}
                     dangerouslySetInnerHTML={{
-                      __html: translations && translations["training_edu_text"],
+                      __html:
+                        translations && getTranslation("training_edu_text"),
                     }}
                   />
                   <div
@@ -358,14 +346,16 @@ const TrainingsPage = () => {
                             fill="currentColor"
                           />
                         </svg>,
-                        translations && translations["download_pdf"],
+                        translations && getTranslation("download_pdf"),
                       ]}
                       onClick={downloadTrainingFile}
                       borderRadius={"8.5rem"}
                     />
                     <Button
                       onClick={() => scrollToContact(contactRef)}
-                      title={translations && translations["come_trial_lesson"]}
+                      title={
+                        translations && getTranslation("come_trial_lesson")
+                      }
                       borderRadius={"7.2rem"}
                       component
                     />
@@ -388,12 +378,12 @@ const TrainingsPage = () => {
           </div>
         </section>
 
-        <Rooms title={translations && translations["classrooms"]} />
+        <Rooms title={translations && getTranslation("classrooms")} />
 
         <section className={`${styles.faqContact} flex`}>
           <div className={styles.faq}>
             <div className={styles.faqTitle}>
-              <h2>{translations && translations["faq"]}</h2>
+              <h2>{translations && getTranslation("faq")}</h2>
             </div>
             <div className={styles.faqWrapper}>
               {trainingFaq &&
@@ -407,7 +397,7 @@ const TrainingsPage = () => {
             </div>
           </div>
           <div className={styles.faqTraininMenu}>
-            <h2>{translations && translations["other_trainings_title"]}</h2>
+            <h2>{translations && getTranslation("other_trainings_title")}</h2>
             {categories && (
               <ul
                 className={`${styles.trainingMenu} trainingMenu flex flexDirectionColumn`}

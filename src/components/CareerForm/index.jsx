@@ -73,25 +73,11 @@ const CareerForm = ({ onResults }) => {
     experience: Yup.number().required("Required"),
   });
 
-  const keywords = [
-    "how_to_learn",
-    "in_innab",
-    "myself",
-    "other_courses",
-    "how_many_works",
-    "hour",
-    "english_knowledge",
-    "beginner",
-    "intermediate",
-    "advanced",
-    "experience",
-    "year",
-  ];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   const calculateResults = (values) => {
     const fieldSalaries =
@@ -220,7 +206,7 @@ const CareerForm = ({ onResults }) => {
                 {isLoading && (
                   <Skeleton variant="text" height={20} width={"100%"} />
                 )}
-                {translations && translations["how_to_learn"]}
+                {translations && getTranslation("how_to_learn")}
               </h4>
               <div
                 className={`${styles.formGroupWrapper} flex alignItemsCenter justifyContentBetween`}
@@ -235,7 +221,7 @@ const CareerForm = ({ onResults }) => {
                   {isLoading && (
                     <Skeleton variant="text" height={20} width={"100%"} />
                   )}
-                  {translations && translations["in_innab"]}
+                  {translations && getTranslation("in_innab")}
                 </label>
                 <label
                   htmlFor="educationType"
@@ -245,7 +231,7 @@ const CareerForm = ({ onResults }) => {
                   {isLoading && (
                     <Skeleton variant="text" height={20} width={"100%"} />
                   )}
-                  {translations && translations["myself"]}
+                  {translations && getTranslation("myself")}
                 </label>
                 <label
                   htmlFor="educationType"
@@ -259,7 +245,7 @@ const CareerForm = ({ onResults }) => {
                   {isLoading && (
                     <Skeleton variant="text" height={20} width={"100%"} />
                   )}
-                  {translations && translations["other_courses"]}
+                  {translations && getTranslation("other_courses")}
                 </label>
               </div>
               <ErrorMessage
@@ -275,7 +261,7 @@ const CareerForm = ({ onResults }) => {
                   {isLoading && (
                     <Skeleton variant="text" height={20} width={"100%"} />
                   )}
-                  {translations && translations["how_many_works"]}
+                  {translations && getTranslation("how_many_works")}
                 </label>
                 <div className="flex justifyContentBetween">
                   <span>{values.duration}</span>
@@ -283,7 +269,7 @@ const CareerForm = ({ onResults }) => {
                     {isLoading && (
                       <Skeleton variant="text" height={20} width={"100%"} />
                     )}
-                    {translations && translations["hour"]}
+                    {translations && getTranslation("hour")}
                   </span>
                 </div>
                 <Box>
@@ -313,7 +299,7 @@ const CareerForm = ({ onResults }) => {
                 {isLoading && (
                   <Skeleton variant="text" height={20} width={"100%"} />
                 )}
-                {translations && translations["english_knowledge"]}
+                {translations && getTranslation("english_knowledge")}
               </h4>
               <div
                 className={`${styles.formGroupWrapper} flex alignItemsCenter justifyContentBetween`}
@@ -323,21 +309,21 @@ const CareerForm = ({ onResults }) => {
                   {isLoading && (
                     <Skeleton variant="text" height={20} width={"100%"} />
                   )}
-                  {translations && translations["beginner"]}
+                  {translations && getTranslation("beginner")}
                 </label>
                 <label htmlFor="language" className="flex alignItemsCenter">
                   <Field type="radio" name="language" value="Orta" />
                   {isLoading && (
                     <Skeleton variant="text" height={20} width={"100%"} />
                   )}
-                  {translations && translations["intermediate"]}
+                  {translations && getTranslation("intermediate")}
                 </label>
                 <label htmlFor="language" className="flex alignItemsCenter">
                   <Field type="radio" name="language" value="Güclü" />
                   {isLoading && (
                     <Skeleton variant="text" height={20} width={"100%"} />
                   )}
-                  {translations && translations["advanced"]}
+                  {translations && getTranslation("advanced")}
                 </label>
               </div>
               <ErrorMessage
@@ -353,7 +339,7 @@ const CareerForm = ({ onResults }) => {
                   {isLoading && (
                     <Skeleton variant="text" height={20} width={"100%"} />
                   )}
-                  {translations && translations["experience"]}
+                  {translations && getTranslation("experience")}
                 </label>
                 <div className="flex justifyContentBetween">
                   <span>{values.experience}</span>
@@ -361,7 +347,7 @@ const CareerForm = ({ onResults }) => {
                     {isLoading && (
                       <Skeleton variant="text" height={20} width={"100%"} />
                     )}
-                    {translations && translations["year"]}
+                    {translations && getTranslation("year")}
                   </span>
                 </div>
                 <Box>

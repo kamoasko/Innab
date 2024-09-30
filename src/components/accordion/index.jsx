@@ -6,14 +6,14 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import { AccordionActions, Box, Skeleton, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useGetVacancies } from "../../features/vacancies/vacanciesSlice";
-import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
-import Button from "../Button";
+// import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
+// import Button from "../Button";
 import CustomExpandIcon from "./customExpandIcon";
 
 export default function CustomizedAccordions({ btn_text }) {
   const { lang } = useParams();
   const { data: vacancies, status, error } = useGetVacancies(lang);
-  const { data: infos, isSuccess } = useSiteInfos(lang);
+  // const { data: infos, isSuccess } = useSiteInfos(lang);
 
   return (
     <>

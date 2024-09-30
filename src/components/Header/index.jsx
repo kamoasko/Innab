@@ -1,4 +1,11 @@
-import React, { memo, useEffect, useRef, useState } from "react";
+import React, {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Link, useLocation, useParams } from "react-router-dom";
 import SocialNetworks from "../SocialNetworks";
 import Button from "../Button";
@@ -23,20 +30,23 @@ const Header = memo(
     const location = useLocation();
     const prevLocationRef = useRef(location);
 
-    const toggleMobMenu = () => {
+    const toggleMobMenu = useCallback(() => {
       setMobMenuOpen((prev) => !prev);
       if (openDropdowns.some((isOpen) => isOpen)) {
         setOpenDropdowns(Array(7).fill(false));
         setOpenSubMenus(Array(6).fill(false));
       }
-    };
+    }, []);
 
-    const handleScrollToContact = () => {
+    const handleScrollToContact = useCallback(() => {
       document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
-    };
+    }, []);
 
-    const keywords = ["h_apply_button"];
-    const { data: translations } = useTranslations(lang, "header", keywords);
+    const { data: translations } = useTranslations("header");
+    const getTranslation = (keyword) => {
+      const translation = translations.find((item) => item.keyword === keyword);
+      return translation ? translation.value[lang] : keyword;
+    };
 
     useEffect(() => {
       if (location.pathname !== prevLocationRef.current.pathname) {
@@ -146,7 +156,7 @@ const Header = memo(
               ) : (
                 <>
                   <Button
-                    title={translations && translations["h_apply_button"]}
+                    title={translations && getTranslation("h_apply_button")}
                     component
                     color="orange"
                     borderRadius={"3.3rem"}

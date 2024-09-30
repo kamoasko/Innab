@@ -22,8 +22,11 @@ const SearchBar = ({ top, bottom, isOpen, onClose }) => {
   const className = top ? `searchForm ${isOpen ? "open" : ""}` : "";
   const className2 = bottom ? `searchBar ${isOpen ? "open" : ""}` : "searchBar";
 
-  const keywords = ["search_placeholder"];
-  const { data: translations } = useTranslations(lang, "header", keywords);
+  const { data: translations } = useTranslations("header");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   const handleSearchChange = async (e) => {
     const query = e.target.value.toLowerCase();
@@ -114,7 +117,7 @@ const SearchBar = ({ top, bottom, isOpen, onClose }) => {
           name="search"
           value={searchQuery}
           onChange={handleSearchChange}
-          placeholder={translations && translations["search_placeholder"]}
+          placeholder={translations && getTranslation("search_placeholder")}
         />
         <button type="button" name="" id="" onClick={handleClose}>
           <svg

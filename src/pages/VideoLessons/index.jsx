@@ -23,13 +23,11 @@ const VideoLessons = () => {
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
 
-  const keywords = ["video_lessons_title"];
-
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   const handleTabClick = (id) => {
     setCategoryId(id);
@@ -50,9 +48,9 @@ const VideoLessons = () => {
       <section className={styles.videoLessons}>
         <div className="container">
           <PageTitle
-            title={translations && translations["video_lessons_title"]}
+            title={translations && getTranslation("video_lessons_title")}
           />
-          <ul className="flex alignItemsCenter tabsMenu">
+          <ul className="flex alignItemsCenter tabsMenu tbMenu">
             {status === "pending" && (
               <Box
                 sx={{

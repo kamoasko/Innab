@@ -24,12 +24,11 @@ const NewsPage = () => {
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
 
-  const keywords = ["news_page_title"];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   const handlePageChange = (event, value) => {
     setPage(value);
@@ -76,7 +75,7 @@ const NewsPage = () => {
                 isLoading ? (
                   <Skeleton variant="text" width={"100%"} height={100} />
                 ) : (
-                  translations && translations["news_page_title"]
+                  translations && getTranslation("news_page_title")
                 )
               }
             />

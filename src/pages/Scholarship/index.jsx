@@ -21,16 +21,12 @@ const Scholarships = () => {
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
-  const keywords = [
-    "scholarship_page_title",
-    "scholarships_top_text",
-    "active_scholarships",
-  ];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   const handleScrollToContact = () => {
     contactRef?.current.scrollIntoView({ behavior: "smooth" });
@@ -88,7 +84,7 @@ const Scholarships = () => {
                     sx={{ borderRadius: "0.8rem" }}
                   />
                 ) : (
-                  translations && translations["scholarship_page_title"]
+                  translations && getTranslation("scholarship_page_title")
                 )
               }
             />
@@ -97,7 +93,7 @@ const Scholarships = () => {
                 isLoading ? (
                   <Skeleton variant="text" width={"100%"} height={200} />
                 ) : (
-                  translations && translations["scholarships_top_text"]
+                  translations && getTranslation("scholarships_top_text")
                 )
               }
               icon={
@@ -146,7 +142,7 @@ const Scholarships = () => {
                 {isLoading ? (
                   <Skeleton variant="text" height={60} width={200} />
                 ) : (
-                  translations && translations["active_scholarships"]
+                  translations && getTranslation("active_scholarships")
                 )}
               </h2>
             </div>

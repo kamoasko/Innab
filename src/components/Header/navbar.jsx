@@ -14,6 +14,7 @@ import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonSlice";
 import { useProjectOrCareer } from "../../features/project/projectSlice";
 import { useTranslations } from "../../features/translations/translations";
+import { useCallback, useMemo } from "react";
 
 const Navbar = ({
   partnersRef,
@@ -40,9 +41,18 @@ const Navbar = ({
   const location = useLocation();
   const navigate = useNavigate();
 
-  const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
-  const aboutMenu = menus?.filter((menu) => menu.parent_id === 3);
-  const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
+  const parentMenu = useMemo(
+    () => menus?.filter((menu) => menu.parent_id === 0),
+    [menus]
+  );
+  const aboutMenu = useMemo(
+    () => menus?.filter((menu) => menu.parent_id === 3),
+    [menus]
+  );
+  const usefulMenu = useMemo(
+    () => menus?.filter((menu) => menu.parent_id === 8),
+    [menus]
+  );
   const blogSlug = isSuccess && blog?.map((b) => b.slug);
   const videoSlug = videoStatus && video?.map((v) => v.slug);
   const projects = projectOrCareer?.filter(
@@ -52,40 +62,46 @@ const Navbar = ({
     (career) => career.is_corporative === 1
   );
 
-  const keywords = ["h_apply_button", "h_follow_us"];
-  const { data: translations } = useTranslations(lang, "header", keywords);
+  const { data: translations } = useTranslations("header");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
-  const toggleDropdown = (index) => {
+  const toggleDropdown = useCallback((index) => {
     setOpenDropdowns((prev) =>
       prev.map((isOpen, i) => (i === index ? !isOpen : false))
     );
-  };
+  }, []);
 
-  const toggleSubMenu = (index) => {
+  const toggleSubMenu = useCallback((index) => {
     setOpenSubMenus((prev) =>
       prev.map((isOpen, i) => (i === index ? !isOpen : false))
     );
-  };
+  }, []);
 
   const isMenuActive = (slug) => {
     return slug === location.pathname.split("/")[2];
   };
 
-  const handleScrollToContact = () => {
+  const handleScrollToContact = useCallback(() => {
     document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
     setMobMenuOpen(false);
     setOpenDropdowns(Array(7).fill(false));
     setOpenSubMenus(Array(6).fill(false));
-  };
+  }, []);
 
-  const handleScrollToSect = (sectRef) => {
-    navigate(`/${lang}`);
-    setTimeout(() => {
-      if (sectRef && sectRef.current) {
-        sectRef.current.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 0);
-  };
+  const handleScrollToSect = useCallback(
+    (sectRef) => {
+      navigate(`/${lang}`);
+      setTimeout(() => {
+        if (sectRef && sectRef.current) {
+          sectRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 0);
+    },
+    [lang, navigate]
+  );
 
   if (status === "error") {
     return <Box>{error}</Box>;
@@ -576,11 +592,11 @@ const Navbar = ({
               </svg>
             </button>
             <div className="headerBottomSocials flexDirectionColumn">
-              <p>{translations && translations["h_follow_us"]}</p>
+              <p>{translations && getTranslation("h_follow_us")}</p>
               <SocialNetworks gap="2rem" />
             </div>
             <Button
-              title={translations && translations["h_apply_button"]}
+              title={translations && getTranslation("h_apply_button")}
               component
               color="orange"
               onClick={handleScrollToContact}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { memo, useCallback } from "react";
 import styles from "../../pages/Homepage/home.module.css";
 import PartnersCard from "../PartnersCard";
 import SectionTitle from "../SectionTitle";
@@ -8,12 +8,16 @@ import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { useGetPartners } from "../../features/partners/partnersSlice";
 import { Box, Skeleton } from "@mui/material";
 
-const PartnersSection = ({ onClick, partnersTitle }) => {
+const PartnersSection = memo(({ onClick, partnersTitle }) => {
   const { lang } = useParams();
   const { data: partners, status, error } = useGetPartners(lang);
 
   const { width } = useWindowDimensions();
   const { partnersRef } = useOutletContext();
+
+  const handleClick = useCallback(() => {
+    onClick();
+  }, [onClick]);
 
   return (
     <section
@@ -48,18 +52,18 @@ const PartnersSection = ({ onClick, partnersTitle }) => {
                     cardtTitle={partner.name}
                     text={partner.short_description}
                     img={partner.image}
-                    onClick={onClick}
+                    onClick={handleClick}
                   />
                 ))}
               </div>
             ) : (
-              <PartnersSlider onclick={onClick} partnerSlider={partners} />
+              <PartnersSlider onclick={handleClick} partnerSlider={partners} />
             )}
           </>
         )}
       </div>
     </section>
   );
-};
+});
 
 export default PartnersSection;

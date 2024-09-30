@@ -17,12 +17,11 @@ const ContactPage = () => {
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const aboutMenu = menus?.filter((menu) => menu.parent_id === 3);
 
-  const keywords = ["contact_title", "contact_top_text"];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   return (
     <>
@@ -68,7 +67,7 @@ const ContactPage = () => {
                 isLoading ? (
                   <Skeleton variant="text" width={"100%"} height={100} />
                 ) : (
-                  translations && translations["contact_title"]
+                  translations && getTranslation("contact_title")
                 )
               }
             />
@@ -79,7 +78,7 @@ const ContactPage = () => {
               {translations && (
                 <h2
                   dangerouslySetInnerHTML={{
-                    __html: translations["contact_top_text"],
+                    __html: getTranslation("contact_top_text"),
                   }}
                 />
               )}

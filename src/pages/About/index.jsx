@@ -40,11 +40,12 @@ const About = () => {
     "about_bottom_text",
     "about_contact",
   ];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   return (
     <>
@@ -81,7 +82,7 @@ const About = () => {
                 isLoading ? (
                   <Skeleton variant="text" width={"100%"} height={100} />
                 ) : (
-                  translations && translations["about_page_title"]
+                  translations && getTranslation("about_page_title")
                 )
               }
             />
@@ -95,7 +96,7 @@ const About = () => {
                 {isLoading ? (
                   <Skeleton variant="text" width={"100%"} height={100} />
                 ) : (
-                  translations && translations["about_top_text"]
+                  translations && getTranslation("about_top_text")
                 )}
               </p>
             </div>
@@ -179,7 +180,7 @@ const About = () => {
               translations && (
                 <h2
                   dangerouslySetInnerHTML={{
-                    __html: translations["why_innab"],
+                    __html: getTranslation("why_innab"),
                   }}
                 />
               )
@@ -188,7 +189,7 @@ const About = () => {
               {isLoading && (
                 <Skeleton variant="text" width={"100%"} height={100} />
               )}
-              {translations && translations["about_bottom_text"]}
+              {translations && getTranslation("about_bottom_text")}
             </div>
           </div>
           <div className="container">
@@ -204,11 +205,11 @@ const About = () => {
               {isLoading && (
                 <Skeleton variant="text" width={"100%"} height={48} />
               )}
-              {translations && translations["about_contact"]}
+              {translations && getTranslation("about_contact")}
             </h2>
             <ContactSection
               h2
-              title={translations && translations["about_contact"]}
+              title={translations && getTranslation("about_contact")}
             />
           </div>
         </section>

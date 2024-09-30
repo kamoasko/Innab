@@ -7,7 +7,7 @@ import { Autoplay, FreeMode } from "swiper/modules";
 const CustomerSlider = ({ customers }) => {
   const swiperRefLocal = useRef();
 
-  const handleMouseOver = () => {
+  const handleMouseEnter = () => {
     swiperRefLocal?.current?.swiper?.autoplay?.stop();
   };
 
@@ -17,7 +17,7 @@ const CustomerSlider = ({ customers }) => {
 
   return (
     <Swiper
-      onMouseOver={handleMouseOver}
+      onMouseOver={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       ref={swiperRefLocal}
       spaceBetween={20}

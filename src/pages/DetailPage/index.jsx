@@ -55,8 +55,11 @@ const DetailPage = ({ blog }) => {
     }));
   };
 
-  const keywords = ["other_video_lessons_title", "other_blog_title"];
-  const { data: translations } = useTranslations(lang, "site", keywords);
+  const { data: translations } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   const links = content?.links;
   const videoId = links?.link;
@@ -352,8 +355,8 @@ const DetailPage = ({ blog }) => {
           <h2>
             {translations &&
               (blog
-                ? translations["other_blog_title"]
-                : translations["other_video_lessons_title"])}
+                ? getTranslation("other_blog_title")
+                : getTranslation("other_video_lessons_title"))}
           </h2>
           <TrainingsMenu
             vidCat={category}

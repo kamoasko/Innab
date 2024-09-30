@@ -25,8 +25,11 @@ const BlogPage = () => {
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
 
-  const keywords = ["blog_page_title"];
-  const { data: translations } = useTranslations(lang, "site", keywords);
+  const { data: translations } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   const handleTabClick = (id) => {
     setCategoryId(id);
@@ -70,10 +73,10 @@ const BlogPage = () => {
         <section className={styles.blogs}>
           <div className="container">
             <PageTitle
-              title={translations && translations["blog_page_title"]}
+              title={translations && getTranslation("blog_page_title")}
             />
             {!isDetailPage && (
-              <ul className="flex alignItemsCenter tabsMenu">
+              <ul className="flex alignItemsCenter tabsMenu tbMenu">
                 {status === "pending" && (
                   <Box
                     sx={{

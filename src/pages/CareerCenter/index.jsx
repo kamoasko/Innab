@@ -17,12 +17,11 @@ const CareerCenter = ({ page }) => {
     error,
   } = useProOrCarContent(lang, slug);
 
-  const keywords = ["career_page_title"];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   if (status === "pending") {
     return (
@@ -72,7 +71,7 @@ const CareerCenter = ({ page }) => {
                 isLoading ? (
                   <Skeleton variant="text" width={"100%"} height={100} />
                 ) : (
-                  translations && translations["career_page_title"]
+                  translations && getTranslation("career_page_title")
                 )
               }
             />

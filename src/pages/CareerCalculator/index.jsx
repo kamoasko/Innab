@@ -26,12 +26,11 @@ const CareerCalculator = () => {
     categories &&
     categories?.map((category) => category.subData)?.flat(Infinity);
 
-  const keywords = ["calculator_page_title", "calculator_title"];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   const handleResults = (data) => {
     setResults(data);
@@ -84,7 +83,7 @@ const CareerCalculator = () => {
                 isLoading ? (
                   <Skeleton variant="text" width={"100%"} height={100} />
                 ) : (
-                  translations && translations["calculator_page_title"]
+                  translations && getTranslation("calculator_page_title")
                 )
               }
             />
@@ -106,7 +105,7 @@ const CareerCalculator = () => {
                   {translations && (
                     <h2
                       dangerouslySetInnerHTML={{
-                        __html: translations["calculator_title"],
+                        __html: getTranslation("calculator_title"),
                       }}
                     />
                   )}

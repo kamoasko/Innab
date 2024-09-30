@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import styles from "../../pages/Homepage/home.module.css";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -10,21 +16,23 @@ import { useParams } from "react-router";
 import { useStatistics } from "../../features/statistics/statisticSlice";
 import CountUp from "react-countup";
 
-const StatisticCard = ({ stat, isVisible, formatCount, className }) => (
-  <div className={`${styles.statisticsCard} ${className}`}>
-    <div>
-      <img loading="lazy" src={stat.icon} alt={stat.text} />
+const StatisticCard = React.memo(
+  ({ stat, isVisible, formatCount, className }) => (
+    <div className={`${styles.statisticsCard} ${className}`}>
+      <div>
+        <img loading="lazy" src={stat.icon} alt={stat.text} />
+      </div>
+      <p>
+        {isVisible ? (
+          <CountUp end={stat.count} duration={2} formattingFn={formatCount} />
+        ) : (
+          0
+        )}
+        +
+      </p>
+      <span>{stat.text}</span>
     </div>
-    <p>
-      {isVisible ? (
-        <CountUp end={stat.count} duration={2} formattingFn={formatCount} />
-      ) : (
-        0
-      )}
-      +
-    </p>
-    <span>{stat.text}</span>
-  </div>
+  )
 );
 
 const StatsCounter = () => {
@@ -34,12 +42,15 @@ const StatsCounter = () => {
   const [isVisible, setIsVisible] = useState(false);
   const statsRef = useRef(null);
 
-  const formatCount = (count) => {
-    if (count >= 1000 && width <= 1024) {
-      return `${(count / 1000).toFixed(0)}k`;
-    }
-    return count;
-  };
+  const formatCount = useCallback(
+    (count) => {
+      if (count >= 1000 && width <= 1024) {
+        return `${(count / 1000).toFixed(0)}k`;
+      }
+      return count;
+    },
+    [width]
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -63,8 +74,8 @@ const StatsCounter = () => {
     };
   }, []);
 
-  const getCardClass = (index) => {
-    const classes = [
+  const cardClasses = useMemo(() => {
+    return [
       styles.statsCard1,
       styles.statsCard2,
       styles.statsCard3,
@@ -73,8 +84,9 @@ const StatsCounter = () => {
       styles.statsCard2,
       styles.statsCard1,
     ];
-    return classes[index % classes.length];
-  };
+  }, []);
+
+  const getCardClass = (index) => cardClasses[index % cardClasses.length];
 
   return (
     <div

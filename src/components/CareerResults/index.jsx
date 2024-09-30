@@ -5,19 +5,12 @@ import { Skeleton } from "@mui/material";
 
 const CareerResults = ({ results }) => {
   const { lang } = useParams();
-  const keywords = [
-    "avarage_salary",
-    "payback_period",
-    "months",
-    "future_position",
-    "work_offer_chances",
-  ];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
-  // if (!results) return null;
+  const { data: translations, isLoading } = useTranslations("site");
+
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   return (
     <div>
@@ -26,7 +19,7 @@ const CareerResults = ({ results }) => {
           {isLoading && (
             <Skeleton variant="text" width={"100%"} height={"100%"} />
           )}
-          {translations && translations["avarage_salary"]}
+          {translations && getTranslation("avarage_salary")}
         </h4>
         <h3>
           {results ? results.futureSalary.replace(/\.0+$/, "") : ""}
@@ -65,7 +58,7 @@ const CareerResults = ({ results }) => {
             {isLoading && (
               <Skeleton variant="text" width={"100%"} height={20} />
             )}
-            {translations && translations["payback_period"]}
+            {translations && getTranslation("payback_period")}
           </span>
           <h4>
             {results
@@ -78,7 +71,7 @@ const CareerResults = ({ results }) => {
             {isLoading && (
               <Skeleton variant="text" width={"100%"} height={20} />
             )}
-            {translations && translations["future_position"]}
+            {translations && getTranslation("future_position")}
           </span>
           <h4>{results ? results.futurePositions.join(", ") : ""}</h4>
         </li>
@@ -87,7 +80,7 @@ const CareerResults = ({ results }) => {
             {isLoading && (
               <Skeleton variant="text" width={"100%"} height={20} />
             )}
-            {translations && translations["work_offer_chances"]}
+            {translations && getTranslation("work_offer_chances")}
           </span>
           <h4>{results ? results.foreignWorkPercentage + "%" : ""}</h4>
         </li>

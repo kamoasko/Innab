@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import styles from "./contact.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -40,74 +40,25 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
         service: "",
       };
 
-  const keywords = [
-    "name_surname_label",
-    "full_name_label",
-    "name_surname_validation",
-    "phone_validation",
-    "pin_validation",
-    "email_validation",
-    "full_name_validation",
-    "birthday_validation",
-    "address_validation",
-    "cv_validation",
-    "pin_label",
-    "phone_label",
-    "formType_label",
-    "mail_label",
-    "select_services_label",
-    "select_default_opt",
-    "individual_label",
-    "corporate_label",
-    "name_placeholder",
-    "mail_placeholder",
-    "form_title",
-    "form_subtitle",
-    "form_title_2",
-    "form_subtitle_2",
-    "birthday_label",
-    "phone_placeholder",
-    "project_label",
-    "education_label",
-    "student_label",
-    "work_label",
-    "tin_label",
-    "address_label",
-    "cv_label",
-    "cvFile_label",
-    "apply_button",
-    "send_button",
-    "submit_button",
-    "yes_label",
-    "no_label",
-    "other_label",
-    "secondary_edu_label",
-    "bachelor_edu_label",
-    "master_edu_label",
-    "qualification_edu_label",
-    "modal_title",
-    "modal_text",
-    "corporate_order",
-  ];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "form",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("form");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   const validationSchema = apply
     ? Yup.object({
         name: Yup.string().required(
-          translations && translations["full_name_validation"]
+          translations && getTranslation("full_name_validation")
         ),
         fin: Yup.string().required(
-          translations && translations["pin_validation"]
+          translations && getTranslation("pin_validation")
         ),
         date: Yup.date().required(
-          translations && translations["birthday_validation"]
+          translations && getTranslation("birthday_validation")
         ),
         phone: Yup.string().required(
-          translations && translations["phone_validation"]
+          translations && getTranslation("phone_validation")
         ),
         // project: Yup.string().required("Layihə tələb olunur"),
         // education: Yup.string().required("Təhsil tələb olunur"),
@@ -115,25 +66,27 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
         // workStatus: Yup.string().required("Is statusunuz tələb olunur"),
         // voen: Yup.string().required("VÖEN tələb olunur"),
         address: Yup.string().required(
-          translations && translations["address_validation"]
+          translations && getTranslation("address_validation")
         ),
-        cv: Yup.mixed().required(translations && translations["cv_validation"]),
+        cv: Yup.mixed().required(
+          translations && getTranslation("cv_validation")
+        ),
       })
     : join
     ? Yup.object({
         name: Yup.string().required(
-          translations && translations["name_surname_validation"]
+          translations && getTranslation("name_surname_validation")
         ),
         phone: Yup.string().required(
-          translations && translations["phone_validation"]
+          translations && getTranslation("phone_validation")
         ),
       })
     : Yup.object({
         name: Yup.string().required(
-          translations && translations["name_surname_validation"]
+          translations && getTranslation("name_surname_validation")
         ),
         phone: Yup.string().required(
-          translations && translations["phone_validation"]
+          translations && getTranslation("phone_validation")
         ),
       });
 
@@ -185,15 +138,17 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                   )}
                   {translations &&
                     (apply
-                      ? translations["full_name_label"]
-                      : translations["name_surname_label"])}{" "}
+                      ? getTranslation("full_name_label")
+                      : getTranslation("name_surname_label"))}{" "}
                   <small>*</small>
                 </label>
                 <Field
                   type="text"
                   id="name"
                   name="name"
-                  placeholder={translations && translations["name_placeholder"]}
+                  placeholder={
+                    translations && getTranslation("name_placeholder")
+                  }
                 />
                 <ErrorMessage name="name" component="span" className="error" />
               </div>
@@ -209,13 +164,14 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         sx={{ display: "inline-block" }}
                       />
                     )}
-                    {translations && translations["pin_label"]} <small>*</small>
+                    {translations && getTranslation("pin_label")}{" "}
+                    <small>*</small>
                   </label>
                   <Field
                     type="text"
                     id="fin"
                     name="fin"
-                    placeholder={translations && translations["pin_label"]}
+                    placeholder={translations && getTranslation("pin_label")}
                   />
                   <ErrorMessage name="fin" component="span" className="error" />
                 </div>
@@ -230,7 +186,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         sx={{ display: "inline-block" }}
                       />
                     )}
-                    {translations && translations["phone_label"]}{" "}
+                    {translations && getTranslation("phone_label")}{" "}
                     <small>*</small>
                   </label>
                   <Field
@@ -238,7 +194,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                     id="phone"
                     name="phone"
                     placeholder={
-                      translations && translations["phone_placeholder"]
+                      translations && getTranslation("phone_placeholder")
                     }
                   />
                   <ErrorMessage
@@ -264,7 +220,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         sx={{ display: "inline-block" }}
                       />
                     )}
-                    {translations && translations["birthday_label"]}{" "}
+                    {translations && getTranslation("birthday_label")}{" "}
                     <small>*</small>
                   </label>
                   <Field type="date" id="date" name="date" />
@@ -287,7 +243,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         sx={{ display: "inline-block" }}
                       />
                     )}
-                    {translations && translations["formType_label"]}{" "}
+                    {translations && getTranslation("formType_label")}{" "}
                   </label>
                   <div
                     role="group"
@@ -298,7 +254,9 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                       <Field
                         type="radio"
                         name="formType"
-                        value={translations && translations["individual_label"]}
+                        value={
+                          translations && getTranslation("individual_label")
+                        }
                       />
                       {isLoading && (
                         <Skeleton
@@ -308,13 +266,15 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                           sx={{ display: "inline-block" }}
                         />
                       )}
-                      {translations && translations["individual_label"]}
+                      {translations && getTranslation("individual_label")}
                     </label>
                     <label>
                       <Field
                         type="radio"
                         name="formType"
-                        value={translations && translations["corporate_label"]}
+                        value={
+                          translations && getTranslation("corporate_label")
+                        }
                       />
                       {isLoading && (
                         <Skeleton
@@ -324,7 +284,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                           sx={{ display: "inline-block" }}
                         />
                       )}
-                      {translations && translations["corporate_label"]}
+                      {translations && getTranslation("corporate_label")}
                     </label>
                   </div>
                 </div>
@@ -333,7 +293,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
               {apply ? (
                 <div className={`${styles.formGroup} flex flexDirectionColumn`}>
                   <label htmlFor="phone">
-                    {translations && translations["phone_label"]}{" "}
+                    {translations && getTranslation("phone_label")}{" "}
                     <small>*</small>
                   </label>
                   <Field
@@ -341,7 +301,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                     id="phone"
                     name="phone"
                     placeholder={
-                      translations && translations["phone_placeholder"]
+                      translations && getTranslation("phone_placeholder")
                     }
                   />
                   <ErrorMessage
@@ -365,14 +325,14 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         sx={{ display: "inline-block" }}
                       />
                     )}
-                    {translations && translations["mail_label"]}{" "}
+                    {translations && getTranslation("mail_label")}{" "}
                   </label>
                   <Field
                     type="email"
                     id="email"
                     name="email"
                     placeholder={
-                      translations && translations["mail_placeholder"]
+                      translations && getTranslation("mail_placeholder")
                     }
                   />
                   <ErrorMessage
@@ -398,7 +358,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         sx={{ display: "inline-block" }}
                       />
                     )}
-                    {translations && translations["project_label"]}{" "}
+                    {translations && getTranslation("project_label")}{" "}
                   </label>
                   <div
                     role="group"
@@ -433,10 +393,10 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                       <Field
                         type="radio"
                         name="project"
-                        value={translations && translations["other_label"]}
+                        value={translations && getTranslation("other_label")}
                       />
                       <div className="flex">
-                        {translations && translations["other_label"]}
+                        {translations && getTranslation("other_label")}
                         <Field type="text" name="projectOther" placeholder="" />
                       </div>
                     </label>
@@ -460,7 +420,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         sx={{ display: "inline-block" }}
                       />
                     )}
-                    {translations && translations["education_label"]}{" "}
+                    {translations && getTranslation("education_label")}{" "}
                   </label>
                   <div
                     role="group"
@@ -472,7 +432,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         type="radio"
                         name="education"
                         value={
-                          translations && translations["secondary_edu_label"]
+                          translations && getTranslation("secondary_edu_label")
                         }
                       />
                       {isLoading && (
@@ -483,7 +443,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                           sx={{ display: "inline-block" }}
                         />
                       )}
-                      {translations && translations["secondary_edu_label"]}
+                      {translations && getTranslation("secondary_edu_label")}
                     </label>
                     <label>
                       <Field
@@ -491,7 +451,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         name="education"
                         value={
                           translations &&
-                          translations["qualification_edu_label"]
+                          getTranslation("qualification_edu_label")
                         }
                       />
                       {isLoading && (
@@ -502,14 +462,15 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                           sx={{ display: "inline-block" }}
                         />
                       )}
-                      {translations && translations["qualification_edu_label"]}
+                      {translations &&
+                        getTranslation("qualification_edu_label")}
                     </label>
                     <label>
                       <Field
                         type="radio"
                         name="education"
                         value={
-                          translations && translations["bachelor_edu_label"]
+                          translations && getTranslation("bachelor_edu_label")
                         }
                       />
                       {isLoading && (
@@ -520,13 +481,15 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                           sx={{ display: "inline-block" }}
                         />
                       )}
-                      {translations && translations["bachelor_edu_label"]}
+                      {translations && getTranslation("bachelor_edu_label")}
                     </label>
                     <label>
                       <Field
                         type="radio"
                         name="education"
-                        value={translations && translations["master_edu_label"]}
+                        value={
+                          translations && getTranslation("master_edu_label")
+                        }
                       />
                       {isLoading && (
                         <Skeleton
@@ -536,13 +499,13 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                           sx={{ display: "inline-block" }}
                         />
                       )}
-                      {translations && translations["master_edu_label"]}
+                      {translations && getTranslation("master_edu_label")}
                     </label>
                     <label>
                       <Field
                         type="radio"
                         name="education"
-                        value={translations && translations["other_label"]}
+                        value={translations && getTranslation("other_label")}
                       />
                       <div className="flex">
                         {isLoading && (
@@ -553,7 +516,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                             sx={{ display: "inline-block" }}
                           />
                         )}
-                        {translations && translations["other_label"]}
+                        {translations && getTranslation("other_label")}
                         <Field
                           type="text"
                           name="educationOther"
@@ -581,7 +544,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         sx={{ display: "inline-block" }}
                       />
                     )}
-                    {translations && translations["student_label"]}
+                    {translations && getTranslation("student_label")}
                   </label>
                   <div
                     role="group"
@@ -589,29 +552,21 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                     className={`${styles.formGroupTypes} flex flexDirectionColumn`}
                   >
                     <label>
-                      <Field
-                        type="radio"
-                        name="studentStatus"
-                        value={translations && translations["yes_label"]}
-                      />
-                      {translations && translations["yes_label"]}
+                      <Field type="radio" name="studentStatus" value="yes" />
+                      {translations && getTranslation("yes_label")}
+                    </label>
+                    <label>
+                      <Field type="radio" name="studentStatus" value="no" />
+                      {translations && getTranslation("no_label")}
                     </label>
                     <label>
                       <Field
                         type="radio"
                         name="studentStatus"
-                        value={translations && translations["no_label"]}
-                      />
-                      {translations && translations["no_label"]}
-                    </label>
-                    <label>
-                      <Field
-                        type="radio"
-                        name="studentStatus"
-                        value={translations && translations["other_label"]}
+                        value={translations && getTranslation("other_label")}
                       />
                       <div className="flex">
-                        {translations && translations["other_label"]}
+                        {translations && getTranslation("other_label")}
                         <Field
                           type="text"
                           name="studentStatusOther"
@@ -639,7 +594,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         sx={{ display: "inline-block" }}
                       />
                     )}
-                    {translations && translations["work_label"]}
+                    {translations && getTranslation("work_label")}
                   </label>
                   <div
                     role="group"
@@ -647,29 +602,17 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                     className={`${styles.formGroupTypes} flex flexDirectionColumn`}
                   >
                     <label>
-                      <Field
-                        type="radio"
-                        name="workStatus"
-                        value={translations && translations["yes_label"]}
-                      />
-                      {translations && translations["yes_label"]}
+                      <Field type="radio" name="workStatus" value="yes" />
+                      {translations && getTranslation("yes_label")}
                     </label>
                     <label>
-                      <Field
-                        type="radio"
-                        name="workStatus"
-                        value={translations && translations["no_label"]}
-                      />
-                      {translations && translations["no_label"]}
+                      <Field type="radio" name="workStatus" value="no" />
+                      {translations && getTranslation("no_label")}
                     </label>
                     <label>
-                      <Field
-                        type="radio"
-                        name="workStatus"
-                        value={translations && translations["other_label"]}
-                      />
+                      <Field type="radio" name="workStatus" value="other" />
                       <div className="flex">
-                        {translations && translations["other_label"]}
+                        {translations && getTranslation("other_label")}
                         <Field
                           type="text"
                           name="workStatusOther"
@@ -697,7 +640,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         sx={{ display: "inline-block" }}
                       />
                     )}
-                    {translations && translations["tin_label"]}
+                    {translations && getTranslation("tin_label")}
                   </label>
                   <div
                     role="group"
@@ -705,29 +648,17 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                     className={`${styles.formGroupTypes} flex flexDirectionColumn`}
                   >
                     <label>
-                      <Field
-                        type="radio"
-                        name="voen"
-                        value={translations && translations["yes_label"]}
-                      />
-                      {translations && translations["yes_label"]}
+                      <Field type="radio" name="voen" value="yes" />
+                      {translations && getTranslation("yes_label")}
                     </label>
                     <label>
-                      <Field
-                        type="radio"
-                        name="voen"
-                        value={translations && translations["no_label"]}
-                      />
-                      {translations && translations["no_label"]}
+                      <Field type="radio" name="voen" value="no" />
+                      {translations && getTranslation("")}
                     </label>
                     <label>
-                      <Field
-                        type="radio"
-                        name="voen"
-                        value={translations && translations["other_label"]}
-                      />
+                      <Field type="radio" name="voen" value="other" />
                       <div className="flex">
-                        {translations && translations["other_label"]}
+                        {translations && getTranslation("other_label")}
                         <Field type="text" name="voenOther" placeholder="" />
                       </div>
                     </label>
@@ -751,7 +682,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         sx={{ display: "inline-block" }}
                       />
                     )}
-                    {translations && translations["address_label"]}
+                    {translations && getTranslation("address_label")}
                     <small>*</small>
                   </label>
                   <Field
@@ -779,7 +710,8 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         sx={{ display: "inline-block" }}
                       />
                     )}
-                    {translations && translations["cv_label"]} <small>*</small>
+                    {translations && getTranslation("cv_label")}{" "}
+                    <small>*</small>
                   </label>
                   <label htmlFor="cv" className="flexCenter">
                     <input
@@ -806,7 +738,9 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                         fill="#3138E3"
                       />
                     </svg>
-                    <span>{translations && translations["cvFile_label"]}</span>
+                    <span>
+                      {translations && getTranslation("cvFile_label")}
+                    </span>
                   </label>
                   <ErrorMessage name="cv" component="span" className="error" />
                 </div>
@@ -822,7 +756,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                       sx={{ display: "inline-block" }}
                     />
                   )}
-                  {translations && translations["select_services_label"]}
+                  {translations && getTranslation("select_services_label")}
                 </label>
                 <Field as="select" id="service" name="service">
                   <option value="" hidden>
@@ -836,8 +770,8 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                     )}
                     {translations &&
                       (corporative
-                        ? translations["corporate_order"]
-                        : translations["select_default_opt"])}
+                        ? getTranslation("corporate_order")
+                        : getTranslation("select_default_opt"))}
                   </option>
                   {categories?.map((category) => (
                     <option key={category.id} value={category.title}>
@@ -858,10 +792,10 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
               title={
                 translations &&
                 (apply
-                  ? translations["send_button"]
+                  ? getTranslation("send_button")
                   : join
-                  ? translations["submit_button"]
-                  : translations["apply_button"])
+                  ? getTranslation("submit_button")
+                  : getTranslation("apply_button"))
               }
               borderRadius={"7rem"}
             />
@@ -894,8 +828,8 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
           />
         </svg>
         <div>
-          <p>{translations && translations["modal_title"]}</p>
-          <p>{translations && translations["modal_text"]}</p>
+          <p>{translations && getTranslation("modal_title")}</p>
+          <p>{translations && getTranslation("modal_text")}</p>
         </div>
       </Modal>
     </>

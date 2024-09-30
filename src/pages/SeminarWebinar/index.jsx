@@ -36,20 +36,12 @@ const SeminarWebinar = ({ workshop }) => {
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const usefulMenu = menus?.filter((menu) => menu.parent_id === 8);
 
-  const keywords = [
-    "seminar_top_text",
-    "workshops_top_text",
-    "seminar_page_title",
-    "workshop_page_title",
-    "active_seminars",
-    "active_workshops",
-    "last_events",
-  ];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
+
   // const date = new Date();
 
   // const today = `${date.getFullYear()}-0${date.getMonth()}-0${date.getDate()} ${date.getHours()}:${date.getSeconds()}`;
@@ -152,8 +144,8 @@ const SeminarWebinar = ({ workshop }) => {
                 ) : (
                   translations &&
                   (workshop
-                    ? translations["workshop_page_title"]
-                    : translations["seminar_page_title"])
+                    ? getTranslation("workshop_page_title")
+                    : getTranslation("seminar_page_title"))
                 )
               }
             />
@@ -164,8 +156,8 @@ const SeminarWebinar = ({ workshop }) => {
                 ) : (
                   translations &&
                   (workshop
-                    ? translations["workshops_top_text"]
-                    : translations["seminar_top_text"])
+                    ? getTranslation("workshops_top_text")
+                    : getTranslation("seminar_top_text"))
                 )
               }
               icon={
@@ -249,8 +241,8 @@ const SeminarWebinar = ({ workshop }) => {
                 ) : (
                   translations &&
                   (workshop
-                    ? translations["active_workshops"]
-                    : translations["active_seminars"])
+                    ? getTranslation("active_workshops")
+                    : getTranslation("active_seminars"))
                 )}
               </h2>
             </div>
@@ -296,7 +288,7 @@ const SeminarWebinar = ({ workshop }) => {
                 {isLoading ? (
                   <Skeleton variant="text" width={"100%"} height={40} />
                 ) : (
-                  translations && translations["last_events"]
+                  translations && getTranslation("last_events")
                 )}
               </h2>
               <div className={styles.lastEventsGrid}>

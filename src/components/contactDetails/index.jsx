@@ -10,18 +10,12 @@ const ContactDetails = ({ marginLeft, email }) => {
   const { width } = useWindowDimensions();
   const { lang } = useParams();
   const { data: infos, status, error } = useSiteInfos(lang);
-  const keywords = [
-    "individual_phone",
-    "corporate_phone",
-    "project_phone",
-    "phone_word",
-  ];
+  const { data: translations, isLoading } = useTranslations("site");
 
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   return (
     <>
@@ -46,7 +40,7 @@ const ContactDetails = ({ marginLeft, email }) => {
                   {isLoading && (
                     <Skeleton variant="text" width={150} height={20} />
                   )}
-                  {translations && translations["individual_phone"]}
+                  {translations && getTranslation("individual_phone")}
                 </span>
                 <span>
                   {isLoading && (
@@ -57,7 +51,7 @@ const ContactDetails = ({ marginLeft, email }) => {
                       sx={{ display: "inline-block" }}
                     />
                   )}
-                  {translations && translations["phone_word"]}{" "}
+                  {translations && getTranslation("phone_word")}{" "}
                   <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
                 </span>
               </li>
@@ -66,7 +60,7 @@ const ContactDetails = ({ marginLeft, email }) => {
                   {isLoading && (
                     <Skeleton width={150} height={20} variant="text" />
                   )}
-                  {translations && translations["corporate_phone"]}
+                  {translations && getTranslation("corporate_phone")}
                 </span>
                 <span>
                   {isLoading && (
@@ -77,7 +71,7 @@ const ContactDetails = ({ marginLeft, email }) => {
                       sx={{ display: "inline-block" }}
                     />
                   )}
-                  {translations && translations["phone_word"]}
+                  {translations && getTranslation("phone_word")}
                   <Link to={`tel:${infos.phone2}`}>{infos.phone2}</Link>
                 </span>
               </li>
@@ -86,7 +80,7 @@ const ContactDetails = ({ marginLeft, email }) => {
                   {isLoading && (
                     <Skeleton width={150} height={20} variant="text" />
                   )}
-                  {translations && translations["project_phone"]}
+                  {translations && getTranslation("project_phone")}
                 </span>
                 <span>
                   {isLoading && (
@@ -97,7 +91,7 @@ const ContactDetails = ({ marginLeft, email }) => {
                       sx={{ display: "inline-block" }}
                     />
                   )}
-                  {translations && translations["phone_word"]}
+                  {translations && getTranslation("phone_word")}
                   <Link to={`tel:${infos.phone2}`}>{infos.phone2}</Link>
                 </span>
               </li>
@@ -117,7 +111,7 @@ const ContactDetails = ({ marginLeft, email }) => {
                   {isLoading && (
                     <Skeleton variant="text" width={150} height={20} />
                   )}
-                  {translations && translations["individual_phone"]}
+                  {translations && getTranslation("individual_phone")}
                 </span>
                 <span>
                   {isLoading && (
@@ -128,7 +122,7 @@ const ContactDetails = ({ marginLeft, email }) => {
                       sx={{ display: "inline-block" }}
                     />
                   )}
-                  {translations && translations["phone_word"]}{" "}
+                  {translations && getTranslation("phone_word")}{" "}
                   <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
                 </span>
               </li>
@@ -137,7 +131,7 @@ const ContactDetails = ({ marginLeft, email }) => {
                   {isLoading && (
                     <Skeleton width={150} height={20} variant="text" />
                   )}
-                  {translations && translations["corporate_phone"]}
+                  {translations && getTranslation("corporate_phone")}
                 </span>
                 <span>
                   {isLoading && (
@@ -148,7 +142,7 @@ const ContactDetails = ({ marginLeft, email }) => {
                       sx={{ display: "inline-block" }}
                     />
                   )}
-                  {translations && translations["phone_word"]}{" "}
+                  {translations && getTranslation("phone_word")}{" "}
                   <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
                 </span>
               </li>
@@ -157,7 +151,7 @@ const ContactDetails = ({ marginLeft, email }) => {
                   {isLoading && (
                     <Skeleton width={150} height={20} variant="text" />
                   )}
-                  {translations && translations["project_phone"]}
+                  {translations && getTranslation("project_phone")}
                 </span>
                 <span>
                   {isLoading && (
@@ -168,7 +162,7 @@ const ContactDetails = ({ marginLeft, email }) => {
                       sx={{ display: "inline-block" }}
                     />
                   )}
-                  {translations && translations["phone_word"]}{" "}
+                  {translations && getTranslation("phone_word")}{" "}
                   <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
                 </span>
               </li>

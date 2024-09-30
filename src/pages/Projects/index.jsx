@@ -25,18 +25,11 @@ const Projects = ({ book }) => {
     error,
   } = useProOrCarContent(lang, slug);
 
-  const keywords = [
-    "project_page_title",
-    "order_btn",
-    "mobile_book",
-    "qr_code_text",
-    "application_text",
-  ];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   const scrollToContact = () => {
     contactRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -86,7 +79,7 @@ const Projects = ({ book }) => {
                 isLoading ? (
                   <Skeleton variant="text" width={"100%"} height={100} />
                 ) : (
-                  translations && translations?.project_page_title
+                  translations && getTranslation("project_page_title")
                 )
               }
             />
@@ -132,7 +125,7 @@ const Projects = ({ book }) => {
                               height={20}
                             />
                           ) : (
-                            translations && translations?.order_btn
+                            translations && getTranslation("order_btn")
                           )
                         }
                         borderRadius={"7.8rem"}
@@ -159,7 +152,7 @@ const Projects = ({ book }) => {
                       {isLoading && (
                         <Skeleton variant="text" width={"100%"} height={48} />
                       )}
-                      {translations && translations?.mobile_book}
+                      {translations && getTranslation("mobile_book")}
                     </h2>
                     <div>{projectContent?.mobile_qr_text}</div>
                   </div>
@@ -177,7 +170,7 @@ const Projects = ({ book }) => {
                       {isLoading && (
                         <Skeleton variant="text" width={"100%"} height={50} />
                       )}
-                      {translations && translations?.qr_code_text}
+                      {translations && getTranslation("qr_code_text")}
                     </figcaption>
                   </figure>
                 </div>
@@ -191,7 +184,7 @@ const Projects = ({ book }) => {
                       {isLoading && (
                         <Skeleton variant="text" width={"100%"} height={48} />
                       )}
-                      {translations && translations?.application_text}
+                      {translations && getTranslation("application_text")}
                     </div>
                     <div className="flex flexDirectionColumn">
                       <Link to={""} className="flexCenter">

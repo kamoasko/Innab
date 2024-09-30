@@ -15,12 +15,11 @@ const VacanciesPage = () => {
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const aboutMenu = menus?.filter((menu) => menu.parent_id === 3);
 
-  const keywords = ["vacancy_page_title", "send_cv_btn"];
-  const { data: translations, isLoading } = useTranslations(
-    lang,
-    "site",
-    keywords
-  );
+  const { data: translations, isLoading } = useTranslations("site");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
 
   return (
     <>
@@ -66,7 +65,7 @@ const VacanciesPage = () => {
                 isLoading ? (
                   <Skeleton variant="text" width={"100%"} height={100} />
                 ) : (
-                  translations?.vacancy_page_title
+                  getTranslation("vacancy_page_title")
                 )
               }
             />
@@ -78,7 +77,7 @@ const VacanciesPage = () => {
                   isLoading ? (
                     <Skeleton variant="text" width={"100%"} height={20} />
                   ) : (
-                    translations?.send_cv_btn
+                    getTranslation("send_cv_btn")
                   )
                 }
               />
