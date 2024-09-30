@@ -5,24 +5,21 @@ import CustomerCard from "../../CustomerCard";
 import { Autoplay, FreeMode } from "swiper/modules";
 
 const CustomerSlider = ({ customers }) => {
-  const swiperRef = useRef(null);
+  const swiperRefLocal = useRef();
 
-  const handleMouseEnter = () => {
-    if (swiperRef.current && swiperRef.current.autoplay) {
-      swiperRef.current.autoplay.stop();
-    }
+  const handleMouseOver = () => {
+    swiperRefLocal?.current?.swiper?.autoplay?.stop();
   };
 
   const handleMouseLeave = () => {
-    if (swiperRef.current && swiperRef.current.autoplay) {
-      swiperRef.current.autoplay.start();
-    }
+    swiperRefLocal?.current?.swiper?.autoplay?.start();
   };
 
   return (
     <Swiper
-      onMouseEnter={handleMouseEnter}
+      onMouseOver={handleMouseOver}
       onMouseLeave={handleMouseLeave}
+      ref={swiperRefLocal}
       spaceBetween={20}
       loop={true}
       modules={[Autoplay, FreeMode]}
@@ -66,9 +63,6 @@ const CustomerSlider = ({ customers }) => {
         1800: {
           slidesPerView: 8,
         },
-      }}
-      onSwiper={(swiper) => {
-        swiperRef.current = swiper;
       }}
     >
       {customers?.map((customer) => (

@@ -107,7 +107,7 @@ const Customers = forwardRef(({ homepage, about, corporative }, ref) => {
           </>
         )}
       </div>
-      {homepage && <GoogleReviews />}
+      {/* {homepage && <GoogleReviews />} */}
     </section>
   );
 });
