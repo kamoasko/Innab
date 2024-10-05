@@ -303,17 +303,15 @@ const TrainingsPage = () => {
         <section className={styles.education}>
           <div className="container">
             <div className={`${styles.educationWrapper} flex`}>
-              <div className={styles.educationLeftBg}></div>
+              {isLoading && (
+                <Skeleton variant="text" width={"100%"} height={50} />
+              )}
+              <h2
+                dangerouslySetInnerHTML={{
+                  __html: translations && getTranslation("training_edu_title"),
+                }}
+              />
               <div className={styles.educationLeft}>
-                {isLoading && (
-                  <Skeleton variant="text" width={"100%"} height={50} />
-                )}
-                <h2
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      translations && getTranslation("training_edu_title"),
-                  }}
-                />
                 <div>
                   {isLoading && (
                     <Skeleton variant="text" width={"100%"} height={80} />

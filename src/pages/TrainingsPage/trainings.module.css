@@ -123,35 +123,50 @@
   gap: 5.9rem;
 }
 
-.educationLeftBg {
+.educationWrapper > h2 {
   position: absolute;
+  display: flex;
+  align-items: center;
   top: 0;
   left: 0;
-  width: 13%;
+  width: 30%;
+  font-size: 4rem;
+  line-height: 3.9rem;
   height: 20.9rem;
+}
+
+.educationWrapper > h2 > strong,
+.educationWrapper > h2 > span {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+}
+
+.educationWrapper > h2 > strong {
+  color: var(--color-white);
+  justify-content: flex-end;
   background-color: var(--color-main);
+}
+
+.educationWrapper > h2 > span {
+  margin-left: 0.5rem;
+  background-color: var(--color-bg);
+  justify-content: flex-start;
 }
 
 .educationLeft {
   z-index: 1;
-  h2 {
-    font-size: 4rem;
-    line-height: 3.9rem;
-
-    strong {
-      color: var(--color-white);
-    }
-  }
 
   > div {
-    margin-left: 12.9rem;
+    margin-left: 15.9rem;
+    margin-top: 5.5rem;
   }
 }
 
 .educationLeftContent {
   font-size: 2.8rem;
   line-height: 3.9rem;
-  margin-top: 2rem;
 
   strong {
     color: var(--color-main);
@@ -295,6 +310,12 @@
   }
 }
 
+@media (max-width: 1140px) {
+  .educationLeft > div {
+    margin-left: 14rem;
+  }
+}
+
 @media (max-width: 1100px) {
   .faqContact {
     margin-top: 7.2rem;
@@ -319,6 +340,10 @@
 
   .educationWrapper {
     flex-direction: column;
+  }
+
+  .educationLeft > div {
+    margin-left: 12rem;
   }
 }
 
@@ -415,26 +440,25 @@
     gap: 4rem;
   }
 
-  .educationLeftBg {
+  .educationWrapper > h2 {
+    font-size: 2.4rem;
+    line-height: 2rem;
+    width: 40%;
     height: 7.1rem;
   }
 
-  .educationLeft {
-    h2 {
-      font-size: 2.4rem;
-      line-height: 2rem;
-    }
+  .educationWrapper > h2 > strong {
+    padding: 0.4rem;
+  }
 
-    > div {
-      margin-left: 0;
-    }
+  .educationLeft > div {
+    margin-left: 13rem;
+    margin-top: 3.5rem;
   }
 
   .educationLeftContent {
-    margin-top: 1rem;
     font-size: 1.6rem;
     line-height: 2rem;
-    margin-left: 9rem;
   }
 
   .educationLeftBtns {
@@ -505,6 +529,10 @@
 }
 
 @media (max-width: 587px) {
+  .educationLeft > div {
+    margin-left: 10rem;
+  }
+
   .roomsGrid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 15.75rem));
     grid-auto-rows: 16.4rem;
@@ -516,9 +544,19 @@
     height: 21.8rem;
   }
 
+  .educationLeft > div {
+    margin-left: 8rem;
+  }
+
   .educationLeftBtns {
     button {
       padding: 1rem;
     }
+  }
+}
+
+@media (max-width: 376px) {
+  .educationWrapper > h2 {
+    width: 50%;
   }
 }
