@@ -62,11 +62,13 @@ const CareerResults = ({ results }) => {
           </span>
           <h4>
             {results
-              ? results.investmentPaybackPeriod.replace(/\.0+$/, "") + " ay"
+              ? results.investmentPaybackPeriod +
+                " " +
+                (translations && getTranslation("year"))
               : ""}
           </h4>
         </li>
-        <li>
+        {/* <li>
           <span>
             {isLoading && (
               <Skeleton variant="text" width={"100%"} height={20} />
@@ -83,7 +85,7 @@ const CareerResults = ({ results }) => {
             {translations && getTranslation("work_offer_chances")}
           </span>
           <h4>{results ? results.foreignWorkPercentage + "%" : ""}</h4>
-        </li>
+        </li> */}
       </ol>
     </div>
   );

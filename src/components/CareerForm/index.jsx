@@ -56,30 +56,54 @@ const PrettoSlider = styled(Slider)({
 const CareerForm = ({ onResults }) => {
   const { lang } = useParams();
   const { data: calcDatas } = useCalcDatas(lang);
-
-  const initialValues = {
-    field: "",
-    educationType: "",
-    duration: 2,
-    language: "",
-    experience: 0,
-  };
-
-  const validationSchema = Yup.object({
-    field: Yup.string().required("Required"),
-    educationType: Yup.string().required("Required"),
-    duration: Yup.number().required("Required"),
-    language: Yup.string().required("Required"),
-    experience: Yup.number().required("Required"),
-  });
-
   const { data: translations, isLoading } = useTranslations("site");
   const getTranslation = (keyword) => {
     const translation = translations.find((item) => item.keyword === keyword);
     return translation ? translation.value[lang] : keyword;
   };
 
+  const initialValues = {
+    field: "",
+    educationType: "",
+    // duration: 2,
+    language: "",
+    computer: "",
+    experience: 0,
+  };
+
+  const validationSchema = Yup.object({
+    field: Yup.string().required(
+      translations && getTranslation("profession_validation")
+    ),
+    educationType: Yup.string().required(
+      translations && getTranslation("where_validation")
+    ),
+    // duration: Yup.number().required("Required"),
+    language: Yup.string().required(
+      translations && getTranslation("language_validation")
+    ),
+    computer: Yup.string().required(
+      translations && getTranslation("computer_validation")
+    ),
+    experience: Yup.number().required(
+      translations && getTranslation("experience_validation")
+    ),
+  });
+
   const calculateResults = (values) => {
+    if (
+      !values.field ||
+      !values.educationType ||
+      !values.language ||
+      !values.computer ||
+      values.experience === undefined ||
+      values.experience === null
+    ) {
+      // Don't proceed if any required value is missing
+      onResults(null);
+      return;
+    }
+
     const fieldSalaries =
       calcDatas &&
       calcDatas?.areas
@@ -94,19 +118,25 @@ const CareerForm = ({ onResults }) => {
       "Digər kurslarda": calcDatas?.calculator?.where_other,
     };
 
-    const durationCoefficients = {
-      0: 0.5,
-      1: 0.7,
-      2: 1,
-      3: 1.25,
-      4: 2,
-      5: 3,
-    };
+    // const durationCoefficients = {
+    //   0: 0.5,
+    //   1: 0.7,
+    //   2: 1,
+    //   3: 1.25,
+    //   4: 2,
+    //   5: 3,
+    // };
 
     const languageCoefficients = calcDatas && {
       Zəif: calcDatas?.calculator?.english_elementry,
       Orta: calcDatas?.calculator?.english_medium,
       Güclü: calcDatas?.calculator?.english_hard,
+    };
+
+    const computerCoefficients = calcDatas && {
+      Zəif: calcDatas?.calculator?.comp_elementry,
+      Orta: calcDatas?.calculator?.comp_medium,
+      Güclü: calcDatas?.calculator?.comp_hard,
     };
 
     const experienceCoefficients = calcDatas && {
@@ -119,78 +149,108 @@ const CareerForm = ({ onResults }) => {
     };
 
     const educationCosts = {
-      "İnnab-da": 2000,
-      Özüm: 1000,
-      "Digər kurslarda": 1500,
+      "İnnab-da": 800,
+      Özüm: 600,
+      "Digər kurslarda": 2000,
     };
 
-    const averageSalary = fieldSalaries[values.field];
-    const educationCoefficient = educationCoefficients[values.educationType];
-    const experienceCoefficient =
-      values.experience >= 10
-        ? experienceCoefficients[5]
-        : values.experience >= 5
-        ? experienceCoefficients[4]
-        : values.experience >= 3
-        ? experienceCoefficients[3]
-        : values.experience >= 1
-        ? experienceCoefficients[2]
-        : experienceCoefficients[1];
-    const languageCoefficient = languageCoefficients[values.language];
-    const durationCoefficient =
-      values.duration >= 6
-        ? durationCoefficients[5]
-        : values.duration >= 3
-        ? durationCoefficients[4]
-        : values.duration >= 1
-        ? durationCoefficients[3]
-        : durationCoefficients[1];
+    let averageSalary = fieldSalaries[values.field] || 0;
+    let educationCoefficient = educationCoefficients[values.educationType] || 1;
+    let languageCoefficient = languageCoefficients[values.language] || 1;
+    let computerCoefficient = computerCoefficients[values.computer] || 1;
+    let experienceCoefficient = 1;
+
+    if (values.experience >= 10) {
+      experienceCoefficient = experienceCoefficients[5];
+    } else if (values.experience >= 5) {
+      experienceCoefficient = experienceCoefficients[4];
+    } else if (values.experience >= 3) {
+      experienceCoefficient = experienceCoefficients[3];
+    } else if (values.experience >= 1) {
+      experienceCoefficient = experienceCoefficients[2];
+    } else {
+      experienceCoefficient = experienceCoefficients[1];
+    }
+
+    educationCoefficient = Number(educationCoefficient) || 1;
+    languageCoefficient = Number(languageCoefficient) || 1;
+    computerCoefficient = Number(computerCoefficient) || 1;
+    experienceCoefficient = Number(experienceCoefficient) || 1;
+    // const durationCoefficient =
+    //   values.duration >= 6
+    //     ? durationCoefficients[5]
+    //     : values.duration >= 3
+    //     ? durationCoefficients[4]
+    //     : values.duration >= 1
+    //     ? durationCoefficients[3]
+    //     : durationCoefficients[1];
 
     const futureSalary =
       averageSalary *
       educationCoefficient *
       experienceCoefficient *
       languageCoefficient *
-      durationCoefficient;
+      computerCoefficient;
+    // durationCoefficient;
 
-    const futurePositions =
-      calcDatas &&
-      calcDatas?.areas
-        ?.map((area) => ({
-          [area.area_name]: area.children?.map((child) => child.area_name),
-        }))
-        ?.reduce((acc, curr) => ({ ...acc, ...curr }), {});
+    // const futurePositions =
+    //   calcDatas &&
+    //   calcDatas?.areas
+    //     ?.map((area) => ({
+    //       [area.area_name]: area.children?.map((child) => child.area_name),
+    //     }))
+    //     ?.reduce((acc, curr) => ({ ...acc, ...curr }), {});
 
-    const foreignWorkPercentage = futureSalary > 1000 ? 45 : 25;
+    // const foreignWorkPercentage = futureSalary > 1000 ? 45 : 25;
 
     const totalInvestment =
       educationCosts[values.educationType] * educationCoefficient;
-    const averageMonthlySalary = futureSalary / 12;
+    const averageYearlySalary = futureSalary;
     const investmentPaybackPeriod = (
-      totalInvestment / averageMonthlySalary
-    ).toFixed(2);
+      totalInvestment / averageYearlySalary
+    ).toFixed(1);
 
     onResults({
       futureSalary: futureSalary.toFixed(2),
-      futurePositions: futurePositions[values.field],
-      foreignWorkPercentage,
+      // futurePositions: futurePositions[values.field],
+      // foreignWorkPercentage,
       investmentPaybackPeriod: investmentPaybackPeriod,
     });
   };
 
+  const onSubmit = (values) => {
+    calculateResults(values);
+  };
+
   return (
-    <Formik initialValues={initialValues} validationSchema={validationSchema}>
-      {({ values, setFieldValue }) => {
+    <Formik
+      initialValues={initialValues}
+      validationSchema={validationSchema}
+      validateOnChange={false}
+      validateOnBlur={false}
+      onSubmit={onSubmit}
+    >
+      {({ values, setFieldValue, isValid, handleSubmit }) => {
         useEffect(() => {
-          if (values.experience !== initialValues.experience) {
+          if (isValid) {
             calculateResults(values);
+          } else {
+            onResults(null);
           }
-        }, [values.experience]);
+        }, [values, isValid]);
+
+        const handleExperienceChange = (_, value) => {
+          setFieldValue("experience", value);
+          handleSubmit();
+        };
 
         return (
           <Form className="flex flexDirectionColumn">
             <div className={`${styles.formGroup}`}>
               <Field as="select" name="field" id="field">
+                <option value="" hidden>
+                  {translations && getTranslation("select_field")}
+                </option>
                 {calcDatas &&
                   calcDatas.areas?.map((area, index) => (
                     <option key={index} value={area.area_name}>
@@ -255,7 +315,7 @@ const CareerForm = ({ onResults }) => {
               />
             </div>
 
-            <div className={`${styles.formGroup}`}>
+            {/* <div className={`${styles.formGroup}`}>
               <div>
                 <label>
                   {isLoading && (
@@ -288,7 +348,7 @@ const CareerForm = ({ onResults }) => {
                 component="span"
                 className="error"
               />
-            </div>
+            </div>  */}
 
             <div
               className={`${styles.formGroup} flex flexDirectionColumn`}
@@ -333,6 +393,49 @@ const CareerForm = ({ onResults }) => {
               />
             </div>
 
+            <div
+              className={`${styles.formGroup} flex flexDirectionColumn`}
+              role="group"
+              aria-labelledby="computer"
+            >
+              <h4>
+                {isLoading && (
+                  <Skeleton variant="text" height={20} width={"100%"} />
+                )}
+                {translations && getTranslation("computer_knowledge")}
+              </h4>
+              <div
+                className={`${styles.formGroupWrapper} flex alignItemsCenter justifyContentBetween`}
+              >
+                <label htmlFor="computer" className="flex alignItemsCenter">
+                  <Field type="radio" name="computer" value="Zəif" />
+                  {isLoading && (
+                    <Skeleton variant="text" height={20} width={"100%"} />
+                  )}
+                  {translations && getTranslation("beginner")}
+                </label>
+                <label htmlFor="computer" className="flex alignItemsCenter">
+                  <Field type="radio" name="computer" value="Orta" />
+                  {isLoading && (
+                    <Skeleton variant="text" height={20} width={"100%"} />
+                  )}
+                  {translations && getTranslation("intermediate")}
+                </label>
+                <label htmlFor="computer" className="flex alignItemsCenter">
+                  <Field type="radio" name="computer" value="Güclü" />
+                  {isLoading && (
+                    <Skeleton variant="text" height={20} width={"100%"} />
+                  )}
+                  {translations && getTranslation("advanced")}
+                </label>
+              </div>
+              <ErrorMessage
+                name="computer"
+                component="span"
+                className="error"
+              />
+            </div>
+
             <div className={`${styles.formGroup}`}>
               <div>
                 <label>
@@ -353,10 +456,10 @@ const CareerForm = ({ onResults }) => {
                 <Box>
                   <PrettoSlider
                     value={values.experience}
-                    onChange={(_, value) => setFieldValue("experience", value)}
-                    aria-label="pretto slider"
+                    onChange={handleExperienceChange}
+                    aria-label="Experience slider"
                     min={0}
-                    max={10}
+                    max={47}
                     step={1}
                   />
                 </Box>

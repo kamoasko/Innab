@@ -778,6 +778,9 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                       {category.title}
                     </option>
                   ))}
+                  <option value="other">
+                    {translations && getTranslation("other_option")}
+                  </option>
                 </Field>
                 <ErrorMessage
                   name="service"
