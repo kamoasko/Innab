@@ -85,10 +85,12 @@ const Navbar = ({
   };
 
   const handleScrollToContact = useCallback(() => {
-    document.getElementById("contact").scrollIntoView({ behavior: "smooth" });
-    setMobMenuOpen(false);
-    setOpenDropdowns(Array(7).fill(false));
-    setOpenSubMenus(Array(6).fill(false));
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      const headerHeight = document.querySelector("header").offsetHeight;
+      const offsetTop = contactSection.offsetTop - headerHeight;
+      window.scrollTo({ top: offsetTop, behavior: "smooth" });
+    }
   }, []);
 
   const handleScrollToSect = useCallback(
@@ -96,7 +98,9 @@ const Navbar = ({
       navigate(`/${lang}`);
       setTimeout(() => {
         if (sectRef && sectRef.current) {
-          sectRef.current.scrollIntoView({ behavior: "smooth" });
+          const headerHeight = document.querySelector("header").offsetHeight;
+          const offsetTop = sectRef.current.offsetTop - headerHeight;
+          window.scrollTo({ top: offsetTop, behavior: "smooth" });
         }
       }, 0);
     },
