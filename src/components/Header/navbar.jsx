@@ -107,6 +107,21 @@ const Navbar = ({
     [lang, navigate]
   );
 
+  const handleCorporativeNavigation = useCallback(
+    (sectionId) => {
+      navigate(`/${lang}/${parentMenu[2].slug}`); // Navigate to Corporative page
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          const headerHeight = document.querySelector("header").offsetHeight;
+          const offsetTop = element.offsetTop - headerHeight;
+          window.scrollTo({ top: offsetTop, behavior: "smooth" });
+        }
+      }, 0);
+    },
+    [lang, navigate, parentMenu]
+  );
+
   if (status === "error") {
     return <Box>{error}</Box>;
   }
@@ -342,9 +357,15 @@ const Navbar = ({
                   openDropdowns[2] ? "open" : ""
                 }`}
               >
-                <li>Bizi seçənlər</li>
-                <li>Təlimlər</li>
-                <li>Müraciət</li>
+                <li onClick={() => handleCorporativeNavigation("corporative")}>
+                  Təlimlər
+                </li>
+                <li onClick={() => handleCorporativeNavigation("customers")}>
+                  Bizi seçənlər
+                </li>
+                <li onClick={() => handleCorporativeNavigation("contact")}>
+                  Müraciət
+                </li>
               </ul>
             </li>
             <li className="navbarMenuDy">

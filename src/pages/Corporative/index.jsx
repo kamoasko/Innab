@@ -8,7 +8,6 @@ import { Box, Skeleton } from "@mui/material";
 import { useCorporatives } from "../../features/corporative/useCorporatives";
 import { Helmet } from "react-helmet-async";
 import { useMenus } from "../../features/menus/useMenu";
-import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useTranslations } from "../../features/translations/translations";
 import Contact from "../../components/Contact";
@@ -25,7 +24,6 @@ const Corporative = () => {
   const { data: corporatives, status, error } = useCorporatives(lang);
 
   const { data: categories } = useTrainingCategories(lang);
-  const { data: infos } = useSiteInfos(lang);
   const { data: menus, status: menuStatus, error: menuError } = useMenus(lang);
   const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const contactRef = useRef(null);
@@ -36,20 +34,11 @@ const Corporative = () => {
     ?.map((category) => category.subData)
     ?.flat(Infinity);
 
-  const scrollToSection = function (r) {
-    switch (r) {
-      case contactRef:
-        contactRef.current?.scrollIntoView({ behavior: "smooth" });
-        break;
-      case trainingRef:
-        trainingRef.current?.scrollIntoView({ behavior: "smooth" });
-        break;
-      case customersRef:
-        customersRef.current?.scrollIntoView({ behavior: "smooth" });
-        break;
-      default:
-        null;
-        break;
+  const scrollToSection = function (ref) {
+    if (ref && ref.current) {
+      const headerHeight = document.querySelector("header").offsetHeight;
+      const offsetTop = ref.current.offsetTop - headerHeight;
+      window.scrollTo({ top: offsetTop, behavior: "smooth" });
     }
   };
 
@@ -168,7 +157,11 @@ const Corporative = () => {
           </div>
         </section>
 
-        <section className={styles.corporative} ref={trainingRef}>
+        <section
+          className={styles.corporative}
+          ref={trainingRef}
+          id="corporative"
+        >
           <div className="container">
             <div className={styles.corporativeTitle}>
               <h2>

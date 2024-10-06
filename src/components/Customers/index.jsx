@@ -23,7 +23,7 @@ const Customers = memo(
     };
 
     return (
-      <section className={styles.customers} ref={ref}>
+      <section className={styles.customers} ref={ref} id="customers">
         <SectionTitle
           about={about}
           title={
