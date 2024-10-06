@@ -49,8 +49,6 @@ const SearchBar = ({ top, bottom, isOpen, onClose }) => {
       );
       const data = response.data;
 
-      console.log(data);
-
       // Processing and combining trainings and blogs results
       const trainingResults = data.trainings.data.flatMap((training) => ({
         ...training,
@@ -65,14 +63,9 @@ const SearchBar = ({ top, bottom, isOpen, onClose }) => {
         type: "blog",
       }));
 
-      const results = [...trainingResults, ...blogResults].filter(
-        (item) =>
-          (item.top_text_title?.[lang] ?? "").toLowerCase().includes(query) ||
-          (item.slug?.[lang] ?? "").toLowerCase().includes(query) ||
-          (item.short_description?.[lang] ?? "")
-            .toLowerCase()
-            .includes(query) ||
-          (item.title?.[lang] ?? "").toLowerCase().includes(query)
+      // Filtering results based on the 'title' field in the selected language
+      const results = [...trainingResults, ...blogResults].filter((item) =>
+        (item.title?.[lang] ?? "").toLowerCase().includes(query)
       );
 
       setFilteredResults(results);
@@ -202,16 +195,18 @@ const SearchBar = ({ top, bottom, isOpen, onClose }) => {
                     </li>
                   ))}
                 </ul>
-                <Pagination
-                  count={totalPages}
-                  page={currentPage}
-                  onChange={handlePageChange}
-                  color="primary"
-                  sx={{ justifyContent: "center", marginTop: "16px" }}
-                />
+                {totalPages > 1 && (
+                  <Pagination
+                    count={totalPages}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                    color="primary"
+                    sx={{ justifyContent: "center", marginTop: "16px" }}
+                  />
+                )}
               </>
             ) : (
-              <p>No results found</p>
+              <p>{translations && getTranslation("result_not_found")}</p>
             )}
           </div>
         </div>
