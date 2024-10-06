@@ -42,6 +42,10 @@
   left: 0;
 }
 
+.pageHeaderBottom > li {
+  cursor: pointer;
+}
+
 /* corporative */
 
 .corporative {

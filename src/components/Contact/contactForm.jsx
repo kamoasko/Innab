@@ -36,7 +36,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
         name: "",
         phone: "",
         email: "",
-        formType: "Fərdi",
+        formType: corporative ? "Korporativ" : "Fərdi",
         service: "",
       };
 
