@@ -11,6 +11,11 @@ import { Skeleton } from "@mui/material";
 
 const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
   const { lang } = useParams();
+  const { data: translations, isLoading } = useTranslations("form");
+  const getTranslation = (keyword) => {
+    const translation = translations.find((item) => item.keyword === keyword);
+    return translation ? translation.value[lang] : keyword;
+  };
   const initialValues = apply
     ? {
         name: "",
@@ -36,15 +41,9 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
         name: "",
         phone: "",
         email: "",
-        formType: corporative ? "Korporativ" : "Fərdi",
+        formType: corporative ? "corporate" : "individual",
         service: "",
       };
-
-  const { data: translations, isLoading } = useTranslations("form");
-  const getTranslation = (keyword) => {
-    const translation = translations.find((item) => item.keyword === keyword);
-    return translation ? translation.value[lang] : keyword;
-  };
 
   const validationSchema = apply
     ? Yup.object({
@@ -251,13 +250,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                     className={`${styles.formGroupTypes} flex alignItemsCenter`}
                   >
                     <label>
-                      <Field
-                        type="radio"
-                        name="formType"
-                        value={
-                          translations && getTranslation("individual_label")
-                        }
-                      />
+                      <Field type="radio" name="formType" value="individual" />
                       {isLoading && (
                         <Skeleton
                           variant="text"
@@ -269,13 +262,7 @@ const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
                       {translations && getTranslation("individual_label")}
                     </label>
                     <label>
-                      <Field
-                        type="radio"
-                        name="formType"
-                        value={
-                          translations && getTranslation("corporate_label")
-                        }
-                      />
+                      <Field type="radio" name="formType" value="corporate" />
                       {isLoading && (
                         <Skeleton
                           variant="text"
