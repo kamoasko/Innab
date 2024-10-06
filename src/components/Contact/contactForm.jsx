@@ -24,6 +24,7 @@ const ContactForm = ({
     const translation = translations.find((item) => item.keyword === keyword);
     return translation ? translation.value[lang] : keyword;
   };
+
   const initialValues = useMemo(() => {
     const defaultValues = apply
       ? {
@@ -58,8 +59,13 @@ const ContactForm = ({
       projectContent &&
       orderButtonClicked &&
       projectContent.mobile_title &&
-      projectContent.mobile_title === projectContent.title &&
-      categories.some((category) => category.title === "55 Dərsə Excel Kitabı")
+      projectContent.mobile_title?.replace(/[“”"]/g, "").toLowerCase() ===
+        projectContent.title?.replace(/[“”"]/g, "").toLowerCase() &&
+      categories.some(
+        (category) =>
+          category.title?.replace(/[“”"]/g, "").toLowerCase() ===
+          "55 dərsə excel kitabı"
+      )
     ) {
       defaultValues.service = "55 Dərsə Excel Kitabı";
     }
