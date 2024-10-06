@@ -109,7 +109,7 @@ const Navbar = ({
 
   const handleCorporativeNavigation = useCallback(
     (sectionId) => {
-      navigate(`/${lang}/${parentMenu[2].slug}`); // Navigate to Corporative page
+      navigate(`/${lang}/${parentMenu[2].slug}`);
       setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -117,7 +117,7 @@ const Navbar = ({
           const offsetTop = element.offsetTop - headerHeight;
           window.scrollTo({ top: offsetTop, behavior: "smooth" });
         }
-      }, 0);
+      }, 1000);
     },
     [lang, navigate, parentMenu]
   );
