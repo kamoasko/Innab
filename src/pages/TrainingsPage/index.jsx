@@ -38,10 +38,6 @@ const TrainingsPage = () => {
   } = useTrainingCategories(lang);
   const contactRef = useRef(null);
 
-  const isMenuActive = (slug) => {
-    return slug === location.pathname.split("/")[4];
-  };
-
   const toggleTrainingMenu = (categoryId) => {
     setOpenCategoryId((prevId) => (prevId === categoryId ? null : categoryId));
   };
@@ -53,9 +49,18 @@ const TrainingsPage = () => {
   useEffect(() => {
     if (isSuccess && categories) {
       const training = categories
-        ?.flatMap((category) => category.subData)
-        ?.find((training) => training.slug === trainingSlug);
+        .flatMap((category) => category.subData)
+        .find((training) => training.slug === trainingSlug);
+
       setSelectedTraining(training);
+
+      // Find the category ID of the selected training
+      const category = categories.find((category) =>
+        category.subData.includes(training)
+      );
+      if (category) {
+        setOpenCategoryId(category.id);
+      }
     }
   }, [categories, isSuccess, trainingSlug]);
 
@@ -86,10 +91,18 @@ const TrainingsPage = () => {
   );
 
   const scrollToContact = () => {
+    const contactSection = document.getElementById("contact");
     if (contactRef) {
-      contactRef.current?.scrollIntoView({ behavior: "smooth" });
+      const headerHeight = document.querySelector("header").offsetHeight;
+      const offsetTop = contactSection.offsetTop - headerHeight;
+      window.scrollTo({ top: offsetTop, behavior: "smooth" });
     }
   };
+
+  console.log(
+    categories &&
+      categories.find((c) => c.slug === location.pathname.split("/")[3])
+  );
 
   if (isPending) {
     return (
@@ -186,46 +199,41 @@ const TrainingsPage = () => {
                     <li
                       key={category.id}
                       className={`${
-                        openCategoryId === category.id &&
-                        location.pathname.split("/")[3] === category.slug
-                          ? "opened"
-                          : ""
+                        openCategoryId === category.id ? "opened" : ""
                       }`}
                     >
                       <div
                         onClick={() => toggleTrainingMenu(category.id)}
-                        className="flex alignItemsCenter"
+                        className="flex alignItemsCenter justifyContentBetween"
                       >
                         {category.title}
-                        {openCategoryId === category.id &&
-                        location.pathname.split("/")[3] === category.slug ? (
+                        {openCategoryId === category.id ? (
                           <FaMinus />
                         ) : (
                           <FaPlus />
                         )}
                       </div>
-                      {openCategoryId === category.id &&
-                        location.pathname.split("/")[3] === category.slug && (
-                          <ul className="flex flexDirectionColumn">
-                            {category.subData?.map((training) => (
-                              <li
-                                key={training.id}
-                                className={
-                                  location.pathname.split("/")[4] ===
-                                  training.slug
-                                    ? "active"
-                                    : ""
-                                }
+                      {openCategoryId === category.id && category.slug && (
+                        <ul className="flex flexDirectionColumn">
+                          {category.subData?.map((training) => (
+                            <li
+                              key={training.id}
+                              className={
+                                location.pathname.split("/")[4] ===
+                                training.slug
+                                  ? "active"
+                                  : ""
+                              }
+                            >
+                              <Link
+                                to={`/${lang}/${parentMenu[1]?.slug}/${category.slug}/${training.slug}`}
                               >
-                                <Link
-                                  to={`/${lang}/${parentMenu[1]?.slug}/${category.slug}/${training.slug}`}
-                                >
-                                  {training.title}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        )}
+                                {training.title}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -407,7 +415,7 @@ const TrainingsPage = () => {
                   >
                     <div
                       onClick={() => toggleTrainingMenu(category.id)}
-                      className="flex alignItemsCenter"
+                      className="flex alignItemsCenter justifyContentBetween"
                     >
                       {category.title}{" "}
                       {openCategoryId === category.id ? (

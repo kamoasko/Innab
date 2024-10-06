@@ -733,8 +733,11 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .trainingMenu > li {
-  width: max-content;
-  padding: 1.6rem 2rem;
+  display: flex;
+  flex-direction: column;
+  width: 21.1rem;
+  padding: 1.6rem 0;
+  /* padding-inline: 2rem 1.5rem; */
   height: 5.5rem;
   overflow: hidden;
   border-radius: 6rem;
@@ -744,6 +747,10 @@ input[type="search"]::-webkit-search-cancel-button {
   -moz-transition: 0.3s;
   -ms-transition: 0.3s;
   -o-transition: 0.3s;
+}
+
+.trainingMenu > li > ul > li {
+  padding-inline: 2rem 0;
 }
 
 .trainingMenu > li.opened {
@@ -765,13 +772,16 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .trainingMenu > li.opened > ul > li.active,
 .trainingMenu > li.opened > ul > li:hover {
-  color: var(--color-main);
+  color: var(--color-white);
+  background-color: var(--color-main);
 }
 
-.trainingMenu > li div {
+.trainingMenu > li > div {
+  padding-inline: 2rem 1.5rem;
   gap: 2rem;
   cursor: pointer;
   font-weight: 700;
+  width: 100%;
 }
 
 .trainingMenu > li ul {
