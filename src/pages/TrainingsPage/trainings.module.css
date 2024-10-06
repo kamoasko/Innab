@@ -560,3 +560,13 @@
     width: 50%;
   }
 }
+
+@media (max-width: 371px) {
+  .educationLeftBtns {
+    flex-direction: column;
+  }
+
+  .educationLeftBtns > button {
+    width: 100%;
+  }
+}
