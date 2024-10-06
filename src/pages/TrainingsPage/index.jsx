@@ -427,7 +427,14 @@ const TrainingsPage = () => {
                     {openCategoryId === category.id && (
                       <ul className="flex flexDirectionColumn">
                         {category.subData?.map((training) => (
-                          <li key={training.id}>
+                          <li
+                            key={training.id}
+                            className={
+                              location.pathname.split("/")[4] === training.slug
+                                ? "active"
+                                : ""
+                            }
+                          >
                             <Link
                               to={`/${lang}/${parentMenu[1]?.slug}/${category.slug}/${training.slug}`}
                             >

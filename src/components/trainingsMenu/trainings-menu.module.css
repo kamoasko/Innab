@@ -3,8 +3,10 @@
 }
 
 .trainingMenu > li {
-  width: max-content;
-  padding: 1.6rem 2rem;
+  display: flex;
+  flex-direction: column;
+  width: 23.38rem;
+  padding: 1.6rem 0;
   height: 5.5rem;
   overflow: hidden;
   border-radius: 6rem;
@@ -16,7 +18,11 @@
   -o-transition: 0.3s;
 }
 
-.trainingMenu > li div {
+.trainingMenu > li > ul > li {
+  padding-inline: 2rem 0;
+}
+
+.trainingMenu > li > div {
   gap: 2rem;
   cursor: pointer;
   font-weight: 700;
