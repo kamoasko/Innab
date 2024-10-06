@@ -15,6 +15,8 @@ const Contact = memo(
     contactRef,
     apiEndpoint,
     corporative,
+    projectContent,
+    orderButtonClicked,
   }) => {
     const { lang } = useParams();
     const { data: translations, isLoading } = useTranslations("form");
@@ -69,6 +71,8 @@ const Contact = memo(
                 apiEndpoint={apiEndpoint}
                 categories={categories}
                 corporative={corporative}
+                projectContent={projectContent}
+                orderButtonClicked={orderButtonClicked}
               />
             </div>
           </div>

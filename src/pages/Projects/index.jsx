@@ -1,4 +1,4 @@
-import React, { Suspense, useRef } from "react";
+import React, { Suspense, useRef, useState } from "react";
 import styles from "./projects.module.css";
 import playStore from "../../assets/icons/google-play-icon.svg";
 import { Link, useParams } from "react-router-dom";
@@ -18,6 +18,7 @@ const Contact = React.lazy(() => import("../../components/Contact"));
 const Projects = ({ book }) => {
   const contactRef = useRef(null);
   const { lang, slug } = useParams();
+  const [orderButtonClicked, setOrderButtonClicked] = useState(false);
   const { data: projects } = useProjectOrCareer(lang);
   const {
     data: projectContent,
@@ -129,7 +130,10 @@ const Projects = ({ book }) => {
                           )
                         }
                         borderRadius={"7.8rem"}
-                        onClick={scrollToContact}
+                        onClick={() => {
+                          setOrderButtonClicked(true);
+                          scrollToContact();
+                        }}
                       />
                     </div>
                   </article>
@@ -214,6 +218,8 @@ const Projects = ({ book }) => {
           contactRef={contactRef}
           apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
           categories={projects && projects}
+          projectContent={projectContent}
+          orderButtonClicked={orderButtonClicked}
         />
       </Suspense>
     </>

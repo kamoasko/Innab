@@ -9,41 +9,70 @@ import { useTranslations } from "../../features/translations/translations";
 import { useParams } from "react-router";
 import { Skeleton } from "@mui/material";
 
-const ContactForm = ({ categories, apiEndpoint, apply, join, corporative }) => {
+const ContactForm = ({
+  categories,
+  apiEndpoint,
+  apply,
+  join,
+  corporative,
+  projectContent,
+  orderButtonClicked,
+}) => {
   const { lang } = useParams();
   const { data: translations, isLoading } = useTranslations("form");
   const getTranslation = (keyword) => {
     const translation = translations.find((item) => item.keyword === keyword);
     return translation ? translation.value[lang] : keyword;
   };
-  const initialValues = apply
-    ? {
-        name: "",
-        fin: "",
-        date: "",
-        phone: "",
-        project: "",
-        education: "",
-        studentStatus: "",
-        workStatus: "",
-        voen: "",
-        address: "",
-        cv: null,
-      }
-    : join
-    ? {
-        name: "",
-        phone: "",
-        email: "",
-        training: "",
-      }
-    : {
-        name: "",
-        phone: "",
-        email: "",
-        formType: corporative ? "corporate" : "individual",
-        service: "",
-      };
+  const initialValues = useMemo(() => {
+    const defaultValues = apply
+      ? {
+          name: "",
+          fin: "",
+          date: "",
+          phone: "",
+          project: "",
+          education: "",
+          studentStatus: "",
+          workStatus: "",
+          voen: "",
+          address: "",
+          cv: null,
+        }
+      : join
+      ? {
+          name: "",
+          phone: "",
+          email: "",
+          training: "",
+        }
+      : {
+          name: "",
+          phone: "",
+          email: "",
+          formType: corporative ? "corporate" : "individual",
+          service: "",
+        };
+
+    if (
+      projectContent &&
+      orderButtonClicked &&
+      projectContent.mobile_title &&
+      projectContent.mobile_title === projectContent.title &&
+      categories.some((category) => category.title === "55 Dərsə Excel Kitabı")
+    ) {
+      defaultValues.service = "55 Dərsə Excel Kitabı";
+    }
+
+    return defaultValues;
+  }, [
+    apply,
+    join,
+    corporative,
+    projectContent,
+    orderButtonClicked,
+    categories,
+  ]);
 
   const validationSchema = apply
     ? Yup.object({
