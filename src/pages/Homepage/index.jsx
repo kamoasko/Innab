@@ -217,6 +217,7 @@ const Homepage = () => {
       >
         <PartnersSection
           onClick={handleScrollToContact}
+          buttonTitle={translations && getTranslation("s_apply_button")}
           partnersTitle={
             isLoading ? (
               <Skeleton

@@ -2,7 +2,7 @@ import React from "react";
 import styles from "../../pages/Homepage/home.module.css";
 import Button from "../Button";
 
-const PartnersCard = ({ cardtTitle, text, img, onClick }) => {
+const PartnersCard = ({ cardtTitle, text, img, onClick, buttonTitle }) => {
   return (
     <div
       className={`${styles.partnersCard} flex flexDirectionColumn justifyContentBetween`}
@@ -14,7 +14,7 @@ const PartnersCard = ({ cardtTitle, text, img, onClick }) => {
         <h3>{cardtTitle}</h3>
         <p>{text}</p>
       </div>
-      <Button title={"Müraciət et"} component onClick={onClick} />
+      <Button title={buttonTitle} component onClick={onClick} />
     </div>
   );
 };

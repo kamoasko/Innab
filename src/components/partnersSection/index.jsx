@@ -8,7 +8,7 @@ import useWindowDimensions from "../../hooks/useWindowDimensions";
 import { useGetPartners } from "../../features/partners/partnersSlice";
 import { Box, Skeleton } from "@mui/material";
 
-const PartnersSection = memo(({ onClick, partnersTitle }) => {
+const PartnersSection = memo(({ onClick, partnersTitle, buttonTitle }) => {
   const { lang } = useParams();
   const { data: partners, status, error } = useGetPartners(lang);
 
@@ -53,6 +53,7 @@ const PartnersSection = memo(({ onClick, partnersTitle }) => {
                     text={partner.short_description}
                     img={partner.image}
                     onClick={handleClick}
+                    buttonTitle={buttonTitle}
                   />
                 ))}
               </div>
