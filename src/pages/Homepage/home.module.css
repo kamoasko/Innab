@@ -151,22 +151,23 @@
   flex: 1;
 }
 
-.trainingsNavbarMenu > li > a {
+.trainingsNavbarMenu > li > div {
+  cursor: pointer;
   padding: 1.2rem 2rem;
   font-weight: 600;
 }
 
-.trainingsNavbarMenu > li > a > h3 {
+.trainingsNavbarMenu > li > div > h3 {
   font-size: 2rem;
   font-weight: 600;
   letter-spacing: normal;
 }
 
-.trainingsNavbarMenu > li > a > span {
+.trainingsNavbarMenu > li > div > span {
   font-size: 1.4rem;
 }
 
-.trainingsNavbarMenu > li > a:hover {
+.trainingsNavbarMenu > li > div:hover {
   border-radius: 7.8rem;
   background-color: var(--color-main);
   color: var(--color-white);
@@ -390,11 +391,11 @@
 /* responsive */
 
 @media (max-width: 1434px) {
-  .trainingsNavbarMenu > li > a > h3 {
+  .trainingsNavbarMenu > li > div > h3 {
     font-size: 1.6rem;
   }
 
-  .trainingsNavbarMenu > li > a > span {
+  .trainingsNavbarMenu > li > div > span {
     font-size: 1.2rem;
   }
 
@@ -430,23 +431,23 @@
     font-size: 1.1rem;
   }
 
-  .trainingsNavbarMenu > li > a > h3 {
+  .trainingsNavbarMenu > li > div > h3 {
     font-size: 1.4rem;
     line-height: 1.7rem;
   }
 
-  .trainingsNavbarMenu > li > a > span {
+  .trainingsNavbarMenu > li > div > span {
     font-size: 1rem;
     line-height: normal;
   }
 }
 
 @media (max-width: 1100px) {
-  .trainingsNavbarMenu > li > a > h3 {
+  .trainingsNavbarMenu > li > div > h3 {
     font-size: 1.2rem;
   }
 
-  .trainingsNavbarMenu > li > a > span {
+  .trainingsNavbarMenu > li > div > span {
     font-size: 0.8rem;
   }
 }
@@ -491,7 +492,7 @@
     padding: 2rem 0;
   }
 
-  .trainingsNavbarMenu > li > a {
+  .trainingsNavbarMenu > li > div {
     padding: 0.8rem 2.8rem;
   }
 
@@ -545,7 +546,7 @@
     flex: 0 0 auto;
   }
 
-  .trainingsNavbarMenu > li > a {
+  .trainingsNavbarMenu > li > div {
     white-space: nowrap;
   }
 }

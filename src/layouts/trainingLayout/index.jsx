@@ -49,7 +49,7 @@ const TrainingLayout = () => {
         >
           {trainingsCategories?.map((training) => (
             <li key={training.id}>
-              <Link
+              <div
                 className={`flexCenter flexDirectionColumn ${
                   activeCategory?.id === training.id ? "active" : ""
                 }`}
@@ -57,7 +57,7 @@ const TrainingLayout = () => {
               >
                 <h3>{training.title}</h3>
                 <span>&#123; {training.subtitle} &#125;</span>
-              </Link>
+              </div>
             </li>
           ))}
         </ul>
