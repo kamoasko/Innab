@@ -275,6 +275,34 @@ const SeminarWebinar = ({ workshop }) => {
                       adsImg={sow.image}
                       location={sow.place}
                       title={sow.title}
+                      locationTitle={
+                        isLoading ? (
+                          <Skeleton variant="text" width={"100%"} height={40} />
+                        ) : (
+                          translations && getTranslation("location")
+                        )
+                      }
+                      dateTitle={
+                        isLoading ? (
+                          <Skeleton variant="text" width={"100%"} height={40} />
+                        ) : (
+                          translations && getTranslation("event_date")
+                        )
+                      }
+                      btnTitle={
+                        isLoading ? (
+                          <Skeleton variant="text" width={"100%"} height={40} />
+                        ) : (
+                          translations && getTranslation("join_us")
+                        )
+                      }
+                      speakersTitle={
+                        isLoading ? (
+                          <Skeleton variant="text" width={"100%"} height={40} />
+                        ) : (
+                          translations && getTranslation("speakers")
+                        )
+                      }
                     />
                   </SwiperSlide>
                 ))}

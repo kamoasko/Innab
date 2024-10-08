@@ -99,11 +99,6 @@ const TrainingsPage = () => {
     }
   };
 
-  console.log(
-    categories &&
-      categories.find((c) => c.slug === location.pathname.split("/")[3])
-  );
-
   if (isPending) {
     return (
       <Box sx={{ width: "100%" }}>

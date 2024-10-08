@@ -57,7 +57,7 @@
     -o-border-radius: 1.2rem;
   }
 
-  button {
+  > button {
     display: none;
     position: absolute;
     bottom: 0;
@@ -80,13 +80,13 @@
   }
 
   .advertisementDetails {
-    a {
+    button {
       display: none;
     }
   }
 
   .advertisementimg {
-    a {
+    button {
       display: flex;
     }
   }
