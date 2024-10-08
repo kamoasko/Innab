@@ -163,7 +163,15 @@ const ContactDetails = ({ marginLeft, email, mail }) => {
                   {translations && getTranslation("project_phone")}
                 </span>
                 <span>
-                  {mail}
+                  {isLoading && (
+                    <Skeleton
+                      width={30}
+                      height={20}
+                      variant="text"
+                      sx={{ display: "inline-block" }}
+                    />
+                  )}
+                  {translations && getTranslation("phone_word")}{" "}
                   <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
                 </span>
               </li>

@@ -358,13 +358,13 @@ const Navbar = ({
                 }`}
               >
                 <li onClick={() => handleCorporativeNavigation("corporative")}>
-                  Təlimlər
+                  {translations && getTranslation("header_corp_trainings")}
                 </li>
                 <li onClick={() => handleCorporativeNavigation("customers")}>
-                  Bizi seçənlər
+                  {translations && getTranslation("header_corp_customers")}
                 </li>
                 <li onClick={() => handleCorporativeNavigation("contact")}>
-                  Müraciət
+                  {translations && getTranslation("header_corp_apply")}
                 </li>
               </ul>
             </li>

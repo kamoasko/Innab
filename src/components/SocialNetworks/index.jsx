@@ -58,7 +58,7 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
           style={{ gap: gap }}
         >
           <li>
-            <Link to={infos?.facebook_link}>
+            <Link to={infos?.facebook_link} target="_blank">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -85,7 +85,7 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
             </Link>
           </li>
           <li>
-            <Link to={infos?.instagram_link}>
+            <Link to={infos?.instagram_link} target="_blank">
               {contact ? (
                 <FaInstagram style={{ width: "2.4rem", height: "2.4rem" }} />
               ) : (
@@ -154,7 +154,7 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
             </Link>
           </li>
           <li>
-            <Link to={infos?.linkedin_link}>
+            <Link to={infos?.linkedin_link} target="_blank">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -177,7 +177,7 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
             </Link>
           </li>
           <li>
-            <Link to={infos?.tiktok_link}>
+            <Link to={infos?.tiktok_link} target="_blank">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -201,7 +201,7 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
             </Link>
           </li>
           <li>
-            <Link to={infos?.youtube_link}>
+            <Link to={infos?.youtube_link} target="_blank">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
