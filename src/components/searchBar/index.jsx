@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
-import { useMenus } from "../../features/menus/useMenu";
 import { useTranslations } from "../../features/translations/translations";
-import { CircularProgress, Pagination, Skeleton } from "@mui/material";
+import { Pagination, Skeleton } from "@mui/material";
 import axios from "axios";
+import { useBlogCategories } from "../../features/blogCategories/useBlogCategory";
 
 const SearchBar = ({ top, bottom, isOpen, onClose }) => {
   const { lang } = useParams();
-  const { data: menus } = useMenus(lang);
   const { data: trainings } = useTrainingCategories(lang);
-  const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
+  const { data: blogs } = useBlogCategories(lang);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
@@ -61,6 +60,8 @@ const SearchBar = ({ top, bottom, isOpen, onClose }) => {
       const blogResults = data.blogs.data.map((blog) => ({
         ...blog,
         type: "blog",
+        categorySlug: blogs.find((category) => category.id === blog.category_id)
+          ?.slug,
       }));
 
       // Filtering results based on the 'title' field in the selected language
@@ -174,7 +175,7 @@ const SearchBar = ({ top, bottom, isOpen, onClose }) => {
                         to={
                           item.type === "training"
                             ? `trainings/${item.categorySlug}/${item.slug[lang]}`
-                            : `blog/${item.categorySlug}/${item.slug[lang]}`
+                            : `useful-for-you/blog/${item.categorySlug}/${item.slug[lang]}`
                         }
                         className="flex alignItemsCenter"
                       >

@@ -18,7 +18,6 @@ const Footer = () => {
   const { lang } = useParams();
   const { data: infos, status, error } = useSiteInfos(lang);
   const adresses = infos && infos?.address?.split("/");
-  console.log(adresses);
 
   const { data: menus } = useMenus(lang);
   const { data: categories } = useTrainingCategories(lang);
