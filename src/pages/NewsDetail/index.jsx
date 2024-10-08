@@ -1,19 +1,17 @@
-import React, { Suspense, useEffect } from "react";
+import React, { Suspense } from "react";
 import styles from "./news-detail.module.css";
 import newsImg from "../../assets/images/news/news-img.jpeg";
-import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
-import { Box, CircularProgress, Skeleton } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { useGetNews, useGetNewsDetail } from "../../features/news/useNews";
-import { useMenus } from "../../features/menus/useMenu";
 import { Helmet } from "react-helmet-async";
 import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useTranslations } from "../../features/translations/translations";
 
-const Contact = React.lazy(() => import("../../components/Contact"));
 const NewsCard = React.lazy(() => import("../../components/newsCard"));
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Button = React.lazy(() => import("../../components/Button"));
+const Contact = React.lazy(() => import("../../components/Contact"));
 
 const NewsDetail = () => {
   const { lang, slug } = useParams();
@@ -25,8 +23,6 @@ const NewsDetail = () => {
     error: detailedNewsError,
   } = useGetNewsDetail(lang, slug);
 
-  const { data: menus } = useMenus(lang);
-  const parentMenu = menus?.filter((menu) => menu.parent_id === 0);
   const { data: categories } = useTrainingCategories(lang);
   const allTrainings =
     categories &&

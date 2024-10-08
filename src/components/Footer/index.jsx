@@ -1,6 +1,6 @@
 import React, { Suspense, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Box, CircularProgress, Skeleton } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { useMenus } from "../../features/menus/useMenu";
 import { useTrainingCategories } from "../../features/categories/useCategory";
