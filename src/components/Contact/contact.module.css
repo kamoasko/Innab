@@ -62,7 +62,11 @@
 }
 
 .cti {
+  max-width: 50rem;
+
   h2 {
+    width: 100%;
+
     &::after {
       content: none;
     }
@@ -341,7 +345,6 @@
 
     h2 {
       font-size: 3.6rem;
-      width: max-content;
 
       &::after {
         width: 62.91%;
@@ -359,6 +362,10 @@
   .contactWrapper {
     flex-direction: column;
     gap: 3.5rem;
+  }
+
+  .contactTitle > h2 {
+    width: 100%;
   }
 }
 
@@ -395,7 +402,6 @@
       font-size: 2rem;
       font-weight: 700;
       line-height: normal;
-      width: max-content;
 
       &::after {
         width: 62.91%;
