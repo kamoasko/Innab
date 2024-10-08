@@ -166,6 +166,9 @@ const Scholarships = () => {
                     text={program.short_description}
                     img={program.image}
                     onClick={handleScrollToContact}
+                    buttonTitle={
+                      translations && getTranslation("s_apply_button")
+                    }
                   />
                 ))}
             </div>

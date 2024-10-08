@@ -675,13 +675,13 @@ const ContactForm = ({
                     </label>
                     <label>
                       <Field type="radio" name="voen" value="no" />
-                      {translations && getTranslation("")}
+                      {translations && getTranslation("no_label")}
                     </label>
                     <label>
                       <Field type="radio" name="voen" value="other" />
                       <div className="flex">
                         {translations && getTranslation("other_label")}
-                        <Field type="text" name="voenOther" placeholder="" />
+                        <Field type="text" name="voenOther" />
                       </div>
                     </label>
                   </div>
