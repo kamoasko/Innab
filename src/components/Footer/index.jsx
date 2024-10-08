@@ -17,9 +17,11 @@ const SocialNetworks = React.memo(
 const Footer = () => {
   const { lang } = useParams();
   const { data: infos, status, error } = useSiteInfos(lang);
+  const adresses = infos && infos?.address?.split("/");
+  console.log(adresses);
+
   const { data: menus } = useMenus(lang);
-  const { data: categories, error: categoriesError } =
-    useTrainingCategories(lang);
+  const { data: categories } = useTrainingCategories(lang);
   const { data: projectOrCareer } = useProjectOrCareer(lang);
   const { data: translations } = useTranslations("footer");
 
@@ -89,7 +91,12 @@ const Footer = () => {
               </div>
               <div>
                 <h5>{translationTexts.addressLabel}</h5>
-                <div>{status === "success" && <p>{infos.address}</p>}</div>
+                <div className="footerAdresses">
+                  {adresses &&
+                    adresses.map((address, index) => (
+                      <p key={index}>{address}</p>
+                    ))}
+                </div>
               </div>
               <div>
                 <h5>{translationTexts.contactLabel}</h5>
