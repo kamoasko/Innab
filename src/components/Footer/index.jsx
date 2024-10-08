@@ -1,6 +1,6 @@
 import React, { Suspense, useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Skeleton } from "@mui/material";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { useMenus } from "../../features/menus/useMenu";
 import { useTrainingCategories } from "../../features/categories/useCategory";
@@ -21,7 +21,7 @@ const Footer = () => {
   const { data: categories, error: categoriesError } =
     useTrainingCategories(lang);
   const { data: projectOrCareer } = useProjectOrCareer(lang);
-  const { data: translations, isLoading } = useTranslations("footer");
+  const { data: translations } = useTranslations("footer");
 
   const getTranslation = (keyword) => {
     const translation = translations.find((item) => item.keyword === keyword);
@@ -41,8 +41,10 @@ const Footer = () => {
     () => ({
       linksLabel: translations && getTranslation("links_label"),
       onlineRegistration: translations && getTranslation("online_regisration"),
+      humanResources: translations && getTranslation("human_resources"),
       addressLabel: translations && getTranslation("f_address_label"),
       contactLabel: translations && getTranslation("f_contact_label"),
+      mailWord: translations && getTranslation("mail_word"),
       followUsLabel: translations && getTranslation("f_follow_us"),
       copyrights: translations && getTranslation("copyrights"),
     }),
@@ -82,15 +84,6 @@ const Footer = () => {
                       </li>
                     ))}
                     <li>
-                      <Link
-                        to={`${parentMenu[4].slug}/${
-                          careers && careers[0]?.slug
-                        }`}
-                      >
-                        {translationTexts.humanResources}
-                      </Link>
-                    </li>
-                    <li>
                       <Link to={parentMenu[9]?.slug}>
                         {parentMenu[9]?.title}
                       </Link>
@@ -104,33 +97,33 @@ const Footer = () => {
               </div>
               <div>
                 <h5>{translationTexts.contactLabel}</h5>
-                <ContactDetails email />
+                <ContactDetails email mail={translationTexts.mailWord} />
               </div>
               <div>
                 <h5>{translationTexts.followUsLabel}</h5>
                 <SocialNetworks gap={"2.4rem"} />
-                {status === "pending" && (
-                  <Box sx={{ width: "100%" }}>
-                    <CircularProgress
-                      sx={{
-                        width: "2rem !important",
-                        height: "2rem !important",
-                      }}
-                    />
-                  </Box>
-                )}
-                {status === "error" && <p>{error}</p>}
-                {status === "success" && (
-                  <Link to={"/"}>
-                    <figure className="footerLogo">
+                <Link to={"/"}>
+                  <figure className="footerLogo">
+                    {status === "pending" && (
+                      <Box sx={{ width: "100%" }}>
+                        <Skeleton
+                          variant="rectangular"
+                          width={"100%"}
+                          height={30}
+                          sx={{ borderRadius: "0.5rem" }}
+                        />
+                      </Box>
+                    )}
+                    {status === "error" && <p>{error}</p>}
+                    {status === "success" && (
                       <img
                         loading="lazy"
                         src={infos.header_footer}
                         alt="Innab logo"
                       />
-                    </figure>
-                  </Link>
-                )}
+                    )}
+                  </figure>
+                </Link>
               </div>
             </div>
           </div>

@@ -70,17 +70,22 @@ const Header = memo(
       <header>
         <div className="container">
           <div className="headerTop flex alignItemsCenter justifyContentBetween">
-            {status === "pending" && (
-              <Box sx={{ width: "100%" }}>
-                <Skeleton variant="rectangular" width={150} height={60} />
-              </Box>
-            )}
-            {status === "error" && <p>{error}</p>}
-            {status === "success" && (
-              <Link to={"/"} className="headerTopLogo">
+            <Link to={"/"} className="headerTopLogo">
+              {status === "pending" && (
+                <Box sx={{ width: "100%" }}>
+                  <Skeleton
+                    variant="rectangular"
+                    width={"100%"}
+                    height={50}
+                    sx={{ borderRadius: "0.5rem" }}
+                  />
+                </Box>
+              )}
+              {status === "error" && <p>{error}</p>}
+              {status === "success" && (
                 <img loading="lazy" src={infos?.header_top} alt="Innab logo" />
-              </Link>
-            )}
+              )}
+            </Link>
             <div className="headerTopRight flex alignItemsCenter justifyContentBetween">
               <SocialNetworks gap={"3.2rem"} />
               <div className="headerTopTools flex alignItemsCenter">

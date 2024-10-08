@@ -158,7 +158,10 @@ const Homepage = () => {
             >
               <h1>
                 {isLoading && (
-                  <Skeleton variant="text" width={500} height={100} />
+                  <>
+                    <Skeleton variant="text" width={"100%"} height={80} />
+                    <Skeleton variant="text" width={"100%"} height={80} />
+                  </>
                 )}
                 {translations && getTranslation("homepage_title")}
               </h1>

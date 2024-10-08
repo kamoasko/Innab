@@ -6,7 +6,7 @@ import { Box, CircularProgress, Skeleton } from "@mui/material";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import { useTranslations } from "../../features/translations/translations";
 
-const ContactDetails = ({ marginLeft, email }) => {
+const ContactDetails = ({ marginLeft, email, mail }) => {
   const { width } = useWindowDimensions();
   const { lang } = useParams();
   const { data: infos, status, error } = useSiteInfos(lang);
@@ -91,12 +91,21 @@ const ContactDetails = ({ marginLeft, email }) => {
                       sx={{ display: "inline-block" }}
                     />
                   )}
-                  {translations && getTranslation("phone_word")}
+                  {translations && getTranslation("phone_word")}{" "}
                   <Link to={`tel:${infos.phone2}`}>{infos.phone2}</Link>
                 </span>
               </li>
               <li className="flex flexDirectionColumn">
                 <span>
+                  {isLoading && (
+                    <Skeleton
+                      width={30}
+                      height={20}
+                      variant="text"
+                      sx={{ display: "inline-block" }}
+                    />
+                  )}
+                  {mail}{" "}
                   <Link to={`mailto:${infos.email2}`}>{infos.email2}</Link>
                 </span>
               </li>
@@ -154,15 +163,7 @@ const ContactDetails = ({ marginLeft, email }) => {
                   {translations && getTranslation("project_phone")}
                 </span>
                 <span>
-                  {isLoading && (
-                    <Skeleton
-                      width={30}
-                      height={20}
-                      variant="text"
-                      sx={{ display: "inline-block" }}
-                    />
-                  )}
-                  {translations && getTranslation("phone_word")}{" "}
+                  {mail}
                   <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
                 </span>
               </li>
