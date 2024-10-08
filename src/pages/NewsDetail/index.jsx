@@ -53,7 +53,7 @@ const NewsDetail = () => {
         {detailedNews?.seo_links || (
           <link
             rel="canonical"
-            href={`/${lang}/${detailedNews && detailedNews?.slug}`}
+            href={`/${lang}/news/${detailedNews && detailedNews?.slug}`}
           />
         )}
         {(detailedNews && detailedNews?.seo_scripts) || (
@@ -69,7 +69,15 @@ const NewsDetail = () => {
       >
         <section className={styles.newsDetail}>
           <div className="container">
-            <PageTitle title={"Xəbərlər"} />
+            <PageTitle
+              title={
+                isLoading ? (
+                  <Skeleton variant="text" width={"100%"} height={100} />
+                ) : (
+                  translations && getTranslation("news_page_title")
+                )
+              }
+            />
             {detailedNewsStatus === "error" && <Box>{detailedNewsError}</Box>}
             {detailedNewsStatus === "pending" && (
               <>
@@ -152,7 +160,7 @@ const NewsDetail = () => {
                       date={post.published_at?.slice(0, 10)}
                       img={post.image}
                       desc={post.short_description}
-                      to={`/${lang}/${parentMenu[7]?.slug}/${post.slug}`}
+                      to={`/${lang}/news/${post.slug}`}
                     />
                   ))}
             </div>
@@ -165,7 +173,7 @@ const NewsDetail = () => {
                 )
               }
               borderRadius={"6.3rem"}
-              to={`/${lang}/${parentMenu[7]?.slug}`}
+              to={`/${lang}/news`}
             />
           </div>
         </section>

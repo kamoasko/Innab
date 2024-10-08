@@ -143,7 +143,7 @@ const Navbar = ({
                       isMenuActive(parentMenu[0]?.slug) ? "active" : ""
                     }`
                   }
-                  to={aboutMenu[0]?.slug}
+                  to="about-us"
                 >
                   {parentMenu[0].title}
                 </NavLink>
@@ -187,17 +187,13 @@ const Navbar = ({
                 }`}
               >
                 <li>
-                  <Link to={aboutMenu[0]?.slug}>{aboutMenu[0]?.title}</Link>
+                  <Link to="about-us">{aboutMenu[0]?.title}</Link>
                 </li>
                 <li>
-                  <Link to={`${parentMenu[0]?.slug}/${aboutMenu[1]?.slug}`}>
-                    {aboutMenu[1].title}
-                  </Link>
+                  <Link to="about-us/vacancies">{aboutMenu[1].title}</Link>
                 </li>
                 <li>
-                  <Link to={`${parentMenu[0]?.slug}/${aboutMenu[2]?.slug}`}>
-                    {aboutMenu[2]?.title}
-                  </Link>
+                  <Link to="about-us/contact">{aboutMenu[2]?.title}</Link>
                 </li>
               </ul>
             </li>
@@ -302,9 +298,7 @@ const Navbar = ({
                       <ul className={`${openSubMenus[index] ? "open" : ""}`}>
                         {training?.subData?.map((t) => (
                           <li key={t.id}>
-                            <Link
-                              to={`${parentMenu[1]?.slug}/${training.slug}/${t.slug}`}
-                            >
+                            <Link to={`trainings/${training.slug}/${t.slug}`}>
                               {t.title}
                             </Link>
                           </li>
@@ -316,7 +310,7 @@ const Navbar = ({
             </li>
             <li className="navbarMenuDy">
               <div>
-                <NavLink to={parentMenu[2].slug}>{parentMenu[2].title}</NavLink>
+                <NavLink to="corporate">{parentMenu[2].title}</NavLink>
                 {!openDropdowns[2] ? (
                   <svg
                     onClick={() => toggleDropdown(2)}
@@ -371,7 +365,7 @@ const Navbar = ({
             <li className="navbarMenuDy">
               <div>
                 <NavLink
-                  className={({ isActive }) =>
+                  className={() =>
                     `${openDropdowns[3] ? "opened" : ""} ${
                       isMenuActive(parentMenu[3]?.slug) ? "active" : ""
                     }`
@@ -422,7 +416,7 @@ const Navbar = ({
                 {projects &&
                   projects.map((project) => (
                     <li key={project.id}>
-                      <Link to={`${parentMenu[3].slug}/${project.slug}`}>
+                      <Link to={`projects/${project.slug}`}>
                         {project.title}
                       </Link>
                     </li>
@@ -482,7 +476,7 @@ const Navbar = ({
                 {careers &&
                   careers?.map((career) => (
                     <li key={career.id}>
-                      <Link to={`${parentMenu[4]?.slug}/${career.slug}`}>
+                      <Link to={`career-center/${career.slug}`}>
                         {career.title}
                       </Link>
                     </li>
@@ -541,36 +535,32 @@ const Navbar = ({
                 }`}
               >
                 <li>
-                  <Link
-                    to={`${parentMenu[5].slug}/${usefulMenu[0].slug}/${videoSlug[0]}`}
-                  >
+                  <Link to={`useful-for-you/video-lessons/${videoSlug[0]}`}>
                     {usefulMenu[0].title}
                   </Link>
                 </li>
                 <li>
-                  <Link
-                    to={`${parentMenu[5].slug}/${usefulMenu[1].slug}/${blogSlug[0]}`}
-                  >
+                  <Link to={`useful-for-you/blog/${blogSlug[0]}`}>
                     {usefulMenu[1].title}
                   </Link>
                 </li>
                 <li>
-                  <Link to={`${parentMenu[5].slug}/${usefulMenu[2].slug}`}>
+                  <Link to={`useful-for-you/seminar-webinar`}>
                     {usefulMenu[2].title}
                   </Link>
                 </li>
                 <li>
-                  <Link to={`${parentMenu[5].slug}/${usefulMenu[5].slug}`}>
+                  <Link to={`useful-for-you/career-calculator`}>
                     {usefulMenu[5].title}
                   </Link>
                 </li>
                 <li>
-                  <Link to={`${parentMenu[5].slug}/${usefulMenu[4].slug}`}>
+                  <Link to={`useful-for-you/workshop`}>
                     {usefulMenu[4].title}
                   </Link>
                 </li>
                 <li>
-                  <Link to={`${parentMenu[5].slug}/${usefulMenu[3].slug}`}>
+                  <Link to={`useful-for-you/scholarship-programs`}>
                     {usefulMenu[3].title}
                   </Link>
                 </li>
@@ -585,7 +575,7 @@ const Navbar = ({
               </button>
             </li>
             <li>
-              <NavLink to={parentMenu[7].slug}>{parentMenu[7].title}</NavLink>
+              <NavLink to="news">{parentMenu[7].title}</NavLink>
             </li>
           </ul>
 

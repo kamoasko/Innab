@@ -71,8 +71,8 @@ const SeminarWebinar = ({ workshop }) => {
               rel="canonical"
               href={
                 workshop
-                  ? `/${lang}/size-faydali/workshoplar`
-                  : `/${lang}/size-faydali/seminar-vebinar`
+                  ? `/${lang}/size-faydali/workshop`
+                  : `/${lang}/size-faydali/seminar-webinar`
               }
             />
             <script type="application/ld+json"></script>
@@ -104,13 +104,13 @@ const SeminarWebinar = ({ workshop }) => {
               ? usefulMenu[4]?.seo_links || (
                   <link
                     rel="canonical"
-                    href={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[4]?.slug}`}
+                    href={`/${lang}/useful-for-you/workshop`}
                   />
                 )
               : usefulMenu[2]?.seo_links || (
                   <link
                     rel="canonical"
-                    href={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[2]?.slug}`}
+                    href={`/${lang}/useful-for-you/seminar-webinar`}
                   />
                 )}
             {workshop

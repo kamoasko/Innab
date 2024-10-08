@@ -88,23 +88,23 @@ function App() {
             />
             <Route path=":lang" element={<MainLayout />}>
               <Route index element={<Homepage />} />
-              <Route path={parentMenu[0]?.slug}>
+              <Route path="about-us">
                 <Route index element={<About />} />
-                <Route path={aboutMenu[1]?.slug} element={<VacanciesPage />} />
-                <Route path={aboutMenu[2]?.slug} element={<ContactPage />} />
+                <Route path="vacancies" element={<VacanciesPage />} />
+                <Route path="contact" element={<ContactPage />} />
               </Route>
-              <Route path={parentMenu[1]?.slug}>
+              <Route path="trainings">
                 <Route path=":slug/:trainingSlug" element={<TrainingsPage />} />
               </Route>
-              <Route path={parentMenu[2]?.slug} element={<Corporative />} />
-              <Route path={parentMenu[3]?.slug}>
+              <Route path="corporate" element={<Corporative />} />
+              <Route path="projects">
                 <Route path=":slug" element={<Projects />} />
               </Route>
-              <Route path={parentMenu[4]?.slug}>
+              <Route path="career-center">
                 <Route path=":slug" element={<CareerCenter />} />
               </Route>
-              <Route path={parentMenu[5]?.slug}>
-                <Route path={usefulMenu[0]?.slug}>
+              <Route path={"useful-for-you"}>
+                <Route path={"video-lessons"}>
                   <Route path=":slug" element={<VideoLessons />}>
                     <Route index element={<VideoGrid />} />
                     <Route
@@ -113,7 +113,7 @@ function App() {
                     />
                   </Route>
                 </Route>
-                <Route path={usefulMenu[1]?.slug}>
+                <Route path="blog">
                   <Route path=":slug" element={<BlogPage />}>
                     <Route index element={<BlogGrid />} />
                     <Route
@@ -123,24 +123,18 @@ function App() {
                   </Route>
                 </Route>
                 <Route
-                  path={usefulMenu[5]?.slug}
+                  path="career-calculator"
                   element={<CareerCalculator />}
                 />
-                <Route
-                  path={usefulMenu[2]?.slug}
-                  element={<SeminarWebinar />}
-                />
-                <Route
-                  path={usefulMenu[4]?.slug}
-                  element={<SeminarWebinar workshop />}
-                />
-                <Route path={usefulMenu[3]?.slug} element={<Scholarships />} />
+                <Route path="seminar-webinar" element={<SeminarWebinar />} />
+                <Route path="workshop" element={<SeminarWebinar workshop />} />
+                <Route path="scholarship-programs" element={<Scholarships />} />
               </Route>
-              <Route path={parentMenu[7]?.slug}>
+              <Route path="news">
                 <Route index element={<NewsPage />} />
                 <Route path=":slug" element={<NewsDetail />} />
               </Route>
-              <Route path={parentMenu[9]?.slug} element={<Privacy />} />
+              <Route path="privacy-policy" element={<Privacy />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

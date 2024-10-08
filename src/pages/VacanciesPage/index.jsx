@@ -29,7 +29,7 @@ const VacanciesPage = () => {
             <title>{"Vakansiyalar"}</title>
             <meta name="description" content={"Vakansiyalar"} />
             <meta name="keywords" content={"Vakansiyalar"} />
-            <link rel="canonical" href={`/${lang}/haqqimizda/vakansiyalar`} />
+            <link rel="canonical" href={`/${lang}/about-us/vacancies`} />
             <script type="application/ld+json"></script>
           </>
         )}
@@ -40,10 +40,7 @@ const VacanciesPage = () => {
             <meta name="description" content={aboutMenu[1]?.seo_description} />
             <meta name="keywords" content={aboutMenu[1]?.seo_keywords} />
             {aboutMenu[1]?.seo_links || (
-              <link
-                rel="canonical"
-                href={`/${lang}/${parentMenu[0]?.slug}/${aboutMenu[1]?.slug}`}
-              />
+              <link rel="canonical" href={`/${lang}/about-us/vacancies`} />
             )}
             {aboutMenu[1]?.seo_scripts || (
               <script type="application/ld+json"></script>

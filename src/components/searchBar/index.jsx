@@ -172,8 +172,9 @@ const SearchBar = ({ top, bottom, isOpen, onClose }) => {
                     <li key={item.id}>
                       <Link
                         to={
-                          item.type === "training" &&
-                          `${parentMenu[1]?.slug}/${item.categorySlug}/${item.slug[lang]}`
+                          item.type === "training"
+                            ? `trainings/${item.categorySlug}/${item.slug[lang]}`
+                            : `blog/${item.categorySlug}/${item.slug[lang]}`
                         }
                         className="flex alignItemsCenter"
                       >

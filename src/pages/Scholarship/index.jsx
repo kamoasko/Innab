@@ -42,7 +42,7 @@ const Scholarships = () => {
             <meta name="keywords" content={"Təqaüd proqramları"} />
             <link
               rel="canonical"
-              href={`/${lang}/size-faydali/teqaud-proqramlari`}
+              href={`/${lang}/useful-for-you/scholarships-programs`}
             />
             <script type="application/ld+json"></script>
           </>
@@ -56,7 +56,7 @@ const Scholarships = () => {
             {usefulMenu[3]?.seo_links || (
               <link
                 rel="canonical"
-                href={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[3]?.slug}`}
+                href={`/${lang}/useful-for-you/scholarships-programs`}
               />
             )}
             {usefulMenu[3]?.seo_scripts || (

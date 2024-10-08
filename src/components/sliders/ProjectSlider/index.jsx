@@ -77,9 +77,7 @@ const ProjectSliders = () => {
                 text={project.card_description}
                 icon={project.image}
                 to={`${
-                  project.is_corporative === 1
-                    ? parentMenu[4]?.slug
-                    : parentMenu[3]?.slug
+                  project.is_corporative === 1 ? "career-center" : "projects"
                 }/${project.slug}`}
               />
             </SwiperSlide>

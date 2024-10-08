@@ -42,7 +42,7 @@ const NewsPage = () => {
             <title>{"Xəbərlər"}</title>
             <meta name="description" content={"Xəbərlər"} />
             <meta name="keywords" content={"Xəbərlər"} />
-            <link rel="canonical" href={`/${lang}/xeberler`} />
+            <link rel="canonical" href={`/${lang}/news`} />
             <script type="application/ld+json"></script>
           </>
         )}
@@ -53,7 +53,7 @@ const NewsPage = () => {
             <meta name="description" content={menus[7]?.seo_description} />
             <meta name="keywords" content={menus[7]?.seo_keywords} />
             {menus[7]?.seo_links || (
-              <link rel="canonical" href={`/${lang}/${menus[7]?.slug}`} />
+              <link rel="canonical" href={`/${lang}/news`} />
             )}
             {menus[0]?.seo_scripts || (
               <script type="application/ld+json"></script>

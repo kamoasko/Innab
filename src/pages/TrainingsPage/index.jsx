@@ -124,7 +124,7 @@ const TrainingsPage = () => {
             <meta name="keywords" content={"Təlimlər"} />
             <link
               rel="canonical"
-              href={`/${lang}/telimlər/data-analitika/sql`}
+              href={`/${lang}/trainings/data-analitika/sql`}
             />
             <script type="application/ld+json"></script>
           </>
@@ -168,7 +168,7 @@ const TrainingsPage = () => {
                   <Tabs
                     key={category.id}
                     title={category.title}
-                    to={`/${lang}/${parentMenu[1].slug}/${category.slug}/${category.subData[0]?.slug}`}
+                    to={`/${lang}/trainings/${category.slug}/${category.subData[0]?.slug}`}
                     isActive={location.pathname.split("/")[3] === category.slug}
                     onClick={() => setOpenCategoryId(category.id)}
                   />
@@ -221,7 +221,7 @@ const TrainingsPage = () => {
                               }
                             >
                               <Link
-                                to={`/${lang}/${parentMenu[1]?.slug}/${category.slug}/${training.slug}`}
+                                to={`/${lang}/trainings/${category.slug}/${training.slug}`}
                               >
                                 {training.title}
                               </Link>
@@ -431,7 +431,7 @@ const TrainingsPage = () => {
                             }
                           >
                             <Link
-                              to={`/${lang}/${parentMenu[1]?.slug}/${category.slug}/${training.slug}`}
+                              to={`/${lang}/trainings/${category.slug}/${training.slug}`}
                             >
                               {training.title}
                             </Link>

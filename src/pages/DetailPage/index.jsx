@@ -162,7 +162,7 @@ const DetailPage = ({ blog }) => {
           {content?.seo_links || (
             <link
               rel="canonical"
-              href={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/${content?.slug}`}
+              href={`/${lang}/useful-for-you/blog/${content?.slug}`}
             />
           )}
           {content?.seo_scripts || <script type="application/ld+json"></script>}
@@ -182,7 +182,7 @@ const DetailPage = ({ blog }) => {
             {lesson.seo_links || (
               <link
                 rel="canonical"
-                href={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[0]?.slug}/${lesson?.slug}`}
+                href={`/${lang}/useful-for-you/video-lessons/${lesson?.slug}`}
               />
             )}
             {lesson.seo_scripts || <script type="application/ld+json"></script>}
@@ -204,8 +204,8 @@ const DetailPage = ({ blog }) => {
                 lang={lang}
                 slug={
                   parentMenu && usefulMenu && blog
-                    ? `${parentMenu[5].slug}/${usefulMenu[1].slug}`
-                    : `${parentMenu[5].slug}/${usefulMenu[0].slug}`
+                    ? `useful-for-you/blog`
+                    : `useful-for-you/video-lessons`
                 }
                 subData={blog ? false : true}
               />
@@ -363,8 +363,8 @@ const DetailPage = ({ blog }) => {
             lang={lang}
             slug={
               parentMenu && usefulMenu && blog
-                ? `${parentMenu[5].slug}/${usefulMenu[1].slug}`
-                : `${parentMenu[5].slug}/${usefulMenu[0].slug}`
+                ? `useful-for-you/blog`
+                : `useful-for-you/video-lessons`
             }
             subData={blog ? false : true}
           />

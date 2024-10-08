@@ -28,7 +28,7 @@ const Privacy = () => {
             <title>{"Məxfilik siyasəti"}</title>
             <meta name="description" content={"Məxfilik siyasəti"} />
             <meta name="keywords" content={"Məxfilik siyasəti"} />
-            <link rel="canonical" href={`/${lang}/mexfilik-siyaseti`} />
+            <link rel="canonical" href={`/${lang}/privacy-policy`} />
             <script type="application/ld+json"></script>
           </>
         )}
@@ -39,7 +39,7 @@ const Privacy = () => {
             <meta name="description" content={parentMenu[9]?.seo_description} />
             <meta name="keywords" content={parentMenu[9]?.seo_keywords} />
             {parentMenu[9]?.seo_links || (
-              <link rel="canonical" href={`/${lang}/${parentMenu[9]?.slug}`} />
+              <link rel="canonical" href={`/${lang}/privacy-policy`} />
             )}
             {parentMenu[9]?.seo_scripts || (
               <script type="application/ld+json"></script>

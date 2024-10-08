@@ -69,7 +69,7 @@ const HomeTrainings = ({ trainings, link }) => {
                     img={training.icon}
                     title={training.title}
                     desc={training.short_description}
-                    to={`/${lang}/${parentMenu[1]?.slug}/${link}/${training.slug}`}
+                    to={`/${lang}/trainings/${link}/${training.slug}`}
                   />
                 ))}
             </div>
@@ -102,7 +102,7 @@ const HomeTrainings = ({ trainings, link }) => {
                 img={training.icon}
                 title={training.title}
                 desc={training.short_description}
-                to={`/${lang}/${parentMenu[1]?.slug}/${link}/${training.slug}`}
+                to={`/${lang}/trainings/${link}/${training.slug}`}
               />
             </SwiperSlide>
           ))}

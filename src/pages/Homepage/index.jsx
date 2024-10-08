@@ -299,36 +299,36 @@ const Homepage = () => {
                 <UsefulCard
                   title={usefulMenu[0]?.title}
                   icon={<VideoLessonSvg />}
-                  to={`${parentMenu[5]?.slug}/${usefulMenu[0]?.slug}/${
+                  to={`useful-for-you/video-lessons/${
                     videoCategories && videoCategories[0]?.slug
                   }`}
                 />
                 <UsefulCard
                   title={usefulMenu[1]?.title}
                   icon={<BlogSvg />}
-                  to={`${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/${
+                  to={`useful-for-you/blog/${
                     blogCategories && blogCategories[0]?.slug
                   }`}
                 />
                 <UsefulCard
                   title={usefulMenu[5]?.title}
                   icon={<CalculatorSvg />}
-                  to={`${parentMenu[5]?.slug}/${usefulMenu[5]?.slug}`}
+                  to={`useful-for-you/career-calculator`}
                 />
                 <UsefulCard
                   title={usefulMenu[2]?.title}
                   icon={<SeminarSvg />}
-                  to={`${parentMenu[5]?.slug}/${usefulMenu[2]?.slug}`}
+                  to={`useful-for-you/seminar-webinar`}
                 />
                 <UsefulCard
                   title={usefulMenu[4]?.title}
                   icon={<WorkshopSvg />}
-                  to={`${parentMenu[5]?.slug}/${usefulMenu[4]?.slug}`}
+                  to={`useful-for-you/workshop`}
                 />
                 <UsefulCard
                   title={usefulMenu[3]?.title}
                   icon={<ScholarshipSvg />}
-                  to={`${parentMenu[5]?.slug}/${usefulMenu[3]?.slug}`}
+                  to={`useful-for-you/scholarship-programs`}
                 />
               </Suspense>
             </div>

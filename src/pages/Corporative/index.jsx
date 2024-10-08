@@ -60,7 +60,7 @@ const Corporative = () => {
             <title>{"Korporativ"}</title>
             <meta name="description" content={"Korporativ"} />
             <meta name="keywords" content={"Korporativ"} />
-            <link rel="canonical" href={`/${lang}/korporativ`} />
+            <link rel="canonical" href={`/${lang}/corporate`} />
             <script type="application/ld+json"></script>
           </>
         )}
@@ -71,7 +71,7 @@ const Corporative = () => {
             <meta name="description" content={parentMenu[2]?.seo_description} />
             <meta name="keywords" content={parentMenu[2]?.seo_keywords} />
             {parentMenu[2]?.seo_links || (
-              <link rel="canonical" href={`/${lang}/${parentMenu[2]?.slug}`} />
+              <link rel="canonical" href={`/${lang}/corporate`} />
             )}
             {parentMenu[2]?.seo_scripts || (
               <script type="application/ld+json"></script>

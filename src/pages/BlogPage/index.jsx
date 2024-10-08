@@ -55,7 +55,7 @@ const BlogPage = () => {
         {currentCategory?.seo_links || (
           <link
             rel="canonical"
-            href={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/${currentCategory?.slug}`}
+            href={`useful-for-you/blog/${currentCategory?.slug}`}
           />
         )}
         {currentCategory?.seo_scripts || (
@@ -103,7 +103,7 @@ const BlogPage = () => {
                     <Tabs
                       key={blogCategory.id}
                       title={blogCategory.title}
-                      to={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[1]?.slug}/${blogCategory.slug}`}
+                      to={`/${lang}/useful-for-you/blog/${blogCategory.slug}`}
                       onClick={() => handleTabClick(blogCategory.id)}
                     />
                   ))}

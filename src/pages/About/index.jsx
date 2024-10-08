@@ -55,7 +55,7 @@ const About = () => {
             <title>{"Haqqımızda"}</title>
             <meta name="description" content={"Haqqımızda"} />
             <meta name="keywords" content={"Haqqımızda"} />
-            <link rel="canonical" href={`/${lang}/haqqimizda`} />
+            <link rel="canonical" href={`/${lang}/about-us`} />
             <script type="application/ld+json"></script>
           </>
         )}
@@ -66,7 +66,7 @@ const About = () => {
             <meta name="description" content={menus[0]?.seo_description} />
             <meta name="keywords" content={menus[0]?.seo_keywords} />
             {menus[0]?.seo_links || (
-              <link rel="canonical" href={`/${lang}/${menus[0]?.slug}`} />
+              <link rel="canonical" href={`/${lang}/about-us`} />
             )}
             {menus[0]?.seo_scripts || (
               <script type="application/ld+json"></script>
@@ -74,7 +74,11 @@ const About = () => {
           </>
         )}
       </Helmet>
-      <Suspense fallback={<CircularProgress />}>
+      <Suspense
+        fallback={
+          <Skeleton variant="rectangular" width={"100%"} height={"100vh"} />
+        }
+      >
         <div className="pageTop">
           <div className="container">
             <PageTitle

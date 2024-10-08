@@ -31,7 +31,7 @@ const ContactPage = () => {
             <title>{"Contact"}</title>
             <meta name="description" content={"Contact"} />
             <meta name="keywords" content={"Contact"} />
-            <link rel="canonical" href={`/${lang}/haqqimizda/elaqe`} />
+            <link rel="canonical" href={`/${lang}/about-us/contact`} />
             <script type="application/ld+json"></script>
           </>
         )}
@@ -42,10 +42,7 @@ const ContactPage = () => {
             <meta name="description" content={aboutMenu[2]?.seo_description} />
             <meta name="keywords" content={aboutMenu[2]?.seo_keywords} />
             {aboutMenu[2]?.seo_links || (
-              <link
-                rel="canonical"
-                href={`/${lang}/${parentMenu[0]?.slug}/${aboutMenu[2]?.slug}`}
-              />
+              <link rel="canonical" href={`/${lang}/about-us/contact`} />
             )}
             {aboutMenu[2]?.seo_scripts || (
               <script type="application/ld+json"></script>
@@ -56,7 +53,7 @@ const ContactPage = () => {
       <Suspense
         fallback={
           <Box>
-            <Skeleton variant="rectangular" height={48} />
+            <Skeleton variant="rectangular" height={"100vh"} width={"100%"} />
           </Box>
         }
       >

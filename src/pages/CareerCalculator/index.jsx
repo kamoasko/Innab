@@ -46,7 +46,7 @@ const CareerCalculator = () => {
             <meta name="keywords" content={"Career Calculator"} />
             <link
               rel="canonical"
-              href={`/${lang}/size-faydali/karyera-kalkulyatoru`}
+              href={`/${lang}/useful-for-you/career-calculator`}
             />
             <script type="application/ld+json"></script>
           </>
@@ -60,7 +60,7 @@ const CareerCalculator = () => {
             {menus[0]?.seo_links || (
               <link
                 rel="canonical"
-                href={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[5]?.slug}`}
+                href={`/${lang}/useful-for-you/career-calculator`}
               />
             )}
             {usefulMenu[5]?.seo_scripts || (

@@ -78,7 +78,7 @@ const VideoLessons = () => {
                 <Tabs
                   key={category.id}
                   title={category.title}
-                  to={`/${lang}/${parentMenu[5]?.slug}/${usefulMenu[0]?.slug}/${category.slug}`}
+                  to={`/${lang}/useful-for-you/video-lessons/${category.slug}`}
                   onClick={() => handleTabClick(category.id)}
                 />
               ))}

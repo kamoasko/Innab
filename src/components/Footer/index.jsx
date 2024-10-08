@@ -52,7 +52,9 @@ const Footer = () => {
   );
 
   return (
-    <Suspense fallback={<CircularProgress />}>
+    <Suspense
+      fallback={<Skeleton variant="rectangular" width={"100%"} height={300} />}
+    >
       <footer>
         <div className="footerTop">
           <div className="container">
@@ -62,31 +64,25 @@ const Footer = () => {
                 {parentMenu && categories && (
                   <ul className="flex flexDirectionColumn">
                     <li>
-                      <Link to={parentMenu[0]?.slug}>
-                        {parentMenu[0]?.title}
-                      </Link>
+                      <Link to="about-us">{parentMenu[0]?.title}</Link>
                     </li>
                     <li>
                       <Link to="/">{translationTexts.onlineRegistration}</Link>
                     </li>
                     <li>
-                      <Link to={parentMenu[2]?.slug}>
-                        {parentMenu[2]?.title}
-                      </Link>
+                      <Link to="corporate">{parentMenu[2]?.title}</Link>
                     </li>
                     {categories.map((category, index) => (
                       <li key={index}>
                         <Link
-                          to={`${parentMenu[1]?.slug}/${category.slug}/${category.subData[0]?.slug}`}
+                          to={`trainings/${category.slug}/${category.subData[0]?.slug}`}
                         >
                           {category.title}
                         </Link>
                       </li>
                     ))}
                     <li>
-                      <Link to={parentMenu[9]?.slug}>
-                        {parentMenu[9]?.title}
-                      </Link>
+                      <Link to="privacy-policy">{parentMenu[9]?.title}</Link>
                     </li>
                   </ul>
                 )}
