@@ -9,6 +9,7 @@ import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
 import Navbar from "./navbar";
 import { useTranslations } from "../../features/translations/translations";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
+import { imgUrl } from "../../imgUrl";
 
 const Header = memo(
   ({ partnersRef, trainingsRef, projectsRef, useFullRef }) => {
@@ -83,7 +84,11 @@ const Header = memo(
               )}
               {status === "error" && <p>{error}</p>}
               {status === "success" && (
-                <img loading="lazy" src={infos?.header_top} alt="Innab logo" />
+                <img
+                  loading="lazy"
+                  src={`${imgUrl}/${infos[0]?.header_top.url}`}
+                  alt="Innab logo"
+                />
               )}
             </Link>
             <div className="headerTopRight flex alignItemsCenter justifyContentBetween">
@@ -97,7 +102,7 @@ const Header = memo(
                 ) : (
                   <ul className="headerTopContact flex alignItemsCenter">
                     <li>
-                      <Link to={`tel:${infos?.phone1}`}>
+                      <Link to={`tel:${infos[0]?.phone1}`}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="20"
@@ -110,11 +115,11 @@ const Header = memo(
                             fill="#3138E3"
                           />
                         </svg>
-                        {infos?.phone1}
+                        {infos[0]?.phone1}
                       </Link>
                     </li>
                     <li className="headerTopEmail">
-                      <Link to={`mailto:${infos?.email2}`}>
+                      <Link to={`mailto:${infos[0]?.email2}`}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="20"
@@ -127,7 +132,7 @@ const Header = memo(
                             fill="#3138E3"
                           />
                         </svg>
-                        {infos?.email2}
+                        {infos[0]?.email2}
                       </Link>
                     </li>
                   </ul>

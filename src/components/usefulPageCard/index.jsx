@@ -7,7 +7,9 @@ const UsefulPageCard = ({ desc, icon }) => {
       className={`${styles.card}  flex alignItemsCenter justifyContentBetween`}
     >
       <div className={styles.cardDesc}>{desc}</div>
-      <div className={styles.cardIcon}>{icon}</div>
+      <div className={styles.cardIcon}>
+        <img src={icon} alt="" loading="lazy" />
+      </div>
     </article>
   );
 };

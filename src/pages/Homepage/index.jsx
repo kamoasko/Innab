@@ -28,6 +28,7 @@ import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonS
 import { useTranslations } from "../../features/translations/translations";
 import SectionTitle from "../../components/SectionTitle";
 import Button from "../../components/Button";
+import { imgUrl } from "../../imgUrl";
 
 const TrainingLayout = React.lazy(() =>
   import("../../layouts/trainingLayout").then((module) => ({
@@ -147,7 +148,9 @@ const Homepage = () => {
             linear-gradient(180deg, var(--color-main) 3%, rgba(0, 0, 0, 0.3) 100%), 
             linear-gradient(270deg, rgba(0, 0, 0, 0.3) 5%, rgba(5, 5, 5, 0.1) 10%),
             linear-gradient(45deg, rgba(0, 0, 0, 0.3) 5%, rgba(5, 5, 5, 0.1) 10%),
-            url(${infos?.header_image}) rgba(247, 247, 254, 0.87) center / cover no-repeat
+            url(${imgUrl}/${
+            infos && infos[0]?.header_image.url
+          }) rgba(247, 247, 254, 0.87) center / cover no-repeat
             `,
         }}
       >

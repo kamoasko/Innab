@@ -1,6 +1,5 @@
 .card {
   margin-top: 6rem;
-  /* width: 1293px; */
   padding: 6.4rem;
   gap: 3rem;
   border-radius: 2.4rem;
@@ -26,9 +25,13 @@
     padding: 3rem;
   }
 
-  .cardIcon svg {
-    width: 8.3rem;
-    height: 8.2rem;
+  .cardIcon {
+    width: 9.5rem;
+    height: 10rem;
+  }
+
+  .cardIcon > img {
+    object-fit: contain;
   }
 
   .cardDesc {

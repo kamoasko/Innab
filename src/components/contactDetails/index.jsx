@@ -52,7 +52,7 @@ const ContactDetails = ({ marginLeft, email, mail }) => {
                     />
                   )}
                   {translations && getTranslation("phone_word")}{" "}
-                  <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
+                  <Link to={`tel:${infos[0].phone1}`}>{infos[0].phone1}</Link>
                 </span>
               </li>
               <li className="flex flexDirectionColumn">
@@ -72,7 +72,7 @@ const ContactDetails = ({ marginLeft, email, mail }) => {
                     />
                   )}
                   {translations && getTranslation("phone_word")}
-                  <Link to={`tel:${infos.phone2}`}>{infos.phone2}</Link>
+                  <Link to={`tel:${infos[0].phone2}`}>{infos[0].phone2}</Link>
                 </span>
               </li>
               <li className="flex flexDirectionColumn">
@@ -92,7 +92,7 @@ const ContactDetails = ({ marginLeft, email, mail }) => {
                     />
                   )}
                   {translations && getTranslation("phone_word")}{" "}
-                  <Link to={`tel:${infos.phone2}`}>{infos.phone2}</Link>
+                  <Link to={`tel:${infos[0].phone3}`}>{infos[0].phone3}</Link>
                 </span>
               </li>
               <li className="flex flexDirectionColumn">
@@ -106,7 +106,9 @@ const ContactDetails = ({ marginLeft, email, mail }) => {
                     />
                   )}
                   {mail}{" "}
-                  <Link to={`mailto:${infos.email2}`}>{infos.email2}</Link>
+                  <Link to={`mailto:${infos[0].email2}`}>
+                    {infos[0].email2}
+                  </Link>
                 </span>
               </li>
             </ul>
@@ -132,7 +134,7 @@ const ContactDetails = ({ marginLeft, email, mail }) => {
                     />
                   )}
                   {translations && getTranslation("phone_word")}{" "}
-                  <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
+                  <Link to={`tel:${infos[0].phone1}`}>{infos[0].phone1}</Link>
                 </span>
               </li>
               <li className="flex flexDirectionColumn">
@@ -152,7 +154,7 @@ const ContactDetails = ({ marginLeft, email, mail }) => {
                     />
                   )}
                   {translations && getTranslation("phone_word")}{" "}
-                  <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
+                  <Link to={`tel:${infos[0].phone2}`}>{infos[0].phone2}</Link>
                 </span>
               </li>
               <li className="flex flexDirectionColumn">
@@ -172,7 +174,7 @@ const ContactDetails = ({ marginLeft, email, mail }) => {
                     />
                   )}
                   {translations && getTranslation("phone_word")}{" "}
-                  <Link to={`tel:${infos.phone1}`}>{infos.phone1}</Link>
+                  <Link to={`tel:${infos[0].phone3}`}>{infos[0].phone3}</Link>
                 </span>
               </li>
             </ul>

@@ -6,6 +6,7 @@ import { useMenus } from "../../features/menus/useMenu";
 import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useProjectOrCareer } from "../../features/project/projectSlice";
 import { useTranslations } from "../../features/translations/translations";
+import { imgUrl } from "../../imgUrl";
 
 const ContactDetails = React.memo(
   React.lazy(() => import("../contactDetails"))
@@ -17,7 +18,7 @@ const SocialNetworks = React.memo(
 const Footer = () => {
   const { lang } = useParams();
   const { data: infos, status, error } = useSiteInfos(lang);
-  const adresses = infos && infos?.address?.split("/");
+  const adresses = infos && infos[0]?.address[lang]?.split("/");
 
   const { data: menus } = useMenus(lang);
   const { data: categories } = useTrainingCategories(lang);
@@ -120,7 +121,7 @@ const Footer = () => {
                     {status === "success" && (
                       <img
                         loading="lazy"
-                        src={infos.header_footer}
+                        src={`${imgUrl}/${infos[0].header_footer.url}`}
                         alt="Innab logo"
                       />
                     )}
