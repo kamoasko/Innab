@@ -17,20 +17,28 @@ import { useStatistics } from "../../features/statistics/statisticSlice";
 import CountUp from "react-countup";
 
 const StatisticCard = React.memo(
-  ({ stat, isVisible, formatCount, className }) => (
+  ({ stat, isVisible, formatCount, className, lang }) => (
     <div className={`${styles.statisticsCard} ${className}`}>
       <div>
-        <img loading="lazy" src={stat.icon} alt={stat.text} />
+        <img
+          loading="lazy"
+          src={`https://admin.innab.coder.az/${stat.image.url}`}
+          alt={stat.sub_text[lang]}
+        />
       </div>
       <p>
         {isVisible ? (
-          <CountUp end={stat.count} duration={2} formattingFn={formatCount} />
+          <CountUp
+            end={stat.center_text}
+            duration={2}
+            formattingFn={formatCount}
+          />
         ) : (
           0
         )}
         +
       </p>
-      <span>{stat.text}</span>
+      <span>{stat.sub_text.az}</span>
     </div>
   )
 );
@@ -118,6 +126,7 @@ const StatsCounter = () => {
               <StatisticCard
                 key={stat.id}
                 stat={stat}
+                lang={lang}
                 isVisible={isVisible}
                 formatCount={formatCount}
                 className={getCardClass(index)}
