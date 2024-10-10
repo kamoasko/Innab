@@ -1064,9 +1064,9 @@ footer {
     padding: 1.6rem 0;
   }
 
-  .navbarMenu > li > a.active,
+  .navbarMenu > li > button.active,
   .navbarMenu > li > div > a.active,
-  .navbarMenu > li > a:hover,
+  .navbarMenu > li > button:hover,
   .navbarMenu > li > div > a:hover {
     position: static;
   }

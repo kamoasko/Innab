@@ -4,13 +4,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import PartnersCard from "../../PartnersCard";
 import { Autoplay } from "swiper/modules";
 
-const PartnersSlider = ({ partnerSlider, onclick }) => {
+const PartnersSlider = ({ partnerSlider, onclick, buttonTitle }) => {
   return (
     <Swiper
       slidesPerView={3}
       spaceBetween={32}
-      modules={[Autoplay]}
-      autoplay={{ delay: 3000 }}
+      // modules={[Autoplay]}
+      // autoplay={{ delay: 3000 }}
       breakpoints={{
         280: {
           slidesPerView: 1,
@@ -31,6 +31,7 @@ const PartnersSlider = ({ partnerSlider, onclick }) => {
             text={partner.short_description}
             img={partner.image}
             onClick={onclick}
+            buttonTitle={buttonTitle}
           />
         </SwiperSlide>
       ))}

@@ -109,7 +109,7 @@ const Navbar = ({
 
   const handleCorporativeNavigation = useCallback(
     (sectionId) => {
-      navigate(`/${lang}/${parentMenu[2].slug}`);
+      navigate(`/${lang}/corporate`);
       setTimeout(() => {
         const element = document.getElementById(sectionId);
         if (element) {

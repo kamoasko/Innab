@@ -168,7 +168,7 @@
 
 @media (max-width: 992px) {
   .pageHeader {
-    height: 30rem;
+    height: 40rem;
   }
 
   .corporativeWrapper {
@@ -277,6 +277,12 @@
   }
 }
 
+@media (max-width: 537px) {
+  .pageHeader {
+    height: 38rem;
+  }
+}
+
 @media (max-width: 500px) {
   .corporativeImg {
     height: 26.1rem;
@@ -297,5 +303,11 @@
         width: 2.4rem;
       }
     }
+  }
+}
+
+@media (max-width: 360px) {
+  .pageHeader {
+    height: 47rem;
   }
 }

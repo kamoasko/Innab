@@ -453,6 +453,12 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .partnersCard button {
+    padding: 0;
+  }
+}
+
 @media (max-width: 1023px) {
   .statistics {
     margin-top: unset;

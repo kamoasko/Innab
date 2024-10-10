@@ -58,7 +58,11 @@ const PartnersSection = memo(({ onClick, partnersTitle, buttonTitle }) => {
                 ))}
               </div>
             ) : (
-              <PartnersSlider onclick={handleClick} partnerSlider={partners} />
+              <PartnersSlider
+                onclick={handleClick}
+                partnerSlider={partners}
+                buttonTitle={buttonTitle}
+              />
             )}
           </>
         )}
