@@ -5,6 +5,7 @@
 .trainingMenu > li {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 23.38rem;
   padding: 1.6rem 0;
   height: 5.5rem;

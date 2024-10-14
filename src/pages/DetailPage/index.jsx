@@ -269,9 +269,7 @@ const DetailPage = ({ blog }) => {
                                   onClick={() => handleVideoId(link.link)}
                                   key={link.id}
                                 >
-                                  <span>
-                                    1.{index + 1}. {link.title}
-                                  </span>
+                                  <span>{link.title}</span>
                                   <span className="flex alignItemsCenter">
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
