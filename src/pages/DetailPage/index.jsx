@@ -93,16 +93,26 @@ const DetailPage = ({ blog }) => {
     const totalMinutes = totalHours * 60 + minutes;
     const totalSeconds = totalMinutes * 60 + seconds;
 
-    const formattedHours = String(Math.floor(totalSeconds / 3600)).padStart(
-      2,
-      "0"
-    );
-    const formattedMinutes = String(
-      Math.floor((totalSeconds % 3600) / 60)
-    ).padStart(2, "0");
-    const formattedSeconds = String(totalSeconds % 60).padStart(2, "0");
-
-    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    if (totalSeconds < 3600) {
+      // If total seconds are less than 1 hour (3600 seconds), format as "MM:SS"
+      const formattedMinutes = String(Math.floor(totalSeconds / 60)).padStart(
+        2,
+        "0"
+      );
+      const formattedSeconds = String(totalSeconds % 60).padStart(2, "0");
+      return `${formattedMinutes}:${formattedSeconds}`;
+    } else {
+      // If total seconds are 1 hour or more, format as "HH:MM:SS"
+      const formattedHours = String(Math.floor(totalSeconds / 3600)).padStart(
+        2,
+        "0"
+      );
+      const formattedMinutes = String(
+        Math.floor((totalSeconds % 3600) / 60)
+      ).padStart(2, "0");
+      const formattedSeconds = String(totalSeconds % 60).padStart(2, "0");
+      return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+    }
   };
 
   useEffect(() => {
@@ -300,7 +310,7 @@ const DetailPage = ({ blog }) => {
                                           item.snippet.resourceId.videoId ===
                                           link.link
                                       )?.duration) ||
-                                      "00:00:00"}
+                                      "00:00"}
                                   </span>
                                 </li>
                               ))}
