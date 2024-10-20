@@ -6,6 +6,7 @@ import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonS
 import { useMenus } from "../../features/menus/useMenu";
 import { useTrainingCategories } from "../../features/categories/useCategory";
 import { useTranslations } from "../../features/translations/translations";
+import { Helmet } from "react-helmet-async";
 
 const PageTitle = React.lazy(() => import("../../components/pageTitle"));
 const Contact = React.lazy(() => import("../../components/Contact"));
@@ -43,55 +44,95 @@ const VideoLessons = () => {
     }
   }, [status, videoCategories]);
 
+  const currentCategory = videoCategories?.find(
+    (category) => category.id === categoryId
+  );
+
   return (
-    <Suspense fallback={<CircularProgress />}>
-      <section className={styles.videoLessons}>
-        <div className="container">
-          <PageTitle
-            title={translations && getTranslation("video_lessons_title")}
+    <>
+      <Helmet>
+        <title>
+          {currentCategory ? currentCategory?.seo_title : "Video dərslər"}
+        </title>
+        <meta
+          name="description"
+          content={
+            currentCategory
+              ? currentCategory?.seo_description
+              : "Video dərslər səhifəsi"
+          }
+        />
+        <meta
+          name="keywords"
+          content={currentCategory && currentCategory?.seo_keywords}
+        />
+        {(currentCategory && currentCategory?.seo_links) || (
+          <link
+            rel="canonical"
+            href={`useful-for-you/blog/${
+              currentCategory && currentCategory?.slug
+            }`}
           />
-          <ul className="flex alignItemsCenter tabsMenu tbMenu">
-            {status === "pending" && (
-              <Box
-                sx={{
-                  display: "flex",
-                  width: "100%",
-                  gap: 2,
-                }}
-              >
-                {[...Array(4)].map((_, index) => (
-                  <Skeleton
-                    key={index}
-                    variant="rectangular"
-                    width={180}
-                    height={58}
-                    className={styles.tab}
-                    sx={{ borderRadius: "4.8rem" }}
+        )}
+        {currentCategory ? (
+          currentCategory?.seo_scripts
+        ) : (
+          <script type="application/ld+json"></script>
+        )}
+      </Helmet>
+      <Suspense
+        fallback={
+          <Skeleton variant="rectangular" width={"100%"} height={"100vh"} />
+        }
+      >
+        <section className={styles.videoLessons}>
+          <div className="container">
+            <PageTitle
+              title={translations && getTranslation("video_lessons_title")}
+            />
+            <ul className="flex alignItemsCenter tabsMenu tbMenu">
+              {status === "pending" && (
+                <Box
+                  sx={{
+                    display: "flex",
+                    width: "100%",
+                    gap: 2,
+                  }}
+                >
+                  {[...Array(4)].map((_, index) => (
+                    <Skeleton
+                      key={index}
+                      variant="rectangular"
+                      width={180}
+                      height={58}
+                      className={styles.tab}
+                      sx={{ borderRadius: "4.8rem" }}
+                    />
+                  ))}
+                </Box>
+              )}
+              {status === "error" && <Box>{error}</Box>}
+              {status === "success" &&
+                !isDetailPage &&
+                videoCategories.map((category) => (
+                  <Tabs
+                    key={category.id}
+                    title={category.title}
+                    to={`/${lang}/useful-for-you/video-lessons/${category.slug}`}
+                    onClick={() => handleTabClick(category.id)}
                   />
                 ))}
-              </Box>
-            )}
-            {status === "error" && <Box>{error}</Box>}
-            {status === "success" &&
-              !isDetailPage &&
-              videoCategories.map((category) => (
-                <Tabs
-                  key={category.id}
-                  title={category.title}
-                  to={`/${lang}/useful-for-you/video-lessons/${category.slug}`}
-                  onClick={() => handleTabClick(category.id)}
-                />
-              ))}
-          </ul>
-          <Outlet context={{ categoryId }} />
-        </div>
-      </section>
+            </ul>
+            <Outlet context={{ categoryId }} />
+          </div>
+        </section>
 
-      <Contact
-        apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
-        categories={allTrainings && allTrainings}
-      />
-    </Suspense>
+        <Contact
+          apiEndpoint={"https://admin.innab.coder.az/api/contactform/post"}
+          categories={allTrainings && allTrainings}
+        />
+      </Suspense>
+    </>
   );
 };
 

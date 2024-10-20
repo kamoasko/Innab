@@ -1,10 +1,8 @@
 import React from "react";
 import styles from "./tabs.module.css";
-import { NavLink, useMatch } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const Tabs = React.memo(({ title, to, onClick, isActive }) => {
-  // const match = useMatch(to);
-
   return (
     <li>
       <NavLink

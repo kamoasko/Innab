@@ -27,7 +27,7 @@ const VideoGrid = React.memo(() => {
         {status === "pending" &&
           [...Array(3)].map((_, index) => (
             <Skeleton
-              animation="pulse"
+              animation="wave"
               key={index}
               variant="rectangular"
               width={410}
@@ -36,8 +36,14 @@ const VideoGrid = React.memo(() => {
               sx={{ borderRadius: "1.6rem" }}
             />
           ))}
-        {status === "error" && <Box>{error}</Box>}
+        {status === "error" && (
+          <p>{error.message && <p>Video dərslər tapılmadı</p>}</p>
+        )}
+        {status === "success" && videoLessons.length === 0 && (
+          <p>Video dərslər tapılmadı</p>
+        )}
         {status === "success" &&
+          videoLessons.length > 0 &&
           videoLessons.map((video) => (
             <VideoLessonCard
               key={video.id}

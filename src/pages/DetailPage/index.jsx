@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import styles from "./details.module.css";
 import { FaChevronDown } from "react-icons/fa";
 import { useOutletContext, useParams } from "react-router";
@@ -56,14 +56,17 @@ const DetailPage = ({ blog }) => {
   };
 
   const { data: translations } = useTranslations("site");
-  const getTranslation = (keyword) => {
-    const translation = translations.find((item) => item.keyword === keyword);
-    return translation ? translation.value[lang] : keyword;
-  };
+  const getTranslation = useMemo(
+    () => (keyword) => {
+      const translation = translations.find((item) => item.keyword === keyword);
+      return translation ? translation.value[lang] : keyword;
+    },
+    [translations, lang]
+  );
 
   const links = content?.links;
   const videoId = links?.link;
-  const apiKey = "AIzaSyAcNaMFfPRTTcuOI5JHkrDC8ZrzDAb4ELQ";
+  const apiKey = import.meta.env.VITE_API_KEY;
   const [videoLessonId, setVideoLessonId] = useState(videoId);
   const iframeRef = useRef(videoId);
 
@@ -104,7 +107,7 @@ const DetailPage = ({ blog }) => {
 
   useEffect(() => {
     const fetchPlaylistData = async () => {
-      const playlistId = "PLEmd2D4NKfm6vbuyGBI2C43QdQ6LzlM0b";
+      const playlistId = links && links?.playlist_id;
       let nextPageToken = null;
       let allVideos = [];
 
