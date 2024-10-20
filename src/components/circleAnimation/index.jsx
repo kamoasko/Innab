@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./circle-animation.css";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useAnimation } from "framer-motion";
 import about from "../../assets/images/about-logo.png";
 import useWindowDimensions from "../../hooks/useWindowDimensions";
 
@@ -19,20 +19,15 @@ const elements = [
   { id: 9, text: "Müasir ofis şəraiti" },
 ];
 
-const getLeftSideXPosition = (circleRadius) => {
-  return Math.random() * -circleRadius;
-};
-
-const getRightSideXPosition = (circleRadius) => {
-  return Math.random() * circleRadius;
+const getCirclePosition = (circleRadius, index, totalItems, isLeftSide) => {
+  const angle = ((index + 0.5) / totalItems) * Math.PI;
+  const x = Math.cos(angle) * (circleRadius - 50);
+  const y = Math.sin(angle) * (circleRadius - 50);
+  return isLeftSide ? { x: -x, y } : { x, y };
 };
 
 const getRandomRotation = () => {
-  return Math.random() * 360 - 180;
-};
-
-const getBottomYPosition = (circleRadius) => {
-  return circleRadius / 2;
+  return (Math.random() * 180 - 90) / 2; // Limit rotation to -45 to 45 degrees
 };
 
 const DropAnimation = () => {
@@ -40,78 +35,76 @@ const DropAnimation = () => {
   const isInView = useInView(ref, { once: true, threshold: 0.5 });
   const circleRadius = 250;
   const { width } = useWindowDimensions();
+  const [elementPositions, setElementPositions] = useState([]);
+
+  const controls = useAnimation();
+
+  useEffect(() => {
+    if (isInView) {
+      controls.start("visible");
+    }
+  }, [isInView, controls]);
+
+  const renderElements = (start, end, isLeftSide) => {
+    const slicedElements = elements.slice(start, end);
+    return slicedElements.map((el, index) => {
+      const position = getCirclePosition(
+        circleRadius,
+        index,
+        slicedElements.length,
+        isLeftSide
+      );
+      return (
+        <motion.div
+          key={el.id}
+          initial="hidden"
+          animate={controls}
+          variants={{
+            hidden: { x: position.x, y: -circleRadius, rotate: 0, opacity: 0 },
+            visible: {
+              x: position.x,
+              y: position.y,
+              rotate: getRandomRotation(),
+              opacity: 1,
+              transition: {
+                type: "spring",
+                damping: 15,
+                stiffness: 40,
+                delay: index * 0.2,
+              },
+            },
+          }}
+          onUpdate={(latest) => {
+            setElementPositions((prev) => {
+              const newPositions = [...prev];
+              newPositions[el.id] = latest.y;
+              return newPositions;
+            });
+          }}
+          className="element"
+          style={{
+            position: "absolute",
+            zIndex: elementPositions[el.id]
+              ? Math.round(1000 - elementPositions[el.id])
+              : 1,
+          }}
+        >
+          {el.text}
+        </motion.div>
+      );
+    });
+  };
 
   return (
     <div className="venn-container" ref={ref}>
-      {width > 700 ? (
-        <motion.div
-          className="circle left-circle"
-          style={{ position: "relative" }}
-        >
-          {elements.slice(0, 5).map((el, index) => (
-            <motion.div
-              key={el.id}
-              initial={{
-                y: -150,
-                x: getLeftSideXPosition(circleRadius),
-                rotate: getRandomRotation(),
-              }}
-              animate={
-                isInView
-                  ? {
-                      y: getBottomYPosition(circleRadius),
-                      rotate: getRandomRotation(),
-                    }
-                  : {}
-              }
-              transition={{
-                type: "spring",
-                damping: 15,
-                stiffness: 40,
-                delay: index * 0.2,
-              }}
-              className="element"
-              style={{ position: "absolute" }}
-            >
-              {el.text}
-            </motion.div>
-          ))}
-        </motion.div>
-      ) : (
-        <motion.div
-          className="circle left-circle"
-          style={{ position: "relative" }}
-        >
-          {elements.map((el, index) => (
-            <motion.div
-              key={el.id}
-              initial={{
-                y: -150,
-                x: getLeftSideXPosition(circleRadius),
-                rotate: getRandomRotation(),
-              }}
-              animate={
-                isInView
-                  ? {
-                      y: getBottomYPosition(circleRadius),
-                      rotate: getRandomRotation(),
-                    }
-                  : {}
-              }
-              transition={{
-                type: "spring",
-                damping: 15,
-                stiffness: 40,
-                delay: index * 0.2,
-              }}
-              className="element"
-              style={{ position: "absolute" }}
-            >
-              {el.text}
-            </motion.div>
-          ))}
-        </motion.div>
-      )}
+      <motion.div
+        className="circle left-circle"
+        style={{ position: "relative" }}
+      >
+        {width > 700
+          ? renderElements(0, 5, true)
+          : renderElements(0, elements.length, true)}
+      </motion.div>
 
       <motion.div
         className="center-text"
@@ -126,39 +119,14 @@ const DropAnimation = () => {
         <img src={about} alt="" />
       </motion.div>
 
-      <motion.div
-        className="circle right-circle"
-        style={{ position: "relative" }}
-      >
-        {elements.slice(5).map((el, index) => (
-          <motion.div
-            key={el.id}
-            initial={{
-              y: -150,
-              x: getRightSideXPosition(circleRadius),
-              rotate: getRandomRotation(),
-            }}
-            animate={
-              isInView
-                ? {
-                    y: getBottomYPosition(circleRadius),
-                    rotate: getRandomRotation(),
-                  }
-                : {}
-            }
-            transition={{
-              type: "spring",
-              damping: 15,
-              stiffness: 40,
-              delay: index * 0.2,
-            }}
-            className="element"
-            style={{ position: "absolute" }}
-          >
-            {el.text}
-          </motion.div>
-        ))}
-      </motion.div>
+      {width > 700 && (
+        <motion.div
+          className="circle right-circle"
+          style={{ position: "relative" }}
+        >
+          {renderElements(5, elements.length, false)}
+        </motion.div>
+      )}
     </div>
   );
 };
