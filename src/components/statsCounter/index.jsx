@@ -102,7 +102,7 @@ const StatsCounter = () => {
       ref={statsRef}
     >
       {status === "pending" &&
-        [...Array(6)].map((_, index) => (
+        [...Array(7)].map((_, index) => (
           <Skeleton
             key={index}
             variant="rectangular"
