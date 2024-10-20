@@ -44,7 +44,7 @@ const ContactSection = React.memo(({ h2, title }) => {
             </li>
           </ul>
         )}
-        <SocialNetworks contact gap={"2.4rem"} />
+        <SocialNetworks gap={"2.4rem"} />
       </div>
     </div>
   );

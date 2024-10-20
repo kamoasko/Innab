@@ -459,7 +459,7 @@ const CareerForm = ({ onResults }) => {
                     onChange={handleExperienceChange}
                     aria-label="Experience slider"
                     min={0}
-                    max={47}
+                    max={15}
                     step={1}
                   />
                 </Box>

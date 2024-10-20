@@ -8,43 +8,6 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
   const { lang } = useParams();
   const { data: infos, status, error } = useSiteInfos(lang);
 
-  // if (status === "pending") {
-  //   return (
-  //     <Box sx={{ display: "flex", alignItems: "center", gap: 3.2 }}>
-  //       <Skeleton
-  //         variant="rectangular"
-  //         width={30}
-  //         height={30}
-  //         sx={{ borderRadius: "0.5rem" }}
-  //       />
-  //       <Skeleton
-  //         variant="rectangular"
-  //         width={30}
-  //         height={30}
-  //         sx={{ borderRadius: "0.5rem" }}
-  //       />
-  //       <Skeleton
-  //         variant="rectangular"
-  //         width={30}
-  //         height={30}
-  //         sx={{ borderRadius: "0.5rem" }}
-  //       />
-  //       <Skeleton
-  //         variant="rectangular"
-  //         width={30}
-  //         height={30}
-  //         sx={{ borderRadius: "0.5rem" }}
-  //       />
-  //       <Skeleton
-  //         variant="rectangular"
-  //         width={30}
-  //         height={30}
-  //         sx={{ borderRadius: "0.5rem" }}
-  //       />
-  //     </Box>
-  //   );
-  // }
-
   if (status === "error") {
     return <Box>{error}</Box>;
   }
@@ -80,10 +43,9 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
       </li>
       <li>
         <Link to={infos && infos[0]?.instagram_link} target="_blank">
-          {contact ? (
-            <FaInstagram style={{ width: "2.4rem", height: "2.4rem" }} />
-          ) : (
-            <svg
+          <FaInstagram style={{ width: "2.4rem", height: "2.4rem" }} />
+
+          {/* <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
               height="20"
@@ -143,8 +105,7 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
                   <stop offset="1" stopColor="#515BD4" />
                 </linearGradient>
               </defs>
-            </svg>
-          )}
+            </svg> */}
         </Link>
       </li>
       <li>

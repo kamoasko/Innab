@@ -5,3 +5,8 @@
 .vananciesWrapper {
   margin-top: 6rem;
 }
+
+.vananciesWrapper ul,
+.vananciesWrapper ol {
+  list-style: initial;
+}
