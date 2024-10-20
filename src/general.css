@@ -107,6 +107,10 @@
   gap: 4rem;
 }
 
+.headerBottomRight > .headerTopLang {
+  display: none;
+}
+
 /* navbar styles */
 
 .navbarMenu {
@@ -1033,12 +1037,17 @@ footer {
     display: block;
     position: absolute;
     background-color: var(--color-white);
-    top: -616px;
-    transition: top 0.3s ease;
-    -webkit-transition: top 0.3s ease;
-    -moz-transition: top 0.3s ease;
-    -ms-transition: top 0.3s ease;
-    -o-transition: top 0.3s ease;
+    top: -100%;
+    transform: translateY(100%);
+    -webkit-transform: translateY(-100%);
+    -moz-transform: translateY(-100%);
+    -ms-transform: translateY(-100%);
+    -o-transform: translateY(-100%);
+    transition: transform 0.3s ease;
+    -webkit-transition: transform 0.3s ease;
+    -moz-transition: transform 0.3s ease;
+    -ms-transition: transform 0.3s ease;
+    -o-transition: transform 0.3s ease;
     width: 100%;
     z-index: 99;
     overflow-x: scroll;
@@ -1046,6 +1055,11 @@ footer {
 
   .headerBottom.opened {
     top: 100%;
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
   }
 
   .navbarMenu {
@@ -1157,6 +1171,10 @@ footer {
     width: 100%;
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .headerBottomRight > .headerTopLang {
+    display: block;
   }
 
   .headerBottomRight > button:first-of-type {

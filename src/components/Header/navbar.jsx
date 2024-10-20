@@ -15,6 +15,7 @@ import { useVideoLessonCategory } from "../../features/videoLessons/videoLessonS
 import { useProjectOrCareer } from "../../features/project/projectSlice";
 import { useTranslations } from "../../features/translations/translations";
 import { useCallback, useMemo } from "react";
+import LangForm from "../langForm";
 
 const Navbar = ({
   partnersRef,
@@ -606,6 +607,7 @@ const Navbar = ({
                 />
               </svg>
             </button>
+            <LangForm />
             <div className="headerBottomSocials flexDirectionColumn">
               <p>{translations && getTranslation("h_follow_us")}</p>
               <SocialNetworks gap="2rem" />
