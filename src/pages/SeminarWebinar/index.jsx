@@ -164,8 +164,8 @@ const SeminarWebinar = ({ workshop }) => {
               }
               icon={
                 workshop && siteInfo
-                  ? `${imgUrl}/${siteInfo[0]?.workshop_icon.url}`
-                  : `${imgUrl}/${siteInfo[0]?.vebinar_icon.url}`
+                  ? `${imgUrl}/${siteInfo && siteInfo[0]?.workshop_icon.url}`
+                  : `${imgUrl}/${siteInfo && siteInfo[0]?.vebinar_icon.url}`
               }
             />
           </div>

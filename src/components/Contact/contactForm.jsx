@@ -393,11 +393,27 @@ const ContactForm = ({
                         name="project"
                         value="Data analitika"
                       />
-                      Data analitika
+                      {isLoading && (
+                        <Skeleton
+                          variant="text"
+                          width={120}
+                          height={20}
+                          sx={{ display: "inline-block" }}
+                        />
+                      )}
+                      {translations && getTranslation("form_project_1")}
                     </label>
                     <label>
                       <Field type="radio" name="project" value="Mühasibatlıq" />
-                      Mühasibatlıq
+                      {isLoading && (
+                        <Skeleton
+                          variant="text"
+                          width={120}
+                          height={20}
+                          sx={{ display: "inline-block" }}
+                        />
+                      )}
+                      {translations && getTranslation("form_project_2")}
                     </label>
                     <label>
                       <Field
@@ -405,11 +421,27 @@ const ContactForm = ({
                         name="project"
                         value="İnsan Resursları"
                       />
-                      İnsan Resursları
+                      {isLoading && (
+                        <Skeleton
+                          variant="text"
+                          width={120}
+                          height={20}
+                          sx={{ display: "inline-block" }}
+                        />
+                      )}
+                      {translations && getTranslation("form_project_3")}
                     </label>
                     <label>
                       <Field type="radio" name="project" value="SMM" />
-                      SMM
+                      {isLoading && (
+                        <Skeleton
+                          variant="text"
+                          width={120}
+                          height={20}
+                          sx={{ display: "inline-block" }}
+                        />
+                      )}
+                      {translations && getTranslation("form_project_4")}
                     </label>
                     <label>
                       <Field

@@ -183,7 +183,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 30.5rem));
   gap: 2.4rem;
-  place-content: center;
+  /* place-content: center; */
+  align-content: start;
 }
 
 /* partners */
@@ -401,8 +402,14 @@
   }
 
   .trainingsGrid {
-    height: 100%;
+    height: 85%;
     overflow-y: scroll;
+  }
+}
+
+@media (max-width: 1374px) {
+  .trainingsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 28rem));
   }
 }
 
@@ -411,6 +418,13 @@
     width: 10.7rem;
     height: 11.3rem;
     padding: 0.8rem;
+  }
+}
+
+@media (max-width: 1268px) {
+  .trainingsGrid {
+    height: 90%;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 26rem));
   }
 }
 
@@ -440,6 +454,12 @@
   .trainingsNavbarMenu > li > div > span {
     font-size: 1rem;
     line-height: normal;
+  }
+}
+
+@media (max-width: 1183px) {
+  .trainingsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 22rem));
   }
 }
 
@@ -535,6 +555,8 @@
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     -ms-overflow-style: none;
+    display: flex;
+    justify-content: center;
   }
 
   .trainingsNavbar::-webkit-scrollbar {
@@ -555,6 +577,12 @@
 
   .trainingsNavbarMenu > li > div {
     white-space: nowrap;
+  }
+}
+
+@media (max-width: 781px) {
+  .trainingsNavbar {
+    display: block;
   }
 }
 

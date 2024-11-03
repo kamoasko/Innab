@@ -958,6 +958,17 @@ footer {
   }
 }
 
+@media (max-width: 1024px) {
+  .trainingSlider {
+    height: 26rem;
+    margin-top: 3.2rem;
+  }
+
+  .customPagination {
+    display: none;
+  }
+}
+
 @media (max-width: 1023px) {
   .swiper-pagination {
     top: 100% !important;
@@ -977,15 +988,6 @@ footer {
     -moz-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     -o-transform: translateY(-50%);
-  }
-
-  .trainingSlider {
-    height: 24rem;
-    margin-top: 3.2rem;
-  }
-
-  .customPagination {
-    display: none;
   }
 
   .partnersSlider {

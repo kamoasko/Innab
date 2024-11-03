@@ -62,7 +62,11 @@ const TrainingLayout = () => {
           ))}
         </ul>
       </nav>
-      <HomeTrainings trainings={selectedTrainings} link={selectedSlug} />
+      <HomeTrainings
+        trainings={selectedTrainings}
+        link={selectedSlug}
+        selectedCategory={selectedCategory}
+      />
     </>
   );
 };
