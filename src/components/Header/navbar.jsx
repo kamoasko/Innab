@@ -141,7 +141,7 @@ const Navbar = ({
                 <NavLink
                   className={() =>
                     `${openDropdowns[0] ? "opened" : ""} ${
-                      isMenuActive(parentMenu[0]?.slug) ? "active" : ""
+                      isMenuActive("about") ? "active" : ""
                     }`
                   }
                   to="about-us"
@@ -203,7 +203,7 @@ const Navbar = ({
                 <NavLink
                   className={() =>
                     `${openDropdowns[1] ? "opened" : ""} ${
-                      isMenuActive(parentMenu[1]?.slug) ? "active" : ""
+                      isMenuActive("trainings") ? "active" : ""
                     }`
                   }
                   onClick={() => handleScrollToSect(trainingsRef)}
@@ -368,7 +368,7 @@ const Navbar = ({
                 <NavLink
                   className={() =>
                     `${openDropdowns[3] ? "opened" : ""} ${
-                      isMenuActive(parentMenu[3]?.slug) ? "active" : ""
+                      isMenuActive("projects") ? "active" : ""
                     }`
                   }
                   onClick={() => handleScrollToSect(projectsRef)}
@@ -429,7 +429,7 @@ const Navbar = ({
                 <NavLink
                   className={() =>
                     `${openDropdowns[4] ? "opened" : ""} ${
-                      isMenuActive(parentMenu[4]?.slug) ? "active" : ""
+                      isMenuActive("career-center") ? "active" : ""
                     }`
                   }
                 >
@@ -489,7 +489,7 @@ const Navbar = ({
                 <NavLink
                   className={() =>
                     `${openDropdowns[5] ? "opened" : ""} ${
-                      isMenuActive(parentMenu[5]?.slug) ? "active" : ""
+                      isMenuActive("useful-for-you") ? "active" : ""
                     }`
                   }
                   onClick={() => handleScrollToSect(useFullRef)}

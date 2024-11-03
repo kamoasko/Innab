@@ -391,7 +391,7 @@ const ContactForm = ({
                       <Field
                         type="radio"
                         name="project"
-                        value="Data analitika"
+                        value={translations && getTranslation("form_project_1")}
                       />
                       {isLoading && (
                         <Skeleton
@@ -404,7 +404,11 @@ const ContactForm = ({
                       {translations && getTranslation("form_project_1")}
                     </label>
                     <label>
-                      <Field type="radio" name="project" value="Mühasibatlıq" />
+                      <Field
+                        type="radio"
+                        name="project"
+                        value={translations && getTranslation("form_project_2")}
+                      />
                       {isLoading && (
                         <Skeleton
                           variant="text"
@@ -419,7 +423,7 @@ const ContactForm = ({
                       <Field
                         type="radio"
                         name="project"
-                        value="İnsan Resursları"
+                        value={translations && getTranslation("form_project_3")}
                       />
                       {isLoading && (
                         <Skeleton
@@ -432,7 +436,11 @@ const ContactForm = ({
                       {translations && getTranslation("form_project_3")}
                     </label>
                     <label>
-                      <Field type="radio" name="project" value="SMM" />
+                      <Field
+                        type="radio"
+                        name="project"
+                        value={translations && getTranslation("form_project_4")}
+                      />
                       {isLoading && (
                         <Skeleton
                           variant="text"
