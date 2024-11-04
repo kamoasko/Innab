@@ -141,7 +141,7 @@ const Navbar = ({
                 <NavLink
                   className={() =>
                     `${openDropdowns[0] ? "opened" : ""} ${
-                      isMenuActive("about") ? "active" : ""
+                      isMenuActive("about-us") ? "active" : ""
                     }`
                   }
                   to="about-us"
@@ -245,7 +245,7 @@ const Navbar = ({
                 )}
               </div>
               <ul
-                className={`dropdown flex justifyContentBetween ${
+                className={`dropdown trainingDrop flex justifyContentBetween ${
                   openDropdowns[1] ? "open" : ""
                 }`}
               >

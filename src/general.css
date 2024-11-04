@@ -152,11 +152,6 @@
   position: absolute;
 }
 
-.navbarMenu > li > div > svg,
-.dropdown > li > p > svg {
-  display: none;
-}
-
 /* dropdown style start */
 
 .navbarMenuDy {
@@ -191,6 +186,11 @@
   -moz-transition: 0.3s all;
   -ms-transition: 0.3s all;
   -o-transition: 0.3s all;
+}
+
+.navbarMenu > li > div > svg,
+.dropdown > li > p > svg {
+  display: none;
 }
 
 .navbarMenu > li:hover > .dropdown {
@@ -906,6 +906,13 @@ footer {
 
   .headerBottomRight {
     gap: 2rem;
+  }
+}
+
+@media (max-height: 622px) {
+  .trainingDrop {
+    overflow-y: scroll;
+    height: calc(100vh - 100px);
   }
 }
 
