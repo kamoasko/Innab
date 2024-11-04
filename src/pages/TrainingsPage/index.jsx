@@ -71,11 +71,13 @@ const TrainingsPage = () => {
   };
 
   const downloadTrainingFile = () => {
-    const blob = new Blob(selectedTraining && [selectedTraining?.file], {
-      type: "application/pdf",
-    });
+    // const blob = new Blob(selectedTraining && [selectedTraining?.file], {
+    //   type: "application/pdf",
+    // });
+    const pdfUrl = selectedTraining && selectedTraining?.file;
     const link = document.createElement("a");
-    link.href = window.URL.createObjectURL(blob);
+    link.href = pdfUrl;
+    link.target = "_blank";
     link.download = selectedTraining?.title;
     link.click();
   };
