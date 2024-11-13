@@ -48,6 +48,20 @@ const Corporative = () => {
     return translation ? translation.value[lang] : keyword;
   };
 
+  const corporativeItems1 =
+    corporatives &&
+    corporatives?.corporative_trainings?.slice(
+      0,
+      Math.ceil(corporatives?.corporative_trainings?.length / 2)
+    );
+
+  const corporativeItems2 =
+    corporatives &&
+    corporatives?.corporative_trainings?.slice(
+      Math.ceil(corporatives?.corporative_trainings?.length / 2),
+      corporatives?.corporative_trainings?.length
+    );
+
   if (status === "error") {
     return <p>{error}</p>;
   }
@@ -220,8 +234,8 @@ const Corporative = () => {
         <section className={styles.faq}>
           <div className="container">
             <div className={`${styles.faqAccordions} faqAccordions`}>
-              {corporatives &&
-                corporatives?.corporative_trainings?.map((category, index) => (
+              <div>
+                {corporativeItems1?.map((category, index) => (
                   <AccordionSecond
                     key={index}
                     summary={category.title}
@@ -234,6 +248,22 @@ const Corporative = () => {
                     ]}
                   />
                 ))}
+              </div>
+              <div>
+                {corporativeItems2?.map((category, index) => (
+                  <AccordionSecond
+                    key={index}
+                    summary={category.title}
+                    details={[
+                      <ol>
+                        {category.trainings?.map((training, index) => (
+                          <li key={index}>{training}</li>
+                        ))}
+                      </ol>,
+                    ]}
+                  />
+                ))}
+              </div>
             </div>
 
             <div

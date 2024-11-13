@@ -54,7 +54,6 @@ const TrainingsPage = () => {
 
       setSelectedTraining(training);
 
-      // Find the category ID of the selected training
       const category = categories.find((category) =>
         category.subData.includes(training)
       );
