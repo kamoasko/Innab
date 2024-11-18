@@ -169,7 +169,7 @@
   min-width: 20rem;
   width: 90%;
   max-height: calc(100vh - 7.2rem);
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: var(--color-white);
   padding: 3.2rem 2.4rem;
   border-radius: 1.6rem;
@@ -207,7 +207,6 @@
   left: 0;
   gap: 1rem;
   top: calc(100% + 35px);
-  overflow-y: auto;
 }
 
 .navbarMenu > li:hover > .dy {
