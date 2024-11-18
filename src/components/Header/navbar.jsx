@@ -57,8 +57,9 @@ const Navbar = ({
   const blogSlug = isSuccess && blog?.map((b) => b.slug);
   const videoSlug = videoStatus && video?.map((v) => v.slug);
   const projects = projectOrCareer?.filter(
-    (project) => project.is_corporative === null
+    (project) => project.is_corporative === 0
   );
+
   const careers = projectOrCareer?.filter(
     (career) => career.is_corporative === 1
   );
