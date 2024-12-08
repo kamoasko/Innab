@@ -44,10 +44,15 @@ const SeminarWebinar = ({ workshop }) => {
     return translation ? translation.value[lang] : keyword;
   };
 
-  // const date = new Date();
+  const date = new Date();
 
-  // const today = `${date.getFullYear()}-0${date.getMonth()}-0${date.getDate()} ${date.getHours()}:${date.getSeconds()}`;
-  // console.log(today);
+  const today = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()} ${date.getHours()}:${date.getSeconds()}`;
+  console.log(today);
+  console.log(
+    seminarOrWorkshop &&
+      seminarOrWorkshop.map((item) => item.event_datetime?.slice(0, 16))[0] <
+        today
+  );
 
   const contactRef = useRef(null);
 
@@ -205,46 +210,65 @@ const SeminarWebinar = ({ workshop }) => {
               )}
               {status === "error" && <div>{error}</div>}
               {status === "success" &&
-                seminarOrWorkshop?.map((sow, index) => (
-                  <SwiperSlide key={sow.id || index}>
-                    <Advertisement
-                      onclick={handleScrollToContact}
-                      speakers={sow.spikers}
-                      time={sow.event_datetime?.slice(0, 16)}
-                      adsImg={sow.image}
-                      location={sow.place}
-                      title={sow.title}
-                      locationTitle={
-                        isLoading ? (
-                          <Skeleton variant="text" width={"100%"} height={40} />
-                        ) : (
-                          translations && getTranslation("location")
-                        )
-                      }
-                      dateTitle={
-                        isLoading ? (
-                          <Skeleton variant="text" width={"100%"} height={40} />
-                        ) : (
-                          translations && getTranslation("event_date")
-                        )
-                      }
-                      btnTitle={
-                        isLoading ? (
-                          <Skeleton variant="text" width={"100%"} height={40} />
-                        ) : (
-                          translations && getTranslation("join_us")
-                        )
-                      }
-                      speakersTitle={
-                        isLoading ? (
-                          <Skeleton variant="text" width={"100%"} height={40} />
-                        ) : (
-                          translations && getTranslation("speakers")
-                        )
-                      }
-                    />
-                  </SwiperSlide>
-                ))}
+                seminarOrWorkshop?.map(
+                  (sow, index) =>
+                    sow.event_datetime?.slice(0, 16) >= today && (
+                      <SwiperSlide key={sow.id || index}>
+                        <Advertisement
+                          onclick={handleScrollToContact}
+                          speakers={sow.spikers}
+                          time={sow.event_datetime?.slice(0, 16)}
+                          adsImg={sow.image}
+                          location={sow.place}
+                          title={sow.title}
+                          locationTitle={
+                            isLoading ? (
+                              <Skeleton
+                                variant="text"
+                                width={"100%"}
+                                height={40}
+                              />
+                            ) : (
+                              translations && getTranslation("location")
+                            )
+                          }
+                          dateTitle={
+                            isLoading ? (
+                              <Skeleton
+                                variant="text"
+                                width={"100%"}
+                                height={40}
+                              />
+                            ) : (
+                              translations && getTranslation("event_date")
+                            )
+                          }
+                          btnTitle={
+                            isLoading ? (
+                              <Skeleton
+                                variant="text"
+                                width={"100%"}
+                                height={40}
+                              />
+                            ) : (
+                              translations && getTranslation("join_us")
+                            )
+                          }
+                          speakersTitle={
+                            isLoading ? (
+                              <Skeleton
+                                variant="text"
+                                width={"100%"}
+                                height={40}
+                              />
+                            ) : (
+                              translations && getTranslation("speakers")
+                            )
+                          }
+                        />
+                      </SwiperSlide>
+                    )
+                )}
             </Swiper>
           </div>
         </section>
@@ -260,15 +284,18 @@ const SeminarWebinar = ({ workshop }) => {
               </h2>
               <div className={styles.lastEventsGrid}>
                 {seminarOrWorkshop &&
-                  seminarOrWorkshop.map((event) => (
-                    <EventCard
-                      key={event.id}
-                      eventImg={eventCardImg}
-                      title={event.spikers[0]}
-                      date={event.event_datetime?.slice(0, 16)}
-                      place={event.place}
-                    />
-                  ))}
+                  seminarOrWorkshop.map(
+                    (event) =>
+                      event.event_datetime?.slice(0, 16) < today && (
+                        <EventCard
+                          key={event.id}
+                          eventImg={event.image}
+                          title={event.spikers[0]}
+                          date={event.event_datetime?.slice(0, 16)}
+                          place={event.place}
+                        />
+                      )
+                  )}
               </div>
             </div>
           </div>

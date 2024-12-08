@@ -118,7 +118,7 @@ const Corporative = () => {
           className={styles.pageHeader}
           style={{
             background: `linear-gradient(90deg, var(--color-main) -1.51%, rgba(3, 5, 51, 0.00) 81.73%), url(${
-              banner || (corporatives && corporatives?.banner)
+              corporatives && corporatives?.banner
             }) lightgray center / cover no-repeat`,
           }}
         >

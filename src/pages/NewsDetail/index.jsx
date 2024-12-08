@@ -116,9 +116,12 @@ const NewsDetail = () => {
                     />
                   </div>
                 </div>
-                <div className={styles.newsDetailText}>
-                  {detailedNews?.text}
-                </div>
+                <div
+                  className={styles.newsDetailText}
+                  dangerouslySetInnerHTML={{
+                    __html: detailedNews?.text,
+                  }}
+                />
               </>
             )}
           </div>
