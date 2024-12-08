@@ -202,9 +202,7 @@ const Corporative = () => {
                 <picture className={styles.corporativeImg}>
                   <img
                     loading="lazy"
-                    src={
-                      corporativeImg || (corporatives && corporatives?.image)
-                    }
+                    src={corporatives && corporatives?.image}
                     alt={corporatives && corporatives?.content_title}
                   />
                 </picture>
