@@ -212,7 +212,7 @@ const SeminarWebinar = ({ workshop }) => {
               {status === "success" &&
                 seminarOrWorkshop?.map(
                   (sow, index) =>
-                    sow.event_datetime?.slice(0, 16) >= today && (
+                    sow.event_datetime?.slice(0, 16) > today && (
                       <SwiperSlide key={sow.id || index}>
                         <Advertisement
                           onclick={handleScrollToContact}
