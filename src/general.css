@@ -243,6 +243,10 @@
   cursor: pointer;
 }
 
+.trainingDrop > li {
+  flex: 1;
+}
+
 /* dropdown style end */
 
 /* swiper button disabled */
@@ -1411,5 +1415,26 @@ footer {
 
   .pageTitle::after {
     width: 95%;
+  }
+}
+
+
+/* Additional Styles */
+
+.contact__addresses{
+  gap: 1.4rem;
+}
+
+.contact__list--item{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  width: min(100%, 40rem);
+
+  span{
+    flex: 1;
+    word-wrap: break-word;
+    overflow: hidden;
   }
 }

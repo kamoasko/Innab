@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Box, Skeleton } from "@mui/material";
 import { FaInstagram } from "react-icons/fa6";
 import { useSiteInfos } from "../../features/siteInfos/siteInfoSlice";
+import instagram from "../../assets/images/Instagram1.png"
 
 const SocialNetworks = React.memo(({ gap, contact }) => {
   const { lang } = useParams();
@@ -43,7 +44,8 @@ const SocialNetworks = React.memo(({ gap, contact }) => {
       </li>
       <li>
         <Link to={infos && infos[0]?.instagram_link} target="_blank">
-          <FaInstagram style={{ width: "2.4rem", height: "2.4rem" }} />
+          {/* <FaInstagram style={{ width: "2.4rem", height: "2.4rem" }} /> */}
+          <img src={instagram} style={{ width: "2.4rem", height: "2.4rem" }}/>
 
           {/* <svg
               xmlns="http://www.w3.org/2000/svg"
